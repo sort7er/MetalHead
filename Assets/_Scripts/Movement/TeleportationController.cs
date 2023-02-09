@@ -47,7 +47,6 @@ public class TeleportationController : MonoBehaviour
             FindReticle();
         }
 
-
         if (!teleportActive)
         {
             return;
