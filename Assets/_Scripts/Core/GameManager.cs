@@ -47,9 +47,7 @@ public class GameManager : MonoBehaviour
     }
     public void SetXROriginRotation(Transform newRotation)
     {
-        Debug.Log(cam.transform.eulerAngles.y);
-        XROrigin.transform.rotation = Quaternion.Euler(0, newRotation.eulerAngles.y - cam.transform.eulerAngles.y, 0);
-        
+        XROrigin.transform.rotation = Quaternion.Euler(0, newRotation.eulerAngles.y - cam.transform.localEulerAngles.y, 0);
     }
 
 }
