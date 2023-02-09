@@ -97,11 +97,14 @@ public class TeleportationController : MonoBehaviour
     }
     private void SetRay(bool state)
     {
-        rayInteractor.enabled = state;
-        teleportActive = state;
-        leftHand.UsingRay(state);
-        leftLineVisual.reticle.SetActive(state);
-        GameManager.instance.EnableSnap(!state);
+        if (LocomotionManager.instance.isUsingTeleport)
+        {
+            rayInteractor.enabled = state;
+            teleportActive = state;
+            leftHand.UsingRay(state);
+            leftLineVisual.reticle.SetActive(state);
+            LocomotionManager.instance.EnableTurning(!state);
+        }
     }
 
     private void FindReticle()

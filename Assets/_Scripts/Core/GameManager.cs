@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
     public GameObject XROrigin;
     public GameObject leftRayInteractor, rightRayInteractor;
     public Hand leftHand, rightHand;
-    public ActionBasedSnapTurnProvider snapTurn;
 
     private XRInteractorLineVisual leftLineVisual, rightLineVisual;
 
@@ -40,10 +39,6 @@ public class GameManager : MonoBehaviour
             rightLineVisual.reticle.SetActive(state);
         }
 
-    }
-    public void EnableSnap(bool state)
-    {
-        snapTurn.enabled = state;
     }
     public void SetXROriginRotation(Transform newRotation)
     {
