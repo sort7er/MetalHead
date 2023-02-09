@@ -36,7 +36,7 @@ public class TeleportationController : MonoBehaviour
     private void OnDestroy()
     {
         teleportActivate.performed-= OnTeleportActivate;
-        teleportCancel.performed-= OnTeleportCancel;
+        teleportCancel.performed -= OnTeleportCancel;
 
     }
 
@@ -74,15 +74,14 @@ public class TeleportationController : MonoBehaviour
         TeleportRequest teleportRequest = new TeleportRequest()
         {
             destinationPosition = rayCastHit.point,
-            destinationRotation = Quaternion.Euler(90, 0, 90) /*teleportReticle.rotation*/,
-            
         };
 
         teleportationProvider.QueueTeleportRequest(teleportRequest);
-
+        GameManager.instance.SetXROriginRotation(teleportReticle);
         SetRay(false);
 
     }
+
     private void OnTeleportActivate(InputAction.CallbackContext context)
     {
         if(!teleportActive)
@@ -92,7 +91,7 @@ public class TeleportationController : MonoBehaviour
     }
     private void OnTeleportCancel(InputAction.CallbackContext context)
     {
-        if(teleportActive && rayInteractor.enabled)
+        if (teleportActive && rayInteractor.enabled)
         {
             SetRay(false);
         }

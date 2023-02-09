@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     }
 
     public GameObject cam;
+    public GameObject XROrigin;
     public GameObject leftRayInteractor, rightRayInteractor;
     public Hand leftHand, rightHand;
     public ActionBasedSnapTurnProvider snapTurn;
@@ -43,6 +44,10 @@ public class GameManager : MonoBehaviour
     public void EnableSnap(bool state)
     {
         snapTurn.enabled = state;
+    }
+    public void SetXROriginRotation(Transform newRotation)
+    {
+        XROrigin.transform.rotation = newRotation.rotation;
     }
 
 }
