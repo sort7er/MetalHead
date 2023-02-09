@@ -4,11 +4,11 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class LocomotionManager : MonoBehaviour
 {
     public static LocomotionManager instance;
-
     private void Awake()
     {
         instance = this;
     }
+
     public GameObject teleportationRays;
 
     [HideInInspector] public bool isUsingTeleport;
@@ -26,6 +26,9 @@ public class LocomotionManager : MonoBehaviour
         continuousMoveProvider = GetComponent<ContinuousMoveProviderBase>();
         snapTurnProvider = GetComponent<ActionBasedSnapTurnProvider>();
         continuousTurnProvider = GetComponent<ActionBasedContinuousTurnProvider>();
+
+        SetCountinuous(false);
+        SetTeleport(true);
     }
 
 
