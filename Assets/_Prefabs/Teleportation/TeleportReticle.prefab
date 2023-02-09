@@ -9740,7 +9740,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8177718951517292226}
   m_LocalRotation: {x: 0.70710677, y: -0, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.0211, z: 0}
   m_LocalScale: {x: 1, y: 0.13676, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10341,6 +10341,9 @@ MonoBehaviour:
   turnSpeed: 0.2
   inputAction: {fileID: -944628639613478452, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &8637701327906290272
 GameObject:
   m_ObjectHideFlags: 0

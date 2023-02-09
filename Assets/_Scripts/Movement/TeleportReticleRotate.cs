@@ -5,12 +5,18 @@ public class TeleportReticleRotate : MonoBehaviour
 {
     public float turnSpeed;
     public InputActionAsset inputAction;
+    public LayerMask groundMask;
 
     private Vector2 direction;
     private Vector3 rotationDir;
     private InputAction rightJoystick;
     private float lastAngle, angle;
     private bool getAngle;
+
+    private Vector3 normalDirection;
+    private Vector3 forwardDirection, rightDirection;
+    private float raycastAngleX, raycastAngleZ;
+    private float differenceAngleX, differenceAngleZ;
     private void Start()
     {
         rightJoystick = inputAction.FindActionMap("XRI RightHand Locomotion").FindAction("Move");
@@ -34,26 +40,39 @@ public class TeleportReticleRotate : MonoBehaviour
 
     private void Update()
     {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, groundMask))
+        {
+            normalDirection = hit.normal;
+            forwardDirection = new Vector3(transform.forward.x, 0f, transform.forward.z);
+            rightDirection = new Vector3(transform.right.x, 0f, transform.right.z);
+            differenceAngleX = Vector3.Angle(normalDirection, forwardDirection);
+            differenceAngleZ = Vector3.Angle(normalDirection, rightDirection);
+            raycastAngleX = 90f - differenceAngleX;
+            raycastAngleZ = 90f - differenceAngleZ;
+        }
+
+
         float targetAngle = Mathf.Atan2(rotationDir.x, rotationDir.z) * Mathf.Rad2Deg;
         angle = Mathf.LerpAngle(angle, targetAngle, turnSpeed);
         if (rotationDir.magnitude >= 0.1f)
         {
             getAngle = true;
-            transform.rotation = Quaternion.Euler(0f, GameManager.instance.leftHand.transform.eulerAngles.y + angle, 0f);
+            transform.rotation = Quaternion.Euler(raycastAngleX, GameManager.instance.leftHand.transform.eulerAngles.y + angle, -raycastAngleZ);
         }
         else if (getAngle)
         {
             lastAngle = transform.eulerAngles.y - GameManager.instance.leftHand.transform.eulerAngles.y;
-            getAngle= false;
+            getAngle = false;
         }
         else
         {
-            transform.rotation = Quaternion.Euler(0f, GameManager.instance.leftHand.transform.eulerAngles.y + lastAngle, 0f);
+            transform.rotation = Quaternion.Euler(raycastAngleX, GameManager.instance.leftHand.transform.eulerAngles.y + lastAngle, -raycastAngleZ);
         }
     }
     private void ResetRotation()
     {
-        transform.rotation = Quaternion.Euler(0f, GameManager.instance.leftHand.transform.eulerAngles.y, 0f);
+        transform.rotation = Quaternion.Euler(raycastAngleX, GameManager.instance.leftHand.transform.eulerAngles.y, -raycastAngleZ);
         lastAngle= 0f;
     }
 }
