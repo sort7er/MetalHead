@@ -10,6 +10,7 @@ public class LocomotionManager : MonoBehaviour
     }
 
     public GameObject teleportationRays;
+    public GameObject vignette;
 
     [HideInInspector] public bool isUsingTeleport;
  
@@ -59,6 +60,28 @@ public class LocomotionManager : MonoBehaviour
         teleportationRays.SetActive(value);
         teleportationProvider.enabled = value;
     }
+    public void EnableMovement(bool state)
+    {
+        if (state == false)
+        {
+            SetCountinuous(false);
+            SetTeleport(false);
+        }
+        else
+        {
+            if (currentMoveType == 0)
+            {
+                SetCountinuous(false);
+                SetTeleport(true);
+            }
+            else if (currentMoveType == 1)
+            {
+                SetCountinuous(true);
+                SetTeleport(false);
+            }
+        }
+    }
+
 
     //Turning
     public void SwitchTurning(int turnValue)
@@ -89,21 +112,33 @@ public class LocomotionManager : MonoBehaviour
     {
         if(state == false)
         {
-            snapTurnProvider.enabled = false;
-            continuousTurnProvider.enabled = false;
+            SetSnap(false);
+            SetCountinuousTurn(false);
         }
         else
         {
             if(currentTurnType == 0)
             {
-                snapTurnProvider.enabled = true;
-                continuousTurnProvider.enabled = false;
+                SetCountinuousTurn(false);
+                SetSnap(true);
             }
             else if (currentTurnType == 1)
             {
-                snapTurnProvider.enabled = false;
-                continuousTurnProvider.enabled = true;
+                SetCountinuousTurn(true);
+                SetSnap(false);
             }
         }
     }
+    public void SetVignette()
+    {
+        if (!vignette.activeSelf)
+        {
+            vignette.SetActive(true);
+        }
+        else if (vignette.activeSelf)
+        {
+            vignette.SetActive(false);
+        }
+    }
+
 }

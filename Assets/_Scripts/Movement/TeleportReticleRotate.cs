@@ -17,15 +17,13 @@ public class TeleportReticleRotate : MonoBehaviour
     private Vector3 forwardDirection, rightDirection;
     private float raycastAngleX, raycastAngleZ;
     private float differenceAngleX, differenceAngleZ;
-    private void Start()
-    {
-        rightJoystick = inputAction.FindActionMap("XRI RightHand Locomotion").FindAction("Move");
-        rightJoystick.performed += OnRotateJoystick;
-        rightJoystick.Enable();
-    }
+
     private void OnEnable()
     {
         ResetRotation();
+        rightJoystick = inputAction.FindActionMap("XRI RightHand Locomotion").FindAction("Move");
+        rightJoystick.performed += OnRotateJoystick;
+        rightJoystick.Enable();
     }
     private void OnDestroy()
     {

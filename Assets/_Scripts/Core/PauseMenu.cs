@@ -43,6 +43,8 @@ public class PauseMenu : MonoBehaviour
     public void OpenMenu()
     {
         GameManager.instance.EnableRays(true);
+        LocomotionManager.instance.EnableMovement(false);
+        LocomotionManager.instance.EnableTurning(false);
         menu.SetActive(true);
         paused = true;
         followCam= false;
@@ -53,6 +55,8 @@ public class PauseMenu : MonoBehaviour
         paused = false;
         followCam = true;
         GameManager.instance.EnableRays(false);
+        LocomotionManager.instance.EnableMovement(true);
+        LocomotionManager.instance.EnableTurning(true);
     }
 
 
