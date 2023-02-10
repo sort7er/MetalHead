@@ -42,6 +42,7 @@ public class PauseMenu : MonoBehaviour
     }
     public void OpenMenu()
     {
+        RenderSettings.fog = true;
         GameManager.instance.EnableRays(true);
         LocomotionManager.instance.EnableMovement(false);
         LocomotionManager.instance.EnableTurning(false);
@@ -57,6 +58,7 @@ public class PauseMenu : MonoBehaviour
         GameManager.instance.EnableRays(false);
         LocomotionManager.instance.EnableMovement(true);
         LocomotionManager.instance.EnableTurning(true);
+        RenderSettings.fog = false;
     }
 
 
