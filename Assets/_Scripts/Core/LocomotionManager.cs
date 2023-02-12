@@ -45,8 +45,8 @@ public class LocomotionManager : MonoBehaviour
         }
         else if (currentMoveType == 1)
         {
-            SetCountinuous(true);
             SetTeleport(false);
+            SetCountinuous(true);
         }
     }
 
@@ -76,8 +76,8 @@ public class LocomotionManager : MonoBehaviour
             }
             else if (currentMoveType == 1)
             {
-                SetCountinuous(true);
                 SetTeleport(false);
+                SetCountinuous(true);
             }
         }
     }
@@ -95,8 +95,8 @@ public class LocomotionManager : MonoBehaviour
         }
         else if (currentTurnType == 1)
         {
-            SetCountinuousTurn(true);
             SetSnap(false);
+            SetCountinuousTurn(true);
         }
     }
     private void SetCountinuousTurn(bool value)
@@ -124,8 +124,8 @@ public class LocomotionManager : MonoBehaviour
             }
             else if (currentTurnType == 1)
             {
-                SetCountinuousTurn(true);
                 SetSnap(false);
+                SetCountinuousTurn(true);
             }
         }
     }
