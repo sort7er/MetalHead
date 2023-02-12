@@ -73,6 +73,16 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.078
       objectReference: {fileID: 0}
+    - target: {fileID: -109315760746993192, guid: cde3ebe9062d2f2408085d777b631abe,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -109315760746993192, guid: cde3ebe9062d2f2408085d777b631abe,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.194
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cde3ebe9062d2f2408085d777b631abe,
         type: 3}
       propertyPath: m_Name
@@ -96,5 +106,57 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7990918536147327167, guid: cde3ebe9062d2f2408085d777b631abe,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7362890048402490763}
   m_SourcePrefab: {fileID: 100100000, guid: cde3ebe9062d2f2408085d777b631abe, type: 3}
+--- !u!1 &1455408122931716800 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7990918536147327167, guid: cde3ebe9062d2f2408085d777b631abe,
+    type: 3}
+  m_PrefabInstance: {fileID: 8851780984634702463}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7362890048402490763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1455408122931716800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bf296fc962d7184ab14ad1841598d5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_System: {fileID: 0}
+  m_MoveSpeed: 1
+  m_EnableStrafe: 1
+  m_UseGravity: 1
+  m_GravityApplicationMode: 0
+  m_ForwardSource: {fileID: 0}
+  m_LeftHandMoveAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Left Hand Move
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 8ddf8917-c651-4ac2-885c-d10bbbe18cee
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  m_RightHandMoveAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Right Hand Move
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 3ee70da1-6083-4b4d-874a-6d03c33795a0
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
