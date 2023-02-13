@@ -1975,6 +1975,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cde3ebe9062d2f2408085d777b631abe,
         type: 3}
       insertIndex: -1
+      addedObject: {fileID: 8480215060685690225}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cde3ebe9062d2f2408085d777b631abe,
+        type: 3}
+      insertIndex: -1
       addedObject: {fileID: 8480215060685690222}
     - targetCorrespondingSourceObject: {fileID: -2059808378567916338, guid: cde3ebe9062d2f2408085d777b631abe,
         type: 3}
@@ -2290,14 +2294,6 @@ MonoBehaviour:
   bulletPrefab: {fileID: 5189833569497714324, guid: b3d76405e89b33545af00f783f55938d,
     type: 3}
   muzzle: {fileID: 260480102}
-  gunShots:
-  - {fileID: 8300000, guid: 2b1b38e41a7265b4390ebe1d892574de, type: 3}
-  - {fileID: 8300000, guid: 582e9fb27da25c64cb60efbad14e4bb9, type: 3}
-  - {fileID: 8300000, guid: 3491950abe96834489aed1958f35ca11, type: 3}
-  gunGrab:
-  - {fileID: 8300000, guid: 81fbc7b8134971a49a2594458b4e2dc9, type: 3}
-  - {fileID: 8300000, guid: 91b1b1571dfde2e47a372ff79c8e64df, type: 3}
-  - {fileID: 8300000, guid: 0ad4aad6295a43d46b434deb93836ecc, type: 3}
   doubleDial: {fileID: 1536319736655785693}
   singleDial: {fileID: 1190689226793603137}
   doubleZero: {fileID: 266976860}
@@ -2319,6 +2315,30 @@ MonoBehaviour:
   timeUntilHolster: 2
   smoothTime: 4
   holster: {fileID: 0}
+--- !u!114 &8480215060685690225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4655748969463896115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da854c92b3cf85f4d845328b2622ef8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunShots:
+  - {fileID: 8300000, guid: 2b1b38e41a7265b4390ebe1d892574de, type: 3}
+  - {fileID: 8300000, guid: 582e9fb27da25c64cb60efbad14e4bb9, type: 3}
+  - {fileID: 8300000, guid: 3491950abe96834489aed1958f35ca11, type: 3}
+  gunGrab:
+  - {fileID: 8300000, guid: 81fbc7b8134971a49a2594458b4e2dc9, type: 3}
+  - {fileID: 8300000, guid: 91b1b1571dfde2e47a372ff79c8e64df, type: 3}
+  - {fileID: 8300000, guid: 0ad4aad6295a43d46b434deb93836ecc, type: 3}
+  gunEmpty:
+  - {fileID: 8300000, guid: cf03f9c2fb941e6449104263e7775506, type: 3}
+  - {fileID: 8300000, guid: 70058aaeb06664a46848799aa3bee599, type: 3}
+  - {fileID: 8300000, guid: f68dd58545d1fdb449337379ea1171a5, type: 3}
 --- !u!82 &8480215060685690222
 AudioSource:
   m_ObjectHideFlags: 0

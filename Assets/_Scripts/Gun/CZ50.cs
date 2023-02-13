@@ -13,12 +13,14 @@ public class CZ50 : MonoBehaviour
     public MeshRenderer doubleZero, singleZero;
     public Material defaultMaterial, emptyMaterial;
 
+    private Animator cz50Anim;
     private SoundForGun soundForGun;
     private int currentAmmo, totalAmmo;
     private int singleDigit, doubleDigit;
 
     private void Start()
     {
+        cz50Anim = GetComponent<Animator>();
         soundForGun = GetComponent<SoundForGun>();
         currentAmmo = magSize;
         totalAmmo = startAmmo;
@@ -32,6 +34,7 @@ public class CZ50 : MonoBehaviour
         {
             currentAmmo--;
             soundForGun.Fire();
+            cz50Anim.SetTrigger("Fire");
             UpdateDial();
             GameObject bullet = Instantiate(bulletPrefab, muzzle.position, muzzle.rotation);
             bullet.transform.parent = ParentManager.instance.bullets;
