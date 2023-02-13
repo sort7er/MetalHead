@@ -39,11 +39,16 @@ public class CZ50 : MonoBehaviour
         gunSource.PlayOneShot(gunGrab[Random.Range(0, gunGrab.Length)]);
     }
 
+
     public void UpdateDial()
     {
         singleDigit = currentAmmo % 10;
         doubleDigit = (currentAmmo / 10) % 10;
         singleDial.SetDial(singleDigit);
         doubleDial.SetDial(doubleDigit);
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        gunSource.PlayOneShot(gunGrab[Random.Range(0, gunGrab.Length)]);
     }
 }

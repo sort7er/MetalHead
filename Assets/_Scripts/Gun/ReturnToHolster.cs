@@ -6,6 +6,7 @@ public class ReturnToHolster : MonoBehaviour
     public float timeUntilHolster, smoothTime;
     public Transform holster;
 
+    private Vector3 velocity;
     private Rigidbody rb;
     private bool isHolding, isHolstered;
     private float timer;
@@ -49,10 +50,9 @@ public class ReturnToHolster : MonoBehaviour
     {
         rb.useGravity = false;
         rb.isKinematic = true;
-        Debug.Log("Returning");
-        transform.position = Vector3.Lerp(transform.position, holster.position, smoothTime * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, holster.position, smoothTime * Time.deltaTime);
         transform.rotation = Quaternion.Slerp(transform.rotation, holster.rotation, smoothTime * Time.deltaTime);
-        if(Vector3.Distance(transform.position, holster.position) < 0.05f)
+        if (Vector3.Distance(transform.position, holster.position) < 0.05f)
         {
             isHolstered = true;
             transform.parent = holster;
