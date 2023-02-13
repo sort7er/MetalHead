@@ -9,19 +9,17 @@ public class CZ50 : MonoBehaviour
     [Header("References")]
     public GameObject bulletPrefab;
     public Transform muzzle;
-    public AudioClip[] gunShots;
-    public AudioClip[] gunGrab;
     public Dial doubleDial, singleDial;
     public MeshRenderer doubleZero, singleZero;
     public Material defaultMaterial, emptyMaterial;
 
-    private AudioSource gunSource;
+    private SoundForGun soundForGun;
     private int currentAmmo, totalAmmo;
     private int singleDigit, doubleDigit;
 
     private void Start()
     {
-        gunSource= GetComponent<AudioSource>();
+        soundForGun = GetComponent<SoundForGun>();
         currentAmmo = magSize;
         totalAmmo = startAmmo;
         UpdateDial();
@@ -33,13 +31,14 @@ public class CZ50 : MonoBehaviour
         if(currentAmmo > 0)
         {
             currentAmmo--;
-            gunSource.PlayOneShot(gunShots[Random.Range(0, gunShots.Length)]);
+            soundForGun.Fire();
             UpdateDial();
             GameObject bullet = Instantiate(bulletPrefab, muzzle.position, muzzle.rotation);
             bullet.transform.parent = ParentManager.instance.bullets;
         }
         else
         {
+            soundForGun.Empty();
             EmptyColor();
             Invoke("DefaultColor", 0.1f);
         }
@@ -48,7 +47,7 @@ public class CZ50 : MonoBehaviour
 
     public void Grab()
     {
-        gunSource.PlayOneShot(gunGrab[Random.Range(0, gunGrab.Length)]);
+        soundForGun.Grab();
     }
 
     public void Reload()
@@ -84,7 +83,7 @@ public class CZ50 : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        gunSource.PlayOneShot(gunGrab[Random.Range(0, gunGrab.Length)]);
+        soundForGun.Grab();
     }
     private void DefaultColor()
     {
