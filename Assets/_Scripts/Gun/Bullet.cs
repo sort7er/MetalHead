@@ -18,8 +18,9 @@ public class Bullet : MonoBehaviour
     {
         if(collision.rigidbody != null)
         {
-            collision.rigidbody.AddForce(collision.transform.forward - transform.forward * rb.velocity.magnitude * 0.1f, ForceMode.Impulse);
+            collision.rigidbody.AddForce(collision.transform.forward + transform.forward * rb.velocity.magnitude * 0.1f, ForceMode.Impulse);
         }
+        Debug.Log(collision.transform.name);
         Destroy(gameObject);
     }
 
