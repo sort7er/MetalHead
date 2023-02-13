@@ -11,6 +11,7 @@ public class CZ50 : MonoBehaviour
     public Dial doubleDial, singleDial;
     public MeshRenderer doubleZero, singleZero;
     public Material defaultMaterial, emptyMaterial;
+    public ParticleSystem muzzleFlash;
 
     private Animator cz50Anim;
     private SoundForGun soundForGun;
@@ -36,6 +37,7 @@ public class CZ50 : MonoBehaviour
             cz50Anim.SetTrigger("Fire");
             UpdateDial();
             EffectManager.instance.Fire(muzzle);
+            muzzleFlash.Play();
         }
         else
         {
