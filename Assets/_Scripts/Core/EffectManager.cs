@@ -5,6 +5,7 @@ public class EffectManager : MonoBehaviour
     public static EffectManager instance;
     public GameObject bulletPrefab;
     public GameObject bulletHolePrefab;
+    public GameObject HitEffectPrefab;
 
     private void Awake()
     {
@@ -31,8 +32,8 @@ public class EffectManager : MonoBehaviour
         }
         Destroy(bulletHole, 25f);
 
-        //GameObject hitEffect = Instantiate(HitEffectPrefab, hit.point + hit.normal * 0.01f, Quaternion.LookRotation(hit.normal));
-        //hitEffect.transform.parent = hitEffectParent;
-        //Destroy(hitEffect, 2f);
+        GameObject hitEffect = Instantiate(HitEffectPrefab, collision.contacts[0].point + normal * 0.001f, Quaternion.LookRotation(normal));
+        hitEffect.transform.parent = ParentManager.instance.effects;
+        Destroy(hitEffect, 2f);
     }
 }
