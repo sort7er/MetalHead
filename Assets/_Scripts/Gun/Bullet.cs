@@ -20,6 +20,7 @@ public class Bullet : MonoBehaviour
         {
             collision.rigidbody.AddForce(collision.transform.forward + transform.forward * rb.velocity.magnitude * 0.1f, ForceMode.Impulse);
         }
+        EffectManager.instance.SpawnBulletHole(collision);
         Debug.Log(collision.transform.name);
         Destroy(gameObject);
     }

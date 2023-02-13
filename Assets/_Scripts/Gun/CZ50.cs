@@ -7,7 +7,6 @@ public class CZ50 : MonoBehaviour
     public int magSize;
 
     [Header("References")]
-    public GameObject bulletPrefab;
     public Transform muzzle;
     public Dial doubleDial, singleDial;
     public MeshRenderer doubleZero, singleZero;
@@ -36,8 +35,7 @@ public class CZ50 : MonoBehaviour
             soundForGun.Fire();
             cz50Anim.SetTrigger("Fire");
             UpdateDial();
-            GameObject bullet = Instantiate(bulletPrefab, muzzle.position, muzzle.rotation);
-            bullet.transform.parent = ParentManager.instance.bullets;
+            EffectManager.instance.Fire(muzzle);
         }
         else
         {

@@ -10,5 +10,5 @@ public class ParentManager : MonoBehaviour
         instance = this;
     }
 
-    public Transform bullets;
+    public Transform effects, bullets;
 }
