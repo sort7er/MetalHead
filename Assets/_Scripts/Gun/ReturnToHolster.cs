@@ -33,18 +33,16 @@ public class ReturnToHolster : MonoBehaviour
 
     public void IsHolding()
     {
-        rb.useGravity = true;
-        rb.isKinematic = false;
         isHolding = true;
-
-        // remove later
-        transform.parent = null;
     }
     public void Release()
     {
+        rb.useGravity = true;
+        rb.isKinematic = false;
         isHolding = false;
         isHolstered = false;
         timer = timeUntilHolster;
+        transform.parent = null;
     }
     private void Return()
     {
