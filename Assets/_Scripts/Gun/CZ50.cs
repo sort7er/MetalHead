@@ -21,16 +21,14 @@ public class CZ50 : MonoBehaviour
     {
         gunSource= GetComponent<AudioSource>();
         currentAmmo = magSize;
+        UpdateDial();
     }
 
     public void Fire()
     {
         gunSource.PlayOneShot(gunShots[Random.Range(0, gunShots.Length)]);
         currentAmmo--;
-        singleDigit = currentAmmo % 10;
-        doubleDigit = (currentAmmo / 10) % 10;
-        singleDial.SetDial(singleDigit);
-        doubleDial.SetDial(doubleDigit);
+        UpdateDial();
 
         GameObject bullet = Instantiate(bulletPrefab, muzzle.position, muzzle.rotation);
         bullet.transform.parent = ParentManager.instance.bullets;
@@ -39,5 +37,13 @@ public class CZ50 : MonoBehaviour
     public void Grab()
     {
         gunSource.PlayOneShot(gunGrab[Random.Range(0, gunGrab.Length)]);
+    }
+
+    public void UpdateDial()
+    {
+        singleDigit = currentAmmo % 10;
+        doubleDigit = (currentAmmo / 10) % 10;
+        singleDial.SetDial(singleDigit);
+        doubleDial.SetDial(doubleDigit);
     }
 }

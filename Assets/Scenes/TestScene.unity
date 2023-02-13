@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2114,7 +2114,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onPressP:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8480215060685690224}
+        m_TargetAssemblyTypeName: ReturnToHolster, Assembly-CSharp
+        m_MethodName: IsHolding
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onReleaseP:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8480215060685690224}
+        m_TargetAssemblyTypeName: ReturnToHolster, Assembly-CSharp
+        m_MethodName: Release
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &611608869
 Transform:
   m_ObjectHideFlags: 0
@@ -5204,6 +5231,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1172803581}
   m_CullTransparentMesh: 1
+--- !u!1 &1179863461
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1179863462}
+  m_Layer: 0
+  m_Name: Holster
+  m_TagString: Untagged
+  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1179863462
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179863461}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -2.013, y: 1.233, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1181161550
 GameObject:
   m_ObjectHideFlags: 0
@@ -9256,6 +9314,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2024154011 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4655748969463896115, guid: bc37897792a96ac419f413187abaa406,
+    type: 3}
+  m_PrefabInstance: {fileID: 8480215060685690215}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2058676248
 GameObject:
   m_ObjectHideFlags: 0
@@ -9572,8 +9636,32 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8480215060685690223, guid: bc37897792a96ac419f413187abaa406,
+        type: 3}
+      propertyPath: holster
+      value: 
+      objectReference: {fileID: 1179863462}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4655748969463896115, guid: bc37897792a96ac419f413187abaa406,
+        type: 3}
+      insertIndex: 7
+      addedObject: {fileID: 8480215060685690224}
   m_SourcePrefab: {fileID: 100100000, guid: bc37897792a96ac419f413187abaa406, type: 3}
+--- !u!114 &8480215060685690224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2024154011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 742e735b2125589438e7633ea56bc104, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeUntilHolster: 2
+  smoothTime: 4
+  holster: {fileID: 1179863462}
