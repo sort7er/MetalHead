@@ -865,6 +865,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 83699831}
   m_CullTransparentMesh: 1
+--- !u!23 &222119317 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2136541011, guid: bc37897792a96ac419f413187abaa406,
+    type: 3}
+  m_PrefabInstance: {fileID: 8480215060685690215}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &240127002
 GameObject:
   m_ObjectHideFlags: 0
@@ -2115,9 +2121,9 @@ MonoBehaviour:
   onPressP:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8480215060685690224}
-        m_TargetAssemblyTypeName: ReturnToHolster, Assembly-CSharp
-        m_MethodName: IsHolding
+      - m_Target: {fileID: 8480215060685690216}
+        m_TargetAssemblyTypeName: CZ50, Assembly-CSharp
+        m_MethodName: Fire
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2129,10 +2135,13 @@ MonoBehaviour:
         m_CallState: 2
   onReleaseP:
     m_PersistentCalls:
+      m_Calls: []
+  onPressR:
+    m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8480215060685690224}
-        m_TargetAssemblyTypeName: ReturnToHolster, Assembly-CSharp
-        m_MethodName: Release
+      - m_Target: {fileID: 8480215060685690216}
+        m_TargetAssemblyTypeName: CZ50, Assembly-CSharp
+        m_MethodName: Reload
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2493,6 +2502,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 696605534}
   m_CullTransparentMesh: 1
+--- !u!23 &712764923 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 266976860, guid: bc37897792a96ac419f413187abaa406,
+    type: 3}
+  m_PrefabInstance: {fileID: 8480215060685690215}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &767284920
 GameObject:
   m_ObjectHideFlags: 0
@@ -9314,12 +9329,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2024154011 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4655748969463896115, guid: bc37897792a96ac419f413187abaa406,
-    type: 3}
-  m_PrefabInstance: {fileID: 8480215060685690215}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2058676248
 GameObject:
   m_ObjectHideFlags: 0
@@ -9581,6 +9590,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: CZ50
       objectReference: {fileID: 0}
+    - target: {fileID: 5134461657349148667, guid: bc37897792a96ac419f413187abaa406,
+        type: 3}
+      propertyPath: holster
+      value: 
+      objectReference: {fileID: 1179863462}
+    - target: {fileID: 5134461657349148667, guid: bc37897792a96ac419f413187abaa406,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5464937457918739081, guid: bc37897792a96ac419f413187abaa406,
         type: 3}
       propertyPath: m_RootOrder
@@ -9636,32 +9655,65 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8480215060685690218, guid: bc37897792a96ac419f413187abaa406,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8480215060685690218, guid: bc37897792a96ac419f413187abaa406,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8480215060685690218, guid: bc37897792a96ac419f413187abaa406,
+        type: 3}
+      propertyPath: m_ImplicitTensor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8480215060685690223, guid: bc37897792a96ac419f413187abaa406,
         type: 3}
-      propertyPath: holster
+      propertyPath: magSize
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8480215060685690223, guid: bc37897792a96ac419f413187abaa406,
+        type: 3}
+      propertyPath: totalAmmo
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 8480215060685690223, guid: bc37897792a96ac419f413187abaa406,
+        type: 3}
+      propertyPath: doubleZero
       value: 
-      objectReference: {fileID: 1179863462}
+      objectReference: {fileID: 712764923}
+    - target: {fileID: 8480215060685690223, guid: bc37897792a96ac419f413187abaa406,
+        type: 3}
+      propertyPath: singleZero
+      value: 
+      objectReference: {fileID: 222119317}
+    - target: {fileID: 8480215060685690223, guid: bc37897792a96ac419f413187abaa406,
+        type: 3}
+      propertyPath: emptyMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: fafe3b42816a9514a971355f3a92d386, type: 2}
+    - target: {fileID: 8480215060685690223, guid: bc37897792a96ac419f413187abaa406,
+        type: 3}
+      propertyPath: defaultMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 7302fe0c744c11543b9c55f98b6b448a, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4655748969463896115, guid: bc37897792a96ac419f413187abaa406,
-        type: 3}
-      insertIndex: 7
-      addedObject: {fileID: 8480215060685690224}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc37897792a96ac419f413187abaa406, type: 3}
---- !u!114 &8480215060685690224
+--- !u!114 &8480215060685690216 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 8480215060685690223, guid: bc37897792a96ac419f413187abaa406,
+    type: 3}
+  m_PrefabInstance: {fileID: 8480215060685690215}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2024154011}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 742e735b2125589438e7633ea56bc104, type: 3}
+  m_Script: {fileID: 11500000, guid: 82d8b67ec5ca96446b9e5607baee5214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeUntilHolster: 2
-  smoothTime: 4
-  holster: {fileID: 1179863462}

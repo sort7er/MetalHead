@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TestMethods : MonoBehaviour
 {
-    public UnityEvent onPressP, onReleaseP;
+    public UnityEvent onPressP, onReleaseP, onPressR;
 
     private void Update()
     {
@@ -14,6 +14,10 @@ public class TestMethods : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.P))
         {
             onReleaseP.Invoke();
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            onPressR.Invoke();
         }
     }
 }
