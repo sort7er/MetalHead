@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class GameManager : MonoBehaviour
@@ -14,7 +15,6 @@ public class GameManager : MonoBehaviour
     public GameObject XROrigin;
     public GameObject leftRayInteractor, rightRayInteractor;
     public Hand leftHand, rightHand;
-
 
     private XRInteractorLineVisual leftLineVisual, rightLineVisual;
 

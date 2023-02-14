@@ -15,7 +15,7 @@ public class CZ50 : MonoBehaviour
 
     private Animator cz50Anim;
     private SoundForGun soundForGun;
-    private int currentAmmo, totalAmmo;
+    public int currentAmmo, totalAmmo;
     private int singleDigit, doubleDigit;
 
     private void Start()
@@ -75,6 +75,16 @@ public class CZ50 : MonoBehaviour
         }
 
         UpdateDial();
+    }
+    public void MagOut()
+    {
+        if(currentAmmo != 0)
+        {
+            int rest = currentAmmo - 1;
+            currentAmmo -= rest;
+            totalAmmo += rest;
+            UpdateDial();
+        }
     }
 
     public void UpdateDial()
