@@ -15,11 +15,11 @@ public class GameManager : MonoBehaviour
     public GameObject leftRayInteractor, rightRayInteractor;
     public Hand leftHand, rightHand;
 
+
     private XRInteractorLineVisual leftLineVisual, rightLineVisual;
 
     private void Start()
     {
-        Physics.IgnoreLayerCollision(7, 8);
         EnableRays(false);
         leftLineVisual = leftRayInteractor.GetComponent<XRInteractorLineVisual>();
         rightLineVisual = rightRayInteractor.GetComponent<XRInteractorLineVisual>();

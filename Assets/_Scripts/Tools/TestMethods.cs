@@ -20,4 +20,21 @@ public class TestMethods : MonoBehaviour
             onPressR.Invoke();
         }
     }
+
+    public void One()
+    {
+        Debug.Log("1");
+    }
+    public void Two()
+    {
+        Debug.Log("2");
+    }
+    public void Three()
+    {
+        Debug.Log("3");
+    }
+    public void Four()
+    {
+        Debug.Log("4");
+    }
 }

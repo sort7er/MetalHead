@@ -6,9 +6,10 @@ public class ReturnToHolster : MonoBehaviour
     public float timeUntilHolster, smoothTime;
     public Transform holster;
 
+    [HideInInspector] public bool isHolding, isHolstered;
+
     private Vector3 velocity;
     private Rigidbody rb;
-    private bool isHolding, isHolstered;
     private float timer;
 
     private void Start()
