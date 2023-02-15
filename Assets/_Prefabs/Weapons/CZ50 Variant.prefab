@@ -1567,6 +1567,8 @@ GameObject:
   - component: {fileID: 6004139976720994204}
   - component: {fileID: 814155394277189194}
   - component: {fileID: 5700104776950498935}
+  - component: {fileID: 736810792}
+  - component: {fileID: 736810793}
   m_Layer: 0
   m_Name: Trigger
   m_TagString: Untagged
@@ -1581,14 +1583,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1693868521625292324}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0.30221295, y: -0.000000029802319, z: 0.0000000074505797, w: 0.9532404}
   m_LocalPosition: {x: -0.0000046789646, y: 0.074015066, z: 0.016458832}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5464937457918739081}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 35.181, y: 0, z: 0}
 --- !u!33 &814155394277189194
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1639,6 +1641,41 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &736810792
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1693868521625292324}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9ba3520299371984784e2907ec1461d0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &736810793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1693868521625292324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a359a5b60a3d5a448de201d70dca17f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagToCompare: Pistol
+  triggerInput: {fileID: -944628639613478452, guid: c348712bda248c246b8c49b3db54643f,
+    type: 3}
 --- !u!1 &2041188589086777822
 GameObject:
   m_ObjectHideFlags: 0
@@ -2367,7 +2404,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 608322018}
-        m_TargetAssemblyTypeName: FollowHand, Assembly-CSharp
+        m_TargetAssemblyTypeName: Slide, Assembly-CSharp
         m_MethodName: Follow
         m_Mode: 1
         m_Arguments:
@@ -2394,8 +2431,20 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 608322018}
-        m_TargetAssemblyTypeName: FollowHand, Assembly-CSharp
+        m_TargetAssemblyTypeName: Slide, Assembly-CSharp
         m_MethodName: DontFollow
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 608322018}
+        m_TargetAssemblyTypeName: Slide, Assembly-CSharp
+        m_MethodName: SlideDone
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2453,6 +2502,9 @@ MonoBehaviour:
   tagToCompare: Slide
   limit: -0.07
   sensitivity: 1
+  cz50: {fileID: 8480215060685690223}
+  releaseMag: {fileID: 8480215060685690242}
+  soundForGun: {fileID: 8480215060685690225}
 --- !u!1 &4655748969463896115
 GameObject:
   m_ObjectHideFlags: 0
@@ -2473,6 +2525,7 @@ GameObject:
   - component: {fileID: 8480215060685690225}
   - component: {fileID: 8480215060685690222}
   - component: {fileID: 8480215060685690226}
+  - component: {fileID: 8480215060685690228}
   m_Layer: 0
   m_Name: CZ50 Variant
   m_TagString: Pistol
@@ -2681,6 +2734,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 8480215060685690228}
+        m_TargetAssemblyTypeName: ChangeLayer, Assembly-CSharp
+        m_MethodName: NewLayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
       m_Calls:
@@ -2700,6 +2765,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
         m_MethodName: set_enabled
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8480215060685690228}
+        m_TargetAssemblyTypeName: ChangeLayer, Assembly-CSharp
+        m_MethodName: OriginalLayer
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2836,6 +2913,7 @@ MonoBehaviour:
     type: 3}
   magLocation: {fileID: 5440392112006933917}
   magEndPoint: {fileID: 1356023294}
+  reloadValid: 0
 --- !u!114 &5134461657349148667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2877,6 +2955,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: cf03f9c2fb941e6449104263e7775506, type: 3}
   - {fileID: 8300000, guid: 70058aaeb06664a46848799aa3bee599, type: 3}
   - {fileID: 8300000, guid: f68dd58545d1fdb449337379ea1171a5, type: 3}
+  slide:
+  - {fileID: 8300000, guid: 58cc240553236b542bba4d1c6daf9ba7, type: 3}
+  - {fileID: 8300000, guid: f0678319f0bc9c34db3aee2d2b2da606, type: 3}
 --- !u!82 &8480215060685690222
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2993,6 +3074,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &8480215060685690228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4655748969463896115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aa92b401616de34f9d08f5a54414e00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5299283524019339071
 GameObject:
   m_ObjectHideFlags: 0

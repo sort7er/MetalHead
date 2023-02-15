@@ -8,6 +8,7 @@ public class Slide : MonoBehaviour
     public float sensitivity;
     public CZ50 cz50;
     public ReleaseMag releaseMag;
+    public SoundForGun soundForGun;
 
     private XRDirectInteractor rHand, lHand;
     private float difference;
@@ -46,6 +47,10 @@ public class Slide : MonoBehaviour
 
         if(transform.localPosition.z < limit)
         {
+            if (follow)
+            {
+                soundForGun.Slide(0);
+            }
             follow = false;
             slideValid = true;
         }
@@ -77,6 +82,7 @@ public class Slide : MonoBehaviour
     }
     public void SlideDone()
     {
+        soundForGun.Slide(1);
         if(slideValid && releaseMag.reloadValid)
         {
             cz50.Reload();

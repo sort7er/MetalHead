@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        Physics.IgnoreLayerCollision(7, 8);
         EnableRays(false);
         leftLineVisual = leftRayInteractor.GetComponent<XRInteractorLineVisual>();
         rightLineVisual = rightRayInteractor.GetComponent<XRInteractorLineVisual>();

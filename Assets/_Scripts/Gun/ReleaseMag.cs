@@ -84,14 +84,12 @@ public class ReleaseMag : MonoBehaviour
         }
         if (insert)
         {
-            Debug.Log("SlideIn");
             MagIn();
         }
 
     }
     public void Insert()
     {
-        Debug.Log("1");
         insert = true;
         currentGameobject.GetComponent<XRGrabInteractable>().enabled = false;
         currentGameobject.parent = magLocation;
