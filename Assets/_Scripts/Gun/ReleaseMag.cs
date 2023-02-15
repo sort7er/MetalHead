@@ -8,7 +8,6 @@ public class ReleaseMag : MonoBehaviour
     public string tagToCompare;
     public InputActionAsset releaseMagInputAction;
     public Transform magLocation, magEndPoint;
-    public Transform currentGameobject;
 
 
     private CZ50 cz50;
@@ -16,7 +15,7 @@ public class ReleaseMag : MonoBehaviour
     private ReturnToHolster returnToHolster;
     private XRSocketInteractor magLocationSocketInteractor;
     private XRDirectInteractor rHand, lHand;
-    private Transform mag;
+    private Transform mag, currentGameobject;
     private Rigidbody magRB;
     private Collider magCollider;
     private bool left;
