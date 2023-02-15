@@ -9935,6 +9935,16 @@ PrefabInstance:
       propertyPath: m_InteractionManager
       value: 
       objectReference: {fileID: 1932161242}
+    - target: {fileID: 8480215060685690241, guid: bc37897792a96ac419f413187abaa406,
+        type: 3}
+      propertyPath: m_Colliders.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8480215060685690241, guid: bc37897792a96ac419f413187abaa406,
+        type: 3}
+      propertyPath: m_Colliders.Array.data[0]
+      value: 
+      objectReference: {fileID: 8480215060685690225}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9952,3 +9962,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82d8b67ec5ca96446b9e5607baee5214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!64 &8480215060685690225 stripped
+MeshCollider:
+  m_CorrespondingSourceObject: {fileID: 8480215060685690219, guid: bc37897792a96ac419f413187abaa406,
+    type: 3}
+  m_PrefabInstance: {fileID: 8480215060685690215}
+  m_PrefabAsset: {fileID: 0}
