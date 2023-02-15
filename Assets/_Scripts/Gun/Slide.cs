@@ -1,17 +1,18 @@
 using UnityEngine;
-using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class FollowHand : MonoBehaviour
+public class Slide : MonoBehaviour
 {
     public string tagToCompare;
     public float limit;
     public float sensitivity;
+    public CZ50 cz50;
+    public ReleaseMag releaseMag;
 
     private XRDirectInteractor rHand, lHand;
     private float difference;
     private Vector3 oldPos, newPos;
-    private bool followLeftHand, followRightHand, follow;
+    private bool followLeftHand, followRightHand, follow, slideValid;
 
 
 
@@ -46,12 +47,14 @@ public class FollowHand : MonoBehaviour
         if(transform.localPosition.z < limit)
         {
             follow = false;
+            slideValid = true;
         }
     }
 
     public void Follow()
     {
         follow = true;
+        slideValid = false;
         if (rHand.selectTarget != null && rHand.selectTarget.CompareTag(tagToCompare))
         {
             newPos = GameManager.instance.rightHand.transform.localPosition;
@@ -69,6 +72,15 @@ public class FollowHand : MonoBehaviour
     {
         followRightHand = false;
         followLeftHand = false;
+        follow= false;
 
+    }
+    public void SlideDone()
+    {
+        if(slideValid && releaseMag.reloadValid)
+        {
+            cz50.Reload();
+            releaseMag.CanReload(false);
+        }
     }
 }

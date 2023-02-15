@@ -9,6 +9,7 @@ public class ReleaseMag : MonoBehaviour
     public InputActionAsset releaseMagInputAction;
     public Transform magLocation, magEndPoint;
 
+    [HideInInspector] public bool reloadValid;
 
     private CZ50 cz50;
     private InputAction releaseMagLeft, releaseMagRight;
@@ -156,8 +157,13 @@ public class ReleaseMag : MonoBehaviour
         if (Vector3.Distance(mag.position, magLocation.position) < 0.001f)
         {
             insert = false;
-            Debug.Log("CanCock");
+            CanReload(true);
         }
+    }
+    
+    public void CanReload(bool state)
+    {
+        reloadValid = state;
     }
 
 }
