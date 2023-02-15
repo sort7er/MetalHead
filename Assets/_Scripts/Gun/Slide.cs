@@ -6,6 +6,7 @@ public class Slide : MonoBehaviour
     public string tagToCompare;
     public float limit;
     public float sensitivity;
+    public Transform attachTransform;
     public CZ50 cz50;
     public ReleaseMag releaseMag;
     public SoundForGun soundForGun;
@@ -65,16 +66,25 @@ public class Slide : MonoBehaviour
             newPos = GameManager.instance.rightHand.transform.localPosition;
             oldPos = GameManager.instance.rightHand.transform.localPosition;
             followRightHand = true;
+            GameManager.instance.rightHand.NewParent(transform, attachTransform);
+            GameManager.instance.rightHand.GrabSlide(true);
+
         }
         else if (lHand.selectTarget != null && lHand.selectTarget.CompareTag(tagToCompare))
         {
             newPos = GameManager.instance.leftHand.transform.localPosition;
             oldPos = GameManager.instance.leftHand.transform.localPosition;
             followLeftHand = true;
+            GameManager.instance.leftHand.NewParent(transform, attachTransform);
+            GameManager.instance.leftHand.GrabSlide(true);
         }
     }
     public void DontFollow()
     {
+        GameManager.instance.leftHand.OriginalParent();
+        GameManager.instance.rightHand.OriginalParent();
+        GameManager.instance.leftHand.GrabSlide(false);
+        GameManager.instance.rightHand.GrabSlide(false);
         followRightHand = false;
         followLeftHand = false;
         follow= false;

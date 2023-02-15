@@ -6,8 +6,11 @@ public class Hand : MonoBehaviour
     public GameObject handPrefab;
     public InputDeviceCharacteristics controllerCharacteristics;
 
+    private GameObject spawnedHand;
     private InputDevice targetDevice;
     private Animator handAnim;
+    private Vector3 originalPostion;
+    private Quaternion originalRotation;
 
     private void Start()
     {
@@ -35,7 +38,9 @@ public class Hand : MonoBehaviour
         {
             targetDevice = devices[0];
 
-            GameObject spawnedHand = Instantiate(handPrefab, transform);
+            spawnedHand = Instantiate(handPrefab, transform);
+            originalPostion = spawnedHand.transform.localPosition;
+            originalRotation = spawnedHand.transform.localRotation;
             handAnim = spawnedHand.GetComponent<Animator>();
         }
     }
@@ -67,5 +72,25 @@ public class Hand : MonoBehaviour
         {
             handAnim.SetBool("UsingRay", state);
         }
+    }
+    public void GrabSlide(bool state)
+    {
+        if (handAnim != null)
+        {
+            handAnim.SetBool("GrabSlide", state);
+        }
+    }
+
+    public void NewParent(Transform newParent, Transform attachTransform)
+    {
+        spawnedHand.transform.parent = newParent;
+        spawnedHand.transform.position= attachTransform.position;
+        spawnedHand.transform.rotation= attachTransform.rotation;
+    }
+    public void OriginalParent()
+    {
+        spawnedHand.transform.parent = transform;
+        spawnedHand.transform.localPosition = originalPostion;
+        spawnedHand.transform.localRotation = originalRotation;
     }
 }
