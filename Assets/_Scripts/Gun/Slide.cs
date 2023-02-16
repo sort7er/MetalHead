@@ -6,7 +6,7 @@ public class Slide : MonoBehaviour
     public string tagToCompare;
     public float limit;
     public float sensitivity;
-    public Transform attachTransform;
+    public Transform attachTransform, frontCheck, backCheck;
     public CZ50 cz50;
     public ReleaseMag releaseMag;
     public SoundForGun soundForGun;
@@ -25,6 +25,9 @@ public class Slide : MonoBehaviour
     }
     private void Update()
     {
+        
+
+
         if (follow)
         {
             if (followRightHand)
@@ -61,22 +64,36 @@ public class Slide : MonoBehaviour
     {
         follow = true;
         slideValid = false;
-        if (rHand.GetOldestInteractableSelected() != null && rHand.GetOldestInteractableSelected().transform.CompareTag(tagToCompare))
+        if (GameManager.instance.CheckHand("Slide") == 2)
         {
             newPos = GameManager.instance.rightHand.transform.localPosition;
             oldPos = GameManager.instance.rightHand.transform.localPosition;
             followRightHand = true;
             GameManager.instance.rightHand.NewParent(transform, attachTransform);
-            GameManager.instance.rightHand.GrabSlide(true);
+            if (Vector3.Distance(rHand.transform.position, frontCheck.position) > Vector3.Distance(rHand.transform.position, backCheck.position))
+            {
+                GameManager.instance.rightHand.GrabSlideBack(true);
+            }
+            else
+            {
+                GameManager.instance.rightHand.GrabSlide(true);
+            }
 
         }
-        else if (lHand.GetOldestInteractableSelected() != null && lHand.GetOldestInteractableSelected().transform.CompareTag(tagToCompare))
+        else if (GameManager.instance.CheckHand("Slide") == 1)
         {
             newPos = GameManager.instance.leftHand.transform.localPosition;
             oldPos = GameManager.instance.leftHand.transform.localPosition;
             followLeftHand = true;
             GameManager.instance.leftHand.NewParent(transform, attachTransform);
-            GameManager.instance.leftHand.GrabSlide(true);
+            if (Vector3.Distance(lHand.transform.position, frontCheck.position) > Vector3.Distance(lHand.transform.position, backCheck.position))
+            {
+                GameManager.instance.leftHand.GrabSlideBack(true);
+            }
+            else
+            {
+                GameManager.instance.leftHand.GrabSlide(true);
+            }
         }
     }
     public void DontFollow()
@@ -84,7 +101,9 @@ public class Slide : MonoBehaviour
         GameManager.instance.leftHand.OriginalParent();
         GameManager.instance.rightHand.OriginalParent();
         GameManager.instance.leftHand.GrabSlide(false);
+        GameManager.instance.leftHand.GrabSlideBack(false);
         GameManager.instance.rightHand.GrabSlide(false);
+        GameManager.instance.rightHand.GrabSlideBack(false);
         followRightHand = false;
         followLeftHand = false;
         follow= false;

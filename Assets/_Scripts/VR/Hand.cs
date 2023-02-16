@@ -88,6 +88,13 @@ public class Hand : MonoBehaviour
             handAnim.SetBool("GrabSlide", state);
         }
     }
+    public void GrabSlideBack(bool state)
+    {
+        if (handAnim != null)
+        {
+            handAnim.SetBool("GrabSlideBack", state);
+        }
+    }
     public void GrabMag(bool state)
     {
         if (handAnim != null)
