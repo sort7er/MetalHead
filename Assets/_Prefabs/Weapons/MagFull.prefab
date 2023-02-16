@@ -1,5 +1,67 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &686641380
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 686641381}
+  m_Layer: 0
+  m_Name: AttachLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &686641381
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 686641380}
+  m_LocalRotation: {x: -0.14417762, y: 0.14417762, z: 0.69225204, w: 0.69225204}
+  m_LocalPosition: {x: -0.09, y: 0.08, z: 0.19}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1243663767088504439}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: -23.53, y: 0, z: 90}
+--- !u!1 &1873844996
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1873844997}
+  m_Layer: 0
+  m_Name: AttachRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1873844997
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873844996}
+  m_LocalRotation: {x: -0.14417762, y: -0.14417762, z: -0.69225204, w: 0.69225204}
+  m_LocalPosition: {x: 0.09, y: 0.08, z: 0.19}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1243663767088504439}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: -23.53, y: 0, z: -90}
 --- !u!1 &446193085149609580
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,9 +411,10 @@ GameObject:
   - component: {fileID: 970528736}
   - component: {fileID: 970528735}
   - component: {fileID: 970528741}
+  - component: {fileID: 1905724417}
   m_Layer: 0
   m_Name: MagFull
-  m_TagString: Untagged
+  m_TagString: Magazine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -369,8 +432,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 457337425679299521}
+  - {fileID: 686641381}
+  - {fileID: 1873844997}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: -39.087, z: 0}
 --- !u!33 &472445477359779541
 MeshFilter:
@@ -526,12 +591,36 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1905724417}
+        m_TargetAssemblyTypeName: Mag, Assembly-CSharp
+        m_MethodName: GrabMag
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 970528741}
         m_TargetAssemblyTypeName: ChangeLayer, Assembly-CSharp
         m_MethodName: OriginalLayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1905724417}
+        m_TargetAssemblyTypeName: Mag, Assembly-CSharp
+        m_MethodName: ReleaseMag
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -574,7 +663,7 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
-  m_AttachTransform: {fileID: 0}
+  m_AttachTransform: {fileID: 686641381}
   m_UseDynamicAttach: 0
   m_MatchAttachPosition: 1
   m_MatchAttachRotation: 1
@@ -627,6 +716,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aa92b401616de34f9d08f5a54414e00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1905724417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097784035369411896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 435b39a8a10aa494c98d6f55dede2389, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftAttach: {fileID: 686641381}
+  rightAttach: {fileID: 1873844997}
+  magFull: {fileID: 970528735}
 --- !u!1 &2386264572667018933
 GameObject:
   m_ObjectHideFlags: 0

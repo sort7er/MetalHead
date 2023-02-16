@@ -5,7 +5,6 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class ReleaseMag : MonoBehaviour
 {
     public float slideTime;
-    public string tagToCompare;
     public InputActionAsset releaseMagInputAction;
     public Transform magLocation, magEndPoint;
 
