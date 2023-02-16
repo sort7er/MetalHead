@@ -61,7 +61,7 @@ public class Slide : MonoBehaviour
     {
         follow = true;
         slideValid = false;
-        if (rHand.selectTarget != null && rHand.selectTarget.CompareTag(tagToCompare))
+        if (rHand.GetOldestInteractableSelected() != null && rHand.GetOldestInteractableSelected().transform.CompareTag(tagToCompare))
         {
             newPos = GameManager.instance.rightHand.transform.localPosition;
             oldPos = GameManager.instance.rightHand.transform.localPosition;
@@ -70,7 +70,7 @@ public class Slide : MonoBehaviour
             GameManager.instance.rightHand.GrabSlide(true);
 
         }
-        else if (lHand.selectTarget != null && lHand.selectTarget.CompareTag(tagToCompare))
+        else if (lHand.GetOldestInteractableSelected() != null && lHand.GetOldestInteractableSelected().transform.CompareTag(tagToCompare))
         {
             newPos = GameManager.instance.leftHand.transform.localPosition;
             oldPos = GameManager.instance.leftHand.transform.localPosition;

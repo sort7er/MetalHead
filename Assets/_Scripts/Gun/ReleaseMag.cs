@@ -51,25 +51,24 @@ public class ReleaseMag : MonoBehaviour
     {
         if(returnToHolster.isHolding)
         {
-            if (rHand.selectTarget != null && rHand.selectTarget.CompareTag(tagToCompare))
+            if (GameManager.instance.CheckHand("Pistol") == 1)
             {
-                left = false;
-                if (lHand.selectTarget != null)
+                left = true;
+                if (rHand.GetOldestInteractableSelected() != null)
                 {
-                    currentGameobject = lHand.selectTarget.transform;
+                    currentGameobject = rHand.GetOldestInteractableSelected().transform;
                 }
                 else
                 {
                     currentGameobject = null;
                 }
-
             }
-            else if (lHand.selectTarget != null && lHand.selectTarget.CompareTag(tagToCompare))
+            else if (GameManager.instance.CheckHand("Pistol") == 2)
             {
-                left = true;
-                if (rHand.selectTarget != null)
+                left = false;
+                if (lHand.GetOldestInteractableSelected() != null)
                 {
-                    currentGameobject = rHand.selectTarget.transform;
+                    currentGameobject = lHand.GetOldestInteractableSelected().transform;
                 }
                 else
                 {

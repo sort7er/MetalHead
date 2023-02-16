@@ -9,25 +9,22 @@ public class Trigger : MonoBehaviour
 
     private Animator triggerAnim;
     private InputAction triggerLeft, triggerRight;
-    private XRDirectInteractor rHand, lHand;
     private float leftTriggerValue, rightTriggerValue;
 
 
     private void Start()
     {
-        lHand = GameManager.instance.leftHand.gameObject.GetComponent<XRDirectInteractor>();
-        rHand = GameManager.instance.rightHand.gameObject.GetComponent<XRDirectInteractor>();
         triggerAnim = GetComponent<Animator>();
     }
     private void Update()
     {
-        if (rHand.GetOldestInteractableSelected() != null && rHand.GetOldestInteractableSelected().transform.CompareTag(tagToCompare))
-        {
-            triggerAnim.SetFloat("Trigger", rightTriggerValue);
-        }
-        else if (lHand.GetOldestInteractableSelected() != null && lHand.GetOldestInteractableSelected().transform.CompareTag(tagToCompare))
+        if (GameManager.instance.CheckHand("Pistol") == 1)
         {
             triggerAnim.SetFloat("Trigger", leftTriggerValue);
+        }
+        else if (GameManager.instance.CheckHand("Pistol") == 2)
+        {
+            triggerAnim.SetFloat("Trigger", rightTriggerValue);
         }
     }
     private void OnEnable()

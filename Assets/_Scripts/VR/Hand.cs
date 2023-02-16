@@ -5,6 +5,7 @@ public class Hand : MonoBehaviour
 {
     public GameObject handPrefab;
     public InputDeviceCharacteristics controllerCharacteristics;
+    public float lerpSmooth;
 
     private GameObject spawnedHand;
     private InputDevice targetDevice;
@@ -71,6 +72,13 @@ public class Hand : MonoBehaviour
         if(handAnim!= null)
         {
             handAnim.SetBool("UsingRay", state);
+        }
+    }
+    public void GrabPistol(bool state)
+    {
+        if (handAnim != null)
+        {
+            handAnim.SetBool("GrabPistol", state);
         }
     }
     public void GrabSlide(bool state)

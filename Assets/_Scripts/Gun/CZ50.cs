@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.XR;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class CZ50 : MonoBehaviour
 {
@@ -51,6 +53,14 @@ public class CZ50 : MonoBehaviour
     public void Grab()
     {
         soundForGun.Grab();
+        if(GameManager.instance.CheckHand("Pistol") == 1)
+        {
+            GameManager.instance.leftHand.GrabPistol(true);
+        }
+        if (GameManager.instance.CheckHand("Pistol") == 2)
+        {
+            Debug.Log("right");
+        }
     }
 
     public void Reload()
