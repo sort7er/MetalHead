@@ -11,6 +11,7 @@ public class ReleaseMag : MonoBehaviour
     [HideInInspector] public bool reloadValid;
 
     private CZ50 cz50;
+    private SoundForGun soundForGun;
     private InputAction releaseMagLeft, releaseMagRight;
     private ReturnToHolster returnToHolster;
     private XRSocketInteractor magLocationSocketInteractor;
@@ -24,6 +25,7 @@ public class ReleaseMag : MonoBehaviour
     private void Start()
     {
         cz50 = GetComponent<CZ50>();
+        soundForGun = GetComponent<SoundForGun>();
         returnToHolster = GetComponent<ReturnToHolster>();
         magLocationSocketInteractor = magLocation.GetComponent<XRSocketInteractor>();
         lHand = GameManager.instance.leftHand.gameObject.GetComponent<XRDirectInteractor>();
@@ -89,6 +91,7 @@ public class ReleaseMag : MonoBehaviour
     public void Insert()
     {
         insert = true;
+        soundForGun.Magazine(0);
         currentGameobject.GetComponent<XRGrabInteractable>().enabled = false;
         currentGameobject.parent = magLocation;
         UpdateMag(currentGameobject);
@@ -130,6 +133,7 @@ public class ReleaseMag : MonoBehaviour
     {
         if (mag != null)
         {
+            soundForGun.Magazine(2);
             cz50.MagOut();
             release = true;
         }
@@ -152,6 +156,7 @@ public class ReleaseMag : MonoBehaviour
         mag.position = Vector3.MoveTowards(mag.position, magLocation.position, Time.deltaTime * slideTime);
         if (Vector3.Distance(mag.position, magLocation.position) < 0.001f)
         {
+            soundForGun.Magazine(1);
             insert = false;
             CanReload(true);
         }

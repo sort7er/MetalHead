@@ -6,6 +6,7 @@ public class SoundForGun : MonoBehaviour
     public AudioClip[] gunGrab;
     public AudioClip[] gunEmpty;
     public AudioClip[] slide;
+    public AudioClip[] magazine;
 
     private AudioSource gunSource;
 
@@ -25,6 +26,10 @@ public class SoundForGun : MonoBehaviour
     public void Grab()
     {
         gunSource.PlayOneShot(gunGrab[Random.Range(0, gunShots.Length)]);
+    }
+    public void Magazine(int index)
+    {
+        gunSource.PlayOneShot(magazine[index]);
     }
     public void Slide(int index)
     {
