@@ -62,6 +62,10 @@ public class CZ50 : MonoBehaviour
             Debug.Log("right");
         }
     }
+    public void Release()
+    {
+        GameManager.instance.leftHand.GrabPistol(false);
+    }
 
     public void Reload()
     {
