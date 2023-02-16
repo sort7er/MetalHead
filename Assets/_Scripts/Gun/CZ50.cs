@@ -59,12 +59,13 @@ public class CZ50 : MonoBehaviour
         }
         if (GameManager.instance.CheckHand("Pistol") == 2)
         {
-            Debug.Log("right");
+            GameManager.instance.rightHand.GrabPistol(true);
         }
     }
     public void Release()
     {
         GameManager.instance.leftHand.GrabPistol(false);
+        GameManager.instance.rightHand.GrabPistol(false);
     }
 
     public void Reload()

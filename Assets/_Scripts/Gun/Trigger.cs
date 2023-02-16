@@ -45,11 +45,11 @@ public class Trigger : MonoBehaviour
     }
     private void TriggerLeft(InputAction.CallbackContext context)
     {
-        leftTriggerValue = context.ReadValue<float>() * 2;
+        leftTriggerValue = context.ReadValue<float>();
     }
     private void TriggerRight(InputAction.CallbackContext context)
     {
-        rightTriggerValue = context.ReadValue<float>() * 2;
+        rightTriggerValue = context.ReadValue<float>();
     }
 
 }
