@@ -3,18 +3,19 @@ using UnityEngine;
 public class ReturnToHolster : MonoBehaviour
 {
 
-    public float timeUntilHolster, smoothTime;
+    public float timeUntilHolster, startSmoothTime;
     public Transform holster;
 
     [HideInInspector] public bool isHolding, isHolstered;
 
     private Vector3 velocity;
     private Rigidbody rb;
-    private float timer;
+    private float timer, smoothTime;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        smoothTime = startSmoothTime;
     }
 
     private void Update()
@@ -28,6 +29,7 @@ public class ReturnToHolster : MonoBehaviour
             else
             {
                 Return();
+                smoothTime += 0.2f;
             }
         }
     }
@@ -57,6 +59,7 @@ public class ReturnToHolster : MonoBehaviour
             transform.parent = holster;
             transform.position = holster.position;
             transform.rotation = holster.rotation;
+            smoothTime = startSmoothTime;
         }
     }
 

@@ -16,12 +16,16 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.rigidbody != null)
+        if(!collision.transform.CompareTag("Player") && !collision.transform.CompareTag("Pistol"))
         {
-            collision.rigidbody.AddForce(collision.transform.forward + transform.forward * rb.velocity.magnitude * 0.1f, ForceMode.Impulse);
+            if (collision.rigidbody != null)
+            {
+                collision.rigidbody.AddForce(collision.transform.forward + transform.forward * rb.velocity.magnitude * 0.1f, ForceMode.Impulse);
+            }
+            EffectManager.instance.SpawnBulletHole(collision);
+            Destroy(gameObject);
         }
-        EffectManager.instance.SpawnBulletHole(collision);
-        Destroy(gameObject);
+
     }
 
 }
