@@ -9,7 +9,8 @@ public class CZ50 : MonoBehaviour
     public int magSize;
 
     [Header("References")]
-    public Transform muzzle;
+    public GameObject casingPrefab;
+    public Transform muzzle, casingPoint;
     public Dial doubleDial, singleDial;
     public MeshRenderer doubleZero, singleZero;
     public Material defaultMaterial, emptyMaterial;
@@ -122,5 +123,10 @@ public class CZ50 : MonoBehaviour
     {
         doubleZero.material = emptyMaterial;
         singleZero.material = emptyMaterial;
+    }
+    public void Casing()
+    {
+        GameObject casing = Instantiate(casingPrefab, casingPoint.position, casingPoint.rotation);
+        casing.transform.parent = ParentManager.instance.bullets;
     }
 }
