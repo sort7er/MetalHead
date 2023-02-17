@@ -33,6 +33,7 @@ public class EnemyHealth : MonoBehaviour
         isDead = true;
         rb.isKinematic = false;
         rb.useGravity = true;
+        EffectManager.instance.SpawnPickups(transform, Random.Range(3, 8));
         Destroy(gameObject, timeDead);
     }
 }
