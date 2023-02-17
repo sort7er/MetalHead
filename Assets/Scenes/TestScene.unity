@@ -746,7 +746,7 @@ PrefabInstance:
     - target: {fileID: 4105155477360791946, guid: 665841814dfd7e44596d8d0a5db278b2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.136044
+      value: -7.774
       objectReference: {fileID: 0}
     - target: {fileID: 4105155477360791946, guid: 665841814dfd7e44596d8d0a5db278b2,
         type: 3}
@@ -756,7 +756,7 @@ PrefabInstance:
     - target: {fileID: 4105155477360791946, guid: 665841814dfd7e44596d8d0a5db278b2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.6840553
+      value: -1.101
       objectReference: {fileID: 0}
     - target: {fileID: 4105155477360791946, guid: 665841814dfd7e44596d8d0a5db278b2,
         type: 3}
@@ -2384,6 +2384,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e17c20d058a6234cab72e7f92ecbc67, type: 3}
+--- !u!114 &558089765 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5666821179534085288, guid: 1e17c20d058a6234cab72e7f92ecbc67,
+    type: 3}
+  m_PrefabInstance: {fileID: 556747833}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec760e76115877468f2d193cf633c22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &558089769 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6212678997429254887, guid: 1e17c20d058a6234cab72e7f92ecbc67,
@@ -2562,6 +2574,18 @@ MonoBehaviour:
       - m_Target: {fileID: 8480215060685690216}
         m_TargetAssemblyTypeName: CZ50, Assembly-CSharp
         m_MethodName: Reload
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 558089765}
+        m_TargetAssemblyTypeName: Pickup, Assembly-CSharp
+        m_MethodName: PickUp
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
