@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-
+    public int damage;
     public float bulletSpeed;
 
     private Rigidbody rb;
@@ -21,6 +21,10 @@ public class Bullet : MonoBehaviour
             if (collision.rigidbody != null)
             {
                 collision.rigidbody.AddForce(collision.transform.forward + transform.forward * rb.velocity.magnitude * 0.1f, ForceMode.Impulse);
+            }
+            if (collision.transform.CompareTag("Enemy"))
+            {
+                collision.transform.GetComponent<EnemyHealth>().TakeDamage(damage);
             }
             EffectManager.instance.SpawnBulletHole(collision);
             Destroy(gameObject);
