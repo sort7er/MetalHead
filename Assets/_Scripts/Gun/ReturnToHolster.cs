@@ -8,13 +8,15 @@ public class ReturnToHolster : MonoBehaviour
 
     [HideInInspector] public bool isHolding, isHolstered;
 
-    private Vector3 velocity;
+    private SoundForGun soundForGun;
     private Rigidbody rb;
     private float timer, smoothTime;
+    private bool canHolster;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        soundForGun = GetComponent<SoundForGun>();
         smoothTime = startSmoothTime;
     }
 
@@ -46,6 +48,10 @@ public class ReturnToHolster : MonoBehaviour
         isHolstered = false;
         timer = timeUntilHolster;
         transform.parent = null;
+        if (canHolster)
+        {
+            Holster();
+        }
     }
     private void Return()
     {
@@ -55,12 +61,24 @@ public class ReturnToHolster : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, holster.rotation, smoothTime * Time.deltaTime);
         if (Vector3.Distance(transform.position, holster.position) < 0.05f)
         {
-            isHolstered = true;
-            transform.parent = holster;
-            transform.position = holster.position;
-            transform.rotation = holster.rotation;
-            smoothTime = startSmoothTime;
+            Holster();
         }
     }
+    public void Holster()
+    {
+        isHolstered = true;
+        isHolding = false;
+        rb.useGravity = false;
+        rb.isKinematic = true;
+        transform.parent = holster;
+        transform.position = holster.position;
+        transform.rotation = holster.rotation;
+        smoothTime = startSmoothTime;
+        soundForGun.Grab();
+    }
+    public void CanHolster(bool state)
+    {
+        canHolster = state;
 
+    }
 }

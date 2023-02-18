@@ -4,7 +4,16 @@ public class TwoHandGrab : XRGrabInteractable
 {
     public override bool IsSelectableBy(XRBaseInteractor interactor)
     {
-        bool isAllreadyGrabbed = selectingInteractor && !interactor.Equals(selectingInteractor);
-        return base.IsSelectableBy(interactor) && !isAllreadyGrabbed;
+      
+        if (!interactor.CompareTag("Holster"))
+        {
+            bool isAllreadyGrabbed = selectingInteractor && !interactor.Equals(selectingInteractor);
+            return base.IsSelectableBy(interactor) && !isAllreadyGrabbed;
+        }
+        else
+        {
+            return false;
+        }
+        
     }
 }

@@ -21,11 +21,11 @@ public class SoundForGun : MonoBehaviour
     }
     public void Empty()
     {
-        gunSource.PlayOneShot(gunEmpty[Random.Range(0, gunShots.Length)]);
+        gunSource.PlayOneShot(gunEmpty[Random.Range(0, gunEmpty.Length)]);
     }
     public void Grab()
     {
-        gunSource.PlayOneShot(gunGrab[Random.Range(0, gunShots.Length)]);
+        gunSource.PlayOneShot(gunGrab[Random.Range(0, gunGrab.Length)]);
     }
     public void Magazine(int index)
     {
