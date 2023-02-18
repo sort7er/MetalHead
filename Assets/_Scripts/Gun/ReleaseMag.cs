@@ -14,11 +14,12 @@ public class ReleaseMag : MonoBehaviour
     private SoundForGun soundForGun;
     private InputAction releaseMagLeft, releaseMagRight;
     private ReturnToHolster returnToHolster;
-    private XRSocketInteractor magLocationSocketInteractor;
+    private DynamicTrigger dynamicTrigger;
     private XRDirectInteractor rHand, lHand;
-    private Transform mag, currentGameobject;
+    public Transform mag, currentGameobject;
     private Rigidbody magRB;
     private Collider magCollider;
+    private XRGrabInteractable magInteractable;
     private bool left;
     private bool release, insert;
 
@@ -27,7 +28,8 @@ public class ReleaseMag : MonoBehaviour
         cz50 = GetComponent<CZ50>();
         soundForGun = GetComponent<SoundForGun>();
         returnToHolster = GetComponent<ReturnToHolster>();
-        magLocationSocketInteractor = magLocation.GetComponent<XRSocketInteractor>();
+        dynamicTrigger = magLocation.GetComponent<DynamicTrigger>();
+        dynamicTrigger.TriggerEnabled(false);
         lHand = GameManager.instance.leftHand.gameObject.GetComponent<XRDirectInteractor>();
         rHand = GameManager.instance.rightHand.gameObject.GetComponent<XRDirectInteractor>();
         UpdateMag(magLocation.GetChild(0));
@@ -90,45 +92,37 @@ public class ReleaseMag : MonoBehaviour
     }
     public void Insert()
     {
-        insert = true;
-        soundForGun.Magazine(0);
-        currentGameobject.GetComponent<XRGrabInteractable>().enabled = false;
-        currentGameobject.parent = magLocation;
-        UpdateMag(currentGameobject);
-        mag.position = magEndPoint.position;
-        mag.localRotation = Quaternion.identity;
-        magRB.isKinematic = true;
-        magRB.useGravity = false;
-        magCollider.enabled = false;
+        Debug.Log("lool");
+        if (currentGameobject != null && currentGameobject.gameObject == dynamicTrigger.GetGameObject())
+        {
+            insert = true;
+            soundForGun.Magazine(0);
+            UpdateMag(currentGameobject);
+            magInteractable.enabled = false;
+            mag.parent = magLocation;
+            mag.position = magEndPoint.position;
+            mag.localRotation = Quaternion.identity;
+            magRB.isKinematic = true;
+            magRB.useGravity = false;
+            magCollider.enabled = false;
+            dynamicTrigger.TriggerEnabled(false);
+        }
+
     }
     public void UpdateMag(Transform currentMag)
     {
         mag = currentMag;
         magRB = mag.GetComponent<Rigidbody>();
         magCollider = mag.GetComponent<Collider>();
-        magLocationSocketInteractor.enabled = false;
+        magInteractable = mag.GetComponent<XRGrabInteractable>();
     }
     private void ResetMag()
     {
         mag = null;
         magRB = null;
         magCollider = null;
-        magLocationSocketInteractor.enabled = true;
     }
-    private void MagOutLeft(InputAction.CallbackContext context)
-    {
-        if(returnToHolster.isHolding && left)
-        {
-            StartRelease();
-        }
-    }
-    private void MagOutRight(InputAction.CallbackContext context)
-    {
-        if (returnToHolster.isHolding && !left)
-        {
-            StartRelease();
-        }
-    }
+
     private void StartRelease()
     {
         if (mag != null)
@@ -146,10 +140,16 @@ public class ReleaseMag : MonoBehaviour
             magRB.isKinematic = false;
             magRB.useGravity = true;
             magCollider.enabled = true;
+            magInteractable.enabled = true;
+            Invoke("EnableTrigger", 0.25f);
             release = false;
             mag.parent = ParentManager.instance.mags;
             ResetMag();
         }
+    }
+    private void EnableTrigger()
+    {
+        dynamicTrigger.TriggerEnabled(true);
     }
     private void MagIn()
     {
@@ -166,5 +166,18 @@ public class ReleaseMag : MonoBehaviour
     {
         reloadValid = state;
     }
-
+    private void MagOutLeft(InputAction.CallbackContext context)
+    {
+        if (returnToHolster.isHolding && left)
+        {
+            StartRelease();
+        }
+    }
+    private void MagOutRight(InputAction.CallbackContext context)
+    {
+        if (returnToHolster.isHolding && !left)
+        {
+            StartRelease();
+        }
+    }
 }
