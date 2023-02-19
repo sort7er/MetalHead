@@ -10333,11 +10333,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb178deb1bf19454fb1b686da6c8928c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAmmo: 0
+  maxAmmo: 45
   magazinePrefab: {fileID: 1097784035369411896, guid: 01cca02632cdbf64ebaf7e9074e3856c,
     type: 3}
   spawn: {fileID: 768278392}
   magazine: {fileID: 0}
+  currentTotalAmmo: 0
+  rest: 0
+  numberOfFullMags: 0
+  magSize: 0
 --- !u!1 &2010580247
 GameObject:
   m_ObjectHideFlags: 0
