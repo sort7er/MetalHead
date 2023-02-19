@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class CZ50 : MonoBehaviour
 {
-    [Header("Values")]
-    public int startAmmo;
-
     [Header("References")]
     public GameObject casingPrefab;
     public Transform muzzle, casingPoint;
@@ -16,7 +13,7 @@ public class CZ50 : MonoBehaviour
     private Mag magInGun;
     private Animator cz50Anim;
     private SoundForGun soundForGun;
-    public int currentAmmo;
+    private int currentAmmo;
     private int singleDigit, doubleDigit;
     private bool reloadNeeded, firstDialUpdate;
 

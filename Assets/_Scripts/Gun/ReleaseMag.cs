@@ -16,7 +16,7 @@ public class ReleaseMag : MonoBehaviour
     private ReturnToHolster returnToHolster;
     private DynamicTrigger dynamicTrigger;
     private XRDirectInteractor rHand, lHand;
-    public Transform mag, currentGameobject;
+    private Transform mag, currentGameobject;
     private Rigidbody magRB;
     private Collider magCollider;
     private XRGrabInteractable magInteractable;
