@@ -16,8 +16,7 @@ public class ReleaseMag : MonoBehaviour
     private ReturnToHolster returnToHolster;
     private DynamicTrigger dynamicTrigger;
     private XRDirectInteractor rHand, lHand;
-    private Transform mag, currentGameobject;
-    private Rigidbody magRB;
+    public Transform mag, currentGameobject;
     private Collider magCollider;
     private XRGrabInteractable magInteractable;
     private Mag magInGun;
@@ -102,8 +101,7 @@ public class ReleaseMag : MonoBehaviour
             mag.parent = magLocation;
             mag.position = magEndPoint.position;
             mag.localRotation = Quaternion.identity;
-            magRB.isKinematic = true;
-            magRB.useGravity = false;
+            magInGun.EnableGravity(false);
             magCollider.enabled = false;
             dynamicTrigger.TriggerEnabled(false);
         }
@@ -112,7 +110,6 @@ public class ReleaseMag : MonoBehaviour
     public void UpdateMag(Transform currentMag)
     {
         mag = currentMag;
-        magRB = mag.GetComponent<Rigidbody>();
         magCollider = mag.GetComponent<Collider>();
         magInteractable = mag.GetComponent<XRGrabInteractable>();
         magInGun = mag.GetComponent<Mag>();
@@ -121,13 +118,12 @@ public class ReleaseMag : MonoBehaviour
     private void ResetMag()
     {
         mag = null;
-        magRB = null;
         magCollider = null;
     }
 
     private void StartRelease()
     {
-        if (mag != null)
+        if (mag != null && !insert)
         {
             soundForGun.Magazine(2);
             cz50.MagOut();
@@ -138,15 +134,14 @@ public class ReleaseMag : MonoBehaviour
     {
         mag.position = Vector3.MoveTowards(mag.position, magEndPoint.position, Time.deltaTime * slideTime);
         if (Vector3.Distance(mag.position, magEndPoint.position) < 0.001f)
-        {
-            magRB.isKinematic = false;
-            magRB.useGravity = true;
+        {   
             magCollider.enabled = true;
             magInteractable.enabled = true;
             Invoke("EnableTrigger", 0.25f);
             release = false;
             mag.parent = ParentManager.instance.mags;
             ResetMag();
+            magInGun.EnableGravity(true);
         }
     }
     private void EnableTrigger()
@@ -155,12 +150,15 @@ public class ReleaseMag : MonoBehaviour
     }
     private void MagIn()
     {
-        mag.position = Vector3.MoveTowards(mag.position, magLocation.position, Time.deltaTime * slideTime);
-        if (Vector3.Distance(mag.position, magLocation.position) < 0.001f)
+        if (mag != null)
         {
-            soundForGun.Magazine(1);
-            insert = false;
-            CanReload(true);
+            mag.position = Vector3.MoveTowards(mag.position, magLocation.position, Time.deltaTime * slideTime);
+            if (Vector3.Distance(mag.position, magLocation.position) < 0.001f)
+            {
+                soundForGun.Magazine(1);
+                insert = false;
+                CanReload(true);
+            }
         }
     }
     

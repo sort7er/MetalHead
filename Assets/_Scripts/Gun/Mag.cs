@@ -11,10 +11,12 @@ public class Mag : MonoBehaviour
     public GameObject[] bullets;
 
     private int currentAmmo;
+    private Rigidbody rb;
 
     private void Start()
     {
         currentAmmo = MagSize;
+        rb = GetComponent<Rigidbody>();
     }
 
     public void GrabMag()
@@ -67,5 +69,10 @@ public class Mag : MonoBehaviour
     public int GetCurrentAmmoFromMag()
     {
         return currentAmmo;
+    }
+    public void EnableGravity(bool state)
+    {
+        rb.useGravity= state;
+        rb.isKinematic= !state;
     }
 }

@@ -4,10 +4,7 @@ using UnityEngine;
 public class TestMethods : MonoBehaviour
 {
     public UnityEvent onPressP, onReleaseP, onPressR;
-    public GameObject magazinePrefab;
-    public Transform spawn;
 
-    private GameObject magazine;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))
@@ -40,14 +37,5 @@ public class TestMethods : MonoBehaviour
     {
         Debug.Log("4");
     }
-    public void InstatntiateMagazine()
-    {
-        magazine = Instantiate(magazinePrefab, spawn.position, Quaternion.identity);
-        magazine.GetComponent<Rigidbody>().isKinematic= true;
-        magazine.GetComponent<Rigidbody>().useGravity=false;
-    }
-    //public void DestroyMagazine()
-    //{
-    //    Destroy(magazine);
-    //}
+
 }
