@@ -12,6 +12,7 @@ public class BodySocketInventory : MonoBehaviour
 {
 
     public BodySocket[] bodySockets;
+    public float heightOfPlayer;
 
     private Transform HMD;
     private Vector3 currentHMDPos;
@@ -35,7 +36,7 @@ public class BodySocketInventory : MonoBehaviour
     }
     private void UpdateHeight(BodySocket bodySocket)
     {
-        bodySocket.gameObject.transform.position = new Vector3(bodySocket.gameObject.transform.position.x, currentHMDPos.y * bodySocket.heightRatio, bodySocket.gameObject.transform.position.z);
+        bodySocket.gameObject.transform.position = new Vector3(bodySocket.gameObject.transform.position.x, HMD.position.y - heightOfPlayer * bodySocket.heightRatio, bodySocket.gameObject.transform.position.z);
     }
     private void UpdateInventory()
     {
