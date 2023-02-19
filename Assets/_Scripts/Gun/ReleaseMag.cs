@@ -140,8 +140,10 @@ public class ReleaseMag : MonoBehaviour
             Invoke("EnableTrigger", 0.25f);
             release = false;
             mag.parent = ParentManager.instance.mags;
-            ResetMag();
             magInGun.EnableGravity(true);
+            magInGun.CheckForDestroyMag();
+            ResetMag();
+            
         }
     }
     private void EnableTrigger()

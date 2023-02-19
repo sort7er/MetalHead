@@ -10,12 +10,16 @@ public class UpgradeManager : MonoBehaviour
 
     [Header("CZ50")]
     public int magSize;
+    public Transform magPos;
     
 
 
     public void SetMagSize(int size)
     {
         magSize = size;
+        for(int i = 0; i < magPos.childCount; i++)
+        {
+            magPos.GetChild(i).GetComponent<Mag>().UpgradeMags();
+        }
     }
-    public int GetMagSize() { return magSize; }
 }

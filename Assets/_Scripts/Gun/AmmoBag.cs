@@ -2,83 +2,86 @@ using UnityEngine;
 
 public class AmmoBag : MonoBehaviour
 {
-    public int maxAmmo;
-
+    public int numberOfMagsAtStart;
+    public Transform magPos;
     public GameObject magazinePrefab;
-    public Transform spawn;
 
-    public GameObject magazine;
-    public int currentTotalAmmo, rest, numberOfFullMags, magSize;
-    private bool grabbed, handIn;
+    private GameObject magazineToDrop;
+    private Animator ammoPouchAnim;
+    private bool handIn;
 
     private void Start()
     {
-        currentTotalAmmo = maxAmmo;  
-        UpdateAmmo();
+        ammoPouchAnim = GetComponent<Animator>();
+        AddAmmo(numberOfMagsAtStart);
     }
 
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Interactor"))
-        {
-            InstatntiateMagazine();
-            handIn= true;
-        }
         if (other.CompareTag("Magazine"))
         {
-            magazine = other.gameObject;
+            magazineToDrop = other.gameObject;
+        }
+        if (other.CompareTag("Interactor"))
+        {
+            if(magPos.childCount > 0 && GameManager.instance.CheckHand("Magazine") == 0)
+            {
+                magPos.GetChild(0).gameObject.SetActive(true);
+            }            
+            handIn= true;
+            ammoPouchAnim.SetBool("Open", true);
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Interactor"))
-        {
-            DestroyMagazine();
-            handIn = false;
-        }
         if (other.CompareTag("Magazine"))
         {
-            magazine = null;
+            magazineToDrop = null;
+        }
+        if (other.CompareTag("Interactor"))
+        {
+            Invoke("DisableChild", 0.3f);
+            Invoke("DisableMagToDrop", 0.3f);
+            handIn = false;
+            ammoPouchAnim.SetBool("Open", false);
         }
     }
 
+    private void DisableChild()
+    {
+        if (magPos.childCount > 0)
+        {
+            magPos.GetChild(0).gameObject.SetActive(false);
+        }
+    }
+    public void AddAmmo(int numberOfMags)
+    {
+        for (int i = 0; i < numberOfMags; i++)
+        {
+            GameObject magazine = Instantiate(magazinePrefab, magPos.position, magPos.rotation);
+            magazine.transform.parent = magPos;
+            magazine.SetActive(false);
+        }
+    }
+    public void ReleasingMag()
+    {
+        if (handIn && magazineToDrop != null)
+        {
+            magazineToDrop.GetComponent<Mag>().EnableGravity(false);
+            magazineToDrop.transform.parent = magPos;
+            magazineToDrop.transform.position = magPos.position;
+            magazineToDrop.transform.rotation = magPos.rotation;
+        }
+    }
+    private void DisableMagToDrop()
+    {
+        if(magazineToDrop != null)
+        {
+            magazineToDrop.SetActive(false);
+            magazineToDrop = null;
+        }
 
+    }
 
-    public void InstatntiateMagazine()
-    {
-        if (!grabbed)
-        {
-            currentTotalAmmo = -magSize;
-            magazine = Instantiate(magazinePrefab, spawn.position, spawn.rotation);
-            magazine.transform.parent = transform;
-            magazine.GetComponent<Rigidbody>().isKinematic = true;
-            magazine.GetComponent<Rigidbody>().useGravity = false;
-        }
-    }
-    public void GrabbedMag(bool state)
-    { 
-        grabbed = state;
-        if(!grabbed && handIn)
-        {
-            DestroyMagazine();
-            InstatntiateMagazine();
-        }
-    }
-    public void DestroyMagazine()
-    {
-        if (!grabbed)
-        {
-            Destroy(magazine);
-        }
-    }
-    private void UpdateAmmo()
-    {
-        magSize = UpgradeManager.instance.GetMagSize();
-        if (magSize != 0)
-        {
-            rest = currentTotalAmmo % magSize;
-            numberOfFullMags = (currentTotalAmmo - rest) / magSize;
-        }
-    }
 }

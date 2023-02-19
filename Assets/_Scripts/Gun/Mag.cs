@@ -14,12 +14,14 @@ public class Mag : MonoBehaviour
 
     private void Start()
     {
-        currentAmmo = UpgradeManager.instance.magSize;
+        UpgradeMags();
         rb = GetComponent<Rigidbody>();
+        EnableGravity(false);
     }
 
     public void GrabMag()
     {
+        CancelInvoke();
         if (GameManager.instance.CheckHand("Magazine") == 1)
         {
             magFull.attachTransform = leftAttach;
@@ -30,15 +32,26 @@ public class Mag : MonoBehaviour
             magFull.attachTransform = rightAttach;
             GameManager.instance.rightHand.GrabMag(true);
         }
-        GameManager.instance.ammoBag.GetComponent<AmmoBag>().GrabbedMag(true);
     }
     public void ReleaseMag()
     {
         GameManager.instance.leftHand.GrabMag(false);
         GameManager.instance.rightHand.GrabMag(false);
-        transform.parent = null;
-        GameManager.instance.ammoBag.GetComponent<AmmoBag>().GrabbedMag(false);
+        transform.parent = ParentManager.instance.mags;
         EnableGravity(true);
+        CheckForDestroyMag();
+        GameManager.instance.ammoBag.GetComponent<AmmoBag>().ReleasingMag();
+    }
+    public void CheckForDestroyMag()
+    {
+        if (currentAmmo <= 0)
+        {
+            Invoke("DestroyMag", 15);
+        }
+    }
+    private void DestroyMag()
+    {
+        Destroy(gameObject);
     }
 
     public void Fire()
@@ -68,6 +81,10 @@ public class Mag : MonoBehaviour
             magPart.position = magPartPos[0].position;
         }
 
+    }
+    public void UpgradeMags()
+    {
+        currentAmmo = UpgradeManager.instance.magSize;
     }
     public int GetCurrentAmmoFromMag()
     {
