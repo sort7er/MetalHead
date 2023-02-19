@@ -6,7 +6,6 @@ public class CZ50 : MonoBehaviour
 {
     [Header("Values")]
     public int startAmmo;
-    public int magSize;
 
     [Header("References")]
     public GameObject casingPrefab;
@@ -19,22 +18,20 @@ public class CZ50 : MonoBehaviour
     private Mag magInGun;
     private Animator cz50Anim;
     private SoundForGun soundForGun;
-    public int currentAmmo, totalAmmo;
+    public int currentAmmo;
     private int singleDigit, doubleDigit;
+    private bool reloadNeeded, firstDialUpdate;
 
     private void Start()
     {
         cz50Anim = GetComponent<Animator>();
         soundForGun = GetComponent<SoundForGun>();
-        currentAmmo = magSize;
-        totalAmmo = startAmmo;
-        UpdateDial();
         DefaultColor();
     }
 
     public void Fire()
     {
-        if(currentAmmo > 0)
+        if(currentAmmo > 0 && !reloadNeeded)
         {
             magInGun.Fire();
             currentAmmo--;
@@ -46,6 +43,7 @@ public class CZ50 : MonoBehaviour
         }
         else
         {
+            reloadNeeded = true;
             soundForGun.Empty();
             EmptyColor();
             Invoke("DefaultColor", 0.1f);
@@ -73,41 +71,23 @@ public class CZ50 : MonoBehaviour
 
     public void Reload()
     {
-        if(totalAmmo >= magSize)
-        {
-            totalAmmo -= magSize - currentAmmo;
-            currentAmmo = magSize;
-        }
-        else if(totalAmmo < magSize)
-        {
-            currentAmmo += totalAmmo;
-            if(currentAmmo > magSize)
-            {
-                totalAmmo = currentAmmo - magSize;
-                currentAmmo = magSize;
-            }
-            else
-            {
-                totalAmmo = 0;
-            }
-        }
-
+        reloadNeeded = false;
         UpdateDial();
     }
     public void MagOut()
     {
-        if(currentAmmo != 0)
-        {
-            int rest = currentAmmo - 1;
-            currentAmmo -= rest;
-            totalAmmo += rest;
-            UpdateDial();
-        }
+        currentAmmo = 0;
+        UpdateDial();
     }
     public void MagIn(Mag mag)
     {
         magInGun = mag;
-        UpdateDial();
+        currentAmmo = magInGun.GetCurrentAmmoFromMag();
+        if (!firstDialUpdate)
+        {
+            UpdateDial();
+            firstDialUpdate = true;
+        }
     }
 
     public void UpdateDial()

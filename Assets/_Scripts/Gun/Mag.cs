@@ -64,4 +64,8 @@ public class Mag : MonoBehaviour
         }
 
     }
+    public int GetCurrentAmmoFromMag()
+    {
+        return currentAmmo;
+    }
 }
