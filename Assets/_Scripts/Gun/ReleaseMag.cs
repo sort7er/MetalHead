@@ -20,6 +20,7 @@ public class ReleaseMag : MonoBehaviour
     private Rigidbody magRB;
     private Collider magCollider;
     private XRGrabInteractable magInteractable;
+    private Mag magInGun;
     private bool left;
     private bool release, insert;
 
@@ -92,7 +93,6 @@ public class ReleaseMag : MonoBehaviour
     }
     public void Insert()
     {
-        Debug.Log("lool");
         if (currentGameobject != null && currentGameobject.gameObject == dynamicTrigger.GetGameObject())
         {
             insert = true;
@@ -115,6 +115,8 @@ public class ReleaseMag : MonoBehaviour
         magRB = mag.GetComponent<Rigidbody>();
         magCollider = mag.GetComponent<Collider>();
         magInteractable = mag.GetComponent<XRGrabInteractable>();
+        magInGun = mag.GetComponent<Mag>();
+        cz50.MagIn(magInGun);
     }
     private void ResetMag()
     {

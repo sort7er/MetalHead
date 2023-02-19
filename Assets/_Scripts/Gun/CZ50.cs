@@ -16,6 +16,7 @@ public class CZ50 : MonoBehaviour
     public Material defaultMaterial, emptyMaterial;
     public ParticleSystem muzzleFlash;
 
+    private Mag magInGun;
     private Animator cz50Anim;
     private SoundForGun soundForGun;
     public int currentAmmo, totalAmmo;
@@ -35,6 +36,7 @@ public class CZ50 : MonoBehaviour
     {
         if(currentAmmo > 0)
         {
+            magInGun.Fire();
             currentAmmo--;
             soundForGun.Fire();
             cz50Anim.SetTrigger("Fire");
@@ -101,6 +103,11 @@ public class CZ50 : MonoBehaviour
             totalAmmo += rest;
             UpdateDial();
         }
+    }
+    public void MagIn(Mag mag)
+    {
+        magInGun = mag;
+        UpdateDial();
     }
 
     public void UpdateDial()
