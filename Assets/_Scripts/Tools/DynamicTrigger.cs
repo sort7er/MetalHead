@@ -3,11 +3,12 @@ using UnityEngine.Events;
 
 public class DynamicTrigger : MonoBehaviour
 {
+    public bool triggerEnabled;
     public string tagToCompare;
     public UnityEvent enter, exit;
 
-    public GameObject enteringGameObject;
-    private bool triggerEnabled;
+    private GameObject enteringGameObject;
+
 
     private void OnTriggerEnter(Collider other)
     {

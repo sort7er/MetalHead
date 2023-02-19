@@ -3,7 +3,6 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class Mag : MonoBehaviour
 {
-    public int MagSize;
     public Transform leftAttach, rightAttach;
     public XRGrabInteractable magFull;
     public Transform magPart;
@@ -15,7 +14,7 @@ public class Mag : MonoBehaviour
 
     private void Start()
     {
-        currentAmmo = MagSize;
+        currentAmmo = UpgradeManager.instance.magSize;
         rb = GetComponent<Rigidbody>();
     }
 
@@ -31,11 +30,15 @@ public class Mag : MonoBehaviour
             magFull.attachTransform = rightAttach;
             GameManager.instance.rightHand.GrabMag(true);
         }
+        GameManager.instance.ammoBag.GetComponent<AmmoBag>().GrabbedMag(true);
     }
     public void ReleaseMag()
     {
         GameManager.instance.leftHand.GrabMag(false);
         GameManager.instance.rightHand.GrabMag(false);
+        transform.parent = null;
+        GameManager.instance.ammoBag.GetComponent<AmmoBag>().GrabbedMag(false);
+        EnableGravity(true);
     }
 
     public void Fire()
@@ -72,7 +75,11 @@ public class Mag : MonoBehaviour
     }
     public void EnableGravity(bool state)
     {
-        rb.useGravity= state;
-        rb.isKinematic= !state;
+        if(rb != null)
+        {
+            rb.useGravity= state;
+            rb.isKinematic= !state;
+
+        }
     }
 }
