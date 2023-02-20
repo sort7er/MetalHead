@@ -4,12 +4,14 @@ public class CZ50 : MonoBehaviour
 {
     [Header("References")]
     public GameObject casingPrefab;
-    public Transform muzzle, casingPoint;
+    public Transform muzzle, casingPoint, leftAttach, rightAttach;
     public Dial doubleDial, singleDial;
     public MeshRenderer doubleZero, singleZero;
     public Material defaultMaterial, emptyMaterial;
     public ParticleSystem muzzleFlash;
 
+    private TwoHandGrab twoHandGrab;
+    private Recoil recoil;
     private Mag magInGun;
     private Animator cz50Anim;
     private SoundForGun soundForGun;
@@ -19,6 +21,8 @@ public class CZ50 : MonoBehaviour
 
     private void Start()
     {
+        twoHandGrab = GetComponent<TwoHandGrab>();
+        recoil = GetComponent<Recoil>();
         cz50Anim = GetComponent<Animator>();
         soundForGun = GetComponent<SoundForGun>();
         DefaultColor();
@@ -29,6 +33,7 @@ public class CZ50 : MonoBehaviour
         if(currentAmmo > 0 && !reloadNeeded)
         {
             magInGun.Fire();
+            recoil.StartRecoil();
             currentAmmo--;
             soundForGun.Fire();
             cz50Anim.SetTrigger("Fire");
@@ -51,10 +56,12 @@ public class CZ50 : MonoBehaviour
         soundForGun.Grab();
         if(GameManager.instance.CheckHand("Pistol") == 1)
         {
+            twoHandGrab.attachTransform = leftAttach;
             GameManager.instance.leftHand.GrabPistol(true);
         }
         if (GameManager.instance.CheckHand("Pistol") == 2)
         {
+            twoHandGrab.attachTransform = rightAttach;
             GameManager.instance.rightHand.GrabPistol(true);
         }
     }

@@ -1732,6 +1732,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6c8ff671dca48b4e8d8a79c3c8185fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triggerEnabled: 0
   tagToCompare: Magazine
   enter:
     m_PersistentCalls:
@@ -1751,7 +1752,6 @@ MonoBehaviour:
   exit:
     m_PersistentCalls:
       m_Calls: []
-  enteringGameObject: {fileID: 0}
 --- !u!1 &2501908775437417949
 GameObject:
   m_ObjectHideFlags: 0
@@ -2320,7 +2320,7 @@ GameObject:
   - component: {fileID: 8480215060685690225}
   - component: {fileID: 8480215060685690222}
   - component: {fileID: 8480215060685690226}
-  - component: {fileID: 8480215060685690228}
+  - component: {fileID: 4417837202779372664}
   m_Layer: 8
   m_Name: CZ50 Variant
   m_TagString: Pistol
@@ -2519,18 +2519,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 8480215060685690228}
-        m_TargetAssemblyTypeName: ChangeLayer, Assembly-CSharp
-        m_MethodName: NewLayer
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 608322017}
         m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
         m_MethodName: set_enabled
@@ -2704,7 +2692,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82d8b67ec5ca96446b9e5607baee5214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startAmmo: 360
   casingPrefab: {fileID: 1139190485275634224, guid: 37378da54e6a77642b0acb727f76c113,
     type: 3}
   muzzle: {fileID: 260480102}
@@ -2716,7 +2703,6 @@ MonoBehaviour:
   defaultMaterial: {fileID: 2100000, guid: 7302fe0c744c11543b9c55f98b6b448a, type: 2}
   emptyMaterial: {fileID: 2100000, guid: fafe3b42816a9514a971355f3a92d386, type: 2}
   muzzleFlash: {fileID: 8579543505862670249}
-  currentAmmo: 0
 --- !u!114 &8480215060685690242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2901,7 +2887,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!114 &8480215060685690228
+--- !u!114 &4417837202779372664
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2910,7 +2896,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4655748969463896115}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9aa92b401616de34f9d08f5a54414e00, type: 3}
+  m_Script: {fileID: 11500000, guid: a361e7be107a5a548a12e6dab138a5fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5299283524019339071

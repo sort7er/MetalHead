@@ -5,7 +5,6 @@ public class Hand : MonoBehaviour
 {
     public GameObject handPrefab;
     public InputDeviceCharacteristics controllerCharacteristics;
-    public float lerpSmooth;
 
     private GameObject spawnedHand;
     private InputDevice targetDevice;
