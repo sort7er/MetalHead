@@ -8,7 +8,6 @@ public class ReturnToHolster : MonoBehaviour
 
     [HideInInspector] public bool isHolding, isHolstered;
 
-    private SoundForGun soundForGun;
     private Rigidbody rb;
     private float timer, smoothTime;
     private bool canHolster;
@@ -16,7 +15,6 @@ public class ReturnToHolster : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        soundForGun = GetComponent<SoundForGun>();
         smoothTime = startSmoothTime;
     }
 
@@ -74,7 +72,6 @@ public class ReturnToHolster : MonoBehaviour
         transform.position = holster.position;
         transform.rotation = holster.rotation;
         smoothTime = startSmoothTime;
-        soundForGun.Grab();
     }
     public void CanHolster(bool state)
     {
