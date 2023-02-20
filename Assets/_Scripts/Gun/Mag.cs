@@ -40,7 +40,7 @@ public class Mag : MonoBehaviour
         transform.parent = ParentManager.instance.mags;
         EnableGravity(true);
         CheckForDestroyMag();
-        GameManager.instance.ammoBag.GetComponent<AmmoBag>().ReleasingMag();
+        GameManager.instance.ammoBag.ReleasingMag();
     }
     public void CheckForDestroyMag()
     {

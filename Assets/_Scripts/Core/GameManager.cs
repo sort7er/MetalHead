@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public GameObject XROrigin;
     public GameObject leftRayInteractor, rightRayInteractor;
     public Hand leftHand, rightHand;
-    public GameObject ammoBag;
+    public AmmoBag ammoBag;
 
     private XRInteractorLineVisual leftLineVisual, rightLineVisual;
     private XRDirectInteractor rHand, lHand;

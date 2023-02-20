@@ -20,6 +20,7 @@ public class UpgradeManager : MonoBehaviour
         for(int i = 0; i < magPos.childCount; i++)
         {
             magPos.GetChild(i).GetComponent<Mag>().UpgradeMags();
+            GameManager.instance.ammoBag.CheckAmmoStatus();
         }
     }
 }
