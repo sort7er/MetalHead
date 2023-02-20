@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Pickup : MonoBehaviour
 {
+    public int value;
     public float lifeTime, startFlashTime, smoothTime;
     public MeshRenderer pickupMesh;
     public ParticleSystem effect;
@@ -95,11 +96,10 @@ public class Pickup : MonoBehaviour
     }
     public void PickedUp()
     {
-        Debug.Log("BlingBling");
+        GameManager.instance.magnet.UpdateMetal(value);
         pickupSource.PlayOneShot(metalSounds[Random.Range(0, metalSounds.Length)]);
         pickupMesh.enabled = false;
         Destroy(gameObject, 0.5f);
-        
     }
 
 }
