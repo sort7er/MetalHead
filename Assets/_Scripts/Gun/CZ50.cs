@@ -78,6 +78,7 @@ public class CZ50 : MonoBehaviour
     }
     public void MagOut()
     {
+        reloadNeeded = true;
         currentAmmo = 0;
         UpdateDial();
     }

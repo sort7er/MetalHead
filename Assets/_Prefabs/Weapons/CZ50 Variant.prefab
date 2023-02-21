@@ -643,6 +643,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &865062997
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 865062998}
+  m_Layer: 0
+  m_Name: AttatchPointRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &865062998
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865062997}
+  m_LocalRotation: {x: -0.11086183, y: 0, z: 0, w: 0.99383587}
+  m_LocalPosition: {x: -0.035, y: 0.09, z: -0.01}
+  m_LocalScale: {x: 1.6692401, y: 1.6692401, z: 1.6692401}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5464937457918739081}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: -12.73, y: 0, z: 0}
 --- !u!1 &889589740
 GameObject:
   m_ObjectHideFlags: 0
@@ -850,7 +881,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1361272498}
   m_Layer: 0
-  m_Name: AttatchPoint
+  m_Name: AttatchPointLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -864,7 +895,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1361272497}
   m_LocalRotation: {x: -0.11086183, y: 0, z: 0, w: 0.99383587}
-  m_LocalPosition: {x: 0, y: 0.09, z: -0.01}
+  m_LocalPosition: {x: 0.035, y: 0.09, z: -0.01}
   m_LocalScale: {x: 1.6692401, y: 1.6692401, z: 1.6692401}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2341,6 +2372,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1361272498}
+  - {fileID: 865062998}
   - {fileID: 5440392112006933917}
   - {fileID: 1356023294}
   - {fileID: 7789825411287923589}
@@ -2639,7 +2671,7 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
-  m_AttachTransform: {fileID: 1361272498}
+  m_AttachTransform: {fileID: 0}
   m_UseDynamicAttach: 0
   m_MatchAttachPosition: 1
   m_MatchAttachRotation: 1
@@ -2696,6 +2728,8 @@ MonoBehaviour:
     type: 3}
   muzzle: {fileID: 260480102}
   casingPoint: {fileID: 1968779820}
+  leftAttach: {fileID: 1361272498}
+  rightAttach: {fileID: 865062998}
   doubleDial: {fileID: 1536319736655785693}
   singleDial: {fileID: 1190689226793603137}
   doubleZero: {fileID: 266976860}
@@ -2899,6 +2933,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a361e7be107a5a548a12e6dab138a5fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  smoothTimeUp: 1.5
+  smoothTimeDown: 10
+  lowestAngle: 15
+  highestAngle: 20
+  leftHandAttach: {fileID: 0}
+  rightHandAttach: {fileID: 0}
 --- !u!1 &5299283524019339071
 GameObject:
   m_ObjectHideFlags: 0
