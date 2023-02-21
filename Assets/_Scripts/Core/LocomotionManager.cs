@@ -30,6 +30,7 @@ public class LocomotionManager : MonoBehaviour
 
         SetCountinuous(false);
         SetTeleport(true);
+        Invoke("SetVignette", 0.2f);
     }
 
 
