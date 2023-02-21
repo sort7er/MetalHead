@@ -3,12 +3,17 @@ using UnityEngine;
 
 public class Recoil : MonoBehaviour
 {
-    public float smoothTimeUp, smoothTimeDown, lowestAngle, highestAngle, recoilHeight;
+    public float smoothTimeUp, smoothTimeDown;
     public Transform leftHandAttach, rightHandAttach;
 
     private bool left, recoil, moveUp;
-    private float currentRotation, currentPosition, targetRotation, targetPosition, velocity, velocity2;
+    private float currentRotation, currentPosition, targetRotation, targetPosition, velocity, velocity2,  lowestAngle, highestAngle, recoilHeight;
+    private int currentLvl;
 
+    private void Start()
+    {
+        UpgradeRecoil();
+    }
 
     private void Update()
     {
@@ -90,5 +95,38 @@ public class Recoil : MonoBehaviour
     {
         recoil = false;
         GameManager.instance.leftHand.OriginalParent();
+    }
+
+    public void UpgradeRecoil()
+    {
+        currentLvl++;
+        if(currentLvl == 1)
+        {
+            lowestAngle = 15;
+            highestAngle = 20;
+            recoilHeight = 0.04f;
+        }
+        else if (currentLvl == 2)
+        {
+            lowestAngle = 10;
+            highestAngle = 15;
+            recoilHeight = 0.03f;
+        }
+        else if (currentLvl == 3)
+        {
+            lowestAngle = 5;
+            highestAngle = 10;
+            recoilHeight = 0.02f;
+        }
+        else if (currentLvl == 4)
+        {
+            lowestAngle = 0;
+            highestAngle = 5;
+            recoilHeight = 0.01f;
+        }
+        else
+        {
+            Debug.Log("FullyUpgraded");
+        }
     }
 }
