@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 public class Magnet : MonoBehaviour
 {
@@ -21,5 +20,10 @@ public class Magnet : MonoBehaviour
     {
         metalsCollected += value;
         metalsText.text = metalsCollected.ToString("00000");
+    }
+
+    public int GetMetalsCollected()
+    {
+        return metalsCollected;
     }
 }
