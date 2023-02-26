@@ -30,6 +30,10 @@ public class TypeWriterText : MonoBehaviour
             StartCoroutine("TypeWriterTMP");
         }
     }
+    public void StopTyping()
+    {
+        StopAllCoroutines();
+    }
 
     IEnumerator TypeWriterTMP()
     {

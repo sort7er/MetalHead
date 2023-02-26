@@ -7,17 +7,22 @@ public class UpgradeStation : MonoBehaviour
     public AudioSource buttonSource;
     public AudioClip screenOn, screenOff;
     public Animator screenAnim;
-    public TextMeshProUGUI currencyText;
-    public TypeWriterText welcomeText, metalsText;
+    public TextMeshProUGUI titleText, normalText, currencyText;
+    public GameObject nut;
 
     private int currencyOnScreen;
     private AudioSource upgradeStationSource;
+    private TypeWriterText titleType, normalType, currencyType;
     private float currentVolume, targetVolume;
     private bool magnetIn, isOn;
 
     private void Start()
     {
         upgradeStationSource = GetComponent<AudioSource>();
+        titleType = titleText.GetComponent<TypeWriterText>();
+        normalType = normalText.GetComponent<TypeWriterText>();
+        currencyType = currencyText.GetComponent<TypeWriterText>();
+        nut.SetActive(false);
     }
 
     private void Update()
@@ -46,7 +51,8 @@ public class UpgradeStation : MonoBehaviour
         targetVolume = 1;
         currencyOnScreen = GameManager.instance.magnet.GetMetalsCollected();
         currencyText.text = "";
-        welcomeText.StartTyping();
+        normalText.text = "";
+        titleType.StartTyping();
         Invoke("MetalText", 1f);
     }
 
@@ -57,12 +63,17 @@ public class UpgradeStation : MonoBehaviour
         buttonSource.PlayOneShot(screenOff);
         screenAnim.SetBool("ScreenOn", false);
         targetVolume = 0;
+        ResetType();
+        nut.SetActive(false);
     }
 
     public void MagnetIn()
     {
         magnetIn = true;
-        MetalText();
+        if (isOn)
+        {
+            MetalText();
+        }
     }
     public void MagnetOut()
     {
@@ -72,15 +83,38 @@ public class UpgradeStation : MonoBehaviour
 
     private void MetalText()
     {
+        ResetType();
         if (!magnetIn)
         {
-            currencyText.text = "Please insert magnet";
+            CancelInvoke();
+            currencyText.text = "";
+            normalText.text = "Please insert magnet";
+            normalType.StartTyping();
+            nut.SetActive(false);
         }
         else
         {
-            currencyText.text = "Metals: " + currencyOnScreen.ToString("00000");
+            nut.SetActive(true);
+            normalText.text = "";
+            currencyText.text = currencyOnScreen.ToString("00000");
+            currencyType.StartTyping();
+            Invoke("InsertWeapon", 2f);
+            
         }
-        metalsText.StartTyping();
+        
+    }
+
+    private void ResetType()
+    {
+        currencyType.StopTyping();
+        normalType.StopTyping();
+    }
+
+
+    private void InsertWeapon()
+    {
+        normalText.text = "Please insert weapon to upgrade";
+        normalType.StartTyping();
     }
 
 }
