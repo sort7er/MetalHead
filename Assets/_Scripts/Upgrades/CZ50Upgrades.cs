@@ -2,6 +2,8 @@ using UnityEngine;
 using TMPro;
 public class CZ50Upgrades : MonoBehaviour
 {
+    public int damageLevelCap, recoilLevelCap, ammoClipCap, bulletSpeedCap;
+
     public TextMeshProUGUI bulletCost, recoilCost, ammoClipCost, speedCost;
     public TextMeshProUGUI bulletNumber, recoilNumber, ammoClipNumber, speedNumber;
     public GameObject bulletOutline, recoilOutline, ammoClipOutline, speedOutline;
@@ -32,11 +34,14 @@ public class CZ50Upgrades : MonoBehaviour
 
     public void AddBullet()
     {
-        bulletLevel ++;
-        bulletNumber.SetText(bulletLevel.ToString());
-        if (!bulletOutline.activeSelf)
+        if (bulletLevel < damageLevelCap)
         {
-            bulletOutline.SetActive(true);
+            bulletLevel++;
+            bulletNumber.SetText(bulletLevel.ToString());
+            if (!bulletOutline.activeSelf)
+            {
+                bulletOutline.SetActive(true);
+            }
         }
     }
     public void RemoveBullet()
@@ -53,16 +58,19 @@ public class CZ50Upgrades : MonoBehaviour
     }
     public void AddLessRecoil()
     {
-        recoilLevel++;
-        recoilNumber.SetText(recoilLevel.ToString());
-        if (!recoilOutline.activeSelf)
+        if(recoilLevel < recoilLevelCap)
         {
-            recoilOutline.SetActive(true);
+            recoilLevel++;
+            recoilNumber.SetText(recoilLevel.ToString());
+            if (!recoilOutline.activeSelf)
+            {
+                recoilOutline.SetActive(true);
+            }
         }
     }
     public void RemoveLessRecoil()
     {
-        if (bulletLevel > startBulletLevel)
+        if (recoilLevel > startSpeedLevel)
         {
             recoilLevel--;
             recoilNumber.SetText(recoilLevel.ToString());
@@ -74,16 +82,19 @@ public class CZ50Upgrades : MonoBehaviour
     }
     public void AddMagSize()
     {
-        ammoClipLevel++;
-        ammoClipNumber.SetText(ammoClipLevel.ToString());
-        if (!ammoClipOutline.activeSelf)
+        if(ammoClipLevel < ammoClipCap)
         {
-            ammoClipOutline.SetActive(true);
+            ammoClipLevel++;
+            ammoClipNumber.SetText(ammoClipLevel.ToString());
+            if (!ammoClipOutline.activeSelf)
+            {
+                ammoClipOutline.SetActive(true);
+            }
         }
     }
     public void RemoveMagSize()
     {
-        if (bulletLevel > startBulletLevel)
+        if (ammoClipLevel > startAmmoClipLevel)
         {
             ammoClipLevel--;
             ammoClipNumber.SetText(ammoClipLevel.ToString());
@@ -96,12 +107,16 @@ public class CZ50Upgrades : MonoBehaviour
 
     public void AddSpeed()
     {
-        speedLevel++;
-        speedNumber.SetText(speedLevel.ToString());
-        if (!speedOutline.activeSelf)
+        if(speedLevel < bulletSpeedCap)
         {
-            speedOutline.SetActive(true);
+            speedLevel++;
+            speedNumber.SetText(speedLevel.ToString());
+            if (!speedOutline.activeSelf)
+            {
+                speedOutline.SetActive(true);
+            }
         }
+
     }
     public void RemoveSpeed()
     {
@@ -120,6 +135,9 @@ public class CZ50Upgrades : MonoBehaviour
     {
         UpgradeManager.instance.UpgradeCZ50(bulletLevel, recoilLevel, ammoClipLevel, speedLevel);
         bulletOutline.SetActive(false);
+        ammoClipOutline.SetActive(false);
+        recoilOutline.SetActive(false);
+        speedOutline.SetActive(false);
         SetLevels();
     }
 }
