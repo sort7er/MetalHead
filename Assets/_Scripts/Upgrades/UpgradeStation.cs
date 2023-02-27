@@ -9,8 +9,10 @@ public class UpgradeStation : MonoBehaviour
     public Animator screenAnim;
     public TextMeshProUGUI titleText, normalText, currencyText;
     public GameObject nut;
+    public GameObject[] gun;
 
     private int currencyOnScreen;
+    private InsertWeapon insertWeapon;
     private AudioSource upgradeStationSource;
     private TypeWriterText titleType, normalType, currencyType;
     private float currentVolume, targetVolume;
@@ -18,6 +20,7 @@ public class UpgradeStation : MonoBehaviour
 
     private void Start()
     {
+        insertWeapon = GetComponentInChildren<InsertWeapon>();
         upgradeStationSource = GetComponent<AudioSource>();
         titleType = titleText.GetComponent<TypeWriterText>();
         normalType = normalText.GetComponent<TypeWriterText>();
@@ -51,9 +54,7 @@ public class UpgradeStation : MonoBehaviour
         targetVolume = 1;
         currencyOnScreen = GameManager.instance.magnet.GetMetalsCollected();
         currencyText.text = "";
-        normalText.text = "";
-        titleType.StartTyping();
-        Invoke("MetalText", 1f);
+        StartScreen();
     }
 
     private void ScreenOff()
@@ -63,13 +64,13 @@ public class UpgradeStation : MonoBehaviour
         buttonSource.PlayOneShot(screenOff);
         screenAnim.SetBool("ScreenOn", false);
         targetVolume = 0;
-        ResetType();
-        nut.SetActive(false);
+        AllOff();
     }
 
     public void MagnetIn()
     {
         magnetIn = true;
+        insertWeapon.CanInsert(true);
         if (isOn)
         {
             MetalText();
@@ -78,12 +79,27 @@ public class UpgradeStation : MonoBehaviour
     public void MagnetOut()
     {
         magnetIn = false;
-        MetalText();
+        insertWeapon.CanInsert(false);
+        if (isOn)
+        {
+            MetalText();
+        }
     }
-
+    private void StartScreen()
+    {
+        normalText.text = "";
+        titleText.text = "Upgrades";
+        titleType.StartTyping();
+        Invoke("MetalText", 1f);
+        for (int i = 0; i < gun.Length; i++)
+        {
+            gun[i].SetActive(false);
+        }
+    }
     private void MetalText()
     {
-        ResetType();
+        currencyType.StopTyping();
+        normalType.StopTyping();
         if (!magnetIn)
         {
             CancelInvoke();
@@ -94,27 +110,59 @@ public class UpgradeStation : MonoBehaviour
         }
         else
         {
-            nut.SetActive(true);
+            insertWeapon.CanInsert(true);
             normalText.text = "";
             currencyText.text = currencyOnScreen.ToString("00000");
             currencyType.StartTyping();
-            Invoke("InsertWeapon", 2f);
-            
-        }
-        
-    }
+            Invoke("InsertWeaponMessage", 2f);
+            nut.SetActive(true);
 
-    private void ResetType()
+        }     
+    }
+    private void AllOff()
     {
         currencyType.StopTyping();
         normalType.StopTyping();
+        titleType.StopTyping();
+
+        titleText.text = "";
+        normalText.text = "";
+        currencyText.text = "";
+
+        nut.SetActive(false);
+
+        for(int i = 0; i < gun.Length; i++)
+        {
+            gun[i].SetActive(false);
+        }
+        insertWeapon.Eject();
     }
 
 
-    private void InsertWeapon()
+    private void InsertWeaponMessage()
     {
         normalText.text = "Please insert weapon to upgrade";
         normalType.StartTyping();
+    }
+    public void WeaponIn(int weaponID)
+    {
+        CancelInvoke();
+        normalType.StopTyping();
+        normalText.text = "";
+        gun[weaponID].SetActive(true);
+        if(weaponID == 0)
+        {
+            titleText.text = "CZ50";
+        }
+        titleType.StartTyping();
+    }
+
+    public void WeaponOut()
+    {
+        insertWeapon.Eject();
+        insertWeapon.CanInsert(false);
+        CancelInvoke();
+        StartScreen();
     }
 
 }

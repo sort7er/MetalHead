@@ -1693,7 +1693,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a359a5b60a3d5a448de201d70dca17f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tagToCompare: Pistol
   triggerInput: {fileID: -944628639613478452, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
 --- !u!1 &2041188589086777822
@@ -2354,7 +2353,7 @@ GameObject:
   - component: {fileID: 4417837202779372664}
   m_Layer: 8
   m_Name: CZ50 Variant
-  m_TagString: Pistol
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2478,8 +2477,8 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 0
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
@@ -2764,7 +2763,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4655748969463896115}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 742e735b2125589438e7633ea56bc104, type: 3}
   m_Name: 
@@ -2935,9 +2934,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smoothTimeUp: 1.5
   smoothTimeDown: 10
-  lowestAngle: 15
-  highestAngle: 20
-  recoilHeight: 0.04
   leftHandAttach: {fileID: 0}
   rightHandAttach: {fileID: 0}
 --- !u!1 &5299283524019339071

@@ -54,12 +54,12 @@ public class CZ50 : MonoBehaviour
     public void Grab()
     {
         soundForGun.Grab();
-        if(GameManager.instance.CheckHand("Pistol") == 1)
+        if(GameManager.instance.CheckHand("Gun") == 1)
         {
             twoHandGrab.attachTransform = leftAttach;
             GameManager.instance.leftHand.GrabPistol(true);
         }
-        if (GameManager.instance.CheckHand("Pistol") == 2)
+        if (GameManager.instance.CheckHand("Gun") == 2)
         {
             twoHandGrab.attachTransform = rightAttach;
             GameManager.instance.rightHand.GrabPistol(true);

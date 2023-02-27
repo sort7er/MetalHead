@@ -54,7 +54,7 @@ public class ReleaseMag : MonoBehaviour
     {
         if(returnToHolster.isHolding)
         {
-            if (GameManager.instance.CheckHand("Pistol") == 1)
+            if (GameManager.instance.CheckHand("Gun") == 1)
             {
                 left = true;
                 if (rHand.GetOldestInteractableSelected() != null)
@@ -66,7 +66,7 @@ public class ReleaseMag : MonoBehaviour
                     currentGameobject = null;
                 }
             }
-            else if (GameManager.instance.CheckHand("Pistol") == 2)
+            else if (GameManager.instance.CheckHand("Gun") == 2)
             {
                 left = false;
                 if (lHand.GetOldestInteractableSelected() != null)

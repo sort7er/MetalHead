@@ -76,12 +76,12 @@ public class Recoil : MonoBehaviour
     public void StartRecoil()
     {
 
-        if (GameManager.instance.CheckHand("Pistol") == 1)
+        if (GameManager.instance.CheckHand("Gun") == 1)
         {
             GameManager.instance.leftHand.NewParent(leftHandAttach, leftHandAttach);
             left = true;
         }
-        else if (GameManager.instance.CheckHand("Pistol") == 2)
+        else if (GameManager.instance.CheckHand("Gun") == 2)
         {
             GameManager.instance.rightHand.NewParent(rightHandAttach, rightHandAttach);
             left = false;
