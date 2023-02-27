@@ -8,12 +8,6 @@ public class Recoil : MonoBehaviour
 
     private bool left, recoil, moveUp;
     private float currentRotation, currentPosition, targetRotation, targetPosition, velocity, velocity2,  lowestAngle, highestAngle, recoilHeight;
-    private int currentLvl;
-
-    private void Start()
-    {
-        UpgradeRecoil();
-    }
 
     private void Update()
     {
@@ -97,9 +91,8 @@ public class Recoil : MonoBehaviour
         GameManager.instance.leftHand.OriginalParent();
     }
 
-    public void UpgradeRecoil()
+    public void UpgradeRecoil(int currentLvl)
     {
-        currentLvl++;
         if(currentLvl == 1)
         {
             lowestAngle = 15;

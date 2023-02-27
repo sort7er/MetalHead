@@ -18,7 +18,7 @@ public class Casing : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(!played && !collision.transform.CompareTag("Pistol") && !collision.transform.CompareTag("Player"))
+        if(!played && !collision.transform.CompareTag("Gun") && !collision.transform.CompareTag("Player"))
         {
             casingSourse.clip = casingHitGround[Random.Range(0, casingHitGround.Length)];
             casingSourse.Play();

@@ -2,10 +2,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public int damage;
-    public float bulletSpeed;
-
     private Rigidbody rb;
+    private int damage, bulletSpeed;
 
     void Start()
     {
@@ -16,7 +14,7 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(!collision.transform.CompareTag("Player") && !collision.transform.CompareTag("Pistol"))
+        if(!collision.transform.CompareTag("Player") && !collision.transform.CompareTag("Gun"))
         {
             if (collision.rigidbody != null)
             {
@@ -29,7 +27,15 @@ public class Bullet : MonoBehaviour
             EffectManager.instance.SpawnBulletHole(collision);
             Destroy(gameObject);
         }
-
+    }
+    
+    public void SetDamage(int dmg)
+    {
+        damage= dmg;
+    }
+    public void SetSpeed(int speed)
+    {
+        bulletSpeed = speed;
     }
 
 }

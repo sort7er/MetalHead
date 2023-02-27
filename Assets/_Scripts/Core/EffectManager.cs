@@ -12,9 +12,11 @@ public class EffectManager : MonoBehaviour
         instance = this;
     }
 
-    public void Fire(Transform muzzle)
+    public void Fire(Transform muzzle, int damage, int speed)
     {
         GameObject bullet = Instantiate(bulletPrefab, muzzle.position, muzzle.rotation);
+        bullet.GetComponent<Bullet>().SetDamage(damage);
+        bullet.GetComponent<Bullet>().SetSpeed(speed);
         bullet.transform.parent = ParentManager.instance.bullets;
     }
     public void SpawnBulletHole(Collision collision)

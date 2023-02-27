@@ -15,6 +15,7 @@ public class CZ50 : MonoBehaviour
     private Mag magInGun;
     private Animator cz50Anim;
     private SoundForGun soundForGun;
+    private int damage, bulletSpeed;
     private int currentAmmo;
     private int singleDigit, doubleDigit;
     private bool reloadNeeded, firstDialUpdate;
@@ -38,7 +39,7 @@ public class CZ50 : MonoBehaviour
             soundForGun.Fire();
             cz50Anim.SetTrigger("Fire");
             UpdateDial();
-            EffectManager.instance.Fire(muzzle);
+            EffectManager.instance.Fire(muzzle, damage, bulletSpeed);
             muzzleFlash.Play();
         }
         else
@@ -118,5 +119,13 @@ public class CZ50 : MonoBehaviour
     {
         GameObject casing = Instantiate(casingPrefab, casingPoint.position, casingPoint.rotation);
         casing.transform.parent = ParentManager.instance.bullets;
+    }
+    public void SetDamage(int dmg)
+    {
+        damage = dmg;
+    }
+    public void SetSpeed(int speed)
+    {
+        bulletSpeed = speed;
     }
 }
