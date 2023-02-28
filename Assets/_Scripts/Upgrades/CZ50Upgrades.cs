@@ -1,21 +1,32 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 public class CZ50Upgrades : MonoBehaviour
 {
+    public Color selectColor;
+
     public int damageLevelCap, recoilLevelCap, ammoClipCap, bulletSpeedCap;
     public int damageCost, recoilCost, ammoCost, speedCost;
 
+    public Image[] upgradeImage;
     public TextMeshProUGUI bulletCostText, recoilCostText, ammoClipCostText, speedCostText;
     public TextMeshProUGUI bulletNumber, recoilNumber, ammoClipNumber, speedNumber;
     public GameObject bulletOutline, recoilOutline, ammoClipOutline, speedOutline;
     public UpgradeStation upgradeStation;
 
+    private Color startColor, startTextColor, selectTextColor;
+    private Animator cz50UpgradesAnim;
+    private int activeUpgrade;
     private int bulletLevel, recoilLevel, ammoClipLevel, speedLevel;
     private int startBulletLevel, startRecoilLevel, startAmmoClipLevel, startSpeedLevel;
 
     private void Start()
     {
-
+        startColor = upgradeImage[1].color;
+        startTextColor = bulletCostText.color;
+        selectTextColor = bulletOutline.GetComponent<Image>().color;
+        upgradeImage[0].color = selectColor;
+        cz50UpgradesAnim = GetComponent<Animator>();
         bulletLevel = UpgradeManager.instance.startBulletLevel;
         recoilLevel = UpgradeManager.instance.startRecoilLevel;
         ammoClipLevel = UpgradeManager.instance.startMagSizeLevel;
@@ -50,14 +61,23 @@ public class CZ50Upgrades : MonoBehaviour
         {
             if (upgradeStation.currencyOnScreen >= damageCost)
             {
+                upgradeStation.AddingPurchase(damageCost);
                 bulletLevel++;
                 bulletNumber.SetText(bulletLevel.ToString());
                 if (!bulletOutline.activeSelf)
                 {
                     bulletOutline.SetActive(true);
+                    bulletNumber.color = selectTextColor;
+                }
+                if(bulletLevel >= damageLevelCap)
+                {
+                    bulletNumber.text = "Max";
                 }
             }
-            
+            else
+            {
+                upgradeStation.NotEnough();
+            }
         }
     }
     public void RemoveBullet()
@@ -70,6 +90,7 @@ public class CZ50Upgrades : MonoBehaviour
             if(bulletLevel == startBulletLevel)
             {
                 bulletOutline.SetActive(false);
+                bulletNumber.color = startTextColor;
             }
         }        
     }
@@ -86,13 +107,22 @@ public class CZ50Upgrades : MonoBehaviour
                 if (!recoilOutline.activeSelf)
                 {
                     recoilOutline.SetActive(true);
+                    recoilNumber.color = selectTextColor;
                 }
-            }            
+                if(recoilLevel >= recoilLevelCap)
+                {
+                    recoilNumber.text = "Max";
+                }
+            }
+            else
+            {
+                upgradeStation.NotEnough();
+            }
         }
     }
     public void RemoveLessRecoil()
     {
-        if (recoilLevel > startSpeedLevel)
+        if (recoilLevel > startRecoilLevel)
         {
             upgradeStation.RemovePurchase(recoilCost);
             recoilLevel--;
@@ -100,6 +130,7 @@ public class CZ50Upgrades : MonoBehaviour
             if (recoilLevel == startRecoilLevel)
             {
                 recoilOutline.SetActive(false);
+                recoilNumber.color = startTextColor;
             }
         }
     }
@@ -109,13 +140,23 @@ public class CZ50Upgrades : MonoBehaviour
         {
             if (upgradeStation.currencyOnScreen >= ammoCost)
             {
+                upgradeStation.AddingPurchase(ammoCost);
                 ammoClipLevel++;
                 ammoClipNumber.SetText(ammoClipLevel.ToString());
                 if (!ammoClipOutline.activeSelf)
                 {
                     ammoClipOutline.SetActive(true);
+                    ammoClipNumber.color = selectTextColor;
                 }
-            } 
+                if(ammoClipLevel >= ammoClipCap)
+                {
+                    ammoClipNumber.text = "Max";
+                }
+            }
+            else
+            {
+                upgradeStation.NotEnough();
+            }
         }
     }
     public void RemoveMagSize()
@@ -128,6 +169,7 @@ public class CZ50Upgrades : MonoBehaviour
             if (ammoClipLevel == startAmmoClipLevel)
             {
                 ammoClipOutline.SetActive(false);
+                ammoClipNumber.color = startTextColor;
             }
         }
     }
@@ -138,12 +180,22 @@ public class CZ50Upgrades : MonoBehaviour
         {
             if (upgradeStation.currencyOnScreen >= speedCost)
             {
+                upgradeStation.AddingPurchase(speedCost);
                 speedLevel++;
                 speedNumber.SetText(speedLevel.ToString());
                 if (!speedOutline.activeSelf)
                 {
                     speedOutline.SetActive(true);
+                    speedNumber.color = selectTextColor;
                 }
+                if(speedLevel >= bulletSpeedCap)
+                {
+                    speedNumber.text = "Max";
+                }
+            }
+            else
+            {
+                upgradeStation.NotEnough();
             }
         }
     }
@@ -157,6 +209,7 @@ public class CZ50Upgrades : MonoBehaviour
             if (speedLevel == startSpeedLevel)
             {
                 speedOutline.SetActive(false);
+                speedNumber.color = startTextColor;
             }
         }
     }
@@ -169,6 +222,82 @@ public class CZ50Upgrades : MonoBehaviour
         ammoClipOutline.SetActive(false);
         recoilOutline.SetActive(false);
         speedOutline.SetActive(false);
+        bulletNumber.color = startTextColor;
+        recoilNumber.color = startTextColor;
+        ammoClipNumber.color = startTextColor;
+        speedNumber.color = startTextColor;
         SetLevels();
+    }
+    public void Up()
+    {
+        if(activeUpgrade >= 3)
+        {
+            activeUpgrade = 0;
+        }
+        else
+        {
+            activeUpgrade++;
+        }
+        for (int i = 0; i < upgradeImage.Length; i++)
+        {
+            upgradeImage[i].color = startColor;
+        }
+        upgradeImage[activeUpgrade].color = selectColor;
+        cz50UpgradesAnim.SetInteger("Upgrade", activeUpgrade);
+    }
+    public void Down()
+    {
+        if (activeUpgrade <= 0)
+        {
+            activeUpgrade = 3;
+        }
+        else
+        {
+            activeUpgrade--;
+        }
+        for(int i = 0; i < upgradeImage.Length; i++)
+        {
+            upgradeImage[i].color = startColor;
+        }
+        upgradeImage[activeUpgrade].color = selectColor;
+        cz50UpgradesAnim.SetInteger("Upgrade", activeUpgrade);
+    }
+    public void Add()
+    {
+        if(activeUpgrade == 0)
+        {
+            AddMagSize();
+        }
+        else if(activeUpgrade == 1)
+        {
+            AddBullet();
+        }
+        else if(activeUpgrade == 2)
+        {
+            AddSpeed();
+        }
+        else if(activeUpgrade == 3)
+        {
+            AddLessRecoil();
+        }
+    }
+    public void Remove()
+    {
+        if (activeUpgrade == 0)
+        {
+            RemoveMagSize();
+        }
+        else if (activeUpgrade == 1)
+        {
+            RemoveBullet();
+        }
+        else if (activeUpgrade == 2)
+        {
+            RemoveSpeed();
+        }
+        else if (activeUpgrade == 3)
+        {
+            RemoveLessRecoil();
+        }
     }
 }

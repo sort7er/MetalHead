@@ -30,7 +30,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Damage 0
-  m_Speed: -4
+  m_Speed: -20
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -4137027788229713142}
@@ -109,7 +109,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Ammo
-  m_Speed: 4
+  m_Speed: 20
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 3128337281481823494}
@@ -208,7 +208,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Recoil 0
-  m_Speed: -4
+  m_Speed: -20
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -2148616216303360385}
@@ -235,7 +235,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Speed
-  m_Speed: 4
+  m_Speed: 20
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 4190570564522642980}
@@ -290,7 +290,7 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -312,7 +312,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Ammo 0
-  m_Speed: -4
+  m_Speed: -20
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -7220151354519588655}
@@ -364,7 +364,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Recoil
-  m_Speed: 4
+  m_Speed: 20
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -5262516039216762739}
@@ -416,7 +416,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Speed 0
-  m_Speed: -4
+  m_Speed: -20
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -8874276196212426288}
@@ -468,7 +468,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Damage
-  m_Speed: 4
+  m_Speed: 20
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 8934118560204672329}

@@ -3,20 +3,23 @@ using TMPro;
 
 public class UpgradeStation : MonoBehaviour
 {
+    public Color errorColor;
     public float fanSoundSmoothTime;
     public AudioSource buttonSource;
     public AudioClip screenOn, screenOff;
     public Animator screenAnim;
-    public TextMeshProUGUI titleText, normalText, currencyText;
+    public TextMeshProUGUI titleText, normalText, currencyText, minusText;
     public GameObject nut;
     public GameObject[] gun;
+    public CZ50Upgrades cz50Upgrades;
 
-    [HideInInspector] public int currencyOnScreen;
+    [HideInInspector] public int currencyOnScreen, minusOnScreen;
 
     private InsertWeapon insertWeapon;
     private AudioSource upgradeStationSource;
-    private TypeWriterText titleType, normalType, currencyType;
+    private TypeWriterText titleType, normalType, currencyType, minusType;
     private float currentVolume, targetVolume;
+    private int activeUpgrade;
     private bool magnetIn, isOn;
 
     private void Start()
@@ -26,6 +29,7 @@ public class UpgradeStation : MonoBehaviour
         titleType = titleText.GetComponent<TypeWriterText>();
         normalType = normalText.GetComponent<TypeWriterText>();
         currencyType = currencyText.GetComponent<TypeWriterText>();
+        minusType = minusText.GetComponent<TypeWriterText>();
         nut.SetActive(false);
     }
 
@@ -54,7 +58,9 @@ public class UpgradeStation : MonoBehaviour
         screenAnim.SetBool("ScreenOn", true);
         targetVolume = 1;
         currencyOnScreen = GameManager.instance.magnet.GetMetalsCollected();
+        minusOnScreen = 0;
         currencyText.text = "";
+        minusText.text = "";
         StartScreen();
     }
 
@@ -113,7 +119,7 @@ public class UpgradeStation : MonoBehaviour
         {
             insertWeapon.CanInsert(true);
             normalText.text = "";
-            currencyText.text = currencyOnScreen.ToString("00000");
+            currencyText.text = currencyOnScreen.ToString("#,#");
             currencyType.StartTyping();
             Invoke("InsertWeaponMessage", 2f);
             nut.SetActive(true);
@@ -125,7 +131,9 @@ public class UpgradeStation : MonoBehaviour
         currencyType.StopTyping();
         normalType.StopTyping();
         titleType.StopTyping();
+        minusType.StopTyping();
 
+        minusText.text = "";
         titleText.text = "";
         normalText.text = "";
         currencyText.text = "";
@@ -147,11 +155,13 @@ public class UpgradeStation : MonoBehaviour
     }
     public void WeaponIn(int weaponID)
     {
+        activeUpgrade = weaponID;
         CancelInvoke();
         normalType.StopTyping();
+        titleType.StopTyping();
         normalText.text = "";
-        gun[weaponID].SetActive(true);
-        if(weaponID == 0)
+        gun[activeUpgrade].SetActive(true);
+        if(activeUpgrade == 0)
         {
             titleText.text = "CZ50";
         }
@@ -168,16 +178,85 @@ public class UpgradeStation : MonoBehaviour
 
     public void AddingPurchase(int cost)
     {
-        currencyType.StopTyping();
+        minusType.StopTyping();
         currencyOnScreen -= cost;
-        currencyText.text = currencyOnScreen.ToString("00000");
-        currencyType.StartTyping();
+        minusOnScreen += cost;
+        minusText.text = " - " + minusOnScreen.ToString("#,#");
+        minusType.StartTyping();
     }
     public void RemovePurchase(int cost)
     {
-        currencyType.StopTyping();
+        minusType.StopTyping();
         currencyOnScreen += cost;
-        currencyText.text = currencyOnScreen.ToString("00000");
+        minusOnScreen -= cost;
+        if(minusOnScreen <= 0)
+        {
+            minusText.text = "";
+        }
+        else
+        {
+            minusText.text = " - " + minusOnScreen.ToString("#,#");
+            minusType.StartTyping();
+        }
+    }
+
+    public void Up()
+    {
+        if(activeUpgrade == 0)
+        {
+            cz50Upgrades.Up();
+        }
+    }
+    public void Down()
+    {
+        if (activeUpgrade == 0)
+        {
+            cz50Upgrades.Down();
+        }
+    }
+    public void Add()
+    {
+        if (activeUpgrade == 0)
+        {
+            cz50Upgrades.Add();
+        }
+    }
+    public void Remove()
+    {
+        if (activeUpgrade == 0)
+        {
+            cz50Upgrades.Remove();
+        }
+    }
+    public void Execute()
+    {
+        if (activeUpgrade == 0)
+        {
+            cz50Upgrades.Execute();
+        }
+        minusType.StopTyping();
+        minusOnScreen = 0;
+        minusText.text = "";
+        if(currencyOnScreen == 0)
+        {
+            currencyText.text = "0";
+        }
+        else
+        {
+            currencyText.text = currencyOnScreen.ToString("#,#");
+        }
+
         currencyType.StartTyping();
+    }
+    public void NotEnough()
+    {
+        minusText.color = errorColor;
+        currencyText.color = errorColor;
+        Invoke("NotEnoughDone", 0.1f);
+    }
+    private void NotEnoughDone()
+    {
+        minusText.color = Color.black;
+        currencyText.color = Color.black;
     }
 }

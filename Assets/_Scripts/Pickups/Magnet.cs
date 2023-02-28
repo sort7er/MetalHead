@@ -6,8 +6,12 @@ public class Magnet : MonoBehaviour
     public Transform magnetMuzzle;
     public TextMeshProUGUI metalsText;
 
-    private int metalsCollected = 1000;
+    private int metalsCollected;
 
+    private void Start()
+    {
+        UpdateMetal(1000);
+    }
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.layer == 9)
@@ -19,7 +23,7 @@ public class Magnet : MonoBehaviour
     public void UpdateMetal(int value)
     {
         metalsCollected += value;
-        metalsText.text = metalsCollected.ToString("00000");
+        metalsText.text = metalsCollected.ToString("#,#");
     }
 
     public int GetMetalsCollected()
@@ -29,5 +33,6 @@ public class Magnet : MonoBehaviour
     public void SetMetalsCollected(int newNumber)
     {
         metalsCollected = newNumber;
+        metalsText.text = metalsCollected.ToString("#,#");
     }
 }
