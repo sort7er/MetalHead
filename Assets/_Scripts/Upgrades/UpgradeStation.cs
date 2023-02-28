@@ -11,7 +11,8 @@ public class UpgradeStation : MonoBehaviour
     public GameObject nut;
     public GameObject[] gun;
 
-    private int currencyOnScreen;
+    [HideInInspector] public int currencyOnScreen;
+
     private InsertWeapon insertWeapon;
     private AudioSource upgradeStationSource;
     private TypeWriterText titleType, normalType, currencyType;
@@ -165,4 +166,18 @@ public class UpgradeStation : MonoBehaviour
         StartScreen();
     }
 
+    public void AddingPurchase(int cost)
+    {
+        currencyType.StopTyping();
+        currencyOnScreen -= cost;
+        currencyText.text = currencyOnScreen.ToString("00000");
+        currencyType.StartTyping();
+    }
+    public void RemovePurchase(int cost)
+    {
+        currencyType.StopTyping();
+        currencyOnScreen += cost;
+        currencyText.text = currencyOnScreen.ToString("00000");
+        currencyType.StartTyping();
+    }
 }

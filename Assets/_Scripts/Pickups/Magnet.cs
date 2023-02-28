@@ -6,7 +6,7 @@ public class Magnet : MonoBehaviour
     public Transform magnetMuzzle;
     public TextMeshProUGUI metalsText;
 
-    private int metalsCollected;
+    private int metalsCollected = 1000;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -25,5 +25,9 @@ public class Magnet : MonoBehaviour
     public int GetMetalsCollected()
     {
         return metalsCollected;
+    }
+    public void SetMetalsCollected(int newNumber)
+    {
+        metalsCollected = newNumber;
     }
 }
