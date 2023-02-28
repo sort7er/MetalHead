@@ -28,12 +28,17 @@ public class LocomotionManager : MonoBehaviour
         snapTurnProvider = GetComponent<ActionBasedSnapTurnProvider>();
         continuousTurnProvider = GetComponent<ActionBasedContinuousTurnProvider>();
 
-        SetCountinuous(false);
-        SetTeleport(true);
-        Invoke("SetVignette", 0.2f);
+        Invoke("StartSettings", 0.1f);
+        Invoke("SetVignette", 0.1f);
     }
 
-
+    private void StartSettings()
+    {
+        SetCountinuous(false);
+        SetTeleport(true);
+        SetCountinuousTurn(false);
+        SetSnap(true);
+    }
     //Locomotion
     public void SwitchLocomotion(int locomotionValue)
     {
