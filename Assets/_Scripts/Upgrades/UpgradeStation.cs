@@ -20,7 +20,7 @@ public class UpgradeStation : MonoBehaviour
     private TypeWriterText titleType, normalType, currencyType, minusType;
     private float currentVolume, targetVolume;
     private int activeUpgrade;
-    private bool magnetIn, isOn;
+    private bool isOn;
 
     private void Start()
     {
@@ -59,8 +59,6 @@ public class UpgradeStation : MonoBehaviour
         targetVolume = 1;
         currencyOnScreen = GameManager.instance.magnet.GetMetalsCollected();
         minusOnScreen = 0;
-        currencyText.text = "";
-        minusText.text = "";
         StartScreen();
     }
 
@@ -73,55 +71,26 @@ public class UpgradeStation : MonoBehaviour
         targetVolume = 0;
         AllOff();
     }
-
-    public void MagnetIn()
-    {
-        magnetIn = true;
-        if (isOn)
-        {
-            MetalText();
-        }
-    }
-    public void MagnetOut()
-    {
-        magnetIn = false;
-        if (isOn)
-        {
-            MetalText();
-        }
-    }
     private void StartScreen()
     {
+        currencyType.StopTyping();
+        normalType.StopTyping();
+        titleType.StopTyping();
+        minusType.StopTyping();
+
+        minusText.text = "";
         normalText.text = "";
+        currencyText.text = currencyOnScreen.ToString("#,#");
+        currencyType.StartTyping();
+        
         titleText.text = "Upgrades";
         titleType.StartTyping();
-        Invoke("MetalText", 1f);
+        nut.SetActive(true);
+        Invoke("InsertWeaponMessage", 1f);
         for (int i = 0; i < gun.Length; i++)
         {
             gun[i].SetActive(false);
         }
-    }
-    private void MetalText()
-    {
-        currencyType.StopTyping();
-        normalType.StopTyping();
-        if (!magnetIn)
-        {
-            CancelInvoke();
-            currencyText.text = "";
-            normalText.text = "Please insert magnet";
-            normalType.StartTyping();
-            nut.SetActive(false);
-        }
-        else
-        {
-            normalText.text = "";
-            currencyText.text = currencyOnScreen.ToString("#,#");
-            currencyType.StartTyping();
-            Invoke("InsertWeaponMessage", 2f);
-            nut.SetActive(true);
-
-        }     
     }
     private void AllOff()
     {
@@ -148,20 +117,31 @@ public class UpgradeStation : MonoBehaviour
     {
         normalText.text = "Please insert weapon to upgrade";
         normalType.StartTyping();
+
+        insertWeapon.InsertWeaponAnim(true);
+        
     }
     public void WeaponIn(int weaponID)
     {
-        activeUpgrade = weaponID;
-        CancelInvoke();
-        normalType.StopTyping();
-        titleType.StopTyping();
-        normalText.text = "";
-        gun[activeUpgrade].SetActive(true);
-        if(activeUpgrade == 0)
+        if(weaponID != 0)
         {
-            titleText.text = "CZ50";
+            activeUpgrade = weaponID;
+            CancelInvoke();
+            normalType.StopTyping();
+            titleType.StopTyping();
+            normalText.text = "";
+            gun[activeUpgrade - 1].SetActive(true);
+            if (activeUpgrade == 1)
+            {
+                titleText.text = "CZ50";
+            }
+            titleType.StartTyping();
         }
-        titleType.StartTyping();
+        else
+        {
+            Debug.Log("NoWeaponToDrop");
+        }
+
     }
 
     public void WeaponOut()
@@ -196,35 +176,35 @@ public class UpgradeStation : MonoBehaviour
 
     public void Up()
     {
-        if(activeUpgrade == 0)
+        if(activeUpgrade == 1)
         {
             cz50Upgrades.Up();
         }
     }
     public void Down()
     {
-        if (activeUpgrade == 0)
+        if (activeUpgrade == 1)
         {
             cz50Upgrades.Down();
         }
     }
     public void Add()
     {
-        if (activeUpgrade == 0)
+        if (activeUpgrade == 1)
         {
             cz50Upgrades.Add();
         }
     }
     public void Remove()
     {
-        if (activeUpgrade == 0)
+        if (activeUpgrade == 1)
         {
             cz50Upgrades.Remove();
         }
     }
     public void Execute()
     {
-        if (activeUpgrade == 0)
+        if (activeUpgrade == 1)
         {
             cz50Upgrades.Execute();
         }

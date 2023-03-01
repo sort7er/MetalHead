@@ -6,24 +6,50 @@ public class InsertWeapon : MonoBehaviour
     public Transform upgradePosition;
 
     private ReturnToHolster returnToHolster;
+    private Animator insertWeaponAnim;
 
     public bool inserted;
+    private int weaponInserted;
+
+    private void Start()
+    {
+        insertWeaponAnim = GetComponent<Animator>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!inserted)
+        if (other.GetComponent<CZ50>() != null && other.CompareTag("Gun"))
         {
-            if (other.GetComponent<CZ50>() != null && other.CompareTag("Gun"))
+            weaponInserted = 1;
+            returnToHolster = other.GetComponent<ReturnToHolster>();
+            
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Gun"))
+        {
+            weaponInserted = 0;
+            returnToHolster = null;
+
+        }
+    }
+
+    private void Update()
+    {
+        if(weaponInserted == 1 && !inserted)
+        {
+            if (!returnToHolster.isHolding && !returnToHolster.isHolstered) 
             {
-                upgradeStation.WeaponIn(0);
-                Insert();
+                inserted = true;
+                upgradeStation.WeaponIn(weaponInserted);
+                Debug.Log("inserted");
             }
         }
     }
 
-    private void Insert()
+    public void InsertWeaponAnim(bool state)
     {
-        inserted = true; 
+        insertWeaponAnim.SetBool("Insert", state);
     }
-
 }
