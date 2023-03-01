@@ -73,11 +73,7 @@ public class InsertWeapon : MonoBehaviour
 
             IsInserted(false);
 
-            if(upgradeStation.isOn)
-            {
-                upgradeStation.StartScreen();
-            }
-            else
+            if(!upgradeStation.isOn)
             {
                 InsertWeaponAnim(false);
             }

@@ -205,11 +205,14 @@ public class UpgradeStation : MonoBehaviour
             cz50Upgrades.Remove();
         }
     }
-    public void Execute()
+    public void Execute(bool withUpgrades)
     {
-        if (activeUpgrade == 1)
+        if(withUpgrades)
         {
-            cz50Upgrades.Execute();
+            if (activeUpgrade == 1)
+            {
+                cz50Upgrades.Execute();
+            }
         }
         minusType.StopTyping();
         minusOnScreen = 0;
@@ -223,6 +226,7 @@ public class UpgradeStation : MonoBehaviour
             currencyText.text = currencyOnScreen.ToString("#,#");
         }
         currencyType.StartTyping();
+        StartScreen();
 
 
         //Can be changed later
