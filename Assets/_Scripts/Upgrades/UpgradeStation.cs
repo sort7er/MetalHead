@@ -6,7 +6,7 @@ public class UpgradeStation : MonoBehaviour
     public Color errorColor;
     public float fanSoundSmoothTime;
     public AudioSource buttonSource;
-    public AudioClip screenOn, screenOff;
+    public AudioClip screenOn, screenOff, error;
     public Animator screenAnim;
     public TextMeshProUGUI titleText, normalText, currencyText, minusText;
     public GameObject nut;
@@ -229,6 +229,7 @@ public class UpgradeStation : MonoBehaviour
     }
     public void NotEnough()
     {
+        buttonSource.PlayOneShot(error);
         minusText.color = errorColor;
         currencyText.color = errorColor;
         Invoke("NotEnoughDone", 0.1f);
