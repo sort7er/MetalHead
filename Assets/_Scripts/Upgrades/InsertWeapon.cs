@@ -73,12 +73,15 @@ public class InsertWeapon : MonoBehaviour
             returnToHolster = null;
             weaponsRigidbody = null;
 
-            InsertWeaponAnim(false);
             IsInserted(false);
 
             if(upgradeStation.isOn)
             {
                 upgradeStation.StartScreen();
+            }
+            else
+            {
+                InsertWeaponAnim(false);
             }
         }
     }
