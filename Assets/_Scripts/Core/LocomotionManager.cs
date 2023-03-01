@@ -37,7 +37,6 @@ public class LocomotionManager : MonoBehaviour
         SetCountinuous(false);
         SetTeleport(true);
         SetCountinuousTurn(false);
-        SetSnap(true);
     }
     //Locomotion
     public void SwitchLocomotion(int locomotionValue)
