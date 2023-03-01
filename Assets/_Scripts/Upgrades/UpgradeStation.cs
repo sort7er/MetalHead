@@ -77,7 +77,6 @@ public class UpgradeStation : MonoBehaviour
     public void MagnetIn()
     {
         magnetIn = true;
-        insertWeapon.CanInsert(true);
         if (isOn)
         {
             MetalText();
@@ -86,7 +85,6 @@ public class UpgradeStation : MonoBehaviour
     public void MagnetOut()
     {
         magnetIn = false;
-        insertWeapon.CanInsert(false);
         if (isOn)
         {
             MetalText();
@@ -117,7 +115,6 @@ public class UpgradeStation : MonoBehaviour
         }
         else
         {
-            insertWeapon.CanInsert(true);
             normalText.text = "";
             currencyText.text = currencyOnScreen.ToString("#,#");
             currencyType.StartTyping();
@@ -144,7 +141,6 @@ public class UpgradeStation : MonoBehaviour
         {
             gun[i].SetActive(false);
         }
-        insertWeapon.Eject();
     }
 
 
@@ -170,8 +166,6 @@ public class UpgradeStation : MonoBehaviour
 
     public void WeaponOut()
     {
-        insertWeapon.Eject();
-        insertWeapon.CanInsert(false);
         CancelInvoke();
         StartScreen();
     }
