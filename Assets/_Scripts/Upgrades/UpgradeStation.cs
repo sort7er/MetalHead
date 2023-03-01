@@ -14,13 +14,14 @@ public class UpgradeStation : MonoBehaviour
     public CZ50Upgrades cz50Upgrades;
 
     [HideInInspector] public int currencyOnScreen, minusOnScreen;
+    [HideInInspector] public bool isOn;
 
     private InsertWeapon insertWeapon;
     private AudioSource upgradeStationSource;
     private TypeWriterText titleType, normalType, currencyType, minusType;
     private float currentVolume, targetVolume;
     private int activeUpgrade;
-    private bool isOn;
+
 
     private void Start()
     {
@@ -59,7 +60,19 @@ public class UpgradeStation : MonoBehaviour
         targetVolume = 1;
         currencyOnScreen = GameManager.instance.magnet.GetMetalsCollected();
         minusOnScreen = 0;
-        StartScreen();
+        currencyType.StopTyping();
+        currencyText.text = currencyOnScreen.ToString("#,#");
+        currencyType.StartTyping();
+        minusType.StopTyping();
+        minusText.text = "";
+        if (insertWeapon.inserted)
+        {
+            insertWeapon.PowerOn();
+        }
+        else
+        {
+            StartScreen();
+        }
     }
 
     private void ScreenOff()
@@ -71,17 +84,11 @@ public class UpgradeStation : MonoBehaviour
         targetVolume = 0;
         AllOff();
     }
-    private void StartScreen()
+    public void StartScreen()
     {
-        currencyType.StopTyping();
         normalType.StopTyping();
         titleType.StopTyping();
-        minusType.StopTyping();
-
-        minusText.text = "";
         normalText.text = "";
-        currencyText.text = currencyOnScreen.ToString("#,#");
-        currencyType.StartTyping();
         
         titleText.text = "Upgrades";
         titleType.StartTyping();
@@ -104,6 +111,7 @@ public class UpgradeStation : MonoBehaviour
         normalText.text = "";
         currencyText.text = "";
 
+        insertWeapon.PowerOff();
         nut.SetActive(false);
 
         for(int i = 0; i < gun.Length; i++)
@@ -142,12 +150,6 @@ public class UpgradeStation : MonoBehaviour
             Debug.Log("NoWeaponToDrop");
         }
 
-    }
-
-    public void WeaponOut()
-    {
-        CancelInvoke();
-        StartScreen();
     }
 
     public void AddingPurchase(int cost)
@@ -219,8 +221,11 @@ public class UpgradeStation : MonoBehaviour
         {
             currencyText.text = currencyOnScreen.ToString("#,#");
         }
-
         currencyType.StartTyping();
+
+
+        //Can be changed later
+        insertWeapon.InsertWeaponAnim(true);
     }
     public void NotEnough()
     {
