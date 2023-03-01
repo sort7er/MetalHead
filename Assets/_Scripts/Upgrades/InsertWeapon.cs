@@ -65,8 +65,6 @@ public class InsertWeapon : MonoBehaviour
         if(inserted)
         {
             returnToHolster.enabled = true;
-            weaponsRigidbody.isKinematic = false;
-            weaponsRigidbody.useGravity = true;
             weaponsRigidbody.transform.parent = null;
 
             weaponInserted = 0;
