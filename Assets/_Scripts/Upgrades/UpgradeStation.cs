@@ -144,6 +144,7 @@ public class UpgradeStation : MonoBehaviour
                 titleText.text = "CZ50";
             }
             titleType.StartTyping();
+            GameManager.instance.IsUpgrading(true);
         }
         else
         {
@@ -226,6 +227,7 @@ public class UpgradeStation : MonoBehaviour
 
         //Can be changed later
         insertWeapon.InsertWeaponAnim(true);
+        GameManager.instance.IsUpgrading(false);
     }
     public void NotEnough()
     {

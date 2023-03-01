@@ -99,6 +99,10 @@ public class TeleportationController : MonoBehaviour
     {
         if (LocomotionManager.instance.isUsingTeleport)
         {
+            if (GameManager.instance.isUpgrading)
+            {
+                GameManager.instance.EnableRays(!state);
+            }
             rayInteractor.enabled = state;
             teleportActive = state;
             leftHand.UsingRay(state);

@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public Hand leftHand, rightHand;
     public AmmoBag ammoBag;
     public Magnet magnet;
+    [HideInInspector] public bool isUpgrading;
 
     private XRInteractorLineVisual leftLineVisual, rightLineVisual;
     private XRDirectInteractor rHand, lHand;
@@ -45,7 +46,11 @@ public class GameManager : MonoBehaviour
         {
             rightLineVisual.reticle.SetActive(state);
         }
-
+    }
+    public void EnableDirectInteractors(bool state)
+    {
+        lHand.enabled = state;
+        rHand.enabled = state;
     }
     public void SetXROriginRotation(Transform newRotation)
     {
@@ -67,5 +72,10 @@ public class GameManager : MonoBehaviour
             return 0; 
         }
     }
-
+    public void IsUpgrading(bool state)
+    {
+        isUpgrading = state;
+        EnableRays(state);
+        EnableDirectInteractors(!state);
+    }
 }

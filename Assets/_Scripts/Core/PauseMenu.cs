@@ -44,6 +44,7 @@ public class PauseMenu : MonoBehaviour
     {
         RenderSettings.fog = true;
         GameManager.instance.EnableRays(true);
+        GameManager.instance.EnableDirectInteractors(false);
         LocomotionManager.instance.EnableMovement(false);
         LocomotionManager.instance.EnableTurning(false);
         menu.SetActive(true);
@@ -55,7 +56,11 @@ public class PauseMenu : MonoBehaviour
         menu.SetActive(false);
         paused = false;
         followCam = true;
-        GameManager.instance.EnableRays(false);
+        if(!GameManager.instance.isUpgrading)
+        {
+            GameManager.instance.EnableRays(false);
+            GameManager.instance.EnableDirectInteractors(true);
+        }
         LocomotionManager.instance.EnableMovement(true);
         LocomotionManager.instance.EnableTurning(true);
         RenderSettings.fog = false;
