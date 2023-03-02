@@ -39,21 +39,21 @@ public class UpgradeManager : MonoBehaviour
         cz50.SetDamage(10 + bulletLevel * 5);
         SetMagSize(7 + magSizeLevel * 3);
         cz50Recoil.UpgradeRecoil(recoilLevel);
-        if(projectileLevel== 0)
-        {
-            cz50.ProjectilePenetration(false);
-        }
-        else
+        if(projectileLevel== 2)
         {
             cz50.ProjectilePenetration(true);
         }
-        if (laserLevel == 0)
+        else
         {
-            cz50.Laser(false);
+            cz50.ProjectilePenetration(false);
+        }
+        if (laserLevel == 2)
+        {
+            cz50.Laser(true);
         }
         else
         {
-            cz50.Laser(true);
+            cz50.Laser(false);
         }        
     }
 }

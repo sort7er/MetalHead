@@ -10,7 +10,7 @@ public class Magnet : MonoBehaviour
 
     private void Start()
     {
-        UpdateMetal(1000);
+        UpdateMetal(4000);
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -23,7 +23,14 @@ public class Magnet : MonoBehaviour
     public void UpdateMetal(int value)
     {
         metalsCollected += value;
-        metalsText.text = metalsCollected.ToString("#,#");
+        if (metalsCollected == 0)
+        {
+            metalsText.text = "0";
+        }
+        else
+        {
+            metalsText.text = metalsCollected.ToString("#,#");
+        }
     }
 
     public int GetMetalsCollected()
@@ -33,6 +40,13 @@ public class Magnet : MonoBehaviour
     public void SetMetalsCollected(int newNumber)
     {
         metalsCollected = newNumber;
-        metalsText.text = metalsCollected.ToString("#,#");
+        if(metalsCollected == 0)
+        {
+            metalsText.text = "0";
+        }
+        else
+        {
+            metalsText.text = metalsCollected.ToString("#,#");
+        }
     }
 }
