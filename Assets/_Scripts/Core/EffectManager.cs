@@ -19,14 +19,13 @@ public class EffectManager : MonoBehaviour
         bullet.GetComponent<Bullet>().SetSpeed(speed);
         bullet.transform.parent = ParentManager.instance.bullets;
     }
-    public void SpawnBulletHole(Collision collision)
+    public void SpawnBulletHole(RaycastHit hit)
     {
-        Vector3 normal = collision.contacts[0].normal;
-        GameObject bulletHole = Instantiate(bulletHolePrefab, collision.contacts[0].point + normal * 0.001f, Quaternion.LookRotation(normal));
+        GameObject bulletHole = Instantiate(bulletHolePrefab, hit.point + hit.normal * 0.001f, Quaternion.LookRotation(hit.normal));
         bulletHole.transform.Rotate(Vector3.forward * Random.Range(-180, 180));
-        if (collision.rigidbody != null)
+        if (hit.rigidbody != null)
         {
-            bulletHole.transform.parent = collision.transform;
+            bulletHole.transform.parent = hit.transform;
         }
         else
         {

@@ -12,18 +12,17 @@ public class UpgradeManager : MonoBehaviour
     public int startBulletLevel;
     public int startRecoilLevel;
     public int startMagSizeLevel;
-    public int startBulletSpeedLevel;
+    public int startProjectileLevel;
+    public int startLaserLevel;
     public Transform magPos;
     public Recoil cz50Recoil;
     public CZ50 cz50;
 
     [HideInInspector] public int magSize;
 
-    private int bulletLevel, magSizeLevel, recoilLevel, speedLevel;
-
     private void Start()
     {
-        UpgradeCZ50(startBulletLevel, startRecoilLevel, startMagSizeLevel, startBulletSpeedLevel);
+        UpgradeCZ50(startBulletLevel, startRecoilLevel, startMagSizeLevel, startProjectileLevel, startLaserLevel);
     }
 
     public void SetMagSize(int size)
@@ -35,11 +34,26 @@ public class UpgradeManager : MonoBehaviour
             GameManager.instance.ammoBag.CheckAmmoStatus();
         }
     }
-    public void UpgradeCZ50(int bulletLevel, int recoilLevel, int magSizeLevel, int bulletSpeed)
+    public void UpgradeCZ50(int bulletLevel, int recoilLevel, int magSizeLevel, int projectileLevel, int laserLevel)
     {
         cz50.SetDamage(10 + bulletLevel * 5);
         SetMagSize(7 + magSizeLevel * 3);
         cz50Recoil.UpgradeRecoil(recoilLevel);
-        cz50.SetSpeed(75 + bulletSpeed * 25);
+        if(projectileLevel== 0)
+        {
+            cz50.ProjectilePenetration(false);
+        }
+        else
+        {
+            cz50.ProjectilePenetration(true);
+        }
+        if (laserLevel == 0)
+        {
+            cz50.Laser(false);
+        }
+        else
+        {
+            cz50.Laser(true);
+        }        
     }
 }

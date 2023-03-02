@@ -1,9 +1,13 @@
+using System.Net;
 using UnityEngine;
 
 public class CZ50 : MonoBehaviour
 {
+
+    public int damage, bulletForce, penetrationAmount;
+
     [Header("References")]
-    public GameObject casingPrefab;
+    public GameObject casingPrefab, laser;
     public Transform muzzle, casingPoint, leftAttach, rightAttach;
     public Dial doubleDial, singleDial;
     public MeshRenderer doubleZero, singleZero;
@@ -15,10 +19,9 @@ public class CZ50 : MonoBehaviour
     private Mag magInGun;
     private Animator cz50Anim;
     private SoundForGun soundForGun;
-    private int damage, bulletSpeed;
     private int currentAmmo;
     private int singleDigit, doubleDigit;
-    private bool reloadNeeded, firstDialUpdate;
+    private bool reloadNeeded, firstDialUpdate, projectilePenetration;
 
     private void Start()
     {
@@ -39,8 +42,54 @@ public class CZ50 : MonoBehaviour
             soundForGun.Fire();
             cz50Anim.SetTrigger("Fire");
             UpdateDial();
-            EffectManager.instance.Fire(muzzle, damage, bulletSpeed);
             muzzleFlash.Play();
+            //EffectManager.instance.Fire(muzzle, damage, bulletSpeed);
+            Ray ray = new Ray(muzzle.position, muzzle.forward);
+            RaycastHit hit;
+            if(Physics.Raycast(ray, out hit))
+            {
+                if(!hit.transform.CompareTag("Player") && !hit.transform.CompareTag("Gun"))
+                {
+                    if (hit.rigidbody != null)
+                    {
+                        hit.rigidbody.AddForce(hit.transform.forward - hit.normal * bulletForce, ForceMode.Impulse);
+                    }
+                    if (hit.transform.CompareTag("Enemy"))
+                    {
+                        hit.transform.GetComponent<EnemyHealth>().TakeDamage(damage);
+                    }
+                    EffectManager.instance.SpawnBulletHole(hit);
+                    if (projectilePenetration)
+                    {
+                        Ray penRay = new Ray(hit.point + ray.direction * penetrationAmount, -ray.direction);
+                        RaycastHit penHit;
+                        if (hit.collider.Raycast(penRay, out penHit, penetrationAmount))
+                        {
+                            Debug.Log(penHit.transform.name);
+                            Ray secondBullet = new(penHit.point, muzzle.forward);
+                            RaycastHit secondHit;
+                            if (Physics.Raycast(secondBullet, out secondHit))
+                            {
+                                if (!secondHit.transform.CompareTag("Player") && !secondHit.transform.CompareTag("Gun"))
+                                {
+                                    if (secondHit.rigidbody != null)
+                                    {
+                                        secondHit.rigidbody.AddForce(secondHit.transform.forward - secondHit.normal * bulletForce, ForceMode.Impulse);
+                                    }
+                                    if (secondHit.transform.CompareTag("Enemy"))
+                                    {
+                                        secondHit.transform.GetComponent<EnemyHealth>().TakeDamage(damage);
+                                    }
+                                    EffectManager.instance.SpawnBulletHole(secondHit);
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+
+
         }
         else
         {
@@ -124,8 +173,12 @@ public class CZ50 : MonoBehaviour
     {
         damage = dmg;
     }
-    public void SetSpeed(int speed)
+    public void ProjectilePenetration(bool state)
     {
-        bulletSpeed = speed;
+        projectilePenetration = state;
+    }
+    public void Laser(bool state)
+    {
+        laser.SetActive(state);
     }
 }

@@ -3,18 +3,18 @@ using TMPro;
 using UnityEngine.UI;
 public class CZ50Upgrades : MonoBehaviour
 {
-    public int damageLevelCap, recoilLevelCap, ammoClipCap, bulletSpeedCap;
-    public int damageCost, recoilCost, ammoCost, speedCost;
+    public int damageLevelCap, recoilLevelCap, ammoClipCap, penetrationCap, laserCap;
+    public int damageCost, recoilCost, ammoCost, penetrationCost, laserCost;
 
-    public TextMeshProUGUI bulletCostText, recoilCostText, ammoClipCostText, speedCostText;
-    public TextMeshProUGUI bulletNumber, recoilNumber, ammoClipNumber, speedNumber;
-    public GameObject bulletOutline, recoilOutline, ammoClipOutline, speedOutline;
+    public TextMeshProUGUI bulletCostText, recoilCostText, ammoClipCostText, penetrationCostText, laserCostText;
+    public TextMeshProUGUI bulletNumber, recoilNumber, ammoClipNumber, penetrationNumber, laserNumber;
+    public GameObject bulletOutline, recoilOutline, ammoClipOutline, penetrationOutline, laserOutline;
     public UpgradeStation upgradeStation;
 
     private Color startTextColor, selectTextColor;
     private Animator cz50UpgradesAnim;
-    private int bulletLevel, recoilLevel, ammoClipLevel, speedLevel;
-    private int startBulletLevel, startRecoilLevel, startAmmoClipLevel, startSpeedLevel;
+    private int bulletLevel, recoilLevel, ammoClipLevel, penetrationLevel, laserLevel;
+    private int startBulletLevel, startRecoilLevel, startAmmoClipLevel, startPenetrationLevel, startLaserLevel;
 
     private void Start()
     {
@@ -24,11 +24,13 @@ public class CZ50Upgrades : MonoBehaviour
         bulletLevel = UpgradeManager.instance.startBulletLevel;
         recoilLevel = UpgradeManager.instance.startRecoilLevel;
         ammoClipLevel = UpgradeManager.instance.startMagSizeLevel;
-        speedLevel = UpgradeManager.instance.startBulletSpeedLevel;
+        penetrationLevel = UpgradeManager.instance.startProjectileLevel;
+        laserLevel = UpgradeManager.instance.startLaserLevel;
         bulletNumber.text = bulletLevel.ToString();
         recoilNumber.text = recoilLevel.ToString();
         ammoClipNumber.text = ammoClipLevel.ToString();
-        speedNumber.text = speedLevel.ToString();
+        penetrationNumber.text = penetrationLevel.ToString();
+        laserNumber.text = laserLevel.ToString();
         SetLevels();
         SetCost();
     }
@@ -38,18 +40,21 @@ public class CZ50Upgrades : MonoBehaviour
         startBulletLevel = bulletLevel;
         startRecoilLevel = recoilLevel;
         startAmmoClipLevel = ammoClipLevel;
-        startSpeedLevel = speedLevel;
+        startPenetrationLevel = penetrationLevel;
+        startLaserLevel = laserLevel;
     }
     public void ResetLevels()
     {
         bulletLevel = startBulletLevel;
         recoilLevel = startRecoilLevel;
         ammoClipLevel = startAmmoClipLevel;
-        speedLevel = startSpeedLevel;
+        penetrationLevel = startPenetrationLevel;
+        laserLevel = startLaserLevel;
         bulletNumber.text = bulletLevel.ToString();
         recoilNumber.text = recoilLevel.ToString();
         ammoClipNumber.text = ammoClipLevel.ToString();
-        speedNumber.text = speedLevel.ToString();
+        penetrationNumber.text = penetrationLevel.ToString();
+        laserNumber.text = laserLevel.ToString();
     }
 
     public void SetCost()
@@ -57,7 +62,8 @@ public class CZ50Upgrades : MonoBehaviour
         bulletCostText.text = damageCost.ToString();
         recoilCostText.text = recoilCost.ToString();
         ammoClipCostText.text = ammoCost.ToString();
-        speedCostText.text = speedCost.ToString();
+        penetrationCostText.text = penetrationCost.ToString();
+        laserCostText.text = laserCost.ToString();
     }
 
     public void AddBullet()
@@ -179,23 +185,23 @@ public class CZ50Upgrades : MonoBehaviour
         }
     }
 
-    public void AddSpeed()
+    public void AddPenetration()
     {
-        if(speedLevel < bulletSpeedCap)
+        if(penetrationLevel < penetrationCap)
         {
-            if (upgradeStation.currencyOnScreen >= speedCost)
+            if (upgradeStation.currencyOnScreen >= penetrationCost)
             {
-                upgradeStation.AddingPurchase(speedCost);
-                speedLevel++;
-                speedNumber.SetText(speedLevel.ToString());
-                if (!speedOutline.activeSelf)
+                upgradeStation.AddingPurchase(penetrationCost);
+                penetrationLevel++;
+                penetrationNumber.SetText(penetrationLevel.ToString());
+                if (!penetrationOutline.activeSelf)
                 {
-                    speedOutline.SetActive(true);
-                    speedNumber.color = selectTextColor;
+                    penetrationOutline.SetActive(true);
+                    penetrationNumber.color = selectTextColor;
                 }
-                if(speedLevel >= bulletSpeedCap)
+                if(penetrationLevel >= penetrationCap)
                 {
-                    speedNumber.text = "Max";
+                    penetrationNumber.text = "Max";
                 }
             }
             else
@@ -204,33 +210,73 @@ public class CZ50Upgrades : MonoBehaviour
             }
         }
     }
-    public void RemoveSpeed()
+    public void RemovePenetration()
     {
-        if (speedLevel > startSpeedLevel)
+        if (penetrationLevel > startPenetrationLevel)
         {
-            upgradeStation.RemovePurchase(speedCost);
-            speedLevel--;
-            speedNumber.SetText(speedLevel.ToString());
-            if (speedLevel == startSpeedLevel)
+            upgradeStation.RemovePurchase(penetrationCost);
+            penetrationLevel--;
+            penetrationNumber.SetText(penetrationLevel.ToString());
+            if (penetrationLevel == startPenetrationLevel)
             {
-                speedOutline.SetActive(false);
-                speedNumber.color = startTextColor;
+                penetrationOutline.SetActive(false);
+                penetrationNumber.color = startTextColor;
             }
         }
     }
-
+    public void AddLaser()
+    {
+        if (laserLevel < laserCap)
+        {
+            if (upgradeStation.currencyOnScreen >= laserCost)
+            {
+                upgradeStation.AddingPurchase(laserCost);
+                laserLevel++;
+                laserNumber.SetText(laserLevel.ToString());
+                if (!laserOutline.activeSelf)
+                {
+                    laserOutline.SetActive(true);
+                    laserNumber.color = selectTextColor;
+                }
+                if (laserLevel >= laserCap)
+                {
+                    laserNumber.text = "Max";
+                }
+            }
+            else
+            {
+                upgradeStation.NotEnough();
+            }
+        }
+    }
+    public void RemoveLaser()
+    {
+        if (laserLevel > startLaserLevel)
+        {
+            upgradeStation.RemovePurchase(laserCost);
+            laserLevel--;
+            laserNumber.SetText(laserLevel.ToString());
+            if (laserLevel == startLaserLevel)
+            {
+                laserOutline.SetActive(false);
+                laserNumber.color = startTextColor;
+            }
+        }
+    }
     public void Execute()
     {
-        UpgradeManager.instance.UpgradeCZ50(bulletLevel, recoilLevel, ammoClipLevel, speedLevel);
+        UpgradeManager.instance.UpgradeCZ50(bulletLevel, recoilLevel, ammoClipLevel, penetrationLevel, laserLevel);
         GameManager.instance.magnet.SetMetalsCollected(upgradeStation.currencyOnScreen);
         bulletOutline.SetActive(false);
         ammoClipOutline.SetActive(false);
         recoilOutline.SetActive(false);
-        speedOutline.SetActive(false);
+        penetrationOutline.SetActive(false);
+        laserOutline.SetActive(false);
         bulletNumber.color = startTextColor;
         recoilNumber.color = startTextColor;
         ammoClipNumber.color = startTextColor;
-        speedNumber.color = startTextColor;
+        penetrationNumber.color = startTextColor;
+        laserNumber.color = startTextColor;
         SetLevels();
     }
     public void Abort()
@@ -238,11 +284,13 @@ public class CZ50Upgrades : MonoBehaviour
         bulletOutline.SetActive(false);
         ammoClipOutline.SetActive(false);
         recoilOutline.SetActive(false);
-        speedOutline.SetActive(false);
+        penetrationOutline.SetActive(false);
+        laserOutline.SetActive(false);
         bulletNumber.color = startTextColor;
         recoilNumber.color = startTextColor;
         ammoClipNumber.color = startTextColor;
-        speedNumber.color = startTextColor;
+        penetrationNumber.color = startTextColor;
+        laserNumber.color = startTextColor;
         ResetLevels();
     }
     public void ActiveUpgrade(int activeUpgrade)

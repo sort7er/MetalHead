@@ -24,7 +24,7 @@ public class Bullet : MonoBehaviour
             {
                 collision.transform.GetComponent<EnemyHealth>().TakeDamage(damage);
             }
-            EffectManager.instance.SpawnBulletHole(collision);
+//            EffectManager.instance.SpawnBulletHole(collision);
             Destroy(gameObject);
         }
     }
