@@ -3,12 +3,9 @@ using TMPro;
 using UnityEngine.UI;
 public class CZ50Upgrades : MonoBehaviour
 {
-    public Color selectColor;
-
     public int damageLevelCap, recoilLevelCap, ammoClipCap, bulletSpeedCap;
     public int damageCost, recoilCost, ammoCost, speedCost;
 
-    public Image[] upgradeImage;
     public TextMeshProUGUI bulletCostText, recoilCostText, ammoClipCostText, speedCostText;
     public TextMeshProUGUI bulletNumber, recoilNumber, ammoClipNumber, speedNumber;
     public GameObject bulletOutline, recoilOutline, ammoClipOutline, speedOutline;
@@ -22,10 +19,8 @@ public class CZ50Upgrades : MonoBehaviour
 
     private void Start()
     {
-        startColor = upgradeImage[1].color;
         startTextColor = bulletCostText.color;
         selectTextColor = bulletOutline.GetComponent<Image>().color;
-        upgradeImage[0].color = selectColor;
         cz50UpgradesAnim = GetComponent<Animator>();
         bulletLevel = UpgradeManager.instance.startBulletLevel;
         recoilLevel = UpgradeManager.instance.startRecoilLevel;
@@ -45,6 +40,17 @@ public class CZ50Upgrades : MonoBehaviour
         startRecoilLevel = recoilLevel;
         startAmmoClipLevel = ammoClipLevel;
         startSpeedLevel = speedLevel;
+    }
+    public void ResetLevels()
+    {
+        bulletLevel = startBulletLevel;
+        recoilLevel = startRecoilLevel;
+        ammoClipLevel = startAmmoClipLevel;
+        speedLevel = startSpeedLevel;
+        bulletNumber.text = bulletLevel.ToString();
+        recoilNumber.text = recoilLevel.ToString();
+        ammoClipNumber.text = ammoClipLevel.ToString();
+        speedNumber.text = speedLevel.ToString();
     }
 
     public void SetCost()
@@ -228,76 +234,20 @@ public class CZ50Upgrades : MonoBehaviour
         speedNumber.color = startTextColor;
         SetLevels();
     }
-    public void Up()
+    public void Abort()
     {
-        if(activeUpgrade >= 3)
-        {
-            activeUpgrade = 0;
-        }
-        else
-        {
-            activeUpgrade++;
-        }
-        for (int i = 0; i < upgradeImage.Length; i++)
-        {
-            upgradeImage[i].color = startColor;
-        }
-        upgradeImage[activeUpgrade].color = selectColor;
+        bulletOutline.SetActive(false);
+        ammoClipOutline.SetActive(false);
+        recoilOutline.SetActive(false);
+        speedOutline.SetActive(false);
+        bulletNumber.color = startTextColor;
+        recoilNumber.color = startTextColor;
+        ammoClipNumber.color = startTextColor;
+        speedNumber.color = startTextColor;
+        ResetLevels();
+    }
+    public void ActiveUpgrade(int activeUpgrade)
+    {
         cz50UpgradesAnim.SetInteger("Upgrade", activeUpgrade);
-    }
-    public void Down()
-    {
-        if (activeUpgrade <= 0)
-        {
-            activeUpgrade = 3;
-        }
-        else
-        {
-            activeUpgrade--;
-        }
-        for(int i = 0; i < upgradeImage.Length; i++)
-        {
-            upgradeImage[i].color = startColor;
-        }
-        upgradeImage[activeUpgrade].color = selectColor;
-        cz50UpgradesAnim.SetInteger("Upgrade", activeUpgrade);
-    }
-    public void Add()
-    {
-        if(activeUpgrade == 0)
-        {
-            AddMagSize();
-        }
-        else if(activeUpgrade == 1)
-        {
-            AddBullet();
-        }
-        else if(activeUpgrade == 2)
-        {
-            AddSpeed();
-        }
-        else if(activeUpgrade == 3)
-        {
-            AddLessRecoil();
-        }
-    }
-    public void Remove()
-    {
-        if (activeUpgrade == 0)
-        {
-            RemoveMagSize();
-        }
-        else if (activeUpgrade == 1)
-        {
-            RemoveBullet();
-        }
-        else if (activeUpgrade == 2)
-        {
-            RemoveSpeed();
-        }
-        else if (activeUpgrade == 3)
-        {
-            RemoveLessRecoil();
-        }
     }
 }

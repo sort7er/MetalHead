@@ -9,7 +9,7 @@ public class UpgradeStation : MonoBehaviour
     public AudioClip screenOn, screenOff, error;
     public Animator screenAnim;
     public TextMeshProUGUI titleText, normalText, currencyText, minusText;
-    public GameObject nut;
+    public GameObject nut, backButton, executeButton;
     public GameObject[] gun;
     public CZ50Upgrades cz50Upgrades;
 
@@ -32,6 +32,8 @@ public class UpgradeStation : MonoBehaviour
         currencyType = currencyText.GetComponent<TypeWriterText>();
         minusType = minusText.GetComponent<TypeWriterText>();
         nut.SetActive(false);
+        backButton.SetActive(false);
+        executeButton.SetActive(false);
     }
 
     private void Update()
@@ -93,6 +95,8 @@ public class UpgradeStation : MonoBehaviour
         titleText.text = "Upgrades";
         titleType.StartTyping();
         nut.SetActive(true);
+        backButton.SetActive(false);
+        executeButton.SetActive(false);
         Invoke("InsertWeaponMessage", 1f);
         for (int i = 0; i < gun.Length; i++)
         {
@@ -114,7 +118,10 @@ public class UpgradeStation : MonoBehaviour
         insertWeapon.PowerOff();
         nut.SetActive(false);
 
-        for(int i = 0; i < gun.Length; i++)
+        backButton.SetActive(false);
+        executeButton.SetActive(false);
+
+        for (int i = 0; i < gun.Length; i++)
         {
             gun[i].SetActive(false);
         }
@@ -138,6 +145,7 @@ public class UpgradeStation : MonoBehaviour
             normalType.StopTyping();
             titleType.StopTyping();
             normalText.text = "";
+            backButton.SetActive(true);
             gun[activeUpgrade - 1].SetActive(true);
             if (activeUpgrade == 1)
             {
@@ -160,6 +168,10 @@ public class UpgradeStation : MonoBehaviour
         minusOnScreen += cost;
         minusText.text = " - " + minusOnScreen.ToString("#,#");
         minusType.StartTyping();
+        if (!executeButton.activeSelf)
+        {
+            executeButton.SetActive(true);
+        }
     }
     public void RemovePurchase(int cost)
     {
@@ -169,40 +181,12 @@ public class UpgradeStation : MonoBehaviour
         if(minusOnScreen <= 0)
         {
             minusText.text = "";
+            executeButton.SetActive(false);
         }
         else
         {
             minusText.text = " - " + minusOnScreen.ToString("#,#");
             minusType.StartTyping();
-        }
-    }
-
-    public void Up()
-    {
-        if(activeUpgrade == 1)
-        {
-            cz50Upgrades.Up();
-        }
-    }
-    public void Down()
-    {
-        if (activeUpgrade == 1)
-        {
-            cz50Upgrades.Down();
-        }
-    }
-    public void Add()
-    {
-        if (activeUpgrade == 1)
-        {
-            cz50Upgrades.Add();
-        }
-    }
-    public void Remove()
-    {
-        if (activeUpgrade == 1)
-        {
-            cz50Upgrades.Remove();
         }
     }
     public void Execute(bool withUpgrades)
@@ -214,10 +198,18 @@ public class UpgradeStation : MonoBehaviour
                 cz50Upgrades.Execute();
             }
         }
+        else
+        {
+            if (activeUpgrade == 1)
+            {
+                cz50Upgrades.Abort();
+            }
+        }
         minusType.StopTyping();
         minusOnScreen = 0;
         minusText.text = "";
-        if(currencyOnScreen == 0)
+        currencyOnScreen = GameManager.instance.magnet.GetMetalsCollected();
+        if (currencyOnScreen == 0)
         {
             currencyText.text = "0";
         }
