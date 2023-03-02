@@ -2290,6 +2290,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 672295282}
+        m_TargetAssemblyTypeName: UpgradeStation, Assembly-CSharp
+        m_MethodName: SelectSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &200628907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3489,7 +3501,7 @@ GameObject:
   - component: {fileID: 293941541}
   - component: {fileID: 293941542}
   - component: {fileID: 293941543}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Socket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3872,6 +3884,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UpgradeStation, Assembly-CSharp
         m_MethodName: Execute
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 672295282}
+        m_TargetAssemblyTypeName: UpgradeStation, Assembly-CSharp
+        m_MethodName: SelectSound
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4475,7 +4499,7 @@ GameObject:
   - component: {fileID: 444371073}
   - component: {fileID: 444371075}
   - component: {fileID: 444371074}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: MagnetSlot
   m_TagString: Holster
   m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
@@ -4787,6 +4811,18 @@ MonoBehaviour:
       - m_Target: {fileID: 2146025192}
         m_TargetAssemblyTypeName: CZ50Upgrades, Assembly-CSharp
         m_MethodName: AddBullet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 672295282}
+        m_TargetAssemblyTypeName: UpgradeStation, Assembly-CSharp
+        m_MethodName: SelectSound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6569,6 +6605,18 @@ MonoBehaviour:
       - m_Target: {fileID: 2146025192}
         m_TargetAssemblyTypeName: CZ50Upgrades, Assembly-CSharp
         m_MethodName: RemoveSpeed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 672295282}
+        m_TargetAssemblyTypeName: UpgradeStation, Assembly-CSharp
+        m_MethodName: SelectSound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8397,12 +8445,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f63a9a7c9c1c7d348b0334c152dee358, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  errorColor: {r: 1, g: 0.46363068, b: 0, a: 1}
+  errorColor: {r: 1, g: 0.17260043, b: 0, a: 1}
   fanSoundSmoothTime: 2
   buttonSource: {fileID: 293941543}
   screenOn: {fileID: 8300000, guid: 2285d22db400c8240b39e06d792e332e, type: 3}
   screenOff: {fileID: 8300000, guid: 5cf269b93ceeb8348b32de3cfa0b1478, type: 3}
   error: {fileID: 8300000, guid: c6ee72650c4482641a5fba78ce423eac, type: 3}
+  select: {fileID: 8300000, guid: 383357e8ca99c0e40b9df5a233a88ef9, type: 3}
   screenAnim: {fileID: 737427483}
   titleText: {fileID: 805547712}
   normalText: {fileID: 508825035}
@@ -9004,6 +9053,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 672295282}
+        m_TargetAssemblyTypeName: UpgradeStation, Assembly-CSharp
+        m_MethodName: SelectSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &737427476
 GameObject:
   m_ObjectHideFlags: 0
@@ -9239,6 +9300,18 @@ MonoBehaviour:
       - m_Target: {fileID: 2146025192}
         m_TargetAssemblyTypeName: CZ50Upgrades, Assembly-CSharp
         m_MethodName: AddMagSize
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 672295282}
+        m_TargetAssemblyTypeName: UpgradeStation, Assembly-CSharp
+        m_MethodName: SelectSound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14599,7 +14672,7 @@ GameObject:
   - component: {fileID: 1166752411}
   - component: {fileID: 1166752410}
   - component: {fileID: 1166752412}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Right Hand Controller
   m_TagString: Interactor
   m_Icon: {fileID: 0}
@@ -15037,7 +15110,7 @@ GameObject:
   - component: {fileID: 1179863462}
   - component: {fileID: 1179863464}
   - component: {fileID: 1179863463}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Holster
   m_TagString: Holster
   m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
@@ -15712,6 +15785,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 672295282}
+        m_TargetAssemblyTypeName: UpgradeStation, Assembly-CSharp
+        m_MethodName: SelectSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -16602,6 +16687,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 672295282}
+        m_TargetAssemblyTypeName: UpgradeStation, Assembly-CSharp
+        m_MethodName: SelectSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -19643,7 +19740,7 @@ GameObject:
   - component: {fileID: 1595786476}
   - component: {fileID: 1595786475}
   - component: {fileID: 1595786479}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left Hand Controller
   m_TagString: Interactor
   m_Icon: {fileID: 0}
@@ -21148,6 +21245,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 672295282}
+        m_TargetAssemblyTypeName: UpgradeStation, Assembly-CSharp
+        m_MethodName: SelectSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -23299,6 +23408,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 672295282}
+        m_TargetAssemblyTypeName: UpgradeStation, Assembly-CSharp
+        m_MethodName: SelectSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1923278744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23576,6 +23697,18 @@ MonoBehaviour:
       - m_Target: {fileID: 2146025192}
         m_TargetAssemblyTypeName: CZ50Upgrades, Assembly-CSharp
         m_MethodName: RemoveBullet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 672295282}
+        m_TargetAssemblyTypeName: UpgradeStation, Assembly-CSharp
+        m_MethodName: SelectSound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -24156,6 +24289,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 672295282}
+        m_TargetAssemblyTypeName: UpgradeStation, Assembly-CSharp
+        m_MethodName: SelectSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1981142702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24247,7 +24392,7 @@ GameObject:
   - component: {fileID: 1986436921}
   - component: {fileID: 1986436922}
   - component: {fileID: 1986436923}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: AmmoBag
   m_TagString: Untagged
   m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
@@ -24663,6 +24808,18 @@ MonoBehaviour:
       - m_Target: {fileID: 2146025192}
         m_TargetAssemblyTypeName: CZ50Upgrades, Assembly-CSharp
         m_MethodName: AddLessRecoil
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 672295282}
+        m_TargetAssemblyTypeName: UpgradeStation, Assembly-CSharp
+        m_MethodName: SelectSound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -25339,6 +25496,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 672295282}
+        m_TargetAssemblyTypeName: UpgradeStation, Assembly-CSharp
+        m_MethodName: SelectSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2088491975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25806,6 +25975,46 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 367715150, guid: bc37897792a96ac419f413187abaa406, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 367715152, guid: bc37897792a96ac419f413187abaa406, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 367715152, guid: bc37897792a96ac419f413187abaa406, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6658986512bbd8b49be15448df5acd5a, type: 2}
+    - target: {fileID: 367715152, guid: bc37897792a96ac419f413187abaa406, type: 3}
+      propertyPath: m_Positions.Array.data[0].x
+      value: 3.024107
+      objectReference: {fileID: 0}
+    - target: {fileID: 367715152, guid: bc37897792a96ac419f413187abaa406, type: 3}
+      propertyPath: m_Positions.Array.data[0].y
+      value: 0.5490707
+      objectReference: {fileID: 0}
+    - target: {fileID: 367715152, guid: bc37897792a96ac419f413187abaa406, type: 3}
+      propertyPath: m_Positions.Array.data[0].z
+      value: -11.116833
+      objectReference: {fileID: 0}
+    - target: {fileID: 367715152, guid: bc37897792a96ac419f413187abaa406, type: 3}
+      propertyPath: m_Positions.Array.data[1].x
+      value: 3.1869564
+      objectReference: {fileID: 0}
+    - target: {fileID: 367715152, guid: bc37897792a96ac419f413187abaa406, type: 3}
+      propertyPath: m_Positions.Array.data[1].y
+      value: 2.44409e-16
+      objectReference: {fileID: 0}
+    - target: {fileID: 367715152, guid: bc37897792a96ac419f413187abaa406, type: 3}
+      propertyPath: m_Positions.Array.data[1].z
+      value: -11.007203
+      objectReference: {fileID: 0}
+    - target: {fileID: 367715152, guid: bc37897792a96ac419f413187abaa406, type: 3}
+      propertyPath: m_Parameters.widthMultiplier
+      value: 0.005
+      objectReference: {fileID: 0}
     - target: {fileID: 608322017, guid: bc37897792a96ac419f413187abaa406, type: 3}
       propertyPath: m_InteractionManager
       value: 
@@ -25830,11 +26039,6 @@ PrefabInstance:
       propertyPath: holster
       value: 
       objectReference: {fileID: 1179863462}
-    - target: {fileID: 5134461657349148667, guid: bc37897792a96ac419f413187abaa406,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5464937457918739081, guid: bc37897792a96ac419f413187abaa406,
         type: 3}
       propertyPath: m_RootOrder
@@ -25895,16 +26099,6 @@ PrefabInstance:
       propertyPath: m_InteractionManager
       value: 
       objectReference: {fileID: 1932161242}
-    - target: {fileID: 8480215060685690218, guid: bc37897792a96ac419f413187abaa406,
-        type: 3}
-      propertyPath: m_UseGravity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8480215060685690218, guid: bc37897792a96ac419f413187abaa406,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8480215060685690241, guid: bc37897792a96ac419f413187abaa406,
         type: 3}
       propertyPath: m_InteractionManager

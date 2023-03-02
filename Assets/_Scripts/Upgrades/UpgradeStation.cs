@@ -6,7 +6,7 @@ public class UpgradeStation : MonoBehaviour
     public Color errorColor;
     public float fanSoundSmoothTime;
     public AudioSource buttonSource;
-    public AudioClip screenOn, screenOff, error;
+    public AudioClip screenOn, screenOff, error, select;
     public Animator screenAnim;
     public TextMeshProUGUI titleText, normalText, currencyText, minusText;
     public GameObject nut, backButton, executeButton;
@@ -21,6 +21,7 @@ public class UpgradeStation : MonoBehaviour
     private TypeWriterText titleType, normalType, currencyType, minusType;
     private float currentVolume, targetVolume;
     private int activeUpgrade;
+    private bool notEnough;
 
 
     private void Start()
@@ -227,6 +228,7 @@ public class UpgradeStation : MonoBehaviour
     }
     public void NotEnough()
     {
+        notEnough = true;
         buttonSource.PlayOneShot(error);
         minusText.color = errorColor;
         currencyText.color = errorColor;
@@ -234,7 +236,15 @@ public class UpgradeStation : MonoBehaviour
     }
     private void NotEnoughDone()
     {
+        notEnough = false;
         minusText.color = Color.black;
         currencyText.color = Color.black;
+    }
+    public void SelectSound()
+    {
+        if (!notEnough)
+        {
+            buttonSource.PlayOneShot(select);
+        }
     }
 }

@@ -11,9 +11,8 @@ public class CZ50Upgrades : MonoBehaviour
     public GameObject bulletOutline, recoilOutline, ammoClipOutline, speedOutline;
     public UpgradeStation upgradeStation;
 
-    private Color startColor, startTextColor, selectTextColor;
+    private Color startTextColor, selectTextColor;
     private Animator cz50UpgradesAnim;
-    private int activeUpgrade;
     private int bulletLevel, recoilLevel, ammoClipLevel, speedLevel;
     private int startBulletLevel, startRecoilLevel, startAmmoClipLevel, startSpeedLevel;
 
