@@ -374,7 +374,6 @@ GameObject:
   - component: {fileID: 367715151}
   - component: {fileID: 367715156}
   - component: {fileID: 367715155}
-  - component: {fileID: 367715154}
   - component: {fileID: 367715153}
   - component: {fileID: 367715152}
   m_Layer: 0
@@ -383,7 +382,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &367715151
 Transform:
   m_ObjectHideFlags: 0
@@ -395,7 +394,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.0494, z: 0.1591}
   m_LocalScale: {x: 0.073134, y: 0.073134, z: 0.073134}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1024010119}
   m_Father: {fileID: 5464937457918739081}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -449,27 +449,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &367715154
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 367715150}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &367715153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -482,8 +461,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bab3ce5312ff364d81cace8c4b8d63c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserHit: {fileID: 0}
-  offset: 0.1
+  laserHit: {fileID: 1024010118}
+  offset: 0.05
 --- !u!120 &367715152
 LineRenderer:
   serializedVersion: 2
@@ -492,7 +471,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 367715150}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -505,7 +484,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 6658986512bbd8b49be15448df5acd5a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -527,11 +506,11 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
+  - {x: 3.024107, y: 0.5490707, z: -11.116833}
+  - {x: 3.1869564, y: 2.44409e-16, z: -11.007203}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.01
+    widthMultiplier: 0.005
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -982,6 +961,102 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1024010118
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1024010119}
+  - component: {fileID: 1024010123}
+  - component: {fileID: 1024010122}
+  - component: {fileID: 1024010120}
+  m_Layer: 0
+  m_Name: LaserHit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1024010119
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024010118}
+  m_LocalRotation: {x: 0.005089581, y: -0.015921794, z: -0.00015805289, w: 0.99986035}
+  m_LocalPosition: {x: -75.83643, y: -23.117521, z: -18.227495}
+  m_LocalScale: {x: 1.1185967, y: 1.1185967, z: 1.1185964}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 367715151}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &1024010123
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024010118}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &1024010122
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024010118}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 85cbcdb6e9f9cc44a81068cc8f56ba0b, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1024010120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024010118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b68ab240e8f5e054ab57571221d330b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1139569308
 GameObject:
   m_ObjectHideFlags: 0
@@ -2973,8 +3048,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82d8b67ec5ca96446b9e5607baee5214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
+  bulletForce: 10
+  penetrationAmount: 1
   casingPrefab: {fileID: 1139190485275634224, guid: 37378da54e6a77642b0acb727f76c113,
     type: 3}
+  laser: {fileID: 367715150}
   muzzle: {fileID: 260480102}
   casingPoint: {fileID: 1968779820}
   leftAttach: {fileID: 1361272498}
@@ -3004,8 +3083,6 @@ MonoBehaviour:
   magLocation: {fileID: 5440392112006933917}
   magEndPoint: {fileID: 1356023294}
   reloadValid: 0
-  mag: {fileID: 0}
-  currentGameobject: {fileID: 0}
 --- !u!114 &5134461657349148667
 MonoBehaviour:
   m_ObjectHideFlags: 0

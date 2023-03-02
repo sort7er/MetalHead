@@ -50,11 +50,26 @@ public class CZ50Upgrades : MonoBehaviour
         ammoClipLevel = startAmmoClipLevel;
         penetrationLevel = startPenetrationLevel;
         laserLevel = startLaserLevel;
-        bulletNumber.text = bulletLevel.ToString();
-        recoilNumber.text = recoilLevel.ToString();
-        ammoClipNumber.text = ammoClipLevel.ToString();
-        penetrationNumber.text = penetrationLevel.ToString();
-        laserNumber.text = laserLevel.ToString();
+        if(bulletLevel != damageLevelCap)
+        {
+            bulletNumber.text = bulletLevel.ToString();
+        }
+        if (recoilLevel != recoilLevelCap)
+        {
+            recoilNumber.text = recoilLevel.ToString();
+        }
+        if (ammoClipLevel != ammoClipCap)
+        {
+            ammoClipNumber.text = ammoClipLevel.ToString();
+        }
+        if (penetrationLevel != penetrationCap)
+        {
+            penetrationNumber.text = penetrationLevel.ToString();
+        }
+        if (laserLevel != laserCap)
+        {
+            laserNumber.text = laserLevel.ToString();
+        }
     }
 
     public void SetCost()

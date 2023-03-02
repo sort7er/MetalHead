@@ -14,7 +14,6 @@ public class Laser : MonoBehaviour
     private void Start()
     {
         laser = GetComponent<LineRenderer>();
-        //laserHit.SetActive(true);
     }
 
     private void LateUpdate()
@@ -28,19 +27,20 @@ public class Laser : MonoBehaviour
             if (Physics.Raycast(transform.position, transform.forward, out hit, 5000, Physics.AllLayers, QueryTriggerInteraction.Ignore))
             {
                 laser.SetPosition(1, hit.point);
-                ////laserHit.SetActive(true);
-                //laserHit.transform.position = hit.point - transform.forward * offset;
+                laserHit.SetActive(true);
+                laserHit.transform.position = hit.point - transform.forward * offset;
+                laserHit.transform.rotation = Quaternion.LookRotation(-hit.normal);
             }
             else
             {
                 laser.SetPosition(1, transform.forward * 5000);
-                //laserHit.SetActive(false);
+                laserHit.SetActive(false);
             }
         }
         else
         {
             laser.enabled = false;
-            //laserHit.SetActive(false);
+            laserHit.SetActive(false);
         }
     }
     public void LaserOn(bool state)

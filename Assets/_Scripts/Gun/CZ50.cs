@@ -4,7 +4,7 @@ using UnityEngine;
 public class CZ50 : MonoBehaviour
 {
 
-    public int damage, bulletForce, penetrationAmount;
+    public int bulletForce, penetrationAmount;
 
     [Header("References")]
     public GameObject casingPrefab, laser;
@@ -20,7 +20,7 @@ public class CZ50 : MonoBehaviour
     private Animator cz50Anim;
     private SoundForGun soundForGun;
     private int currentAmmo;
-    private int singleDigit, doubleDigit;
+    private int damage, singleDigit, doubleDigit;
     private bool reloadNeeded, firstDialUpdate, projectilePenetration;
 
     private void Start()
@@ -65,7 +65,6 @@ public class CZ50 : MonoBehaviour
                         RaycastHit penHit;
                         if (hit.collider.Raycast(penRay, out penHit, penetrationAmount))
                         {
-                            Debug.Log(penHit.transform.name);
                             Ray secondBullet = new(penHit.point, muzzle.forward);
                             RaycastHit secondHit;
                             if (Physics.Raycast(secondBullet, out secondHit))
