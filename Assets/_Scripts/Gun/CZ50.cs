@@ -46,7 +46,7 @@ public class CZ50 : MonoBehaviour
             //EffectManager.instance.Fire(muzzle, damage, bulletSpeed);
             Ray ray = new Ray(muzzle.position, muzzle.forward);
             RaycastHit hit;
-            if(Physics.Raycast(ray, out hit))
+            if(Physics.Raycast(ray, out hit, 5000, Physics.AllLayers, QueryTriggerInteraction.Ignore))
             {
                 if(!hit.transform.CompareTag("Player") && !hit.transform.CompareTag("Gun"))
                 {
@@ -67,7 +67,7 @@ public class CZ50 : MonoBehaviour
                         {
                             Ray secondBullet = new(penHit.point, muzzle.forward);
                             RaycastHit secondHit;
-                            if (Physics.Raycast(secondBullet, out secondHit))
+                            if (Physics.Raycast(secondBullet, out secondHit, 5000, Physics.AllLayers, QueryTriggerInteraction.Ignore))
                             {
                                 if (!secondHit.transform.CompareTag("Player") && !secondHit.transform.CompareTag("Gun"))
                                 {

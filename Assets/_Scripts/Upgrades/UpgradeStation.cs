@@ -6,16 +6,17 @@ public class UpgradeStation : MonoBehaviour
     public Color errorColor;
     public float fanSoundSmoothTime;
     public AudioSource buttonSource;
-    public AudioClip screenOn, screenOff, error, select;
+    public AudioClip screenOn, screenOff, error, select, select2, upgrading;
     public Animator screenAnim;
     public TextMeshProUGUI titleText, normalText, currencyText, minusText;
-    public GameObject nut, backButton, executeButton;
+    public GameObject nut, backButton, executeButton, loadingBar;
     public GameObject[] gun;
     public CZ50Upgrades cz50Upgrades;
 
     [HideInInspector] public int currencyOnScreen, minusOnScreen;
     [HideInInspector] public bool isOn;
 
+    private Animator loadingBarAnim;
     private InsertWeapon insertWeapon;
     private AudioSource upgradeStationSource;
     private TypeWriterText titleType, normalType, currencyType, minusType;
@@ -26,6 +27,7 @@ public class UpgradeStation : MonoBehaviour
 
     private void Start()
     {
+        loadingBarAnim = loadingBar.GetComponent<Animator>();
         insertWeapon = GetComponentInChildren<InsertWeapon>();
         upgradeStationSource = GetComponent<AudioSource>();
         titleType = titleText.GetComponent<TypeWriterText>();
@@ -64,7 +66,14 @@ public class UpgradeStation : MonoBehaviour
         currencyOnScreen = GameManager.instance.magnet.GetMetalsCollected();
         minusOnScreen = 0;
         currencyType.StopTyping();
-        currencyText.text = currencyOnScreen.ToString("#,#");
+        if (currencyOnScreen == 0)
+        {
+            currencyText.text = "0";
+        }
+        else
+        {
+            currencyText.text = currencyOnScreen.ToString("#,#");
+        }
         currencyType.StartTyping();
         minusType.StopTyping();
         minusText.text = "";
@@ -98,6 +107,7 @@ public class UpgradeStation : MonoBehaviour
         nut.SetActive(true);
         backButton.SetActive(false);
         executeButton.SetActive(false);
+        loadingBar.SetActive(false);
         Invoke("InsertWeaponMessage", 1f);
         for (int i = 0; i < gun.Length; i++)
         {
@@ -121,6 +131,7 @@ public class UpgradeStation : MonoBehaviour
 
         backButton.SetActive(false);
         executeButton.SetActive(false);
+        loadingBar.SetActive(false);
 
         for (int i = 0; i < gun.Length; i++)
         {
@@ -192,11 +203,20 @@ public class UpgradeStation : MonoBehaviour
     }
     public void Execute(bool withUpgrades)
     {
-        if(withUpgrades)
+        minusType.StopTyping();
+        minusOnScreen = 0;
+        minusText.text = "";
+        currencyText.text = "";
+        gun[activeUpgrade - 1].SetActive(false);
+        nut.SetActive(false);
+        backButton.SetActive(false);
+        executeButton.SetActive(false);
+        if (withUpgrades)
         {
             if (activeUpgrade == 1)
             {
                 cz50Upgrades.Execute();
+                Upgrading();
             }
         }
         else
@@ -205,10 +225,24 @@ public class UpgradeStation : MonoBehaviour
             {
                 cz50Upgrades.Abort();
             }
+            UpgradeDone();
         }
-        minusType.StopTyping();
-        minusOnScreen = 0;
-        minusText.text = "";
+
+    }
+    private void Upgrading()
+    {
+        normalText.text = "Loading";
+        normalType.StartTyping();
+        loadingBar.SetActive(true);
+        loadingBarAnim.SetTrigger("Loading");
+        buttonSource.PlayOneShot(upgrading);
+        Invoke("UpgradeDone", 4.5f);
+    }
+    private void UpgradeDone()
+    {
+        normalType.StopTyping();
+        normalText.text = "";
+        loadingBar.SetActive(false);
         currencyOnScreen = GameManager.instance.magnet.GetMetalsCollected();
         if (currencyOnScreen == 0)
         {
@@ -220,12 +254,10 @@ public class UpgradeStation : MonoBehaviour
         }
         currencyType.StartTyping();
         StartScreen();
-
-
-        //Can be changed later
         insertWeapon.InsertWeaponAnim(true);
         GameManager.instance.IsUpgrading(false);
     }
+
     public void NotEnough()
     {
         notEnough = true;
@@ -240,11 +272,19 @@ public class UpgradeStation : MonoBehaviour
         minusText.color = Color.black;
         currencyText.color = Color.black;
     }
-    public void SelectSound()
+    public void SelectSound(int type)
     {
         if (!notEnough)
         {
-            buttonSource.PlayOneShot(select);
+            if(type == 0)
+            {
+                buttonSource.PlayOneShot(select);
+            }
+            else
+            {
+                buttonSource.PlayOneShot(select2);
+            }
+            
         }
     }
 }
