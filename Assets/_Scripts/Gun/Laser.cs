@@ -4,6 +4,8 @@ public class Laser : MonoBehaviour
 {
     [Header("References")]
     public GameObject laserHit;
+    public Material glassMat, laserMat;
+    public MeshRenderer glass;
 
     [Header("Values")]
     public float offset = 0.1f;
@@ -46,5 +48,13 @@ public class Laser : MonoBehaviour
     public void LaserOn(bool state)
     {
         laserOn = state;
+        if (state)
+        {
+            glass.material = laserMat;
+        }
+        else
+        {
+            glass.material = glassMat;
+        }
     }
 }
