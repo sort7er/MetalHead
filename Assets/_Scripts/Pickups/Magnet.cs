@@ -5,12 +5,15 @@ public class Magnet : MonoBehaviour
 {
     public Transform magnetMuzzle;
     public Dial doubleDial, singleDial, thirdDial, fourthDial, fifthDial, sixthDial;
+
+    private Animator magnetAnim;
     private int metalsCollected;
     private int singleDigit, doubleDigit, thirdDigit, fourthDigit, fifthDigit, sixthDigit;
 
     private void Start()
     {
         UpdateMetal(4000);
+        magnetAnim = GetComponent<Animator>();
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -34,6 +37,14 @@ public class Magnet : MonoBehaviour
     {
         metalsCollected = newNumber;
         UpdateDial();
+    }
+    public void GrabMagnet()
+    {
+        magnetAnim.SetBool("Out", true);
+    }
+    public void ReleaseMagnet()
+    {
+        magnetAnim.SetBool("Out", false);
     }
     private void UpdateDial()
     {
