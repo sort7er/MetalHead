@@ -49,21 +49,12 @@ public class AmmoBag : MonoBehaviour
         }
         if (other.CompareTag("Interactor"))
         {
-            Invoke("DisableChild", 0.3f);
-            Invoke("DisableMagToDrop", 0.3f);
+            if (GameManager.instance.CheckHand("Magazine") == 0)
+            {
+                Invoke("DisableMagToDrop", 0.3f);
+            }
             handIn = false;
             ammoPouchAnim.SetBool("Open", false);
-            CheckAmmoStatus();
-        }
-    }
-
-    private void DisableChild()
-    {
-        if (magPos.childCount > 0)
-        {
-            magPos.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
-            magPos.GetChild(0).GetComponent<Collider>().enabled = false;
-            magPos.GetChild(0).transform.GetChild(0).gameObject.SetActive(false);
             CheckAmmoStatus();
         }
     }
@@ -103,6 +94,7 @@ public class AmmoBag : MonoBehaviour
     {
         if (handIn && magazineToDrop != null)
         {
+            Debug.Log("1");
             magazineToDrop.GetComponent<Mag>().EnableGravity(false);
             magazineToDrop.transform.parent = magPos;
             magazineToDrop.transform.position = magPos.position;
@@ -118,8 +110,20 @@ public class AmmoBag : MonoBehaviour
             magazineToDrop.GetComponent<Collider>().enabled = false;
             magazineToDrop.transform.GetChild(0).gameObject.SetActive(false);
             magazineToDrop = null;
+
+            if (magPos.childCount > 0)
+            {
+                magPos.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
+                magPos.GetChild(0).GetComponent<Collider>().enabled = false;
+                magPos.GetChild(0).transform.GetChild(0).gameObject.SetActive(false);
+            }
             CheckAmmoStatus();
         }
+
+    }
+
+    private void SetMag(GameObject mag)
+    {
 
     }
 
