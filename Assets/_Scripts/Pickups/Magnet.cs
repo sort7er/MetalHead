@@ -1,17 +1,21 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class Magnet : MonoBehaviour
 {
-    public Transform magnetMuzzle;
+
+    public Transform magnetMuzzle, leftAttach, rightAttach;
     public Dial doubleDial, singleDial, thirdDial, fourthDial, fifthDial, sixthDial;
 
+    private XRGrabInteractable xrGrabInteractable;
     private Animator magnetAnim;
     private int metalsCollected;
     private int singleDigit, doubleDigit, thirdDigit, fourthDigit, fifthDigit, sixthDigit;
 
     private void Start()
     {
+        xrGrabInteractable = GetComponent<XRGrabInteractable>();
         UpdateMetal(4000);
         magnetAnim = GetComponent<Animator>();
     }
@@ -41,6 +45,14 @@ public class Magnet : MonoBehaviour
     public void GrabMagnet()
     {
         magnetAnim.SetBool("Out", true);
+        if (GameManager.instance.CheckHand("Magnet") == 1)
+        {
+            xrGrabInteractable.attachTransform = leftAttach;
+        }
+        if (GameManager.instance.CheckHand("Magnet") == 2)
+        {
+            xrGrabInteractable.attachTransform = rightAttach;
+        }
     }
     public void ReleaseMagnet()
     {

@@ -3,33 +3,71 @@ using UnityEngine.Events;
 
 public class DynamicTrigger : MonoBehaviour
 {
-    public bool triggerEnabled;
+    public bool compareColliders;
+    public Collider[] collidersToCompare;
+
     public string tagToCompare;
     public UnityEvent enter, exit;
+
+    private bool triggerDisabled;
 
     private GameObject enteringGameObject;
 
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(tagToCompare) && triggerEnabled)
+        if (!triggerDisabled)
         {
-            enteringGameObject = other.gameObject;
-            enter.Invoke();
+            if (compareColliders)
+            {
+                for(int i = 0; i < collidersToCompare.Length; i++)
+                {
+                    if(other == collidersToCompare[i])
+                    {
+                        enter.Invoke();
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                if (other.CompareTag(tagToCompare))
+                {
+                    enteringGameObject = other.gameObject;
+                    enter.Invoke();
+                }
+            }
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag(tagToCompare) && triggerEnabled)
+        if (!triggerDisabled)
         {
-            enteringGameObject = null;
-            exit.Invoke();
+            if (compareColliders)
+            {
+                for (int i = 0; i < collidersToCompare.Length; i++)
+                {
+                    if (other == collidersToCompare[i])
+                    {
+                        exit.Invoke();
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                if (other.CompareTag(tagToCompare))
+                {
+                    enteringGameObject = null;
+                    exit.Invoke();
+                }
+            }
         }
     }
 
-    public void TriggerEnabled(bool state)
+    public void TriggerDisabled(bool state)
     {
-        triggerEnabled = state;
+        triggerDisabled = state;
     }
 
     public GameObject GetGameObject() { return enteringGameObject; }

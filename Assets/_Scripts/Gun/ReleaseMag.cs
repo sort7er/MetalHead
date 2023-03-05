@@ -29,7 +29,7 @@ public class ReleaseMag : MonoBehaviour
         soundForGun = GetComponent<SoundForGun>();
         returnToHolster = GetComponent<ReturnToHolster>();
         dynamicTrigger = magLocation.GetComponent<DynamicTrigger>();
-        dynamicTrigger.TriggerEnabled(false);
+        dynamicTrigger.TriggerDisabled(true);
         lHand = GameManager.instance.leftHand.gameObject.GetComponent<XRDirectInteractor>();
         rHand = GameManager.instance.rightHand.gameObject.GetComponent<XRDirectInteractor>();
         UpdateMag(magLocation.GetChild(0));
@@ -103,7 +103,7 @@ public class ReleaseMag : MonoBehaviour
             mag.localRotation = Quaternion.identity;
             magInGun.EnableGravity(false);
             magCollider.enabled = false;
-            dynamicTrigger.TriggerEnabled(false);
+            dynamicTrigger.TriggerDisabled(true);
         }
 
     }
@@ -148,7 +148,7 @@ public class ReleaseMag : MonoBehaviour
     }
     private void EnableTrigger()
     {
-        dynamicTrigger.TriggerEnabled(true);
+        dynamicTrigger.TriggerDisabled(false);
     }
     private void MagIn()
     {

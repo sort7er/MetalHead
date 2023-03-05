@@ -48,7 +48,7 @@ public class CZ50 : MonoBehaviour
             RaycastHit hit;
             if(Physics.Raycast(ray, out hit, 5000, Physics.AllLayers, QueryTriggerInteraction.Ignore))
             {
-                if(!hit.transform.CompareTag("Player") && !hit.transform.CompareTag("Gun"))
+                if(!hit.transform.CompareTag("Player") && !hit.transform.CompareTag("Gun") && hit.transform.gameObject.layer != 9)
                 {
                     if (hit.rigidbody != null)
                     {
@@ -69,7 +69,7 @@ public class CZ50 : MonoBehaviour
                             RaycastHit secondHit;
                             if (Physics.Raycast(secondBullet, out secondHit, 5000, Physics.AllLayers, QueryTriggerInteraction.Ignore))
                             {
-                                if (!secondHit.transform.CompareTag("Player") && !secondHit.transform.CompareTag("Gun"))
+                                if (!secondHit.transform.CompareTag("Player") && !secondHit.transform.CompareTag("Gun") && hit.transform.gameObject.layer != 9)
                                 {
                                     if (secondHit.rigidbody != null)
                                     {
