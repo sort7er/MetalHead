@@ -91,7 +91,7 @@ public class Pickup : MonoBehaviour
         magnet = magnetMuzzle;
         pickUp = true;
         CancelInvoke();
-        pickUpAnim.enabled = false;
+        pickUpAnim.SetTrigger("PickedUp");
         pickupMesh.enabled = true;
     }
     public void PickedUp()

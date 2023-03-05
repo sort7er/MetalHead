@@ -44,7 +44,7 @@ public class Magnet : MonoBehaviour
     }
     public void GrabMagnet()
     {
-        magnetAnim.SetBool("Out", true);
+        Invoke("GrabMagnetAnim", 0.5f);
         if (GameManager.instance.CheckHand("Magnet") == 1)
         {
             xrGrabInteractable.attachTransform = leftAttach;
@@ -58,6 +58,7 @@ public class Magnet : MonoBehaviour
     }
     public void ReleaseMagnet()
     {
+        CancelInvoke();
         magnetAnim.SetBool("Out", false);
         GameManager.instance.leftHand.GrabHandle(false);
         GameManager.instance.rightHand.GrabHandle(false);
@@ -77,5 +78,10 @@ public class Magnet : MonoBehaviour
         fourthDial.SetDial(fourthDigit);
         fifthDial.SetDial(fifthDigit);
         sixthDial.SetDial(sixthDigit);
+    }
+
+    private void GrabMagnetAnim()
+    {
+        magnetAnim.SetBool("Out", true);
     }
 }
