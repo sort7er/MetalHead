@@ -48,15 +48,19 @@ public class Magnet : MonoBehaviour
         if (GameManager.instance.CheckHand("Magnet") == 1)
         {
             xrGrabInteractable.attachTransform = leftAttach;
+            GameManager.instance.leftHand.GrabHandle(true);
         }
         if (GameManager.instance.CheckHand("Magnet") == 2)
         {
             xrGrabInteractable.attachTransform = rightAttach;
+            GameManager.instance.rightHand.GrabHandle(true);
         }
     }
     public void ReleaseMagnet()
     {
         magnetAnim.SetBool("Out", false);
+        GameManager.instance.leftHand.GrabHandle(false);
+        GameManager.instance.rightHand.GrabHandle(false);
     }
     private void UpdateDial()
     {
