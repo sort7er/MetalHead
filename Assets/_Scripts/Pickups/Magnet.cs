@@ -5,9 +5,11 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class Magnet : MonoBehaviour
 {
 
+    public Animator rodAnim;
     public Transform magnetMuzzle, leftAttach, rightAttach;
     public Dial doubleDial, singleDial, thirdDial, fourthDial, fifthDial, sixthDial;
 
+    private MagnetSounds magnetSounds;
     private XRGrabInteractable xrGrabInteractable;
     private Animator magnetAnim;
     private int metalsCollected;
@@ -15,6 +17,7 @@ public class Magnet : MonoBehaviour
 
     private void Start()
     {
+        magnetSounds = GetComponent<MagnetSounds>();
         xrGrabInteractable = GetComponent<XRGrabInteractable>();
         UpdateMetal(4000);
         magnetAnim = GetComponent<Animator>();
@@ -24,7 +27,15 @@ public class Magnet : MonoBehaviour
         if(other.gameObject.layer == 9)
         {
             other.GetComponent<Pickup>().PickUp(magnetMuzzle);
+            rodAnim.SetBool("PickingUp", true);
+            Invoke("DonePickingUp", 1.5f);
+
         }
+    }
+
+    private void DonePickingUp()
+    {
+        rodAnim.SetBool("PickingUp", false);
     }
 
     public void UpdateMetal(int value)
@@ -60,6 +71,7 @@ public class Magnet : MonoBehaviour
     {
         CancelInvoke();
         magnetAnim.SetBool("Out", false);
+        magnetSounds.MagnetActivate(1);
         GameManager.instance.leftHand.GrabHandle(false);
         GameManager.instance.rightHand.GrabHandle(false);
     }
@@ -83,5 +95,6 @@ public class Magnet : MonoBehaviour
     private void GrabMagnetAnim()
     {
         magnetAnim.SetBool("Out", true);
+        magnetSounds.MagnetActivate(0);
     }
 }
