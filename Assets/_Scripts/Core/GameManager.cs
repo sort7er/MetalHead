@@ -72,6 +72,21 @@ public class GameManager : MonoBehaviour
             return 0; 
         }
     }
+    public int CheckGameObject(GameObject gameObjectToCheck)
+    {
+        if (lHand.GetOldestInteractableSelected() != null && lHand.GetOldestInteractableSelected().transform.gameObject == gameObjectToCheck)
+        {
+            return 1;
+        }
+        else if (rHand.GetOldestInteractableSelected() != null && rHand.GetOldestInteractableSelected().transform.gameObject == gameObjectToCheck)
+        {
+            return 2;
+        }
+        else
+        {
+            return 0;
+        }
+    }
     public int CheckHover(GameObject gameObjectToCheck)
     {
         if (lHand.GetOldestInteractableHovered() != null && lHand.GetOldestInteractableHovered().transform.gameObject == gameObjectToCheck)

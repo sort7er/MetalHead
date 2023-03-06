@@ -228,6 +228,59 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &1707060937
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1707060939}
+  - component: {fileID: 1707060940}
+  m_Layer: 0
+  m_Name: HoverCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1707060939
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707060937}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8917573071779765604}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1707060940
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707060937}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8917573071476299079
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,6 +420,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8956300709796799723}
+  - {fileID: 1707060939}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -396,7 +450,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &8917573071779765601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -411,6 +465,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
   m_Colliders:
+  - {fileID: 1707060940}
   - {fileID: 8917573071779765607}
   m_InteractionLayerMask:
     serializedVersion: 2
@@ -501,12 +556,12 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
-  m_AttachTransform: {fileID: 0}
-  m_UseDynamicAttach: 0
-  m_MatchAttachPosition: 1
-  m_MatchAttachRotation: 1
-  m_SnapToColliderVolume: 1
-  m_AttachEaseInTime: 0.15
+  m_AttachTransform: {fileID: 8917573071779765604}
+  m_UseDynamicAttach: 1
+  m_MatchAttachPosition: 0
+  m_MatchAttachRotation: 0
+  m_SnapToColliderVolume: 0
+  m_AttachEaseInTime: 3
   m_MovementType: 2
   m_VelocityDamping: 1
   m_VelocityScale: 1
@@ -517,7 +572,7 @@ MonoBehaviour:
   m_SmoothPositionAmount: 5
   m_TightenPosition: 0.5
   m_TrackRotation: 1
-  m_SmoothRotation: 0
+  m_SmoothRotation: 1
   m_SmoothRotationAmount: 5
   m_TightenRotation: 0.5
   m_ThrowOnDetach: 1
@@ -562,7 +617,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.072490565, y: 0.05800082, z: 0.13765739}
-  m_Center: {x: 0, y: 0.009000411, z: 0}
+  m_Center: {x: 0, y: 0.028, z: 0}
 --- !u!82 &8917573071779765606
 AudioSource:
   m_ObjectHideFlags: 0
@@ -671,6 +726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 683c0ba4d4c240f4e958f0353e871bd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  smoothTime: 2.5
   box: {fileID: 8575131487382552145}
 --- !u!1 &8917573072450871650
 GameObject:
@@ -784,7 +840,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 4e29ffb1e5e02834fb7f66acae2b65c4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.019863367
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4e29ffb1e5e02834fb7f66acae2b65c4,
         type: 3}
