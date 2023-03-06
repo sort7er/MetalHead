@@ -31,6 +31,7 @@ public class Magnet : MonoBehaviour
             other.GetComponent<Pickup>().PickUp(magnetMuzzle);
             rodAnim.SetBool("PickingUp", true);
             magneticEffect.Play();
+            magnetSounds.MagnetOn();
             Invoke("DonePickingUp", 1.5f);
 
         }
@@ -40,6 +41,7 @@ public class Magnet : MonoBehaviour
     {
         rodAnim.SetBool("PickingUp", false);
         magneticEffect.Stop();
+        magnetSounds.MagnetOff();
     }
 
     public void UpdateMetal(int value)
