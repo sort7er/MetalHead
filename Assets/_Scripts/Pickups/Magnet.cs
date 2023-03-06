@@ -10,30 +10,29 @@ public class Magnet : MonoBehaviour
     public Transform magnetMuzzle, leftAttach, rightAttach;
     public Dial doubleDial, singleDial, thirdDial, fourthDial, fifthDial, sixthDial;
 
-
+    private MagnetAnimation magnetAnimation;
     private MagnetSounds magnetSounds;
     private XRGrabInteractable xrGrabInteractable;
-    private Animator magnetAnim;
+
     private int metalsCollected;
     private int singleDigit, doubleDigit, thirdDigit, fourthDigit, fifthDigit, sixthDigit;
 
     private void Start()
     {
+        magnetAnimation = GetComponent<MagnetAnimation>();
         magnetSounds = GetComponent<MagnetSounds>();
         xrGrabInteractable = GetComponent<XRGrabInteractable>();
         UpdateMetal(4000);
-        magnetAnim = GetComponent<Animator>();
     }
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.layer == 9)
         {
+            CancelInvoke();
             other.GetComponent<Pickup>().PickUp(magnetMuzzle);
             rodAnim.SetBool("PickingUp", true);
             magneticEffect.Play();
             magnetSounds.MagnetOn();
-            Invoke("DonePickingUp", 1.5f);
-
         }
     }
 
@@ -48,6 +47,7 @@ public class Magnet : MonoBehaviour
     {
         metalsCollected += value;
         UpdateDial();
+        Invoke("DonePickingUp", 0.5f);
     }
 
     public int GetMetalsCollected()
@@ -61,7 +61,7 @@ public class Magnet : MonoBehaviour
     }
     public void GrabMagnet()
     {
-        Invoke("GrabMagnetAnim", 0.5f);
+        magnetAnimation.GrabMagnetRelay();
         if (GameManager.instance.CheckHand("Magnet") == 1)
         {
             xrGrabInteractable.attachTransform = leftAttach;
@@ -75,8 +75,7 @@ public class Magnet : MonoBehaviour
     }
     public void ReleaseMagnet()
     {
-        CancelInvoke();
-        magnetAnim.SetBool("Out", false);
+        magnetAnimation.ReleaseMagnetAnim();
         magnetSounds.MagnetActivate(1);
         GameManager.instance.leftHand.GrabHandle(false);
         GameManager.instance.rightHand.GrabHandle(false);
@@ -96,11 +95,5 @@ public class Magnet : MonoBehaviour
         fourthDial.SetDial(fourthDigit);
         fifthDial.SetDial(fifthDigit);
         sixthDial.SetDial(sixthDigit);
-    }
-
-    private void GrabMagnetAnim()
-    {
-        magnetAnim.SetBool("Out", true);
-        magnetSounds.MagnetActivate(0);
     }
 }

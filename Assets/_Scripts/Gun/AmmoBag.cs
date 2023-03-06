@@ -94,7 +94,6 @@ public class AmmoBag : MonoBehaviour
     {
         if (handIn && magazineToDrop != null)
         {
-            Debug.Log("1");
             magazineToDrop.GetComponent<Mag>().EnableGravity(false);
             magazineToDrop.transform.parent = magPos;
             magazineToDrop.transform.position = magPos.position;

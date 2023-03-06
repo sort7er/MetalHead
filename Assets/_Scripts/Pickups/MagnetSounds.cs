@@ -32,7 +32,7 @@ public class MagnetSounds : MonoBehaviour
     }
     public void MagnetOn()
     {
-        targetVolume= 1.0f;
+        targetVolume= 0.6f;
     }
     public void MagnetOff()
     {
