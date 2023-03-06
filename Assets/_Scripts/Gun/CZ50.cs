@@ -21,7 +21,7 @@ public class CZ50 : MonoBehaviour
     private SoundForGun soundForGun;
     private int currentAmmo;
     private int damage, singleDigit, doubleDigit;
-    private bool reloadNeeded, firstDialUpdate, projectilePenetration;
+    private bool reloadNeeded, firstDialUpdate, projectilePenetration, slideBack;
 
     private void Start()
     {
@@ -36,57 +36,65 @@ public class CZ50 : MonoBehaviour
     {
         if(currentAmmo > 0 && !reloadNeeded)
         {
-            magInGun.Fire();
-            recoil.StartRecoil();
-            currentAmmo--;
-            soundForGun.Fire();
-            cz50Anim.SetTrigger("Fire");
-            UpdateDial();
-            muzzleFlash.Play();
-            //EffectManager.instance.Fire(muzzle, damage, bulletSpeed);
-            Ray ray = new Ray(muzzle.position, muzzle.forward);
-            RaycastHit hit;
-            if(Physics.Raycast(ray, out hit, 5000, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+            if (!slideBack)
             {
-                if(!hit.transform.CompareTag("Player") && !hit.transform.CompareTag("Gun") && hit.transform.gameObject.layer != 9)
+                magInGun.Fire();
+                recoil.StartRecoil();
+                currentAmmo--;
+                soundForGun.Fire();
+                cz50Anim.SetTrigger("Fire");
+                UpdateDial();
+                muzzleFlash.Play();
+                //EffectManager.instance.Fire(muzzle, damage, bulletSpeed);
+                Ray ray = new Ray(muzzle.position, muzzle.forward);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, 5000, Physics.AllLayers, QueryTriggerInteraction.Ignore))
                 {
-                    if (hit.rigidbody != null)
+                    if (!hit.transform.CompareTag("Player") && !hit.transform.CompareTag("Gun") && hit.transform.gameObject.layer != 9)
                     {
-                        hit.rigidbody.AddForce(hit.transform.forward - hit.normal * bulletForce, ForceMode.Impulse);
-                    }
-                    if (hit.transform.CompareTag("Enemy"))
-                    {
-                        hit.transform.GetComponent<EnemyHealth>().TakeDamage(damage);
-                    }
-                    EffectManager.instance.SpawnBulletHole(hit);
-                    if (projectilePenetration)
-                    {
-                        Ray penRay = new Ray(hit.point + ray.direction * penetrationAmount, -ray.direction);
-                        RaycastHit penHit;
-                        if (hit.collider.Raycast(penRay, out penHit, penetrationAmount))
+                        if (hit.rigidbody != null)
                         {
-                            Ray secondBullet = new(penHit.point, muzzle.forward);
-                            RaycastHit secondHit;
-                            if (Physics.Raycast(secondBullet, out secondHit, 5000, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+                            hit.rigidbody.AddForce(hit.transform.forward - hit.normal * bulletForce, ForceMode.Impulse);
+                        }
+                        if (hit.transform.CompareTag("Enemy"))
+                        {
+                            hit.transform.GetComponent<EnemyHealth>().TakeDamage(damage);
+                        }
+                        EffectManager.instance.SpawnBulletHole(hit);
+                        if (projectilePenetration)
+                        {
+                            Ray penRay = new Ray(hit.point + ray.direction * penetrationAmount, -ray.direction);
+                            RaycastHit penHit;
+                            if (hit.collider.Raycast(penRay, out penHit, penetrationAmount))
                             {
-                                if (!secondHit.transform.CompareTag("Player") && !secondHit.transform.CompareTag("Gun") && hit.transform.gameObject.layer != 9)
+                                Ray secondBullet = new(penHit.point, muzzle.forward);
+                                RaycastHit secondHit;
+                                if (Physics.Raycast(secondBullet, out secondHit, 5000, Physics.AllLayers, QueryTriggerInteraction.Ignore))
                                 {
-                                    if (secondHit.rigidbody != null)
+                                    if (!secondHit.transform.CompareTag("Player") && !secondHit.transform.CompareTag("Gun") && hit.transform.gameObject.layer != 9)
                                     {
-                                        secondHit.rigidbody.AddForce(secondHit.transform.forward - secondHit.normal * bulletForce, ForceMode.Impulse);
+                                        if (secondHit.rigidbody != null)
+                                        {
+                                            secondHit.rigidbody.AddForce(secondHit.transform.forward - secondHit.normal * bulletForce, ForceMode.Impulse);
+                                        }
+                                        if (secondHit.transform.CompareTag("Enemy"))
+                                        {
+                                            secondHit.transform.GetComponent<EnemyHealth>().TakeDamage(damage);
+                                        }
+                                        EffectManager.instance.SpawnBulletHole(secondHit);
                                     }
-                                    if (secondHit.transform.CompareTag("Enemy"))
-                                    {
-                                        secondHit.transform.GetComponent<EnemyHealth>().TakeDamage(damage);
-                                    }
-                                    EffectManager.instance.SpawnBulletHole(secondHit);
                                 }
                             }
                         }
-                    }
 
+                    }
                 }
             }
+            else
+            {
+                soundForGun.Empty();
+            }
+
 
 
         }
@@ -179,5 +187,9 @@ public class CZ50 : MonoBehaviour
     public void Laser(bool state)
     {
         laser.SetActive(state);
+    }
+    public void SlideBack(bool state)
+    {
+        slideBack = state;
     }
 }

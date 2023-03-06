@@ -62,6 +62,7 @@ public class Slide : MonoBehaviour
 
     public void Follow()
     {
+        cz50.SlideBack(true);
         follow = true;
         slideValid = false;
         if (GameManager.instance.CheckHand("Slide") == 2)
@@ -111,6 +112,7 @@ public class Slide : MonoBehaviour
     }
     public void SlideDone()
     {
+        cz50.SlideBack(false);
         soundForGun.Slide(1);
         if(slideValid && releaseMag.reloadValid)
         {
