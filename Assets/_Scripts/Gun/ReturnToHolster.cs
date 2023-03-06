@@ -76,6 +76,10 @@ public class ReturnToHolster : MonoBehaviour
     public void CanHolster(bool state)
     {
         canHolster = state;
+        if(!isHolding && !isHolstered)
+        {
+            Holster();
+        }
 
     }
 }
