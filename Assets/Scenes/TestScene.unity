@@ -6083,7 +6083,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 366898097}
   serializedVersion: 8
-  lengthInSec: 0.1
+  lengthInSec: 2
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -6148,7 +6148,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -6158,7 +6158,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.1
+      scalar: 2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -6211,7 +6211,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 100000
+      scalar: 10000
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -10040,7 +10040,7 @@ ParticleSystem:
     lifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.001
+      scalar: 0.0001
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -10171,14 +10171,14 @@ ParticleSystem:
     widthOverTrail:
       serializedVersion: 2
       minMaxState: 1
-      scalar: 0.025
+      scalar: 0.1
       minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0
+          value: 1
           inSlope: 0.022342248
           outSlope: 0.022342248
           tangentMode: 0
@@ -10187,7 +10187,7 @@ ParticleSystem:
           outWeight: 0.40782124
         - serializedVersion: 3
           time: 1
-          value: 1
+          value: 0.14806366
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -13751,6 +13751,10 @@ MonoBehaviour:
   - {fileID: 5030928432243003539, guid: 4c9a9695a259f4d4fb1898133e77b5cb, type: 3}
   - {fileID: 4105155477360791956, guid: 665841814dfd7e44596d8d0a5db278b2, type: 3}
   - {fileID: 6212678997429254905, guid: 1e17c20d058a6234cab72e7f92ecbc67, type: 3}
+  pickUpEffect:
+  - {fileID: 105952355330092607, guid: a549fd50194f9ab439da9bcd94a737b4, type: 3}
+  - {fileID: 6920413416558812168, guid: 8061d8daf8a6edd4b8a00460c4385625, type: 3}
+  - {fileID: 4550768861569893247, guid: cd6066fa3fd7fae4bb233de758ad5960, type: 3}
 --- !u!114 &590820404
 MonoBehaviour:
   m_ObjectHideFlags: 0

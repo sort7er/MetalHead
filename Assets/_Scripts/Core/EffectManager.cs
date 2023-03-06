@@ -6,6 +6,7 @@ public class EffectManager : MonoBehaviour
     public GameObject bulletPrefab;
     public GameObject bulletHolePrefab;
     public GameObject[] pickUp;
+    public GameObject[] pickUpEffect;
 
     private void Awake()
     {
@@ -38,9 +39,17 @@ public class EffectManager : MonoBehaviour
     {
         for(int i = 0; i < numberOfPickups; i++)
         {
-            GameObject pickup = Instantiate(pickUp[Random.Range(0, pickUp.Length)], enemy.position, Quaternion.identity);
+            int randomPickup = Random.Range(0, pickUp.Length);
+            GameObject pickup = Instantiate(pickUp[randomPickup], enemy.position, Quaternion.identity);
             pickup.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-2,2), 2, Random.Range(-2, 2)), ForceMode.Impulse);
+            pickup.GetComponent<Pickup>().SetPickupID(randomPickup);
             pickup.transform.parent = ParentManager.instance.pickups;
         }
+    }
+    public void SpawnPickupeEffect(Transform pointToSpawn, int pickUpID)
+    {
+        GameObject pickup = Instantiate(pickUpEffect[pickUpID], pointToSpawn.position, Quaternion.identity);
+        pickup.transform.parent = ParentManager.instance.pickups;
+        Destroy(pickup, 1);
     }
 }

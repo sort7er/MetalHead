@@ -8,6 +8,7 @@ public class Pickup : MonoBehaviour
     public ParticleSystem effect;
     public AudioClip[] metalSounds;
 
+    public int pickUpID;
     private AudioSource pickupSource;
     private Transform magnet;
     private Vector3 smallSize;
@@ -97,9 +98,14 @@ public class Pickup : MonoBehaviour
     public void PickedUp()
     {
         GameManager.instance.magnet.UpdateMetal(value);
+        EffectManager.instance.SpawnPickupeEffect(transform, pickUpID);
         pickupSource.PlayOneShot(metalSounds[Random.Range(0, metalSounds.Length)]);
         pickupMesh.enabled = false;
         Destroy(gameObject, 0.5f);
+    }
+    public void SetPickupID(int ID)
+    {
+        pickUpID = ID;
     }
 
 }
