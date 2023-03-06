@@ -6,8 +6,10 @@ public class Magnet : MonoBehaviour
 {
 
     public Animator rodAnim;
+    public ParticleSystem magneticEffect;
     public Transform magnetMuzzle, leftAttach, rightAttach;
     public Dial doubleDial, singleDial, thirdDial, fourthDial, fifthDial, sixthDial;
+
 
     private MagnetSounds magnetSounds;
     private XRGrabInteractable xrGrabInteractable;
@@ -28,6 +30,7 @@ public class Magnet : MonoBehaviour
         {
             other.GetComponent<Pickup>().PickUp(magnetMuzzle);
             rodAnim.SetBool("PickingUp", true);
+            magneticEffect.Play();
             Invoke("DonePickingUp", 1.5f);
 
         }
@@ -36,6 +39,7 @@ public class Magnet : MonoBehaviour
     private void DonePickingUp()
     {
         rodAnim.SetBool("PickingUp", false);
+        magneticEffect.Stop();
     }
 
     public void UpdateMetal(int value)
