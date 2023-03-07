@@ -11,7 +11,7 @@ public class Mag : MonoBehaviour
     public Collider trigger;
 
     private int magSize;
-    public int currentAmmo;
+    private int currentAmmo;
     private Rigidbody rb;
 
     private void Awake()
@@ -37,6 +37,7 @@ public class Mag : MonoBehaviour
 
     public void GrabMag()
     {
+        NotHovering();
         CancelInvoke();
         trigger.enabled = false;
         if (GameManager.instance.CheckHand("Magazine") == 1)
@@ -110,15 +111,21 @@ public class Mag : MonoBehaviour
         if (currentAmmo == 0)
         {
             bullets[0].SetActive(false);
+            bullets[1].SetActive(false);
+            bullets[2].SetActive(false);
+            bullets[3].SetActive(false);
         }
         else if (currentAmmo == 1)
         {
             bullets[1].SetActive(false);
+            bullets[2].SetActive(false);
+            bullets[3].SetActive(false);
             magPart.position = magPartPos[3].position;
         }
         else if (currentAmmo == 2)
         {
             bullets[2].SetActive(false);
+            bullets[3].SetActive(false);
             magPart.position = magPartPos[2].position;
         }
         else if (currentAmmo == 3)
@@ -143,5 +150,22 @@ public class Mag : MonoBehaviour
             rb.isKinematic= !state;
 
         }
+    }
+
+    public void IsHovering()
+    {
+        if (Vector3.Distance(GameManager.instance.leftHand.transform.position, transform.position) < Vector3.Distance(GameManager.instance.rightHand.transform.position, transform.position))
+        {
+            GameManager.instance.leftHand.Hover(true);
+        }
+        else
+        {
+            GameManager.instance.rightHand.Hover(true);
+        }
+    }
+    public void NotHovering()
+    {
+        GameManager.instance.leftHand.Hover(false);
+        GameManager.instance.rightHand.Hover(false);
     }
 }

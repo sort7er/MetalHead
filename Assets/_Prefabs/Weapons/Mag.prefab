@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 686641380}
   m_LocalRotation: {x: -0.14417762, y: 0.14417762, z: 0.69225204, w: 0.69225204}
-  m_LocalPosition: {x: -0.09000001, y: 0.080000006, z: 0.19000001}
+  m_LocalPosition: {x: -0.09, y: 0.1108, z: 0.17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -55,7 +55,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1873844996}
   m_LocalRotation: {x: -0.14417762, y: -0.14417762, z: -0.69225204, w: 0.69225204}
-  m_LocalPosition: {x: 0.09000001, y: 0.080000006, z: 0.19000001}
+  m_LocalPosition: {x: 0.09, y: 0.1108, z: 0.17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -592,10 +592,34 @@ MonoBehaviour:
   m_CustomReticle: {fileID: 0}
   m_FirstHoverEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1905724417}
+        m_TargetAssemblyTypeName: Mag, Assembly-CSharp
+        m_MethodName: IsHovering
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_LastHoverExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1905724417}
+        m_TargetAssemblyTypeName: Mag, Assembly-CSharp
+        m_MethodName: NotHovering
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_HoverEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -751,6 +775,7 @@ MonoBehaviour:
   - {fileID: 446193086268793796}
   - {fileID: 4919744629748960843}
   trigger: {fileID: 5187585188073680092}
+  currentAmmo: 0
 --- !u!135 &5187585188073680092
 SphereCollider:
   m_ObjectHideFlags: 0

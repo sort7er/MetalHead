@@ -108,6 +108,13 @@ public class Hand : MonoBehaviour
             handAnim.SetBool("GrabHandle", state);
         }
     }
+    public void Hover(bool state)
+    {
+        if (handAnim != null)
+        {
+            handAnim.SetBool("Hover", state);
+        }
+    }
 
     public void NewParent(Transform newParent, Transform attachTransform)
     {
