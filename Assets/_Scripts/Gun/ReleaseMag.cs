@@ -17,7 +17,7 @@ public class ReleaseMag : MonoBehaviour
     private DynamicTrigger dynamicTrigger;
     private XRDirectInteractor rHand, lHand;
     private Transform mag, currentGameobject;
-    private Collider magCollider;
+    private Collider magCollider, magSphereCollider;
     private XRGrabInteractable magInteractable;
     private Mag magInGun;
     private bool left;
@@ -103,6 +103,7 @@ public class ReleaseMag : MonoBehaviour
             mag.localRotation = Quaternion.identity;
             magInGun.EnableGravity(false);
             magCollider.enabled = false;
+            magSphereCollider.enabled = false;
             dynamicTrigger.TriggerDisabled(true);
         }
 
@@ -111,6 +112,7 @@ public class ReleaseMag : MonoBehaviour
     {
         mag = currentMag;
         magCollider = mag.GetComponent<Collider>();
+        magSphereCollider = mag.GetComponent<SphereCollider>();
         magInteractable = mag.GetComponent<XRGrabInteractable>();
         magInGun = mag.GetComponent<Mag>();
         cz50.MagIn(magInGun);
@@ -119,6 +121,7 @@ public class ReleaseMag : MonoBehaviour
     {
         mag = null;
         magCollider = null;
+        magSphereCollider = null;
     }
 
     private void StartRelease()
@@ -136,6 +139,7 @@ public class ReleaseMag : MonoBehaviour
         if (Vector3.Distance(mag.position, magEndPoint.position) < 0.001f)
         {   
             magCollider.enabled = true;
+            magSphereCollider.enabled = true;
             magInteractable.enabled = true;
             Invoke("EnableTrigger", 0.25f);
             release = false;

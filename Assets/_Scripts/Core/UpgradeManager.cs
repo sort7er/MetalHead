@@ -31,8 +31,8 @@ public class UpgradeManager : MonoBehaviour
         for(int i = 0; i < magPos.childCount; i++)
         {
             magPos.GetChild(i).GetComponent<Mag>().UpgradeMags();
-            GameManager.instance.ammoBag.CheckAmmoStatus();
         }
+        GameManager.instance.ammoBag.UpdateAmmo();
     }
     public void UpgradeCZ50(int bulletLevel, int recoilLevel, int magSizeLevel, int projectileLevel, int laserLevel)
     {
