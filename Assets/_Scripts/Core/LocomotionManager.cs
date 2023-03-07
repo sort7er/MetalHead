@@ -18,6 +18,7 @@ public class LocomotionManager : MonoBehaviour
     private ContinuousMoveProviderBase continuousMoveProvider;
     private ActionBasedSnapTurnProvider snapTurnProvider;
     private ActionBasedContinuousTurnProvider continuousTurnProvider;
+    private WorkAround workAround;
     private int currentMoveType;
     private int currentTurnType;
 
@@ -27,6 +28,7 @@ public class LocomotionManager : MonoBehaviour
         continuousMoveProvider = GetComponent<ContinuousMoveProviderBase>();
         snapTurnProvider = GetComponent<ActionBasedSnapTurnProvider>();
         continuousTurnProvider = GetComponent<ActionBasedContinuousTurnProvider>();
+        workAround = GetComponent<WorkAround>();
 
         Invoke("StartSettings", 0.1f);
         Invoke("SetVignette", 0.1f);
@@ -37,6 +39,7 @@ public class LocomotionManager : MonoBehaviour
         SetCountinuous(false);
         SetTeleport(true);
         SetCountinuousTurn(false);
+        SetSnap(true);
     }
     //Locomotion
     public void SwitchLocomotion(int locomotionValue)
@@ -57,13 +60,27 @@ public class LocomotionManager : MonoBehaviour
 
     private void SetCountinuous(bool value)
     {
-        continuousMoveProvider.enabled = value;
+        if (value)
+        {
+            workAround.EnableMove();
+        }
+        else
+        {
+            continuousMoveProvider.enabled = value;
+        }
     }
     private void SetTeleport(bool value)
     {
         isUsingTeleport = value;
         teleportationRays.SetActive(value);
-        teleportationProvider.enabled = value;
+        if (value)
+        {
+            workAround.EnableTeleport();
+        }
+        else
+        {
+            teleportationProvider.enabled = value;
+        }
     }
     public void EnableMovement(bool state)
     {
@@ -106,11 +123,26 @@ public class LocomotionManager : MonoBehaviour
     }
     private void SetCountinuousTurn(bool value)
     {
-        continuousTurnProvider.enabled = value;
+        if (value)
+        {
+            workAround.EnableTurning();
+        }
+        else
+        {
+            continuousTurnProvider.enabled = value;
+        }
     }
     private void SetSnap(bool value)
     {
-        snapTurnProvider.enabled = value;
+        if (value)
+        {
+            workAround.EnableSnap();
+        }
+        else
+        {
+            snapTurnProvider.enabled = value;
+        }
+        
     }
 
     public void EnableTurning(bool state)

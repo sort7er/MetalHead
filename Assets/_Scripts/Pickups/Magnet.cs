@@ -22,7 +22,7 @@ public class Magnet : MonoBehaviour
         magnetAnimation = GetComponent<MagnetAnimation>();
         magnetSounds = GetComponent<MagnetSounds>();
         xrGrabInteractable = GetComponent<XRGrabInteractable>();
-        UpdateMetal(4000);
+        UpdateMetal(6200);
     }
     private void OnTriggerEnter(Collider other)
     {

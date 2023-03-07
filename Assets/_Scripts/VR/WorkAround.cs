@@ -8,6 +8,9 @@ using UnityEngine.XR.Management;
 public class WorkAround : MonoBehaviour
 {
     private ActionBasedSnapTurnProvider m_SnapTurnProvider;
+    private ContinuousTurnProviderBase m_ContinousTurnProvider;
+    private TeleportationProvider m_TeleportationProvider;
+    private ContinuousMoveProviderBase m_ContinousMoveProvider;
     private IEnumerator m_WaitForXRSystemEnumerator;
 
     private bool IsXRSystemActive()
@@ -18,7 +21,22 @@ public class WorkAround : MonoBehaviour
         }
         return XRGeneralSettings.Instance.Manager.isInitializationComplete;
     }
-    public void OnEnable()
+
+    IEnumerator WaitForXRSystem(Action onInitComplete)
+    {
+        while (XRGeneralSettings.Instance == null || XRGeneralSettings.Instance.Manager == null)
+        {
+            yield return null;
+        }
+        while (!XRGeneralSettings.Instance.Manager.isInitializationComplete)
+        {
+            yield return null;
+        }
+
+        onInitComplete?.Invoke();
+    }
+
+    public void EnableSnap()
     {
         if (m_SnapTurnProvider == null)
         {
@@ -45,20 +63,89 @@ public class WorkAround : MonoBehaviour
                 StartCoroutine(m_WaitForXRSystemEnumerator);
             }
         }
-
     }
-
-    IEnumerator WaitForXRSystem(Action onInitComplete)
+    public void EnableTurning()
     {
-        while (XRGeneralSettings.Instance == null || XRGeneralSettings.Instance.Manager == null)
+        if (m_ContinousTurnProvider == null)
         {
-            yield return null;
-        }
-        while (!XRGeneralSettings.Instance.Manager.isInitializationComplete)
-        {
-            yield return null;
+            m_ContinousTurnProvider = GetComponent<ActionBasedContinuousTurnProvider>();
         }
 
-        onInitComplete?.Invoke();
+        bool isXRSystemActive = IsXRSystemActive();
+        Action OnXRSystemActive = () =>
+        {
+            if (m_ContinousTurnProvider == null) throw new Exception("Snap turn provider deleted");
+            m_ContinousTurnProvider.enabled = true;
+        };
+        if (isXRSystemActive)
+        {
+            OnXRSystemActive.Invoke();
+        }
+        else
+        {
+            m_ContinousTurnProvider.enabled = false;
+
+            if (m_WaitForXRSystemEnumerator == null)
+            {
+                m_WaitForXRSystemEnumerator = WaitForXRSystem(OnXRSystemActive);
+                StartCoroutine(m_WaitForXRSystemEnumerator);
+            }
+        }
+    }
+    public void EnableTeleport()
+    {
+        if (m_TeleportationProvider == null)
+        {
+            m_TeleportationProvider = GetComponent<TeleportationProvider>();
+        }
+
+        bool isXRSystemActive = IsXRSystemActive();
+        Action OnXRSystemActive = () =>
+        {
+            if (m_TeleportationProvider == null) throw new Exception("Snap turn provider deleted");
+            m_TeleportationProvider.enabled = true;
+        };
+        if (isXRSystemActive)
+        {
+            OnXRSystemActive.Invoke();
+        }
+        else
+        {
+            m_TeleportationProvider.enabled = false;
+
+            if (m_WaitForXRSystemEnumerator == null)
+            {
+                m_WaitForXRSystemEnumerator = WaitForXRSystem(OnXRSystemActive);
+                StartCoroutine(m_WaitForXRSystemEnumerator);
+            }
+        }
+    }
+    public void EnableMove()
+    {
+        if (m_ContinousMoveProvider == null)
+        {
+            m_ContinousMoveProvider = GetComponent<ActionBasedContinuousMoveProvider>();
+        }
+
+        bool isXRSystemActive = IsXRSystemActive();
+        Action OnXRSystemActive = () =>
+        {
+            if (m_ContinousMoveProvider == null) throw new Exception("Snap turn provider deleted");
+            m_ContinousMoveProvider.enabled = true;
+        };
+        if (isXRSystemActive)
+        {
+            OnXRSystemActive.Invoke();
+        }
+        else
+        {
+            m_ContinousMoveProvider.enabled = false;
+
+            if (m_WaitForXRSystemEnumerator == null)
+            {
+                m_WaitForXRSystemEnumerator = WaitForXRSystem(OnXRSystemActive);
+                StartCoroutine(m_WaitForXRSystemEnumerator);
+            }
+        }
     }
 }
