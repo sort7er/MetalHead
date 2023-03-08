@@ -2,12 +2,10 @@ using UnityEngine;
 
 public class WhiteFlash : MonoBehaviour
 {
-    public float flashDuration, flashInInterpolation, flashOutInterpolation;
+    public float flashDuration;
     public MeshRenderer[] meshesToFlash;
     
     private Color[] originalColors;
-    private bool flash;
-    private float flashSpeed;
 
     private void Start()
     {
@@ -18,34 +16,19 @@ public class WhiteFlash : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (flash)
-        {
-            for (int i = 0; i < meshesToFlash.Length; i++)
-            {
-                meshesToFlash[i].material.color = Color.Lerp(meshesToFlash[i].material.color, Color.white, Time.deltaTime * flashSpeed);
-            }
-        }
-        else
-        {
-            for (int i = 0; i < meshesToFlash.Length; i++)
-            {
-                meshesToFlash[i].material.color = Color.Lerp(meshesToFlash[i].material.color, originalColors[i], Time.deltaTime * flashSpeed);
-            }
-        }
-
-    }
-
     public void Flash()
     {
-        flash = true;
-        flashSpeed = flashInInterpolation;
+        for (int i = 0; i < meshesToFlash.Length; i++)
+        {
+            meshesToFlash[i].material.color = Color.white;
+        }
         Invoke("ResetColors", flashDuration);
     }
     private void ResetColors()
     {
-        flash = false;
-        flashSpeed = flashOutInterpolation;
+        for (int i = 0; i < meshesToFlash.Length; i++)
+        {
+            meshesToFlash[i].material.color = originalColors[i];
+        }
     }
 }
