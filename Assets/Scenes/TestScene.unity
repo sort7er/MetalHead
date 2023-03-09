@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9138,9 +9138,9 @@ MonoBehaviour:
   onPressP:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1032093453}
-        m_TargetAssemblyTypeName: RunningEnemy, Assembly-CSharp
-        m_MethodName: testState
+      - m_Target: {fileID: 8480215060685690229}
+        m_TargetAssemblyTypeName: CZ50, Assembly-CSharp
+        m_MethodName: Fire
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15914,7 +15914,7 @@ GameObject:
   - component: {fileID: 1032093450}
   - component: {fileID: 1032093452}
   - component: {fileID: 1032093453}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -16078,11 +16078,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71743dbb61a06da4da7c295f92f59968, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sightRange: 0
+  sightRange: 7
   FOV: 0
   hearingRange: 0
+  timeBetweenDistanceCheck: 0.25
   minSusDuration: 0
   maxSusDuration: 0
+  directionToPlayer: {x: 0, y: 0, z: 0}
+  enemyDistanceCheck: 0
+  playerDetected: 0
 --- !u!1 &1034308937
 GameObject:
   m_ObjectHideFlags: 0
@@ -38092,6 +38096,11 @@ PrefabInstance:
       propertyPath: holster
       value: 
       objectReference: {fileID: 1179863462}
+    - target: {fileID: 5134461657349148667, guid: bc37897792a96ac419f413187abaa406,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5464937457918739081, guid: bc37897792a96ac419f413187abaa406,
         type: 3}
       propertyPath: m_RootOrder
@@ -38100,17 +38109,17 @@ PrefabInstance:
     - target: {fileID: 5464937457918739081, guid: bc37897792a96ac419f413187abaa406,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.79
+      value: -1.43
       objectReference: {fileID: 0}
     - target: {fileID: 5464937457918739081, guid: bc37897792a96ac419f413187abaa406,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.93
+      value: 2.01
       objectReference: {fileID: 0}
     - target: {fileID: 5464937457918739081, guid: bc37897792a96ac419f413187abaa406,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -11.78
+      value: -0.82
       objectReference: {fileID: 0}
     - target: {fileID: 5464937457918739081, guid: bc37897792a96ac419f413187abaa406,
         type: 3}
@@ -38262,6 +38271,21 @@ PrefabInstance:
       propertyPath: trigger
       value: 
       objectReference: {fileID: 8480215060685690219}
+    - target: {fileID: 8480215060685690218, guid: bc37897792a96ac419f413187abaa406,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8480215060685690218, guid: bc37897792a96ac419f413187abaa406,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8480215060685690225, guid: bc37897792a96ac419f413187abaa406,
+        type: 3}
+      propertyPath: soundRange
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 8480215060685690241, guid: bc37897792a96ac419f413187abaa406,
         type: 3}
       propertyPath: m_InteractionManager
