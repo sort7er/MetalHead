@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -112,24 +113,6 @@ public class RunningEnemy : MonoBehaviour
     {
         pointOfInterest = position;
     }
-    public void WaitBeforeNextTarget()
-    {
-        Invoke("WaitBeforeNextTarget2", Random.Range(minTimeBetweenTargets, maxTimeBetweenTargets));
-    }
-    private void WaitBeforeNextTarget2()
-    {
-        idleState.NextTarget();
-    }
-    public void SusStart()
-    {
-        Invoke("SusStart2", 2f);
-    }
-    private void SusStart2()
-    {
-        susState.CheckItOut();
-    }
-
-
     public void EnemySus(Vector3 position)
     {
         if(!playerDetected)
@@ -157,6 +140,18 @@ public class RunningEnemy : MonoBehaviour
         SwitchState(dieState);
         Destroy(gameObject, timeDead);
         isDead = true;
+    }
+    public void SetDistanceCheck(float newTime)
+    {
+        timeBetweenDistanceCheck = newTime;
+    }
+    public void SetTurnSpeed(float newSpeed)
+    {
+        turnSmoothTime = newSpeed;
+    }
+    public void SetPointOfInterest(Vector3 newInterest)
+    {
+        pointOfInterest = newInterest;
     }
     public void LookingForPlayer(float sightRange)
     {
@@ -200,24 +195,17 @@ public class RunningEnemy : MonoBehaviour
             DistanceCheckOff();
         }
     }
-    public void SetDistanceCheck(float newTime)
+    public void DelayedCallback(EnemyBaseState state, string methodName, float time, params object[] parameters)
     {
-        timeBetweenDistanceCheck = newTime;
+        StartCoroutine(DelayedCallbackRoutine(state, methodName, time, parameters));
     }
-    public void SetTurnSpeed(float newSpeed)
+
+    private IEnumerator DelayedCallbackRoutine(EnemyBaseState state, string methodName, float time, params object[] parameters)
     {
-        turnSmoothTime = newSpeed;
-    }
-    public void SetPointOfInterest(Vector3 newInterest)
-    {
-        pointOfInterest = newInterest;
-    }
-    public void LookingAround()
-    {
-        Invoke("LookingAround2", Random.Range(minSusDuration, maxSusDuration));
-    }
-    public void LookingAround2()
-    {
-        susState.DoneLookingAround();
+
+        yield return new WaitForSeconds(time);
+
+        var method = state.GetType().GetMethod(methodName);
+        method.Invoke(state, parameters);
     }
 }

@@ -23,7 +23,7 @@ public class EnemySusState : EnemyBaseState
         susDone = false;
         sightRange = enemy.susSightRange;
         agent.ResetPath();
-        enemy.SusStart();
+        enemy.DelayedCallback(enemy.susState, "CheckItOut", 1);
     }
 
     public override void UpdateState(RunningEnemy enemy)
@@ -35,7 +35,7 @@ public class EnemySusState : EnemyBaseState
             agent.ResetPath();
             targetReached = true;
             LookingAround();
-            enemy.LookingAround();
+            enemy.DelayedCallback(enemy.susState, "DoneLookingAround", Random.Range(enemy.maxSusDuration, enemy.maxSusDuration));
         }
         else
         {

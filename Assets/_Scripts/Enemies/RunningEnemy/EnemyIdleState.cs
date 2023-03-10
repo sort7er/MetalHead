@@ -41,7 +41,7 @@ public class EnemyIdleState : EnemyBaseState
         if ((targetPos - enemy.transform.position).magnitude <= 1f && !targetReached)
         {
             agent.ResetPath();
-            enemy.WaitBeforeNextTarget();
+            enemy.DelayedCallback(enemy.idleState, "NextTarget", Random.Range(enemy.minTimeBetweenTargets, enemy.maxTimeBetweenTargets));
             targetPos = enemy.tempIdleTargets[currentTarget].position;
             targetReached = true;
 
