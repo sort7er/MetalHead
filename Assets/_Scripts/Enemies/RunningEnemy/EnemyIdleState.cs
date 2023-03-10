@@ -3,7 +3,6 @@ using UnityEngine.AI;
 
 public class EnemyIdleState : EnemyBaseState
 {
-    private Transform enemyTrans;
     private NavMeshAgent agent;
     private Vector3 targetPos;
     private int currentTarget;
@@ -30,7 +29,6 @@ public class EnemyIdleState : EnemyBaseState
 
     public override void UpdateState(RunningEnemy enemy)
     {
-        enemyTrans = enemy.transform;
         enemy.detectionSlider.value = timer;
 
         //Walk to target

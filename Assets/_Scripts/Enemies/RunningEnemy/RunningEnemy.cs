@@ -8,11 +8,11 @@ public class RunningEnemy : MonoBehaviour
     [Header("Overall stats")]
     public float defaultTurnSmoothTime;
     public float defaultTimeBetweenDistanceCheck;
+    public float defaultFOV;
 
     [Header("IdleState")]
     public float idleSpeed;
     public float idleSightRange;
-    public float FOV;
     public float timeBeforeSus;
     public float minTimeBetweenTargets;
     public float maxTimeBetweenTargets;
@@ -30,6 +30,7 @@ public class RunningEnemy : MonoBehaviour
     [Header("SearchingState")]
     public float searchingSpeed;
     public float searchingSightRange;
+    public float searchingFOV;
     public float minSearchDuration;
     public float maxSearchDuration;
     public float timeBeforeSeen;
@@ -75,7 +76,7 @@ public class RunningEnemy : MonoBehaviour
 
     private EnemyBaseState currentState;
     private Vector3 thisFrame, lastFrame;
-    private float timeBetweenDistanceCheck;
+    private float timeBetweenDistanceCheck, FOV;
 
 
 
@@ -83,6 +84,7 @@ public class RunningEnemy : MonoBehaviour
     {
         SetDistanceCheck(defaultTimeBetweenDistanceCheck);
         SetTurnSpeed(defaultTurnSmoothTime);
+        SetFOV(defaultFOV);
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
         SwitchState(idleState);
@@ -101,12 +103,14 @@ public class RunningEnemy : MonoBehaviour
 
     public void SwitchState(EnemyBaseState state)
     {
-        CancelInvoke();
+        StopAllCoroutines();
         if(!isDead)
         {
             DistanceCheckOff();
             currentState = state;
             SetDistanceCheck(defaultTimeBetweenDistanceCheck);
+            SetTurnSpeed(defaultTurnSmoothTime);
+            SetFOV(defaultFOV);
             state.EnterState(this);
         }
     }
@@ -162,6 +166,10 @@ public class RunningEnemy : MonoBehaviour
     public void SetTurnSpeed(float newSpeed)
     {
         turnSmoothTime = newSpeed;
+    }
+    public void SetFOV(float newFOV)
+    {
+        FOV = newFOV;
     }
     public void SetPointOfInterest(Vector3 newInterest)
     {

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemySearchingState : EnemyBaseState
 {
-    private float sightRange, timer;
+    private float timer;
     private bool targetReached, lookingDone;
 
 
@@ -10,13 +10,13 @@ public class EnemySearchingState : EnemyBaseState
     {
         Debug.Log("Entered state searching");
         enemy.SetSpeed(enemy.searchingSpeed);
+        enemy.SetFOV(enemy.searchingFOV);
         enemy.agent.ResetPath();
         enemy.agent.SetDestination(enemy.pointOfInterest);
         enemy.sliderBackground.color = enemy.susDetectionColor;
         enemy.sliderFill.color = enemy.seenColor;
         enemy.detectionSlider.value = 0;
         enemy.detectionSlider.maxValue = enemy.timeBeforeSeen;
-        sightRange = enemy.searchingSightRange;
 
         //Fix this later, could probably be a problem
         targetReached = false;
@@ -25,7 +25,7 @@ public class EnemySearchingState : EnemyBaseState
     public override void UpdateState(RunningEnemy enemy)
     {
         enemy.detectionSlider.value = timer;
-        enemy.LookingForPlayer(sightRange);
+        enemy.LookingForPlayer(enemy.searchingSightRange);
 
 
         //Walk to target
