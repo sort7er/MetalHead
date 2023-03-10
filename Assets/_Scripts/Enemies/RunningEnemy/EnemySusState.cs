@@ -5,7 +5,6 @@ public class EnemySusState : EnemyBaseState
 {
     private NavMeshAgent agent;
     private Vector3 pointOfInterest;
-    private Quaternion targetAngle;
     private bool targetReached, susDone;
     private float sightRange, timer;
 
@@ -51,7 +50,6 @@ public class EnemySusState : EnemyBaseState
             if (timer >= enemy.timeBeforeDetect)
             {
                 timer = enemy.timeBeforeDetect;
-                enemy.SetDistanceCheck(enemy.defaultTimeBetweenDistanceCheck);
                 enemy.PlayerDetected();
                 enemy.SwitchState(enemy.runState);
 

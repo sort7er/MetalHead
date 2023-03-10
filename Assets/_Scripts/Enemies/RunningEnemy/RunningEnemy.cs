@@ -35,7 +35,9 @@ public class RunningEnemy : MonoBehaviour
 
     [Header("RunState")]
     public float runSpeed;
+    public float runSightRange;
     public float rangeBeforeAttack;
+    public float timeBeforeLost;
 
     [Header("DieState")]
     public float timeDead;
@@ -54,7 +56,7 @@ public class RunningEnemy : MonoBehaviour
     [HideInInspector] public bool enemyDistanceCheck;
     [HideInInspector] public bool playerDetected;
     [HideInInspector] public bool isDead;
-/*    [HideInInspector] */public bool inView;
+    [HideInInspector] public bool inView;
     [HideInInspector] public float turnSmoothTime;
 
     public EnemyRunState runState = new EnemyRunState();
@@ -97,6 +99,7 @@ public class RunningEnemy : MonoBehaviour
         {
             DistanceCheckOff();
             currentState = state;
+            SetDistanceCheck(defaultTimeBetweenDistanceCheck);
             state.EnterState(this);
         }
     }
@@ -159,7 +162,6 @@ public class RunningEnemy : MonoBehaviour
     }
     public void LookingForPlayer(float sightRange)
     {
-        //Looking for player
         if (enemyDistanceCheck)
         {
             if ((GameManager.instance.XROrigin.transform.position - transform.position).magnitude <= sightRange)

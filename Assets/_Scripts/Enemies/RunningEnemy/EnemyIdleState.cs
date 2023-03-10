@@ -6,10 +6,9 @@ public class EnemyIdleState : EnemyBaseState
     private Transform enemyTrans;
     private NavMeshAgent agent;
     private Vector3 targetPos;
-    private Quaternion targetAngle;
     private int currentTarget;
-    private bool targetReached;
-    private float sightRange, timer;
+    private bool targetReached, nextTarget;
+    private float timer;
 
 
     public override void EnterState(RunningEnemy enemy)
@@ -21,15 +20,12 @@ public class EnemyIdleState : EnemyBaseState
         enemy.detectionSlider.value = 0f;
         enemy.detectionSlider.maxValue = enemy.timeBeforeSus;
         agent = enemy.agent;
-        targetReached = false;
-        sightRange = enemy.idleSightRange;
         if(targetPos != null)
         {
             currentTarget = Random.Range(0, enemy.tempIdleTargets.Length);
             targetPos = enemy.tempIdleTargets[currentTarget].position;
-            targetAngle = Quaternion.LookRotation(new Vector3(targetPos.x, enemy.transform.position.y, targetPos.z) - enemy.transform.position, enemy.transform.up);
         }
-        enemy.agent.SetDestination(targetPos);
+        NextTarget();
     }
 
     public override void UpdateState(RunningEnemy enemy)
@@ -40,6 +36,7 @@ public class EnemyIdleState : EnemyBaseState
         //Walk to target
         if ((targetPos - enemy.transform.position).magnitude <= 1f && !targetReached)
         {
+            nextTarget = false;
             agent.ResetPath();
             enemy.DelayedCallback(enemy.idleState, "NextTarget", Random.Range(enemy.minTimeBetweenTargets, enemy.maxTimeBetweenTargets));
             targetPos = enemy.tempIdleTargets[currentTarget].position;
@@ -54,12 +51,12 @@ public class EnemyIdleState : EnemyBaseState
                 currentTarget++;
             }
         }
-        else
+        else if(nextTarget)
         {
-            enemyTrans.rotation = Quaternion.Slerp(enemyTrans.rotation, targetAngle, Time.deltaTime * enemy.turnSmoothTime);
+            enemy.RotateToPosition(targetPos);
         }
         //Looking for player
-        enemy.LookingForPlayer(sightRange);
+        enemy.LookingForPlayer(enemy.idleSightRange);
 
         if (enemy.inView)
         {
@@ -68,7 +65,6 @@ public class EnemyIdleState : EnemyBaseState
             {
                 timer = enemy.timeBeforeSus;
                 enemy.SetPointOfInterest(GameManager.instance.XROrigin.transform.position);
-                enemy.SetDistanceCheck(enemy.defaultTimeBetweenDistanceCheck);
                 enemy.SwitchState(enemy.susState);
                 
             }
@@ -90,11 +86,10 @@ public class EnemyIdleState : EnemyBaseState
                 timer = 0;
             }
         }
-
     }
     public void NextTarget()
     {
-        targetAngle = Quaternion.LookRotation(new Vector3(targetPos.x, enemyTrans.position.y, targetPos.z) - enemyTrans.position, enemyTrans.up);
+        nextTarget = true;
         agent.SetDestination(targetPos);
         targetReached = false;
     }

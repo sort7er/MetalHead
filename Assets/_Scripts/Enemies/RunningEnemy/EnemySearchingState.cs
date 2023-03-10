@@ -19,8 +19,7 @@ public class EnemySearchingState : EnemyBaseState
 
     public override void UpdateState(RunningEnemy enemy)
     {
-        targetAngle = Quaternion.LookRotation(new Vector3(enemy.pointOfInterest.x, enemy.transform.position.y, enemy.pointOfInterest.z) - enemy.transform.position, enemy.transform.up);
-        enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, targetAngle, Time.deltaTime * enemy.turnSmoothTime);
+        enemy.RotateToPosition(enemy.pointOfInterest);
 
         enemy.detectionSlider.value = timer;
 
@@ -35,7 +34,6 @@ public class EnemySearchingState : EnemyBaseState
             if (timer >= enemy.timeBeforeSeen)
             {
                 timer = enemy.timeBeforeSeen;
-                enemy.SetDistanceCheck(enemy.defaultTimeBetweenDistanceCheck);
                 enemy.SwitchState(enemy.runState);
             }
             else
