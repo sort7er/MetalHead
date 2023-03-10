@@ -16,10 +16,14 @@ public class EnemyIdleState : EnemyBaseState
     {
         Debug.Log("Entered state idle");
         enemy.SetSpeed(enemy.idleSpeed);
+        enemy.sliderBackground.color = enemy.idleDefaultColor;
+        enemy.sliderFill.color = enemy.idleDetectionColor;
+        enemy.detectionSlider.value = 0f;
+        enemy.detectionSlider.maxValue = enemy.timeBeforeSus;
         agent = enemy.agent;
         targetReached = false;
         inView = false;
-        sightRange = enemy.sightRange;
+        sightRange = enemy.idleSightRange;
         FOV = enemy.FOV;
         if(targetPos != null)
         {
@@ -35,8 +39,7 @@ public class EnemyIdleState : EnemyBaseState
         enemyTrans = enemy.transform;
         directionToPlayer = enemy.directionToPlayer;
         directionToCamera = enemy.directionToCamera;
-
-        Debug.Log(timer);
+        enemy.detectionSlider.value = timer;
 
         //Walk to target
         if ((targetPos - enemy.transform.position).magnitude <= 1f && !targetReached)

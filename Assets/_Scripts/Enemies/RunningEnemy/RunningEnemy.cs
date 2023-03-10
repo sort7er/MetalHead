@@ -1,6 +1,6 @@
-using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class RunningEnemy : MonoBehaviour
 {
@@ -8,27 +8,42 @@ public class RunningEnemy : MonoBehaviour
     public float turnSmoothTime;
 
     [Header("IdleState")]
-    public Transform[] tempIdleTargets;
     public float idleSpeed;
-    public float sightRange;
+    public float idleSightRange;
     public float FOV;
     public float hearingRange;
     public float timeBetweenDistanceCheck;
     public float timeBeforeSus;
     public float minTimeBetweenTargets;
     public float maxTimeBetweenTargets;
+    public Color idleDefaultColor;
+    public Color idleDetectionColor;
 
     [Header("SusState")]
     public float susSpeed;
+    public float timeBeforeDetect;
+    public float susSightRange;
     public float minSusDuration;
     public float maxSusDuration;
+    public Color susDetectionColor;
+
+    [Header("DieState")]
+    public float timeDead;
+
+    [Header("References")]
+    public Slider detectionSlider;
+    public Image sliderBackground;
+    public Image sliderFill;
+    public Transform[] tempIdleTargets;
 
     [HideInInspector] public Vector3 directionToPlayer;
     [HideInInspector] public Vector3 directionToCamera;
     [HideInInspector] public Vector3 pointOfInterest;
     [HideInInspector] public NavMeshAgent agent;
+    [HideInInspector] public Rigidbody rb;
     [HideInInspector] public bool enemyDistanceCheck;
     [HideInInspector] public bool playerDetected;
+    [HideInInspector] public bool isDead;
 
     public EnemyRunState runState = new EnemyRunState();
     public EnemyStunnedState stunnedState = new EnemyStunnedState();
@@ -49,6 +64,7 @@ public class RunningEnemy : MonoBehaviour
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        rb = GetComponent<Rigidbody>();
         SwitchState(idleState);
         DistanceCheck();
     }
@@ -62,8 +78,11 @@ public class RunningEnemy : MonoBehaviour
 
     public void SwitchState(EnemyBaseState state)
     {
-        currentState = state;
-        state.EnterState(this);
+        if(!isDead)
+        {
+            currentState = state;
+            state.EnterState(this);
+        }
     }
     public void DistanceCheckOff()
     {
@@ -108,5 +127,24 @@ public class RunningEnemy : MonoBehaviour
             SwitchState(susState);
         }
     }
+    public void EnemyAlert(Vector3 position)
+    {
 
+        pointOfInterest = position;
+        SwitchState(searchingState);
+        PlayerDetected();
+    }
+    public void PlayerDetected()
+    {
+        if (!playerDetected)
+        {
+            playerDetected = true;
+        }
+    }
+    public void Die()
+    {
+        SwitchState(dieState);
+        Destroy(gameObject, timeDead);
+        isDead = true;
+    }
 }

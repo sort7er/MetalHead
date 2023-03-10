@@ -33,6 +33,7 @@ public class Magnet : MonoBehaviour
             rodAnim.SetBool("PickingUp", true);
             magneticEffect.Play();
             magnetSounds.MagnetOn();
+            Invoke("DonePickingUp", 2f);
         }
     }
 

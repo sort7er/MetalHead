@@ -22,6 +22,7 @@ public class MagnetSounds : MonoBehaviour
         if(!allreadyPlayed)
         {
             magnetSource.PlayOneShot(magnetDrop[Random.Range(0, magnetDrop.Length)]);
+            CheckSound.instance.CheckIfEnemyCanHearTheSound(transform.position, 10, true);
             allreadyPlayed = true;
             Invoke("WaitTime", 0.5f);
         }

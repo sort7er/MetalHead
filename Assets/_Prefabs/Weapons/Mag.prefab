@@ -444,6 +444,7 @@ GameObject:
   - component: {fileID: 970528741}
   - component: {fileID: 1905724417}
   - component: {fileID: 5187585188073680092}
+  - component: {fileID: 8476092062224313298}
   m_Layer: 8
   m_Name: Mag
   m_TagString: Magazine
@@ -662,6 +663,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 8476092062224313298}
+        m_TargetAssemblyTypeName: CheckIfThrown, Assembly-CSharp
+        m_MethodName: Released
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_Activated:
     m_PersistentCalls:
       m_Calls: []
@@ -775,7 +788,6 @@ MonoBehaviour:
   - {fileID: 446193086268793796}
   - {fileID: 4919744629748960843}
   trigger: {fileID: 5187585188073680092}
-  currentAmmo: 0
 --- !u!135 &5187585188073680092
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -797,6 +809,18 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1
   m_Center: {x: -0.0000000027939677, y: 0.13262908, z: 0.048815224}
+--- !u!114 &8476092062224313298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097784035369411896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 999bd58a20e5dc542935c60916b30769, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1700691299994248290
 GameObject:
   m_ObjectHideFlags: 0

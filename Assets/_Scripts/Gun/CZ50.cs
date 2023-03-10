@@ -159,7 +159,7 @@ public class CZ50 : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        soundForGun.Grab();
+        soundForGun.Drop();
     }
     private void DefaultColor()
     {

@@ -3,15 +3,17 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     public int health;
-    public float timeDead;
 
-    private Rigidbody rb;
+    private RunningEnemy runningEnemy;
     private WhiteFlash whiteFlash;
     private bool isDead;
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        if(GetComponent<RunningEnemy>() != null)
+        {
+            runningEnemy = GetComponent<RunningEnemy>();
+        }
         whiteFlash = GetComponent<WhiteFlash>();
     }
     public void TakeDamage(int damage)
@@ -22,7 +24,6 @@ public class EnemyHealth : MonoBehaviour
             health -= damage;
             if (health < 0)
             {
-
                 Die();
             }
         }
@@ -31,9 +32,12 @@ public class EnemyHealth : MonoBehaviour
     private void Die()
     {
         isDead = true;
-        rb.isKinematic = false;
-        rb.useGravity = true;
+        if(runningEnemy != null)
+        {
+            runningEnemy.Die();
+            Debug.Log("Yeah");
+        }
         EffectManager.instance.SpawnPickups(transform, Random.Range(3, 8));
-        Destroy(gameObject, timeDead);
+
     }
 }
