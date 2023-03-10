@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class RunningEnemy : MonoBehaviour
 {
     [Header("Overall stats")]
-    public float turnSmoothTime;
+    public float defaultTurnSmoothTime;
     public float defaultTimeBetweenDistanceCheck;
 
     [Header("IdleState")]
@@ -44,6 +44,7 @@ public class RunningEnemy : MonoBehaviour
     [HideInInspector] public bool playerDetected;
     [HideInInspector] public bool isDead;
     [HideInInspector] public bool inView;
+    [HideInInspector] public float turnSmoothTime;
 
     public EnemyRunState runState = new EnemyRunState();
     public EnemyStunnedState stunnedState = new EnemyStunnedState();
@@ -64,6 +65,7 @@ public class RunningEnemy : MonoBehaviour
     private void Start()
     {
         SetDistanceCheck(defaultTimeBetweenDistanceCheck);
+        SetTurnSpeed(defaultTurnSmoothTime);
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
         SwitchState(idleState);
@@ -72,7 +74,6 @@ public class RunningEnemy : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(inView);
         directionToPlayer = GameManager.instance.XROrigin.transform.position + new Vector3(0,1,0) - transform.position;
         directionToCamera = GameManager.instance.cam.transform.position - transform.position;
         currentState.UpdateState(this);
@@ -167,7 +168,6 @@ public class RunningEnemy : MonoBehaviour
                         if (hit.transform.gameObject.layer == 7)
                         {
                             inView = true;
-                            pointOfInterest = hit.point;
                         }
                         else
                         {
@@ -176,7 +176,6 @@ public class RunningEnemy : MonoBehaviour
                                 if (hit.transform.gameObject.layer == 7)
                                 {
                                     inView = true;
-                                    pointOfInterest = hit.point;
                                 }
 
                             }
@@ -199,5 +198,21 @@ public class RunningEnemy : MonoBehaviour
     public void SetDistanceCheck(float newTime)
     {
         timeBetweenDistanceCheck = newTime;
+    }
+    public void SetTurnSpeed(float newSpeed)
+    {
+        turnSmoothTime = newSpeed;
+    }
+    public void SetPointOfInterest(Vector3 newInterest)
+    {
+        pointOfInterest = newInterest;
+    }
+    public void LookingAround()
+    {
+        Invoke("LookingAround2", Random.Range(minSusDuration, maxSusDuration));
+    }
+    public void LookingAround2()
+    {
+        susState.DoneLookingAround();
     }
 }

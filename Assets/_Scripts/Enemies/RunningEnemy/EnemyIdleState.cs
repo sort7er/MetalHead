@@ -40,7 +40,12 @@ public class EnemyIdleState : EnemyBaseState
         //Walk to target
         if ((targetPos - enemy.transform.position).magnitude <= 1f && !targetReached)
         {
-            if(currentTarget >= enemy.tempIdleTargets.Length - 1)
+            agent.ResetPath();
+            enemy.WaitBeforeNextTarget();
+            targetPos = enemy.tempIdleTargets[currentTarget].position;
+            targetReached = true;
+
+            if (currentTarget >= enemy.tempIdleTargets.Length - 1)
             {
                 currentTarget = 0;
             }
@@ -48,10 +53,6 @@ public class EnemyIdleState : EnemyBaseState
             {
                 currentTarget++;
             }
-            agent.ResetPath();
-            enemy.WaitBeforeNextTarget();
-            targetPos = enemy.tempIdleTargets[currentTarget].position;
-            targetReached = true;
         }
         else
         {
@@ -66,6 +67,7 @@ public class EnemyIdleState : EnemyBaseState
             if (timer >= enemy.timeBeforeSus)
             {
                 timer = enemy.timeBeforeSus;
+                enemy.SetPointOfInterest(GameManager.instance.XROrigin.transform.position);
                 enemy.SetDistanceCheck(enemy.defaultTimeBetweenDistanceCheck);
                 enemy.SwitchState(enemy.susState);
                 

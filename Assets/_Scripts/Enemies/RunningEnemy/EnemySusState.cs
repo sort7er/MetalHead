@@ -6,36 +6,35 @@ public class EnemySusState : EnemyBaseState
     private NavMeshAgent agent;
     private Vector3 pointOfInterest;
     private Quaternion targetAngle;
-    private bool targetReached, sawEnemy;
+    private bool targetReached, susDone;
     private float sightRange, timer;
 
     public override void EnterState(RunningEnemy enemy)
     {
         Debug.Log("Entered state sus");
         agent = enemy.agent;
-        sawEnemy = false;
         enemy.SetSpeed(enemy.susSpeed);
         enemy.sliderBackground.color = enemy.idleDetectionColor;
         enemy.sliderFill.color = enemy.susDetectionColor;
         enemy.detectionSlider.value = 0;
         pointOfInterest = enemy.pointOfInterest;
         targetReached = false;
+        susDone = false;
         sightRange = enemy.susSightRange;
         agent.ResetPath();
         enemy.SusStart();
-        
     }
 
     public override void UpdateState(RunningEnemy enemy)
     {
         enemy.detectionSlider.value = timer;
-
         //Walk to target
-        if ((pointOfInterest - enemy.transform.position).magnitude <= 1f && !targetReached)
+        if ((new Vector3(pointOfInterest.x, enemy.transform.position.y, pointOfInterest.z) - enemy.transform.position).magnitude <= 1f && !targetReached)
         {
             agent.ResetPath();
             targetReached = true;
-            Debug.Log("Yeah");
+            LookingAround();
+            enemy.LookingAround();
         }
         else
         {
@@ -47,11 +46,6 @@ public class EnemySusState : EnemyBaseState
         if (enemy.inView)
         {
             enemy.SetDistanceCheck(0);
-            if (!sawEnemy)
-            {
-                agent.ResetPath();
-                sawEnemy = true;
-            }
 
 
             if (timer >= enemy.timeBeforeDetect)
@@ -69,11 +63,6 @@ public class EnemySusState : EnemyBaseState
         }
         else
         {
-            if (sawEnemy)
-            {
-                CheckItOut();
-                sawEnemy = false;
-            }
             enemy.SetDistanceCheck(enemy.defaultTimeBetweenDistanceCheck);
             if (timer > 0)
             {
@@ -84,6 +73,10 @@ public class EnemySusState : EnemyBaseState
                 timer = 0;
             }
         }
+        if (susDone)
+        {
+            enemy.SwitchState(enemy.idleState);
+        }
 
     }
     public void CheckItOut()
@@ -92,5 +85,13 @@ public class EnemySusState : EnemyBaseState
         {
             agent.SetDestination(pointOfInterest);
         }
+    }
+    private void LookingAround()
+    {
+        Debug.Log("Looking around animation");
+    }
+    public void DoneLookingAround()
+    {
+        susDone = true;
     }
 }

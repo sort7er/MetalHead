@@ -15477,7 +15477,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71743dbb61a06da4da7c295f92f59968, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnSmoothTime: 5
+  defaultTurnSmoothTime: 5
   defaultTimeBetweenDistanceCheck: 0.25
   idleSpeed: 2
   idleSightRange: 7
@@ -15490,8 +15490,8 @@ MonoBehaviour:
   susSpeed: 1
   timeBeforeDetect: 1
   susSightRange: 10
-  minSusDuration: 0
-  maxSusDuration: 0
+  minSusDuration: 2
+  maxSusDuration: 4
   susDetectionColor: {r: 1, g: 0.23137254, b: 0.8523437, a: 1}
   timeDead: 4
   detectionSlider: {fileID: 1590908637}
@@ -15509,6 +15509,7 @@ MonoBehaviour:
   playerDetected: 0
   isDead: 0
   inView: 0
+  turnSmoothTime: 5
 --- !u!195 &1032093454
 NavMeshAgent:
   m_ObjectHideFlags: 0
