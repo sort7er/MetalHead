@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -15478,11 +15478,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnSmoothTime: 5
+  defaultTimeBetweenDistanceCheck: 0.25
   idleSpeed: 2
   idleSightRange: 7
   FOV: 100
-  hearingRange: 0
-  timeBetweenDistanceCheck: 0.25
   timeBeforeSus: 1
   minTimeBetweenTargets: 1
   maxTimeBetweenTargets: 4
@@ -15509,6 +15508,7 @@ MonoBehaviour:
   enemyDistanceCheck: 0
   playerDetected: 0
   isDead: 0
+  inView: 0
 --- !u!195 &1032093454
 NavMeshAgent:
   m_ObjectHideFlags: 0

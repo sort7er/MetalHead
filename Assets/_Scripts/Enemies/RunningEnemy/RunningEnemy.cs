@@ -6,13 +6,12 @@ public class RunningEnemy : MonoBehaviour
 {
     [Header("Overall stats")]
     public float turnSmoothTime;
+    public float defaultTimeBetweenDistanceCheck;
 
     [Header("IdleState")]
     public float idleSpeed;
     public float idleSightRange;
     public float FOV;
-    public float hearingRange;
-    public float timeBetweenDistanceCheck;
     public float timeBeforeSus;
     public float minTimeBetweenTargets;
     public float maxTimeBetweenTargets;
@@ -44,6 +43,7 @@ public class RunningEnemy : MonoBehaviour
     [HideInInspector] public bool enemyDistanceCheck;
     [HideInInspector] public bool playerDetected;
     [HideInInspector] public bool isDead;
+    [HideInInspector] public bool inView;
 
     public EnemyRunState runState = new EnemyRunState();
     public EnemyStunnedState stunnedState = new EnemyStunnedState();
@@ -57,12 +57,13 @@ public class RunningEnemy : MonoBehaviour
     public EnemyKickState kickState = new EnemyKickState();
 
     private EnemyBaseState currentState;
-
+    private float timeBetweenDistanceCheck;
 
 
 
     private void Start()
     {
+        SetDistanceCheck(defaultTimeBetweenDistanceCheck);
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
         SwitchState(idleState);
@@ -71,6 +72,7 @@ public class RunningEnemy : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(inView);
         directionToPlayer = GameManager.instance.XROrigin.transform.position + new Vector3(0,1,0) - transform.position;
         directionToCamera = GameManager.instance.cam.transform.position - transform.position;
         currentState.UpdateState(this);
@@ -78,8 +80,11 @@ public class RunningEnemy : MonoBehaviour
 
     public void SwitchState(EnemyBaseState state)
     {
+        CancelInvoke();
         if(!isDead)
         {
+            inView = false;
+            DistanceCheckOff();
             currentState = state;
             state.EnterState(this);
         }
@@ -111,7 +116,7 @@ public class RunningEnemy : MonoBehaviour
     }
     public void SusStart()
     {
-        Invoke("SusStart2", 1f);
+        Invoke("SusStart2", 2f);
     }
     private void SusStart2()
     {
@@ -146,5 +151,53 @@ public class RunningEnemy : MonoBehaviour
         SwitchState(dieState);
         Destroy(gameObject, timeDead);
         isDead = true;
+    }
+    public void LookingForPlayer(float sightRange)
+    {
+        //Looking for player
+        if (enemyDistanceCheck)
+        {
+            if ((GameManager.instance.XROrigin.transform.position - transform.position).magnitude <= sightRange)
+            {
+                if (Vector3.Angle(directionToPlayer, transform.forward) <= FOV * 0.5f)
+                {
+                    RaycastHit hit;
+                    if (Physics.Raycast(transform.position, directionToPlayer, out hit, 30, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+                    {
+                        if (hit.transform.gameObject.layer == 7)
+                        {
+                            inView = true;
+                            pointOfInterest = hit.point;
+                        }
+                        else
+                        {
+                            if (Physics.Raycast(transform.position, directionToCamera, out hit, 30, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+                            {
+                                if (hit.transform.gameObject.layer == 7)
+                                {
+                                    inView = true;
+                                    pointOfInterest = hit.point;
+                                }
+
+                            }
+
+                        }
+                    }
+                }
+                else
+                {
+                    inView = false;
+                }
+            }
+            else
+            {
+                inView = false;
+            }
+            DistanceCheckOff();
+        }
+    }
+    public void SetDistanceCheck(float newTime)
+    {
+        timeBetweenDistanceCheck = newTime;
     }
 }

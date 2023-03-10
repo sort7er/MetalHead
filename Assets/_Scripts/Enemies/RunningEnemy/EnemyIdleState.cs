@@ -5,11 +5,11 @@ public class EnemyIdleState : EnemyBaseState
 {
     private Transform enemyTrans;
     private NavMeshAgent agent;
-    private Vector3 targetPos, directionToPlayer, directionToCamera, pointOfInterest;
+    private Vector3 targetPos;
     private Quaternion targetAngle;
     private int currentTarget;
-    private bool targetReached, inView;
-    private float sightRange, FOV, timer;
+    private bool targetReached;
+    private float sightRange, timer;
 
 
     public override void EnterState(RunningEnemy enemy)
@@ -22,9 +22,7 @@ public class EnemyIdleState : EnemyBaseState
         enemy.detectionSlider.maxValue = enemy.timeBeforeSus;
         agent = enemy.agent;
         targetReached = false;
-        inView = false;
         sightRange = enemy.idleSightRange;
-        FOV = enemy.FOV;
         if(targetPos != null)
         {
             currentTarget = Random.Range(0, enemy.tempIdleTargets.Length);
@@ -37,8 +35,6 @@ public class EnemyIdleState : EnemyBaseState
     public override void UpdateState(RunningEnemy enemy)
     {
         enemyTrans = enemy.transform;
-        directionToPlayer = enemy.directionToPlayer;
-        directionToCamera = enemy.directionToCamera;
         enemy.detectionSlider.value = timer;
 
         //Walk to target
@@ -61,55 +57,16 @@ public class EnemyIdleState : EnemyBaseState
         {
             enemyTrans.rotation = Quaternion.Slerp(enemyTrans.rotation, targetAngle, Time.deltaTime * enemy.turnSmoothTime);
         }
-
         //Looking for player
-        if (enemy.enemyDistanceCheck)
-        {
-            if ((GameManager.instance.XROrigin.transform.position - enemyTrans.position).magnitude <= sightRange)
-            {
-                if (Vector3.Angle(directionToPlayer, enemyTrans.forward) <= FOV * 0.5f)
-                {
-                    RaycastHit hit;
-                    if(Physics.Raycast(enemyTrans.position, directionToPlayer, out hit, 30, Physics.AllLayers, QueryTriggerInteraction.Ignore))
-                    {
-                        if(hit.transform.gameObject.layer == 7)
-                        {
-                            inView = true;
-                            pointOfInterest = hit.point;
-                        }
-                        else
-                        {
-                            if (Physics.Raycast(enemyTrans.position, directionToCamera, out hit, 30, Physics.AllLayers, QueryTriggerInteraction.Ignore))
-                            {
-                                if (hit.transform.gameObject.layer == 7)
-                                {
-                                    inView = true;
-                                    pointOfInterest = hit.point;
-                                }
+        enemy.LookingForPlayer(sightRange);
 
-                            }
-
-                        }
-                    }
-                }
-                else
-                {
-                    inView = false;
-                }
-            }
-            else
-            {
-                inView = false;
-            }
-            enemy.DistanceCheckOff();
-        }
-        if (inView)
+        if (enemy.inView)
         {
-            
+            enemy.SetDistanceCheck(0);
             if (timer >= enemy.timeBeforeSus)
             {
-                enemy.pointOfInterest = pointOfInterest;
                 timer = enemy.timeBeforeSus;
+                enemy.SetDistanceCheck(enemy.defaultTimeBetweenDistanceCheck);
                 enemy.SwitchState(enemy.susState);
                 
             }
@@ -121,7 +78,8 @@ public class EnemyIdleState : EnemyBaseState
         }
         else
         {
-            if(timer > 0)
+            enemy.SetDistanceCheck(enemy.defaultTimeBetweenDistanceCheck);
+            if (timer > 0)
             {
                 timer -= Time.deltaTime;
             }
