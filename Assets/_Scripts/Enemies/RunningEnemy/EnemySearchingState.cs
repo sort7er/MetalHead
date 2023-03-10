@@ -2,34 +2,57 @@ using UnityEngine;
 
 public class EnemySearchingState : EnemyBaseState
 {
-    private Quaternion targetAngle;
     private float sightRange, timer;
+    private bool targetReached, lookingDone;
+
 
     public override void EnterState(RunningEnemy enemy)
     {
         Debug.Log("Entered state searching");
         enemy.SetSpeed(enemy.searchingSpeed);
         enemy.agent.ResetPath();
+        enemy.agent.SetDestination(enemy.pointOfInterest);
         enemy.sliderBackground.color = enemy.susDetectionColor;
         enemy.sliderFill.color = enemy.seenColor;
         enemy.detectionSlider.value = 0;
         enemy.detectionSlider.maxValue = enemy.timeBeforeSeen;
         sightRange = enemy.searchingSightRange;
+
+        //Fix this later, could probably be a problem
+        targetReached = false;
     }
 
     public override void UpdateState(RunningEnemy enemy)
     {
-        enemy.RotateToPosition(enemy.pointOfInterest);
-
         enemy.detectionSlider.value = timer;
-
-        //Looking for player
         enemy.LookingForPlayer(sightRange);
+
+
+        //Walk to target
+        if ((new Vector3(enemy.pointOfInterest.x, enemy.transform.position.y, enemy.pointOfInterest.z) - enemy.transform.position).magnitude <= 1.5f && !targetReached)
+        {
+            enemy.agent.ResetPath();
+            targetReached = true;
+            LookingAround();
+            enemy.DelayedCallback(enemy.searchingState, "DoneLookingAround", Random.Range(enemy.minSearchDuration, enemy.maxSearchDuration));
+        }
+        else if(!targetReached)
+        {
+            //Rotate to point of interest
+            if (enemy.CheckLineOfSight(true, enemy.pointOfInterest))
+            {
+                enemy.RotateToPosition(enemy.pointOfInterest);
+            }
+            else
+            {
+                enemy.RotateToPosition(enemy.transform.position + enemy.movementDircetion);
+            }
+        }
+
 
         if (enemy.inView)
         {
             enemy.SetDistanceCheck(0);
-            Debug.Log("lol");
 
             if (timer >= enemy.timeBeforeSeen)
             {
@@ -44,7 +67,6 @@ public class EnemySearchingState : EnemyBaseState
         }
         else
         {
-            Debug.Log("3");
             enemy.SetDistanceCheck(enemy.defaultTimeBetweenDistanceCheck);
             if (timer > 0)
             {
@@ -55,6 +77,20 @@ public class EnemySearchingState : EnemyBaseState
                 timer = 0;
             }
         }
+        if (lookingDone)
+        {
+            Debug.Log("Start some walking pattern around");
+        }
+    }
+
+
+    private void LookingAround()
+    {
+        Debug.Log("Looking around animation");
+    }
+    public void DoneLookingAround()
+    {
+        lookingDone = true;
     }
 
 }

@@ -30,6 +30,8 @@ public class RunningEnemy : MonoBehaviour
     [Header("SearchingState")]
     public float searchingSpeed;
     public float searchingSightRange;
+    public float minSearchDuration;
+    public float maxSearchDuration;
     public float timeBeforeSeen;
     public Color seenColor;
 
@@ -51,6 +53,7 @@ public class RunningEnemy : MonoBehaviour
     [HideInInspector] public Vector3 directionToPlayer;
     [HideInInspector] public Vector3 directionToCamera;
     [HideInInspector] public Vector3 pointOfInterest;
+    [HideInInspector] public Vector3 movementDircetion;
     [HideInInspector] public NavMeshAgent agent;
     [HideInInspector] public Rigidbody rb;
     [HideInInspector] public bool enemyDistanceCheck;
@@ -71,6 +74,7 @@ public class RunningEnemy : MonoBehaviour
     public EnemyKickState kickState = new EnemyKickState();
 
     private EnemyBaseState currentState;
+    private Vector3 thisFrame, lastFrame;
     private float timeBetweenDistanceCheck;
 
 
@@ -90,6 +94,9 @@ public class RunningEnemy : MonoBehaviour
         directionToPlayer = GameManager.instance.XROrigin.transform.position + new Vector3(0,0.5f,0) - transform.position;
         directionToCamera = GameManager.instance.cam.transform.position - transform.position;
         currentState.UpdateState(this);
+        thisFrame = transform.position;
+        movementDircetion = thisFrame - lastFrame;
+        lastFrame = transform.position;
     }
 
     public void SwitchState(EnemyBaseState state)
@@ -168,7 +175,7 @@ public class RunningEnemy : MonoBehaviour
             {
                 if (Vector3.Angle(directionToPlayer, transform.forward) <= FOV * 0.5f)
                 {
-                    inView = CheckLineOfSight(false);
+                    inView = CheckLineOfSight(false, directionToPlayer);
                 }
                 else
                 {
@@ -183,10 +190,10 @@ public class RunningEnemy : MonoBehaviour
         }
     }
 
-    public bool CheckLineOfSight(bool onlyLower)
+    public bool CheckLineOfSight(bool onlyLower, Vector3 directionToCheck)
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, directionToPlayer, out hit, 30, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(transform.position, directionToCheck, out hit, 30, Physics.AllLayers, QueryTriggerInteraction.Ignore))
         {
             if (hit.transform.gameObject.layer == 7)
             {

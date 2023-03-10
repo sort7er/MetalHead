@@ -29,7 +29,7 @@ public class EnemySusState : EnemyBaseState
     {
         enemy.detectionSlider.value = timer;
         //Walk to target
-        if ((new Vector3(pointOfInterest.x, enemy.transform.position.y, pointOfInterest.z) - enemy.transform.position).magnitude <= 1f && !targetReached)
+        if ((new Vector3(pointOfInterest.x, enemy.transform.position.y, pointOfInterest.z) - enemy.transform.position).magnitude <= 1.5f && !targetReached)
         {
             agent.ResetPath();
             targetReached = true;
