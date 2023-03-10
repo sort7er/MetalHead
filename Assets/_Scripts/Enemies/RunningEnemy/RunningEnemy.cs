@@ -33,6 +33,9 @@ public class RunningEnemy : MonoBehaviour
     public float timeBeforeSeen;
     public Color seenColor;
 
+    [Header("RunState")]
+    public float runSpeed;
+
     [Header("DieState")]
     public float timeDead;
 

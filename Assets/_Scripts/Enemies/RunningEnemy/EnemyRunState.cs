@@ -7,6 +7,7 @@ public class EnemyRunState : EnemyBaseState
     {
         Debug.Log("Entered state run");
         enemy.agent.ResetPath();
+        enemy.SetSpeed(enemy.runSpeed);
         enemy.sliderFill.color = enemy.seenColor;
         enemy.sliderBackground.color = enemy.susDetectionColor;
         enemy.detectionSlider.maxValue = enemy.timeBeforeSeen;
