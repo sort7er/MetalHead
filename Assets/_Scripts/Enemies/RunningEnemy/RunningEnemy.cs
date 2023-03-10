@@ -35,6 +35,7 @@ public class RunningEnemy : MonoBehaviour
 
     [Header("RunState")]
     public float runSpeed;
+    public float rangeBeforeAttack;
 
     [Header("DieState")]
     public float timeDead;
@@ -53,7 +54,7 @@ public class RunningEnemy : MonoBehaviour
     [HideInInspector] public bool enemyDistanceCheck;
     [HideInInspector] public bool playerDetected;
     [HideInInspector] public bool isDead;
-    [HideInInspector] public bool inView;
+/*    [HideInInspector] */public bool inView;
     [HideInInspector] public float turnSmoothTime;
 
     public EnemyRunState runState = new EnemyRunState();
@@ -84,7 +85,7 @@ public class RunningEnemy : MonoBehaviour
 
     private void Update()
     {
-        directionToPlayer = GameManager.instance.XROrigin.transform.position + new Vector3(0,1,0) - transform.position;
+        directionToPlayer = GameManager.instance.XROrigin.transform.position + new Vector3(0,0.5f,0) - transform.position;
         directionToCamera = GameManager.instance.cam.transform.position - transform.position;
         currentState.UpdateState(this);
     }
@@ -165,26 +166,7 @@ public class RunningEnemy : MonoBehaviour
             {
                 if (Vector3.Angle(directionToPlayer, transform.forward) <= FOV * 0.5f)
                 {
-                    RaycastHit hit;
-                    if (Physics.Raycast(transform.position, directionToPlayer, out hit, 30, Physics.AllLayers, QueryTriggerInteraction.Ignore))
-                    {
-                        if (hit.transform.gameObject.layer == 7)
-                        {
-                            inView = true;
-                        }
-                        else
-                        {
-                            if (Physics.Raycast(transform.position, directionToCamera, out hit, 30, Physics.AllLayers, QueryTriggerInteraction.Ignore))
-                            {
-                                if (hit.transform.gameObject.layer == 7)
-                                {
-                                    inView = true;
-                                }
-
-                            }
-
-                        }
-                    }
+                    inView = CheckLineOfSight(false);
                 }
                 else
                 {
@@ -196,6 +178,46 @@ public class RunningEnemy : MonoBehaviour
                 inView = false;
             }
             DistanceCheckOff();
+        }
+    }
+
+    public bool CheckLineOfSight(bool onlyLower)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, directionToPlayer, out hit, 30, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+        {
+            if (hit.transform.gameObject.layer == 7)
+            {
+                return true;
+            }
+            else if (!onlyLower)
+            {
+                if (Physics.Raycast(transform.position, directionToCamera, out hit, 30, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+                {
+                    if (hit.transform.gameObject.layer == 7)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            else
+            { 
+                return false;
+            }
+        }
+        else
+        {
+            return false;
         }
     }
     public void DelayedCallback(EnemyBaseState state, string methodName, float time, params object[] parameters)
@@ -210,5 +232,10 @@ public class RunningEnemy : MonoBehaviour
 
         var method = state.GetType().GetMethod(methodName);
         method.Invoke(state, parameters);
+    }
+    public void RotateToPosition(Vector3 lookAtPoint)
+    {
+        Quaternion targetAngle = Quaternion.LookRotation(new Vector3(lookAtPoint.x, transform.position.y, lookAtPoint.z) - transform.position, transform.up);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetAngle, Time.deltaTime * turnSmoothTime);
     }
 }

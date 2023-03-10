@@ -39,8 +39,7 @@ public class EnemySusState : EnemyBaseState
         }
         else
         {
-            targetAngle = Quaternion.LookRotation(new Vector3(enemy.pointOfInterest.x, enemy.transform.position.y, enemy.pointOfInterest.z) - enemy.transform.position, enemy.transform.up);
-            enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, targetAngle, Time.deltaTime * enemy.turnSmoothTime);
+            enemy.RotateToPosition(pointOfInterest);
         }
         //Looking for player
         enemy.LookingForPlayer(sightRange);
