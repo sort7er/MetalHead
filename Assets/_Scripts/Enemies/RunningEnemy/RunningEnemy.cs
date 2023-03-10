@@ -26,6 +26,12 @@ public class RunningEnemy : MonoBehaviour
     public float maxSusDuration;
     public Color susDetectionColor;
 
+    [Header("SearchingState")]
+    public float searchingSpeed;
+    public float searchingSightRange;
+    public float timeBeforeSeen;
+    public Color seenColor;
+
     [Header("DieState")]
     public float timeDead;
 
@@ -84,7 +90,6 @@ public class RunningEnemy : MonoBehaviour
         CancelInvoke();
         if(!isDead)
         {
-            inView = false;
             DistanceCheckOff();
             currentState = state;
             state.EnterState(this);
@@ -129,14 +134,14 @@ public class RunningEnemy : MonoBehaviour
     {
         if(!playerDetected)
         {
-            pointOfInterest = position;
+            SetPointOfInterest(position);
             SwitchState(susState);
         }
     }
     public void EnemyAlert(Vector3 position)
     {
 
-        pointOfInterest = position;
+        SetPointOfInterest(position);
         SwitchState(searchingState);
         PlayerDetected();
     }

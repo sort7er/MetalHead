@@ -17,6 +17,7 @@ public class EnemySusState : EnemyBaseState
         enemy.sliderBackground.color = enemy.idleDetectionColor;
         enemy.sliderFill.color = enemy.susDetectionColor;
         enemy.detectionSlider.value = 0;
+        enemy.detectionSlider.maxValue = enemy.timeBeforeDetect;
         pointOfInterest = enemy.pointOfInterest;
         targetReached = false;
         susDone = false;
@@ -52,6 +53,7 @@ public class EnemySusState : EnemyBaseState
             {
                 timer = enemy.timeBeforeDetect;
                 enemy.SetDistanceCheck(enemy.defaultTimeBetweenDistanceCheck);
+                enemy.PlayerDetected();
                 enemy.SwitchState(enemy.runState);
 
             }
