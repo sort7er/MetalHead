@@ -42,6 +42,16 @@ public class RunningEnemy : MonoBehaviour
     public float rangeBeforeAttack;
     public float timeBeforeLost;
 
+    [Header("CoverState")]
+
+    public float coverSpeed;
+    public float coverFOV;
+    public float checkCoverRadius;
+    public float minPlayerDistance;
+    [Range(-1,1)]
+    public float hideSensitivity;
+    public LayerMask hidebleLayer;
+
     [Header("DieState")]
     public float timeDead;
 
@@ -87,7 +97,7 @@ public class RunningEnemy : MonoBehaviour
         SetFOV(defaultFOV);
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
-        SwitchState(idleState);
+        SwitchState(coverState);
         DistanceCheck();
     }
 
