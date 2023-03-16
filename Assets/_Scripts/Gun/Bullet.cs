@@ -22,7 +22,7 @@ public class Bullet : MonoBehaviour
             }
             if (collision.transform.CompareTag("Enemy"))
             {
-                collision.transform.GetComponent<EnemyHealth>().TakeDamage(damage);
+                //collision.transform.GetComponent<BodyPart>().TakeDamage(damage, damage);
             }
 //            EffectManager.instance.SpawnBulletHole(collision);
             Destroy(gameObject);

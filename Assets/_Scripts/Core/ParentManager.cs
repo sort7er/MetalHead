@@ -10,5 +10,5 @@ public class ParentManager : MonoBehaviour
         instance = this;
     }
 
-    public Transform effects, bullets, mags, pickups;
+    public Transform effects, bullets, mags, pickups, enemies;
 }

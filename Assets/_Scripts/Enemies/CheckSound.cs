@@ -11,6 +11,8 @@ public class CheckSound : MonoBehaviour
 
     public LayerMask enemyMask;
     private Collider[] possibleEnemiesWhoHeardMe;
+    //Add more later
+    private RunningEnemy runningEnemy;
 
     public void CheckIfEnemyCanHearTheSound(Vector3 soundSource, float range, bool justSus)
     {
@@ -18,16 +20,19 @@ public class CheckSound : MonoBehaviour
 
         foreach (Collider enemy in possibleEnemiesWhoHeardMe)
         {
-            if (enemy.GetComponent<RunningEnemy>() != null)
+            if (enemy.GetComponentInParent <RunningEnemy>() != null)
             {
+                Debug.Log("Lol");
+                runningEnemy = enemy.GetComponentInParent<RunningEnemy>();
                 if (justSus)
                 {
-                    enemy.GetComponent<RunningEnemy>().EnemySus(soundSource);
+                    runningEnemy.EnemySus(soundSource);
                 }
                 else
                 {
-                    enemy.GetComponent<RunningEnemy>().EnemyAlert(soundSource);
+                    runningEnemy.EnemyAlert(soundSource);
                 }
+                break;
             }
         }
     }

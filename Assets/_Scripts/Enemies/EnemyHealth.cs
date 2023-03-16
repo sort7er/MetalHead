@@ -3,10 +3,14 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     public int health;
+    public float startPosture;
+    public float postureRegenerationSpeed;
 
     private RunningEnemy runningEnemy;
-    private WhiteFlash whiteFlash;
+    private Vector3 damageDir;
+    private Rigidbody rb;
     private bool isDead;
+    private float posture;
 
     private void Start()
     {
@@ -14,17 +18,36 @@ public class EnemyHealth : MonoBehaviour
         {
             runningEnemy = GetComponent<RunningEnemy>();
         }
-        whiteFlash = GetComponent<WhiteFlash>();
+        posture = startPosture;
     }
-    public void TakeDamage(int damage)
+    private void Update()
+    {
+        if (posture < startPosture)
+        {
+            posture += Time.deltaTime * postureRegenerationSpeed;
+        }
+        else
+        {
+            posture = startPosture;
+        }
+    }
+
+    public void TakeDamage(int damage, float stun, Rigidbody rb1, Vector3 damageDir1)
     {
         if (!isDead)
         {
-            whiteFlash.Flash();
+            rb = rb1;
+            damageDir = damageDir1;
+
             health -= damage;
+            posture-= stun;
             if (health < 0)
             {
                 Die();
+            }
+            if(posture <0)
+            {
+                Stun();
             }
         }
     }
@@ -35,9 +58,14 @@ public class EnemyHealth : MonoBehaviour
         if(runningEnemy != null)
         {
             runningEnemy.Die();
+            runningEnemy.AddForce(rb, damageDir);
             Debug.Log("Yeah");
         }
         EffectManager.instance.SpawnPickups(transform, Random.Range(3, 8));
 
+    }
+    private void Stun()
+    {
+        Debug.Log("Stunned");
     }
 }

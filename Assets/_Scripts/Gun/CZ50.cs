@@ -58,9 +58,13 @@ public class CZ50 : MonoBehaviour
                         }
                         if (hit.transform.CompareTag("Enemy"))
                         {
-                            hit.transform.GetComponent<EnemyHealth>().TakeDamage(damage);
+                            hit.transform.GetComponent<BodyPart>().TakeDamage(damage, damage, hit.transform.forward - hit.normal * bulletForce);
+                            //SpawnSome other effect
                         }
-                        EffectManager.instance.SpawnBulletHole(hit);
+                        else
+                        {
+                            EffectManager.instance.SpawnBulletHole(hit);
+                        }
                         if (projectilePenetration)
                         {
                             Ray penRay = new Ray(hit.point + ray.direction * penetrationAmount, -ray.direction);
@@ -79,9 +83,13 @@ public class CZ50 : MonoBehaviour
                                         }
                                         if (secondHit.transform.CompareTag("Enemy"))
                                         {
-                                            secondHit.transform.GetComponent<EnemyHealth>().TakeDamage(damage);
+                                            secondHit.transform.GetComponent<BodyPart>().TakeDamage(damage, damage, secondHit.transform.forward - hit.normal * bulletForce);
+                                            //SpawnSome other effect
                                         }
-                                        EffectManager.instance.SpawnBulletHole(secondHit);
+                                        else
+                                        {
+                                            EffectManager.instance.SpawnBulletHole(secondHit);
+                                        }
                                     }
                                 }
                             }

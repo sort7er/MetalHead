@@ -153,7 +153,6 @@ public class RunningEnemy : MonoBehaviour
     }
     public void EnemyAlert(Vector3 position)
     {
-        Debug.Log("ye");
         SetPointOfInterest(position);
         SwitchState(searchingState);
         PlayerDetected();
@@ -169,7 +168,12 @@ public class RunningEnemy : MonoBehaviour
     {
         SwitchState(dieState);
         Destroy(gameObject, timeDead);
+        Destroy(enemyModel.gameObject, timeDead);
         isDead = true;
+    }
+    public void AddForce(Rigidbody rb, Vector3 damageDir)
+    {
+        rb.AddForce(damageDir, ForceMode.Impulse);
     }
     public void EnableRagdoll(bool state)
     {
@@ -182,6 +186,11 @@ public class RunningEnemy : MonoBehaviour
         {
             enemyModel.localPosition = Vector3.zero;
             enemyModel.localRotation = Quaternion.identity;
+            enemyModel.parent = transform;
+        }
+        else
+        {
+            enemyModel.parent = ParentManager.instance.enemies;
         }
     }
     public void SetDistanceCheck(float newTime)
