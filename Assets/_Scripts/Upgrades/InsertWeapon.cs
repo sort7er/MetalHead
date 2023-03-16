@@ -45,6 +45,7 @@ public class InsertWeapon : MonoBehaviour
             {
                 IsInserted(true);
                 upgradeStation.WeaponIn(weaponInserted);
+                returnToHolster.IsBeeingUpgraded(true);
                 returnToHolster.enabled = false;
                 weaponsRigidbody.isKinematic = true;
                 weaponsRigidbody.useGravity = false;
@@ -65,6 +66,7 @@ public class InsertWeapon : MonoBehaviour
         if(inserted)
         {
             returnToHolster.enabled = true;
+            returnToHolster.IsBeeingUpgraded(false);
             weaponsRigidbody.transform.parent = null;
 
             weaponInserted = 0;

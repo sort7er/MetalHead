@@ -10,7 +10,7 @@ public class ReturnToHolster : MonoBehaviour
 
     private Rigidbody rb;
     private float timer, smoothTime;
-    private bool canHolster;
+    private bool canHolster, isBeeingUpgraded;
 
     private void Start()
     {
@@ -76,10 +76,13 @@ public class ReturnToHolster : MonoBehaviour
     public void CanHolster(bool state)
     {
         canHolster = state;
-        if(!isHolding && !isHolstered)
+        if(!isHolding && !isHolstered && !isBeeingUpgraded)
         {
             Holster();
         }
-
+    }
+    public void IsBeeingUpgraded(bool state)
+    {
+        isBeeingUpgraded = state;
     }
 }
