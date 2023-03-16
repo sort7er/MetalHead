@@ -45,17 +45,6 @@ public class LocomotionManager : MonoBehaviour
     public void SwitchLocomotion(int locomotionValue)
     {
         currentMoveType = locomotionValue;
-
-        if(currentMoveType == 0)
-        {
-            SetCountinuous(false);
-            SetTeleport(true);
-        }
-        else if (currentMoveType == 1)
-        {
-            SetTeleport(false);
-            SetCountinuous(true);
-        }
     }
 
     private void SetCountinuous(bool value)
@@ -109,17 +98,6 @@ public class LocomotionManager : MonoBehaviour
     public void SwitchTurning(int turnValue)
     {
         currentTurnType = turnValue;
-
-        if (currentTurnType == 0)
-        {
-            SetCountinuousTurn(false);
-            SetSnap(true);
-        }
-        else if (currentTurnType == 1)
-        {
-            SetSnap(false);
-            SetCountinuousTurn(true);
-        }
     }
     private void SetCountinuousTurn(bool value)
     {

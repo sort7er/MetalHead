@@ -10,17 +10,10 @@ public class EnemyRunState : EnemyBaseState
         Debug.Log("Entered state run");
         enemy.agent.ResetPath();
         enemy.SetSpeed(enemy.runSpeed);
-        enemy.sliderFill.color = enemy.seenColor;
-        enemy.sliderBackground.color = enemy.susDetectionColor;
-        enemy.detectionSlider.maxValue = enemy.timeBeforeLost;
-        enemy.detectionSlider.value = enemy.timeBeforeLost;
-
     }
 
     public override void UpdateState(RunningEnemy enemy)
     {
-        enemy.detectionSlider.value = Mathf.Abs(timer - enemy.timeBeforeLost);
-
         if((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= enemy.rangeBeforeAttack && enemy.CheckLineOfSight(true, enemy.directionToPlayer))
         {
             enemy.SwitchState(enemy.attackState);

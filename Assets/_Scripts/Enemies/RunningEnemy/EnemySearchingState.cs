@@ -13,10 +13,6 @@ public class EnemySearchingState : EnemyBaseState
         enemy.SetFOV(enemy.searchingFOV);
         enemy.agent.ResetPath();
         enemy.agent.SetDestination(enemy.pointOfInterest);
-        enemy.sliderBackground.color = enemy.susDetectionColor;
-        enemy.sliderFill.color = enemy.seenColor;
-        enemy.detectionSlider.value = 0;
-        enemy.detectionSlider.maxValue = enemy.timeBeforeSeen;
 
         //Fix this later, could probably be a problem
         targetReached = false;
@@ -24,10 +20,6 @@ public class EnemySearchingState : EnemyBaseState
 
     public override void UpdateState(RunningEnemy enemy)
     {
-        enemy.detectionSlider.value = timer;
-        enemy.LookingForPlayer(enemy.searchingSightRange);
-
-
         //Walk to target
         if ((new Vector3(enemy.pointOfInterest.x, enemy.transform.position.y, enemy.pointOfInterest.z) - enemy.transform.position).magnitude <= 1.5f && !targetReached)
         {

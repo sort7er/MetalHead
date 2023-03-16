@@ -56,9 +56,6 @@ public class RunningEnemy : MonoBehaviour
     public float timeDead;
 
     [Header("References")]
-    public Slider detectionSlider;
-    public Image sliderBackground;
-    public Image sliderFill;
     public Transform[] tempIdleTargets;
     public Rigidbody[] limbs;
     public Transform enemyModel;
@@ -156,7 +153,7 @@ public class RunningEnemy : MonoBehaviour
     }
     public void EnemyAlert(Vector3 position)
     {
-
+        Debug.Log("ye");
         SetPointOfInterest(position);
         SwitchState(searchingState);
         PlayerDetected();

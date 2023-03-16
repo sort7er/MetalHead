@@ -13,10 +13,6 @@ public class EnemySusState : EnemyBaseState
         Debug.Log("Entered state sus");
         agent = enemy.agent;
         enemy.SetSpeed(enemy.susSpeed);
-        enemy.sliderBackground.color = enemy.idleDetectionColor;
-        enemy.sliderFill.color = enemy.susDetectionColor;
-        enemy.detectionSlider.value = 0;
-        enemy.detectionSlider.maxValue = enemy.timeBeforeDetect;
         pointOfInterest = enemy.pointOfInterest;
         targetReached = false;
         susDone = false;
@@ -27,7 +23,6 @@ public class EnemySusState : EnemyBaseState
 
     public override void UpdateState(RunningEnemy enemy)
     {
-        enemy.detectionSlider.value = timer;
         //Walk to target
         if ((new Vector3(pointOfInterest.x, enemy.transform.position.y, pointOfInterest.z) - enemy.transform.position).magnitude <= 1.5f && !targetReached)
         {
