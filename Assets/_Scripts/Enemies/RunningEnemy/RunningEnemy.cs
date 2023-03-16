@@ -60,13 +60,14 @@ public class RunningEnemy : MonoBehaviour
     public Image sliderBackground;
     public Image sliderFill;
     public Transform[] tempIdleTargets;
+    public Rigidbody[] limbs;
+    public Transform enemyModel;
 
     [HideInInspector] public Vector3 directionToPlayer;
     [HideInInspector] public Vector3 directionToCamera;
     [HideInInspector] public Vector3 pointOfInterest;
     [HideInInspector] public Vector3 movementDircetion;
     [HideInInspector] public NavMeshAgent agent;
-    [HideInInspector] public Rigidbody rb;
     [HideInInspector] public bool enemyDistanceCheck;
     [HideInInspector] public bool playerDetected;
     [HideInInspector] public bool isDead;
@@ -84,6 +85,7 @@ public class RunningEnemy : MonoBehaviour
     public EnemySearchingState searchingState = new EnemySearchingState();
     public EnemyKickState kickState = new EnemyKickState();
 
+    private Animator enemyAnim;
     private EnemyBaseState currentState;
     private Vector3 thisFrame, lastFrame;
     private float timeBetweenDistanceCheck, FOV;
@@ -95,10 +97,13 @@ public class RunningEnemy : MonoBehaviour
         SetDistanceCheck(defaultTimeBetweenDistanceCheck);
         SetTurnSpeed(defaultTurnSmoothTime);
         SetFOV(defaultFOV);
+        enemyAnim = enemyModel.GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        rb = GetComponent<Rigidbody>();
-        SwitchState(coverState);
+
         DistanceCheck();
+        EnableRagdoll(false);
+        SwitchState(coverState);
+
     }
 
     private void Update()
@@ -168,6 +173,19 @@ public class RunningEnemy : MonoBehaviour
         SwitchState(dieState);
         Destroy(gameObject, timeDead);
         isDead = true;
+    }
+    public void EnableRagdoll(bool state)
+    {
+        for (int i = 0; i < limbs.Length; i++)
+        {
+            limbs[i].isKinematic = !state;
+        }
+        enemyAnim.enabled = !state;
+        if (!state)
+        {
+            enemyModel.localPosition = Vector3.zero;
+            enemyModel.localRotation = Quaternion.identity;
+        }
     }
     public void SetDistanceCheck(float newTime)
     {
