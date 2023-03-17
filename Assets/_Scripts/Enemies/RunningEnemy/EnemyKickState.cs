@@ -23,7 +23,6 @@ public class EnemyKickState : EnemyBaseState
         directionFromPlayer = GameManager.instance.XROrigin.transform.position - kickableToKick.transform.position;
         kickPosition = kickableToKick.transform.position - new Vector3(directionFromPlayer.normalized.x, kickableToKick.transform.position.y, directionFromPlayer.normalized.z);
         kickDirection = new Vector3(directionFromPlayer.normalized.x, directionFromPlayer.normalized.y + 0.7f, directionFromPlayer.normalized.z);
-        enemy.tempBox.position = kickDirection;
         if (!arrivedToKickable)
         {
             enemy.agent.SetDestination(kickPosition);

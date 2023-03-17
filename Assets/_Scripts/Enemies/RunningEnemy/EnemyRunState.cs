@@ -32,7 +32,7 @@ public class EnemyRunState : EnemyBaseState
     {
         justKicked = enemy.justKicked;
 
-        if((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= enemy.rangeBeforeAttack && enemy.CheckLineOfSight(false, enemy.directionToPlayer))
+        if((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= enemy.rangeBeforeAttack && enemy.CheckLineOfSight(true, enemy.transform.forward, enemy.transform.position + new Vector3(0, 0.5f, 0)))
         {
             enemy.SwitchState(enemy.attackState);
             enemy.agent.ResetPath();
@@ -40,7 +40,7 @@ public class EnemyRunState : EnemyBaseState
         else
         {
             enemy.agent.SetDestination(GameManager.instance.XROrigin.transform.position);
-            if (enemy.CheckLineOfSight(false, enemy.directionToPlayer))
+            if (enemy.CheckLineOfSight(false, enemy.directionToPlayer, enemy.headTrans.position))
             {
                 enemy.RotateToPosition(GameManager.instance.XROrigin.transform.position);
             }

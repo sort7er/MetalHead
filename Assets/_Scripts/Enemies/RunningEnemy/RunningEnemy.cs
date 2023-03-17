@@ -47,6 +47,7 @@ public class RunningEnemy : MonoBehaviour
 
     [Header("KickState")]
     public float kickForce;
+    public float timeBetweenKicks;
 
     [Header("CoverState")]
     public float minCoverDuration;
@@ -70,7 +71,6 @@ public class RunningEnemy : MonoBehaviour
     public Rigidbody[] limbs;
     public MeshRenderer[] glowingParts;
     public Transform[] tempIdleTargets;
-    public Transform tempBox;
 
     [HideInInspector] public Vector3 directionToPlayer;
     [HideInInspector] public Vector3 directionToCamera;
@@ -244,7 +244,7 @@ public class RunningEnemy : MonoBehaviour
             {
                 if (Vector3.Angle(directionToPlayer, transform.forward) <= FOV * 0.5f)
                 {
-                    inView = CheckLineOfSight(false, directionToPlayer);
+                    inView = CheckLineOfSight(false, directionToPlayer, headTrans.position);
                 }
                 else
                 {
@@ -259,10 +259,10 @@ public class RunningEnemy : MonoBehaviour
         }
     }
 
-    public bool CheckLineOfSight(bool onlyLower, Vector3 directionToCheck)
+    public bool CheckLineOfSight(bool onlyLower, Vector3 directionToCheck, Vector3 startingPos)
     {
         RaycastHit hit;
-        if (Physics.Raycast(headTrans.position, directionToCheck, out hit, 30, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(startingPos, directionToCheck, out hit, 30, Physics.AllLayers, QueryTriggerInteraction.Ignore))
         {
             if (hit.transform.gameObject.layer == 7)
             {
@@ -270,7 +270,7 @@ public class RunningEnemy : MonoBehaviour
             }
             else if (!onlyLower)
             {
-                if (Physics.Raycast(headTrans.position, directionToCamera, out hit, 30, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+                if (Physics.Raycast(startingPos, directionToCamera, out hit, 30, Physics.AllLayers, QueryTriggerInteraction.Ignore))
                 {
                     if (hit.transform.gameObject.layer == 7)
                     {
@@ -319,7 +319,7 @@ public class RunningEnemy : MonoBehaviour
     public void JustKicked()
     {
         justKicked = true;
-        Invoke("JustKicked2", 1);
+        Invoke("JustKicked2", timeBetweenKicks);
     }
     private void JustKicked2()
     {
@@ -329,7 +329,7 @@ public class RunningEnemy : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(headTrans.position, directionToPlayer * 5);
+        Gizmos.DrawRay(transform.position + new Vector3(0, 0.5f, 0), transform.forward * 5);
         Gizmos.color = Color.yellow;
         Gizmos.DrawRay(headTrans.position, directionToCamera * 5);
         Gizmos.color = Color.blue;
