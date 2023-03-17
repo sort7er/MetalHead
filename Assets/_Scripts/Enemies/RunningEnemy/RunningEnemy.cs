@@ -276,27 +276,10 @@ public class RunningEnemy : MonoBehaviour
                     {
                         return true;
                     }
-                    else
-                    {
-                        return false;
-                    }
-
                 }
-                else
-                {
-                    return false;
-                }
-
-            }
-            else
-            { 
-                return false;
             }
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
     public void DelayedCallback(EnemyBaseState state, string methodName, float time, params object[] parameters)
     {
