@@ -45,6 +45,9 @@ public class RunningEnemy : MonoBehaviour
     public Color detectedColor;
     public LayerMask scanableLayer;
 
+    [Header("KickState")]
+    public float kickForce;
+
     [Header("CoverState")]
     public float minCoverDuration;
     public float maxCoverDuration;
@@ -64,9 +67,10 @@ public class RunningEnemy : MonoBehaviour
     [Header("References")]
     public Transform enemyModel;
     public Transform headTrans;
-    public Transform[] tempIdleTargets;
     public Rigidbody[] limbs;
-    public MeshRenderer[] glowingParts; 
+    public MeshRenderer[] glowingParts;
+    public Transform[] tempIdleTargets;
+    public Transform tempBox;
 
     [HideInInspector] public Vector3 directionToPlayer;
     [HideInInspector] public Vector3 directionToCamera;
@@ -74,8 +78,9 @@ public class RunningEnemy : MonoBehaviour
     [HideInInspector] public Vector3 directionToPointOfInterest;
     [HideInInspector] public Vector3 movementDircetion;
     [HideInInspector] public NavMeshAgent agent;
-/*    [HideInInspector] */public Kickable currentKickable;
+    [HideInInspector] public Kickable currentKickable;
     [HideInInspector] public bool enemyDistanceCheck;
+    [HideInInspector] public bool justKicked;
     [HideInInspector] public bool playerDetected;
     [HideInInspector] public bool playerInSight;
     [HideInInspector] public bool isDead;
@@ -310,6 +315,15 @@ public class RunningEnemy : MonoBehaviour
     {
         Quaternion targetAngle = Quaternion.LookRotation(new Vector3(lookAtPoint.x, transform.position.y, lookAtPoint.z) - transform.position, transform.up);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetAngle, Time.deltaTime * turnSmoothTime);
+    }
+    public void JustKicked()
+    {
+        justKicked = true;
+        Invoke("JustKicked2", 1);
+    }
+    private void JustKicked2()
+    {
+        justKicked = false;
     }
 
     void OnDrawGizmosSelected()

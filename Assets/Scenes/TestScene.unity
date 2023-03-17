@@ -2443,6 +2443,7 @@ GameObject:
   - component: {fileID: 127485447}
   - component: {fileID: 127485453}
   - component: {fileID: 127485454}
+  - component: {fileID: 127485455}
   m_Layer: 12
   m_Name: Barrel
   m_TagString: Untagged
@@ -2513,7 +2514,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 2
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -3593,14 +3594,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 127485446}
-  m_LocalRotation: {x: -0.15983301, y: -0, z: -0, w: 0.98714405}
+  m_LocalRotation: {x: -0.73712736, y: -0, z: -0, w: 0.67575383}
   m_LocalPosition: {x: -8.109638, y: 0.619, z: 1.6317817}
   m_LocalScale: {x: 1.3359, y: 0.9872749, z: 1.0272002}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 14
-  m_LocalEulerAnglesHint: {x: -18.394, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -94.975, y: 0, z: 0}
 --- !u!54 &127485453
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3609,7 +3610,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 127485446}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 30
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -3640,6 +3641,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3188434da77a3f74083fd86ecc9813ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isKicked: 0
+--- !u!208 &127485455
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127485446}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.2, y: 0.4, z: 0.2}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &127861524
 GameObject:
   m_ObjectHideFlags: 0
@@ -4118,6 +4136,7 @@ GameObject:
   - component: {fileID: 172779531}
   - component: {fileID: 172779530}
   - component: {fileID: 172779529}
+  - component: {fileID: 172779537}
   m_Layer: 12
   m_Name: Barrel (1)
   m_TagString: Untagged
@@ -4137,6 +4156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3188434da77a3f74083fd86ecc9813ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isKicked: 0
 --- !u!54 &172779530
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4145,7 +4165,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 172779528}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 30
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -4227,7 +4247,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 2
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -5308,13 +5328,29 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 172779528}
   m_LocalRotation: {x: -0.15983301, y: -0, z: -0, w: 0.98714405}
-  m_LocalPosition: {x: -9.287, y: 0.619, z: -0.19}
+  m_LocalPosition: {x: -9.21, y: 0.619, z: -8.15}
   m_LocalScale: {x: 1.3359, y: 0.9872749, z: 1.0272002}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: -18.394, y: 0, z: 0}
+--- !u!208 &172779537
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 172779528}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.2, y: 0.4, z: 0.2}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &180978525
 GameObject:
   m_ObjectHideFlags: 0
@@ -14080,7 +14116,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-129632
+  m_Name: pb_Mesh28180
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -15356,7 +15392,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh30416
+  m_Name: pb_Mesh28834
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -17152,6 +17188,89 @@ Transform:
   m_Children: []
   m_Father: {fileID: 52134077}
   m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &956167424
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 956167427}
+  - component: {fileID: 956167426}
+  - component: {fileID: 956167425}
+  m_Layer: 0
+  m_Name: TempBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!23 &956167425
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956167424}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &956167426
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956167424}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &956167427
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956167424}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.92795, y: 3.2929075, z: 5.773301}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &958896016
 GameObject:
@@ -25165,7 +25284,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.1
+  m_VoxelSize: 0.06666667
   m_MinRegionArea: 1
   m_NavMeshData: {fileID: 23800000, guid: fd0c604537862e24e8101822fe53fc23, type: 2}
   m_BuildHeightMesh: 0
@@ -26487,7 +26606,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-605824
+  m_Name: pb_Mesh28236
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -40576,6 +40695,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
+        type: 3}
+      propertyPath: tempBox
+      value: 
+      objectReference: {fileID: 956167427}
+    - target: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
+        type: 3}
+      propertyPath: kickForce
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
         type: 3}

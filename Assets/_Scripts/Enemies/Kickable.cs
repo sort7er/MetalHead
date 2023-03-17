@@ -2,15 +2,9 @@ using UnityEngine;
 
 public class Kickable : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [HideInInspector] public bool isKicked;
+    public void Kicked(bool state)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        isKicked = state;
     }
 }
