@@ -22,7 +22,6 @@ public class CheckSound : MonoBehaviour
         {
             if (enemy.GetComponentInParent <RunningEnemy>() != null)
             {
-                Debug.Log("Lol");
                 runningEnemy = enemy.GetComponentInParent<RunningEnemy>();
                 if (justSus)
                 {

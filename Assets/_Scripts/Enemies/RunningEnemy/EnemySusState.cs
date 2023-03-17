@@ -13,6 +13,7 @@ public class EnemySusState : EnemyBaseState
         Debug.Log("Entered state sus");
         agent = enemy.agent;
         enemy.SetSpeed(enemy.susSpeed);
+        enemy.SetGlowColor(enemy.susColor);
         pointOfInterest = enemy.pointOfInterest;
         targetReached = false;
         susDone = false;
@@ -52,6 +53,11 @@ public class EnemySusState : EnemyBaseState
             else
             {
                 timer += Time.deltaTime;
+            }
+            if ((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= enemy.distanceBeforeImmediateDetection)
+            {
+                enemy.SetPointOfInterest(GameManager.instance.XROrigin.transform.position);
+                enemy.SwitchState(enemy.runState);
             }
 
         }

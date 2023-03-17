@@ -10,10 +10,10 @@ public class EnemySearchingState : EnemyBaseState
     {
         Debug.Log("Entered state searching");
         enemy.SetSpeed(enemy.searchingSpeed);
-        enemy.SetFOV(enemy.searchingFOV);
+        enemy.SetGlowColor(enemy.searchingColor);
         enemy.agent.ResetPath();
         enemy.agent.SetDestination(enemy.pointOfInterest);
-
+        enemy.PlayerInSight(false);
         //Fix this later, could probably be a problem
         targetReached = false;
     }
@@ -28,20 +28,19 @@ public class EnemySearchingState : EnemyBaseState
             LookingAround();
             enemy.DelayedCallback(enemy.searchingState, "DoneLookingAround", Random.Range(enemy.minSearchDuration, enemy.maxSearchDuration));
         }
-        else if(!targetReached)
+
+        //Rotate to point of interest
+        if (enemy.CheckLineOfSight(false, enemy.directionToPointOfInterest))
         {
-            //Rotate to point of interest
-            if (enemy.CheckLineOfSight(true, enemy.pointOfInterest))
-            {
-                enemy.RotateToPosition(enemy.pointOfInterest);
-            }
-            else
-            {
-                enemy.RotateToPosition(enemy.transform.position + enemy.movementDircetion);
-            }
+            enemy.RotateToPosition(enemy.pointOfInterest);
+        }
+        else if (Mathf.Abs(enemy.movementDircetion.magnitude) > 0.01f)
+        {
+            enemy.RotateToPosition(enemy.transform.position + enemy.movementDircetion);
         }
 
-
+        //Looking for player
+        enemy.LookingForPlayer(enemy.searchingSightRange);
         if (enemy.inView)
         {
             enemy.SetDistanceCheck(0);
@@ -54,6 +53,11 @@ public class EnemySearchingState : EnemyBaseState
             else
             {
                 timer += Time.deltaTime;
+            }
+            if ((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= enemy.distanceBeforeImmediateDetection)
+            {
+                enemy.SetPointOfInterest(GameManager.instance.XROrigin.transform.position);
+                enemy.SwitchState(enemy.runState);
             }
 
         }

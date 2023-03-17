@@ -9,12 +9,14 @@ public class EnemyRunState : EnemyBaseState
     {
         Debug.Log("Entered state run");
         enemy.agent.ResetPath();
+        enemy.SetGlowColor(enemy.detectedColor);
         enemy.SetSpeed(enemy.runSpeed);
+        enemy.PlayerInSight(true);
     }
 
     public override void UpdateState(RunningEnemy enemy)
     {
-        if((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= enemy.rangeBeforeAttack && enemy.CheckLineOfSight(true, enemy.directionToPlayer))
+        if((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= enemy.rangeBeforeAttack && enemy.CheckLineOfSight(false, enemy.directionToPlayer))
         {
             enemy.SwitchState(enemy.attackState);
             enemy.agent.ResetPath();
@@ -22,7 +24,7 @@ public class EnemyRunState : EnemyBaseState
         else
         {
             enemy.agent.SetDestination(GameManager.instance.XROrigin.transform.position);
-            if (enemy.CheckLineOfSight(true, enemy.directionToPlayer))
+            if (enemy.CheckLineOfSight(false, enemy.directionToPlayer))
             {
                 enemy.RotateToPosition(GameManager.instance.XROrigin.transform.position);
             }

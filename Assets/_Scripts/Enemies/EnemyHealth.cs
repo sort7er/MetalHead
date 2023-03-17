@@ -2,15 +2,17 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    public int health;
+    public int startHealth;
     public float startPosture;
     public float postureRegenerationSpeed;
+    public float timeBeforeHide;
 
     private RunningEnemy runningEnemy;
     private Vector3 damageDir;
     private Rigidbody rb;
     private bool isDead;
-    private float posture;
+    private int health;
+    public float posture, hideTimer;
 
     private void Start()
     {
@@ -19,6 +21,7 @@ public class EnemyHealth : MonoBehaviour
             runningEnemy = GetComponent<RunningEnemy>();
         }
         posture = startPosture;
+        health = startHealth;
     }
     private void Update()
     {
@@ -29,6 +32,20 @@ public class EnemyHealth : MonoBehaviour
         else
         {
             posture = startPosture;
+        }
+
+        if(hideTimer > 0)
+        {
+            hideTimer -= Time.deltaTime;
+            if(hideTimer >= timeBeforeHide)
+            {
+                runningEnemy.Hide();
+                hideTimer = 0;
+            }
+        }
+        else
+        {
+            hideTimer = 0;
         }
     }
 
@@ -49,18 +66,15 @@ public class EnemyHealth : MonoBehaviour
             {
                 Stun();
             }
+            hideTimer += startHealth * 0.01f - health * 0.01f + 1;
         }
     }
 
     private void Die()
     {
         isDead = true;
-        if(runningEnemy != null)
-        {
-            runningEnemy.Die();
-            runningEnemy.AddForce(rb, damageDir);
-            Debug.Log("Yeah");
-        }
+        runningEnemy.Die();
+        runningEnemy.AddForce(rb, damageDir);
         EffectManager.instance.SpawnPickups(transform, Random.Range(3, 8));
 
     }

@@ -12,9 +12,9 @@ public class CheckIfThrown : MonoBehaviour
     {
         if (thrown)
         {
-            if (collision.transform.GetComponent<RunningEnemy>() != null)
+            if (collision.transform.GetComponentInParent<RunningEnemy>() != null)
             {
-                collision.transform.GetComponent<RunningEnemy>().EnemyAlert(collision.contacts[0].point);
+                collision.transform.GetComponentInParent<RunningEnemy>().EnemyAlert(collision.contacts[0].point);
             }
         }
         thrown = false;

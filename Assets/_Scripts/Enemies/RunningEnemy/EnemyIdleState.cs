@@ -14,6 +14,7 @@ public class EnemyIdleState : EnemyBaseState
     {
         Debug.Log("Entered state idle");
         enemy.SetSpeed(enemy.idleSpeed);
+        enemy.SetGlowColor(enemy.idleColor);
         agent = enemy.agent;
         if(targetPos != null)
         {
@@ -63,6 +64,13 @@ public class EnemyIdleState : EnemyBaseState
             else
             {
                 timer += Time.deltaTime;
+            }
+
+            if((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= enemy.distanceBeforeImmediateDetection)
+            {
+                Debug.Log("2");
+                enemy.SetPointOfInterest(GameManager.instance.XROrigin.transform.position);
+                enemy.SwitchState(enemy.runState);
             }
 
         }

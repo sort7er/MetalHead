@@ -10,7 +10,7 @@ public class EnemyAttackState : EnemyBaseState
 
     public override void UpdateState(RunningEnemy enemy)
     {
-        if ((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude > enemy.rangeBeforeAttack || !enemy.CheckLineOfSight(true, enemy.directionToPlayer))
+        if ((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude > enemy.rangeBeforeAttack || !enemy.CheckLineOfSight(false, enemy.directionToPlayer))
         {
             enemy.SwitchState(enemy.runState);
         }
