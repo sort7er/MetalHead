@@ -205,12 +205,12 @@ public class EnemyCoverState : EnemyBaseState
         int direction = Random.Range(0, 2);
         if(direction == 0)
         {
-            destination = enemyTrans.position + enemyTrans.right * 1.5f;
+            destination = enemyTrans.position + enemyTrans.right;
             
         }
         else if (direction == 1)
         {
-            destination = enemyTrans.position - enemyTrans.right * 1.5f;
+            destination = enemyTrans.position - enemyTrans.right;
         }
         agent.SetDestination(destination);
     }
