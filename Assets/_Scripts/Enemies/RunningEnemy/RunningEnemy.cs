@@ -72,7 +72,7 @@ public class RunningEnemy : MonoBehaviour
     [HideInInspector] public bool playerDetected;
     [HideInInspector] public bool playerInSight;
     [HideInInspector] public bool isDead;
-/*    [HideInInspector] */public bool inView;
+    [HideInInspector] public bool inView;
     [HideInInspector] public float turnSmoothTime;
 
     public EnemyRunState runState = new EnemyRunState();
@@ -142,10 +142,6 @@ public class RunningEnemy : MonoBehaviour
     {
         enemyDistanceCheck = true;
     }
-    public void PointOfInterest(Vector3 position)
-    {
-        pointOfInterest = position;
-    }
     public void EnemySus(Vector3 position)
     {
         if(!playerDetected)
@@ -187,7 +183,10 @@ public class RunningEnemy : MonoBehaviour
     }
     public void Hide()
     {
-        SwitchState(coverState);
+        if(playerDetected)
+        {
+            SwitchState(coverState);
+        }
     }
     public void SetDistanceCheck(float newTime)
     {

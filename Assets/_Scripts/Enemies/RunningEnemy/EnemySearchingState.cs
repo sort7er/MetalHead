@@ -16,6 +16,7 @@ public class EnemySearchingState : EnemyBaseState
         enemy.PlayerInSight(false);
         //Fix this later, could probably be a problem
         targetReached = false;
+        timer = 0;
     }
 
     public override void UpdateState(RunningEnemy enemy)
