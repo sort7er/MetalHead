@@ -40,7 +40,10 @@ public class RunningEnemy : MonoBehaviour
     public float runSightRange;
     public float rangeBeforeAttack;
     public float timeBeforeLost;
+    public float timeBetweenScan;
+    public float scanRadius;
     public Color detectedColor;
+    public LayerMask scanableLayer;
 
     [Header("CoverState")]
     public float minCoverDuration;
@@ -71,6 +74,7 @@ public class RunningEnemy : MonoBehaviour
     [HideInInspector] public Vector3 directionToPointOfInterest;
     [HideInInspector] public Vector3 movementDircetion;
     [HideInInspector] public NavMeshAgent agent;
+/*    [HideInInspector] */public Kickable currentKickable;
     [HideInInspector] public bool enemyDistanceCheck;
     [HideInInspector] public bool playerDetected;
     [HideInInspector] public bool playerInSight;
@@ -190,6 +194,10 @@ public class RunningEnemy : MonoBehaviour
         {
             SwitchState(coverState);
         }
+    }
+    public void  SetKickable(Kickable kickable)
+    {
+        currentKickable = kickable;
     }
     public void SetDistanceCheck(float newTime)
     {
@@ -312,6 +320,5 @@ public class RunningEnemy : MonoBehaviour
         Gizmos.DrawRay(headTrans.position, directionToCamera * 5);
         Gizmos.color = Color.blue;
         Gizmos.DrawRay(headTrans.position, directionToPointOfInterest * 5);
-
     }
 }

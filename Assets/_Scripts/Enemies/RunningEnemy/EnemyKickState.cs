@@ -5,6 +5,7 @@ public class EnemyKickState : EnemyBaseState
     public override void EnterState(RunningEnemy enemy)
     {
         Debug.Log("Entered state kick");
+        enemy.agent.ResetPath();
     }
 
     public override void UpdateState(RunningEnemy enemy)

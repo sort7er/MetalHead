@@ -316,9 +316,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f404d5d885f854282c699e23741ac4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  startHealth: 100
   startPosture: 100
   postureRegenerationSpeed: 5
+  timeBeforeHide: 2
+  posture: 0
+  hideTimer: 0
 --- !u!114 &7141347437139885933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,40 +336,47 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultTurnSmoothTime: 5
   defaultTimeBetweenDistanceCheck: 0.25
-  defaultFOV: 100
+  defaultFOV: 160
+  distanceBeforeImmediateDetection: 1.5
   idleSpeed: 2
   idleSightRange: 7
-  timeBeforeSus: 1
+  timeBeforeSus: 0.75
   minTimeBetweenTargets: 1
   maxTimeBetweenTargets: 4
-  idleDefaultColor: {r: 0.23113209, g: 0.31470495, b: 1, a: 1}
-  idleDetectionColor: {r: 0.57653016, g: 0.23137254, b: 1, a: 1}
+  idleColor: {r: 0.110991, g: 1, b: 0, a: 1}
   susSpeed: 1
-  timeBeforeDetect: 1
+  timeBeforeDetect: 2.5
   susSightRange: 10
   minSusDuration: 2
   maxSusDuration: 4
-  susDetectionColor: {r: 1, g: 0.23137254, b: 0.8523437, a: 1}
+  susColor: {r: 1, g: 0.90713394, b: 0, a: 1}
   searchingSpeed: 2
   searchingSightRange: 13
-  searchingFOV: 150
   minSearchDuration: 2
   maxSearchDuration: 4
   timeBeforeSeen: 0.5
-  seenColor: {r: 1, g: 0.23137254, b: 0.29110894, a: 1}
+  searchingColor: {r: 1, g: 0.39719838, b: 0, a: 1}
   runSpeed: 3
   runSightRange: 13
   rangeBeforeAttack: 1.5
   timeBeforeLost: 5
-  coverSpeed: 3
-  coverFOV: 120
-  checkCoverRadius: 12
-  minPlayerDistance: 5
-  hideSensitivity: -0.615
+  timeBetweenScan: 0.25
+  detectedColor: {r: 1, g: 0, b: 0, a: 1}
+  minCoverDuration: 3
+  maxCoverDuration: 6
+  coverSpeed: 5
+  dodgeSpeed: 30
+  sightRangeForCover: 3
+  checkCoverRadius: 5
+  minPlayerDistance: 1
+  defaultTimeCoverCheck: 0.25
+  hideSensitivity: -0.8
   hidebleLayer:
     serializedVersion: 2
     m_Bits: 1024
   timeDead: 4
+  enemyModel: {fileID: 7246732520624336850}
+  headTrans: {fileID: 3173534719420928397}
   tempIdleTargets:
   - {fileID: 0}
   - {fileID: 0}
@@ -386,14 +396,18 @@ MonoBehaviour:
   - {fileID: 7141347436590581824}
   - {fileID: 1121398290}
   - {fileID: 96830950}
-  enemyModel: {fileID: 7246732520624336850}
+  glowingParts:
+  - {fileID: 8420249202725281676}
+  - {fileID: 8420249203053017051}
   directionToPlayer: {x: 0, y: 0, z: 0}
   directionToCamera: {x: 0, y: 0, z: 0}
   pointOfInterest: {x: 0, y: 0, z: 0}
+  directionToPointOfInterest: {x: 0, y: 0, z: 0}
   movementDircetion: {x: 0, y: 0, z: 0}
   agent: {fileID: 0}
   enemyDistanceCheck: 0
   playerDetected: 0
+  playerInSight: 0
   isDead: 0
   inView: 0
   turnSmoothTime: 5
@@ -408,7 +422,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.3
   m_Speed: 2
-  m_Acceleration: 8
+  m_Acceleration: 60
   avoidancePriority: 50
   m_AngularSpeed: 10
   m_StoppingDistance: 0
@@ -628,6 +642,12 @@ PrefabInstance:
 --- !u!4 &7246732520801903843 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 09aa34aca72e351408d3b4615ff74d6b,
+    type: 3}
+  m_PrefabInstance: {fileID: 7141347436900270856}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8420249202725281676 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 09aa34aca72e351408d3b4615ff74d6b,
     type: 3}
   m_PrefabInstance: {fileID: 7141347436900270856}
   m_PrefabAsset: {fileID: 0}
@@ -978,6 +998,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LeftFinger1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1798113229594589225, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1798113229594589225, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 2101808013710851262, guid: ecd7d82ee55e594499c7bc762a276d3d,
         type: 3}
@@ -3424,6 +3454,12 @@ PrefabInstance:
 --- !u!4 &7246732519920520372 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7855c0bdfb77458488ee676c8dbc9b6a,
+    type: 3}
+  m_PrefabInstance: {fileID: 7141347437781658463}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8420249203053017051 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 7855c0bdfb77458488ee676c8dbc9b6a,
     type: 3}
   m_PrefabInstance: {fileID: 7141347437781658463}
   m_PrefabAsset: {fileID: 0}
