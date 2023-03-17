@@ -12,6 +12,7 @@ public class EnemyRunState : EnemyBaseState
         enemy.SetGlowColor(enemy.detectedColor);
         enemy.SetSpeed(enemy.runSpeed);
         enemy.PlayerInSight(true);
+        enemy.PlayerDetected();
         timer = 0;
     }
 
@@ -29,7 +30,7 @@ public class EnemyRunState : EnemyBaseState
             {
                 enemy.RotateToPosition(GameManager.instance.XROrigin.transform.position);
             }
-            else
+            else if(Mathf.Abs(enemy.movementDircetion.magnitude) > 0.01f)
             {
                 enemy.RotateToPosition(enemy.transform.position + enemy.movementDircetion);
             }

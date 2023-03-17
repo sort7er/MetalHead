@@ -29,6 +29,7 @@ public class EnemyCoverState : EnemyBaseState
         dodge= false;
         hideLocked= false;
         relay = false;
+        Hide(GameManager.instance.XROrigin.transform);
     }
 
     public override void UpdateState(RunningEnemy enemy)
@@ -42,6 +43,7 @@ public class EnemyCoverState : EnemyBaseState
         
         if (dodge && (destination - enemyTrans.position).magnitude < 0.2f)
         {
+            agent.ResetPath();
             dodge = false;
             OutOfCover();
             
@@ -67,7 +69,7 @@ public class EnemyCoverState : EnemyBaseState
                 relay = false;
             }
         }
-        else
+        else if (inCover && !dodge)
         {
             enemy.LookingForPlayer(enemy.sightRangeForCover);
             if (enemy.inView)
@@ -198,7 +200,7 @@ public class EnemyCoverState : EnemyBaseState
     }
     private void Dodge()
     {
-        dodge= true;
+        dodge = true;
         agent.speed = dodgeSpeed;
         int direction = Random.Range(0, 2);
         if(direction == 0)

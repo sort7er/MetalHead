@@ -105,7 +105,7 @@ public class RunningEnemy : MonoBehaviour
         FOV = defaultFOV;
         DistanceCheck();
         EnableRagdoll(false);
-        SwitchState(coverState);
+        SwitchState(idleState);
 
     }
 

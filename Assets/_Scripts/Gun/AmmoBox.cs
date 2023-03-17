@@ -49,27 +49,9 @@ public class AmmoBox : MonoBehaviour
                 ammoBoxSource.Play();
                 box.SetActive(false);
                 boxCollider.enabled = false;
-                Invoke("NotHovering", 0.8f);
                 Destroy(gameObject, 0.5f);
             }
 
         }
-    }
-
-    public void IsHovering()
-    {
-        if (Vector3.Distance(GameManager.instance.leftHand.transform.position, transform.position) < Vector3.Distance(GameManager.instance.rightHand.transform.position, transform.position))
-        {
-            GameManager.instance.leftHand.Hover(true);
-        }
-        else
-        {
-            GameManager.instance.rightHand.Hover(true);
-        }
-    }
-    public void NotHovering()
-    {
-        GameManager.instance.leftHand.Hover(false);
-        GameManager.instance.rightHand.Hover(false);
     }
 }
