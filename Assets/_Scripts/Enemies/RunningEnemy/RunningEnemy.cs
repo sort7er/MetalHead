@@ -46,6 +46,7 @@ public class RunningEnemy : MonoBehaviour
     public float minCoverDuration;
     public float maxCoverDuration;
     public float coverSpeed;
+    public float dodgeSpeed;
     public float sightRangeForCover;
     public float checkCoverRadius;
     public float minPlayerDistance;

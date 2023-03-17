@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 2560
     height: 1349
   m_ShowMode: 4
-  m_Title: Console
+  m_Title: Inspector
   m_RootView: {fileID: 3}
   m_MinSize: {x: 875, y: 371}
   m_MaxSize: {x: 10000, y: 10000}
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 1
-  controlID: 20
+  controlID: 95
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 21
+  controlID: 96
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -194,7 +194,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 22
+  controlID: 97
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -220,7 +220,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 50}
   m_MaxSize: {x: 24288, y: 8096}
   vertical: 0
-  controlID: 23
+  controlID: 73
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -321,8 +321,8 @@ MonoBehaviour:
     y: 0
     width: 603
     height: 1299
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 21}
   m_Panes:
   - {fileID: 21}
@@ -769,9 +769,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -4.5408125, y: 2.4439213, z: -7.2427783}
+    m_Target: {x: -0.76728815, y: 1.3722281, z: -0.10358482}
     speed: 2
-    m_Value: {x: -4.5408125, y: 2.4439213, z: -7.2427783}
+    m_Value: {x: -0.76728815, y: 1.3722281, z: -0.10358481}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -817,13 +817,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.0574003, y: -0.05026356, z: 0.00594911, w: -0.99774396}
+    m_Target: {x: -0.01606851, y: -0.817448, z: 0.0279923, w: -0.5763366}
     speed: 2
-    m_Value: {x: -0.058866102, y: -0.048725143, z: 0.0059323413, w: -0.9970584}
+    m_Value: {x: -0.016919283, y: -0.8168225, z: 0.029198773, w: -0.5759012}
   m_Size:
-    m_Target: 0.9949875
+    m_Target: 3.425291
     speed: 2
-    m_Value: 0.9949875
+    m_Value: 3.425291
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -885,9 +885,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 56740000
-      m_LastClickedID: 29782
-      m_ExpandedIDs: 3cf7ffff4cf7ffff5cf7ffff6cf7ffff7cf7ffff8af7ffff92f7ffffa0f7ffffa8f7ffffb0f7ffffc6f7ffffcef7ffffdef7ffffeef7fffffef7ffff0ef8ffff1cf8ffff24f8ffff32f8ffff3af8ffff42f8ffff50f8ffff58f8ffff74f8ffff82f8ffff8af8ffffa6f8ffffb4f8ffffbcf8ffffcaf8fffffaf8fffff4faffff72750000627600008c760000
+      m_SelectedIDs: 8c740000
+      m_LastClickedID: 29836
+      m_ExpandedIDs: 0ef9ffff86f9ffff8ef9ffffa6f9ffffaef9ffff3efaffff46faffffc6fafffff2fafffff4faffff76750000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1272,10 +1272,10 @@ MonoBehaviour:
       e32: 0
       e33: 1
   m_PreviewAnimator: {fileID: 0}
-  m_AnimatorController: {fileID: 9100000, guid: 63dab88e1a579f144a3fdfbbbf14797e,
+  m_AnimatorController: {fileID: 9100000, guid: d41ac93dfaf18884e8c4a59147313580,
     type: 2}
   m_BreadCrumbs:
-  - m_Target: {fileID: 3441923489692707371, guid: 63dab88e1a579f144a3fdfbbbf14797e,
+  - m_Target: {fileID: -4169295618672984299, guid: d41ac93dfaf18884e8c4a59147313580,
       type: 2}
     m_ScrollPosition: {x: 0, y: 0}
   stateMachineGraph: {fileID: 0}
@@ -1359,7 +1359,7 @@ MonoBehaviour:
     m_SaveData: []
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: -1798
+  m_LastSelectedObjectID: 29836
 --- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1407,23 +1407,23 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Physics
+    - Assets/_Scripts/Enemies/RunningEnemy
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
   m_ViewMode: 1
   m_StartGridSize: 96
   m_LastFolders:
-  - Assets/Physics
+  - Assets/_Scripts/Enemies/RunningEnemy
   m_LastFoldersGridSize: 96
   m_LastProjectPath: C:\Users\edvar\Documents\Unity\MetalHead
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 615}
-    m_SelectedIDs: be860000
-    m_LastClickedID: 34494
-    m_ExpandedIDs: 00000000f0840000f2840000f4840000f6840000f8840000fa840000fc840000fe84000000850000028500000485000006850000088500000a8500000c8500000e85000010850000128500001485000016850000188500001a8500001c8500001e8500007286000000ca9a3b
+    scrollPos: {x: 0, y: 287}
+    m_SelectedIDs: 5c920000
+    m_LastClickedID: 37468
+    m_ExpandedIDs: 0000000020850000228500002485000026850000288500002a8500002c8500002e85000030850000328500003485000036850000388500003a8500003c8500003e85000040850000428500004485000046850000488500004a8500004c8500004e850000ca91000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1451,7 +1451,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000f0840000f2840000f4840000f6840000f8840000fa840000fc840000fe84000000850000028500000485000006850000088500000a8500000c8500000e85000010850000128500001485000016850000188500001a8500001c8500001e850000
+    m_ExpandedIDs: 0000000020850000228500002485000026850000288500002a8500002c8500002e85000030850000328500003485000036850000388500003a8500003c8500003e85000040850000428500004485000046850000488500004a8500004c8500004e850000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1476,8 +1476,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
+    m_SelectedInstanceIDs: e2260000
+    m_LastClickedInstanceID: 9954
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c62300000000000062730000
     m_RenameOverlay:
@@ -1548,7 +1548,7 @@ MonoBehaviour:
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_LastInspectedObjectInstanceID: -1
-  m_LastVerticalScrollValue: 1944
+  m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0
   m_LockTracker:

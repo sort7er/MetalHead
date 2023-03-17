@@ -8,8 +8,9 @@ public class EnemyCoverState : EnemyBaseState
     private Collider[] colliders = new Collider[10];
     private Collider colliderChosen;
     private Vector3 destination;
-    private float hideSensitivity, checkCoverRadius, minPlayerDistance;
-    private bool hideLocked, relay, inCover, outOfCover, towardsDestination;
+    private Transform enemyTrans;
+    private float hideSensitivity, checkCoverRadius, minPlayerDistance, dodgeSpeed;
+    private bool hideLocked, relay, inCover, outOfCover, dodge;
 
     public override void EnterState(RunningEnemy enemy)
     {
@@ -21,26 +22,35 @@ public class EnemyCoverState : EnemyBaseState
         checkCoverRadius= enemy.checkCoverRadius;
         minPlayerDistance = enemy.minPlayerDistance;
         agent.ResetPath();
+        dodgeSpeed = enemy.dodgeSpeed;
         colliderChosen = null;
-        inCover= false;
+        inCover = false;
         outOfCover= false;
-        towardsDestination= false;
+        dodge= false;
         hideLocked= false;
         relay = false;
     }
 
     public override void UpdateState(RunningEnemy enemy)
     {
+        enemyTrans = enemy.transform;
         if (outOfCover)
         {
             outOfCover = false;
             enemy.SwitchState(enemy.runState);
         }
+        
+        if (dodge && (destination - enemyTrans.position).magnitude < 0.2f)
+        {
+            dodge = false;
+            OutOfCover();
+            
+        }
 
-        if (!inCover)
+        if (!inCover && !dodge)
         {
             hideSensitivity = enemy.hideSensitivity;
-            if ((destination - enemy.transform.position).magnitude < 0.2f && colliderChosen != null)
+            if ((destination - enemyTrans.position).magnitude < 0.2f && colliderChosen != null)
             {
                 InCover();
                 enemy.DelayedCallback(enemy.coverState, "OutOfCover", Random.Range(enemy.minCoverDuration, enemy.maxCoverDuration));
@@ -93,7 +103,7 @@ public class EnemyCoverState : EnemyBaseState
 
             if(hits == 0)
             {
-                Debug.Log("Dodge");
+                Dodge();
             }
             else
             {
@@ -185,5 +195,21 @@ public class EnemyCoverState : EnemyBaseState
     {
         inCover= false;
         outOfCover= true;
+    }
+    private void Dodge()
+    {
+        dodge= true;
+        agent.speed = dodgeSpeed;
+        int direction = Random.Range(0, 2);
+        if(direction == 0)
+        {
+            destination = enemyTrans.position + enemyTrans.right * 1.5f;
+            
+        }
+        else if (direction == 1)
+        {
+            destination = enemyTrans.position - enemyTrans.right * 1.5f;
+        }
+        agent.SetDestination(destination);
     }
 }
