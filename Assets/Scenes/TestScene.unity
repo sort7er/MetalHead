@@ -24694,7 +24694,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1600273068}
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0.00000020861623}
-  m_LocalPosition: {x: 2.072, y: 0, z: -11.057}
+  m_LocalPosition: {x: -2.99, y: 0, z: -1.27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -37874,6 +37874,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
         type: 3}
+      propertyPath: maxCoverDuration
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
+        type: 3}
+      propertyPath: minCoverDuration
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
+        type: 3}
       propertyPath: searchingColor.a
       value: 1
       objectReference: {fileID: 0}
@@ -37901,6 +37911,11 @@ PrefabInstance:
         type: 3}
       propertyPath: minPlayerDistance
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
+        type: 3}
+      propertyPath: sightRangeForCover
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
         type: 3}

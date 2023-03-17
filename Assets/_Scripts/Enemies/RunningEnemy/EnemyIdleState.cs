@@ -68,7 +68,6 @@ public class EnemyIdleState : EnemyBaseState
 
             if((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= enemy.distanceBeforeImmediateDetection)
             {
-                Debug.Log("2");
                 enemy.SetPointOfInterest(GameManager.instance.XROrigin.transform.position);
                 enemy.SwitchState(enemy.runState);
             }

@@ -9,7 +9,7 @@ public class EnemyCoverState : EnemyBaseState
     private Collider colliderChosen;
     private Vector3 destination;
     private float hideSensitivity, checkCoverRadius, minPlayerDistance;
-    private bool hideLocked, relay;
+    private bool hideLocked, relay, inCover, outOfCover, towardsDestination;
 
     public override void EnterState(RunningEnemy enemy)
     {
@@ -22,37 +22,49 @@ public class EnemyCoverState : EnemyBaseState
         minPlayerDistance = enemy.minPlayerDistance;
         agent.ResetPath();
         colliderChosen = null;
+        inCover= false;
+        outOfCover= false;
+        towardsDestination= false;
+        hideLocked= false;
+        relay = false;
     }
 
     public override void UpdateState(RunningEnemy enemy)
     {
-        hideSensitivity = enemy.hideSensitivity;
-        if ((destination - enemy.transform.position).magnitude < 1f && colliderChosen != null)
+        if (outOfCover)
         {
-            if(colliderChosen.transform.localScale.y < 1.8f)
+            outOfCover = false;
+            enemy.SwitchState(enemy.runState);
+        }
+
+        if (!inCover)
+        {
+            hideSensitivity = enemy.hideSensitivity;
+            if ((destination - enemy.transform.position).magnitude < 0.2f && colliderChosen != null)
             {
-                Debug.Log("Gotta duck");
+                InCover();
+                enemy.DelayedCallback(enemy.coverState, "OutOfCover", Random.Range(enemy.minCoverDuration, enemy.maxCoverDuration));
             }
             else
             {
-                Debug.Log("Can stand");
+                Hide(GameManager.instance.XROrigin.transform);
+                enemy.RotateToPosition(destination);
+
+            }
+            if (relay)
+            {
+                enemy.DelayedCallback(enemy.coverState, "HideUnlocked", enemy.defaultTimeCoverCheck);
+                relay = false;
             }
         }
         else
         {
-            Hide(GameManager.instance.XROrigin.transform);
-            
-            if (Mathf.Abs(enemy.movementDircetion.magnitude) > 0.01f)
+            enemy.LookingForPlayer(enemy.sightRangeForCover);
+            if (enemy.inView)
             {
-                enemy.RotateToPosition(enemy.transform.position + enemy.movementDircetion);
+                OutOfCover();
             }
         }
-        if (relay)
-        {
-            enemy.DelayedCallback(enemy.coverState, "HideUnlocked", enemy.defaultTimeCoverCheck);
-            relay = false;
-        }
-
     }
 
     public void Hide(Transform target)
@@ -64,6 +76,7 @@ public class EnemyCoverState : EnemyBaseState
                 colliders[i] = null;
             }
 
+            
 
             int hits = Physics.OverlapSphereNonAlloc(agent.transform.position, checkCoverRadius, colliders, hidebleLayer);
 
@@ -78,49 +91,55 @@ public class EnemyCoverState : EnemyBaseState
             }
             hits -= hitReduction;
 
-
-
-            System.Array.Sort(colliders, ColliderArraySortComparer);
-
-            for (int i = 0; i < hits; i++)
+            if(hits == 0)
             {
-                if (NavMesh.SamplePosition(colliders[i].transform.position, out NavMeshHit hit, 2f, agent.areaMask))
-                {
-                    if (!NavMesh.FindClosestEdge(hit.position, out hit, agent.areaMask))
-                    {
-                        Debug.Log("Unable to find closest edge close to " + hit.position);
-                    }
-                    if (Vector3.Dot(hit.normal, (target.position - hit.position).normalized) < hideSensitivity)
-                    {
-                        destination = hit.position;
-                        colliderChosen = colliders[i];
+                Debug.Log("Dodge");
+            }
+            else
+            {
+                System.Array.Sort(colliders, ColliderArraySortComparer);
 
-                        agent.SetDestination(destination);
-                        break;
-                    }
-                    else
+                for (int i = 0; i < hits; i++)
+                {
+                    if (NavMesh.SamplePosition(colliders[i].transform.position, out NavMeshHit hit, 2f, agent.areaMask))
                     {
-                        if (NavMesh.SamplePosition(colliders[i].transform.position - (target.position - hit.position).normalized * 2, out NavMeshHit hit2, 2f, agent.areaMask))
+                        if (!NavMesh.FindClosestEdge(hit.position, out hit, agent.areaMask))
                         {
-                            if (!NavMesh.FindClosestEdge(hit2.position, out hit2, agent.areaMask))
+                            Debug.Log("Unable to find closest edge close to " + hit.position);
+                        }
+                        if (Vector3.Dot(hit.normal, (target.position - hit.position).normalized) < hideSensitivity)
+                        {
+                            destination = hit.position;
+                            colliderChosen = colliders[i];
+                            agent.SetDestination(destination);
+                            break;
+                        }
+                        else
+                        {
+                            if (NavMesh.SamplePosition(colliders[i].transform.position - (target.position - hit.position).normalized * 2, out NavMeshHit hit2, 2f, agent.areaMask))
                             {
-                                Debug.Log("Unable to find closest edge close to " + hit2.position);
-                            }
-                            if (Vector3.Dot(hit2.normal, (target.position - hit2.position).normalized) < hideSensitivity)
-                            {
-                                destination = hit2.position;
-                                colliderChosen = colliders[i];
-                                agent.SetDestination(destination);
-                                break;
+                                if (!NavMesh.FindClosestEdge(hit2.position, out hit2, agent.areaMask))
+                                {
+                                    Debug.Log("Unable to find closest edge close to " + hit2.position);
+                                }
+                                if (Vector3.Dot(hit2.normal, (target.position - hit2.position).normalized) < hideSensitivity)
+                                {
+                                    destination = hit2.position;
+                                    colliderChosen = colliders[i];
+                                    agent.SetDestination(destination);
+                                    break;
+                                }
                             }
                         }
                     }
-                }
-                else
-                {
-                    Debug.Log("Unable to find NavMesh near object " + colliders[i].name + " at " + colliders[i].transform.position);
+                    else
+                    {
+                        Debug.Log("Unable to find NavMesh near object " + colliders[i].name + " at " + colliders[i].transform.position);
+                    }
                 }
             }
+
+            
 
             hideLocked= true;
             relay = true;
@@ -149,5 +168,22 @@ public class EnemyCoverState : EnemyBaseState
     public void HideUnlocked()
     {
         hideLocked = false;
+    }
+    private void InCover()
+    {
+        inCover= true;
+        if (colliderChosen.transform.localScale.y < 1.8f)
+        {
+            Debug.Log("Gotta duck");
+        }
+        else
+        {
+            Debug.Log("Can stand");
+        }
+    }
+    public void OutOfCover()
+    {
+        inCover= false;
+        outOfCover= true;
     }
 }

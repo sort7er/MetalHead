@@ -31,7 +31,7 @@ public class EnemySearchingState : EnemyBaseState
         }
 
         //Rotate to point of interest
-        if (enemy.CheckLineOfSight(false, enemy.directionToPointOfInterest))
+        if (enemy.CheckLineOfSight(true, enemy.directionToPointOfInterest))
         {
             enemy.RotateToPosition(enemy.pointOfInterest);
         }

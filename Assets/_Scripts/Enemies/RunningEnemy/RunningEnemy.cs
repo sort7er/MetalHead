@@ -43,8 +43,10 @@ public class RunningEnemy : MonoBehaviour
     public Color detectedColor;
 
     [Header("CoverState")]
-
+    public float minCoverDuration;
+    public float maxCoverDuration;
     public float coverSpeed;
+    public float sightRangeForCover;
     public float checkCoverRadius;
     public float minPlayerDistance;
     public float defaultTimeCoverCheck;
@@ -102,7 +104,7 @@ public class RunningEnemy : MonoBehaviour
         FOV = defaultFOV;
         DistanceCheck();
         EnableRagdoll(false);
-        SwitchState(idleState);
+        SwitchState(coverState);
 
     }
 
