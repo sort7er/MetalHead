@@ -6,6 +6,7 @@ public class BodyPart : MonoBehaviour
     public EnemyHealth enemyHealth;
     public float stunMultiplier, damageMultiplier;
     public int bodyPart;
+    public bool crit;
     public void TakeDamage(int damage, int stun, Vector3 damageDir)
     {
         enemyHealth.TakeDamage(Mathf.CeilToInt(damage * damageMultiplier), stun * stunMultiplier, GetComponent<Rigidbody>(), damageDir, bodyPart);

@@ -5,6 +5,8 @@ public class EffectManager : MonoBehaviour
     public static EffectManager instance;
     public GameObject bulletPrefab;
     public GameObject bulletHolePrefab;
+    public GameObject hitEnemy;
+    public GameObject hitEnemyCrit;
     public GameObject[] pickUp;
     public GameObject[] pickUpEffect;
 
@@ -20,9 +22,23 @@ public class EffectManager : MonoBehaviour
         bullet.GetComponent<Bullet>().SetSpeed(speed);
         bullet.transform.parent = ParentManager.instance.bullets;
     }
-    public void SpawnBulletHole(RaycastHit hit)
+    public void SpawnBulletHole(RaycastHit hit, int type)
     {
-        GameObject bulletHole = Instantiate(bulletHolePrefab, hit.point + hit.normal * 0.001f, Quaternion.LookRotation(hit.normal));
+        GameObject hitEffectToInstantiate;
+        if(type == 1)
+        {
+            hitEffectToInstantiate = hitEnemy;
+        }
+        else if(type == 2)
+        {
+            hitEffectToInstantiate = hitEnemyCrit;
+        }
+        else
+        {
+            hitEffectToInstantiate = bulletHolePrefab;
+        }
+
+        GameObject bulletHole = Instantiate(hitEffectToInstantiate, hit.point + hit.normal * 0.001f, Quaternion.LookRotation(hit.normal));
         bulletHole.transform.Rotate(Vector3.forward * Random.Range(-180, 180));
         if (hit.rigidbody != null)
         {

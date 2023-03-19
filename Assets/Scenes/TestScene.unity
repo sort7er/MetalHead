@@ -9067,6 +9067,10 @@ MonoBehaviour:
     type: 3}
   bulletHolePrefab: {fileID: 7055452335704024811, guid: 7e5e1bc9589cd2b44aff294b0a878545,
     type: 3}
+  hitEnemy: {fileID: 2869318214092889750, guid: 618782a7cf12fe541a3018c46330a41d,
+    type: 3}
+  hitEnemyCrit: {fileID: 3791828726597770384, guid: 7b2f0e2b6a7045240bcd386b97994a80,
+    type: 3}
   pickUp:
   - {fileID: 5030928432243003539, guid: 4c9a9695a259f4d4fb1898133e77b5cb, type: 3}
   - {fileID: 4105155477360791956, guid: 665841814dfd7e44596d8d0a5db278b2, type: 3}
@@ -38065,7 +38069,15 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 489772355, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b, type: 3}
+      propertyPath: crit
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 489772355, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b, type: 3}
       propertyPath: bodyPart
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 722224650, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b, type: 3}
+      propertyPath: crit
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 722224650, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b, type: 3}

@@ -59,11 +59,18 @@ public class CZ50 : MonoBehaviour
                         if (hit.transform.CompareTag("Enemy"))
                         {
                             hit.transform.GetComponent<BodyPart>().TakeDamage(damage, damage, hit.transform.forward - hit.normal * bulletForce);
-                            //SpawnSome other effect
+                            if (hit.transform.GetComponent<BodyPart>().crit)
+                            {
+                                EffectManager.instance.SpawnBulletHole(hit, 2);
+                            }
+                            else
+                            {
+                                EffectManager.instance.SpawnBulletHole(hit, 1);
+                            }
                         }
                         else
                         {
-                            EffectManager.instance.SpawnBulletHole(hit);
+                            EffectManager.instance.SpawnBulletHole(hit, 0);
                         }
                         if (projectilePenetration)
                         {
@@ -84,11 +91,19 @@ public class CZ50 : MonoBehaviour
                                         if (secondHit.transform.CompareTag("Enemy"))
                                         {
                                             secondHit.transform.GetComponent<BodyPart>().TakeDamage(damage, damage, secondHit.transform.forward - hit.normal * bulletForce);
-                                            //SpawnSome other effect
+                                            
+                                            if (hit.transform.GetComponent<BodyPart>().crit)
+                                            {
+                                                EffectManager.instance.SpawnBulletHole(hit, 2);
+                                            }
+                                            else
+                                            {
+                                                EffectManager.instance.SpawnBulletHole(hit, 1);
+                                            }
                                         }
                                         else
                                         {
-                                            EffectManager.instance.SpawnBulletHole(secondHit);
+                                            EffectManager.instance.SpawnBulletHole(secondHit, 0);
                                         }
                                     }
                                 }
