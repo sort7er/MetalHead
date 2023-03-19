@@ -26,7 +26,7 @@ public class RigConstraints : MonoBehaviour
         {
             if (rig.weight < 1)
             {
-                rig.weight += Time.deltaTime;
+                rig.weight += Time.deltaTime * 4;
             }
             else
             {
@@ -37,7 +37,7 @@ public class RigConstraints : MonoBehaviour
         {
             if (rig.weight > 0)
             {
-                rig.weight -= Time.deltaTime;
+                rig.weight -= Time.deltaTime * 4;
             }
             else
             {
@@ -55,7 +55,7 @@ public class RigConstraints : MonoBehaviour
         }
         if (newTarget)
         {
-            targetTransform.position = Vector3.Lerp(targetTransform.position, newPos, Time.deltaTime * 3);
+            targetTransform.position = Vector3.Lerp(targetTransform.position, newPos, Time.deltaTime * 6);
             if((newPos - targetTransform.position).magnitude <= 0.2f)
             {
                 newTarget = false;

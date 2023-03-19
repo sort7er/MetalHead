@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering.PostProcessing;
 using static UnityEngine.GraphicsBuffer;
 
 public class EnemyRunState : EnemyBaseState
@@ -92,7 +93,6 @@ public class EnemyRunState : EnemyBaseState
         //FailSafe
         if((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude < 0.35f)
         {
-            Debug.Log("1");
             tooClose = true;
             enemy.enemyAnim.SetBool("Reverse", true);
             enemy.SetNavMeshDestination(enemy.transform.position - enemy.transform.forward * 2);
@@ -100,7 +100,6 @@ public class EnemyRunState : EnemyBaseState
         }
         else if ((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude > 0.5f)
         {
-            Debug.Log("2");
             tooClose = false;
             enemy.enemyAnim.SetBool("Reverse", false);
         }
@@ -135,14 +134,18 @@ public class EnemyRunState : EnemyBaseState
 
             for (int i = 0; i < hits; i++)
             {
-                if ((GameManager.instance.XROrigin.transform.position - agent.transform.position).magnitude > (colliders[i].transform.position - agent.transform.position).magnitude)
+                if (!colliders[i].GetComponent<Kickable>().isBeeingKicked)
                 {
-                    if ((GameManager.instance.XROrigin.transform.position - colliders[i].transform.position).magnitude < (agent.transform.position - colliders[i].transform.position).magnitude * 1.5f)
+                    if ((GameManager.instance.XROrigin.transform.position - agent.transform.position).magnitude > (colliders[i].transform.position - agent.transform.position).magnitude)
                     {
-                        currentKickable = colliders[i].GetComponent<Kickable>();
-                        runningEnemy.SetKickable(currentKickable);
-                        runningEnemy.SwitchState(runningEnemy.kickState);
-                        break;
+                        if (Vector3.Angle(colliders[i].transform.position - agent.transform.position, runningEnemy.transform.forward) <= runningEnemy.FOV * 0.5f)
+                        {
+                            currentKickable = colliders[i].GetComponent<Kickable>();
+                            currentKickable.IsBeeingKicked(true);
+                            runningEnemy.SetKickable(currentKickable);
+                            runningEnemy.SwitchState(runningEnemy.kickState);
+                            break;
+                        }
                     }
                 }
             }

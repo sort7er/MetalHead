@@ -11,6 +11,7 @@ public class EnemyKickState : EnemyBaseState
     public override void EnterState(RunningEnemy enemy)
     {
         Debug.Log("Entered state kick");
+        enemy.rig.SetRig(true);
         runningEnemy = enemy;
         enemy.agent.ResetPath();
         kickForce = enemy.kickForce;
@@ -26,13 +27,14 @@ public class EnemyKickState : EnemyBaseState
         kickDirection = new Vector3(directionFromPlayer.normalized.x, directionFromPlayer.normalized.y + 0.7f, directionFromPlayer.normalized.z);
         if (!arrivedToKickable)
         {
+            Debug.Log("Lol");
             enemy.SetNavMeshDestination(kickPosition);
             enemy.rig.SetTarget(GameManager.instance.cam.transform.position);
             enemy.RotateToPosition(kickPosition);
             if((kickPosition - enemy.transform.position).magnitude < 0.2f)
             {
                 arrivedToKickable = true;
-                enemy.enemyAnim.SetBool("IsMoving", false);
+                enemy.enemyAnim.SetTrigger("Kick");
                 enemy.JustKicked();
                 enemy.DelayedCallback(enemy.kickState, "Kick", 0.1f);
                 enemy.DelayedCallback(enemy.kickState, "KickDone", 0.3f);
@@ -47,6 +49,7 @@ public class EnemyKickState : EnemyBaseState
     public void Kick()
     {
         rb.AddForce(kickDirection * kickForce, ForceMode.Impulse);
+        kickableToKick.IsBeeingKicked(false);
     }
     public void KickDone()
     {

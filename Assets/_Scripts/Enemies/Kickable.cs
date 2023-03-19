@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Kickable : MonoBehaviour
 {
-    [HideInInspector] public bool isKicked;
-    public void Kicked(bool state)
+    [HideInInspector] public bool isBeeingKicked;
+    public void IsBeeingKicked(bool state)
     {
-        isKicked = state;
+        isBeeingKicked = state;
     }
 }

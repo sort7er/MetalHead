@@ -173,18 +173,12 @@ public class EnemyCoverState : EnemyBaseState
     private void InCover()
     {
         inCover= true;
-        if (colliderChosen.transform.localScale.y < 1.8f)
-        {
-            Debug.Log("Gotta duck");
-        }
-        else
-        {
-            Debug.Log("Can stand");
-        }
+        enemyAnim.SetBool("InCover", true);
     }
     public void OutOfCover()
     {
-        runningEnemy.SwitchState(runningEnemy.runState);
+        enemyAnim.SetBool("InCover", false);
+        runningEnemy.DelayedCallback(runningEnemy.coverState, "BackToRun", 0.3f);
     }
     private void Dodge()
     {
@@ -201,5 +195,9 @@ public class EnemyCoverState : EnemyBaseState
             destination = enemyTrans.position - enemyTrans.right;
         }
         runningEnemy.SetNavMeshDestination(destination);
+    }
+    public void BackToRun()
+    {
+        runningEnemy.SwitchState(runningEnemy.runState);
     }
 }
