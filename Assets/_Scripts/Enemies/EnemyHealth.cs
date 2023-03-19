@@ -11,8 +11,8 @@ public class EnemyHealth : MonoBehaviour
     private Vector3 damageDir;
     private Rigidbody rb;
     private bool isDead;
-    private int health;
-    public float posture, hideTimer;
+    private int health, currentBodyPart;
+    private float posture, hideTimer;
 
     private void Start()
     {
@@ -49,12 +49,13 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage, float stun, Rigidbody rb1, Vector3 damageDir1)
+    public void TakeDamage(int damage, float stun, Rigidbody rb1, Vector3 damageDir1, int bodyPart)
     {
         if (!isDead)
         {
             rb = rb1;
             damageDir = damageDir1;
+            currentBodyPart = bodyPart;
 
             health -= damage;
             posture-= stun;
@@ -62,7 +63,7 @@ public class EnemyHealth : MonoBehaviour
             {
                 Die();
             }
-            if(posture <0)
+            if(posture < 0)
             {
                 Stun();
             }
@@ -80,6 +81,7 @@ public class EnemyHealth : MonoBehaviour
     }
     private void Stun()
     {
-        Debug.Log("Stunned");
+        posture = startPosture;
+        runningEnemy.Stun(currentBodyPart);
     }
 }

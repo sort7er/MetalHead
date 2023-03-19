@@ -9,7 +9,7 @@ public class EnemyCoverState : EnemyBaseState
     private Collider colliderChosen;
     private Animator enemyAnim;
     private Vector3 destination;
-    private float hideSensitivity, checkCoverRadius, minPlayerDistance, dodgeSpeed;
+    private float checkCoverRadius, minPlayerDistance, dodgeSpeed;
     private bool hideLocked, inCover, dodge;
 
     public override void EnterState(RunningEnemy enemy)
@@ -19,9 +19,9 @@ public class EnemyCoverState : EnemyBaseState
         agent = enemy.agent;
         enemyAnim = enemy.enemyAnim;
         enemyAnim.SetBool("IsMoving", true);
+        enemyAnim.SetBool("LookingAround", false);
         enemy.SetAnimSpeed(1f);
         agent.speed = enemy.coverSpeed;
-        hideSensitivity= enemy.hideSensitivity;
         checkCoverRadius= enemy.checkCoverRadius;
         minPlayerDistance = enemy.minPlayerDistance;
         agent.ResetPath();
@@ -39,14 +39,12 @@ public class EnemyCoverState : EnemyBaseState
         if (dodge && (destination - enemy.transform.position).magnitude < 0.2f)
         {
             agent.ResetPath();
-            //dodge = false;
-            BackToRun();
+            HidingDone();
             
         }
 
         if (!inCover && !dodge)
         {
-            hideSensitivity = enemy.hideSensitivity;
             if ((destination - enemy.transform.position).magnitude < 0.2f && colliderChosen != null)
             {
                 InCover();
@@ -109,7 +107,7 @@ public class EnemyCoverState : EnemyBaseState
                         {
                             Debug.Log("Unable to find closest edge close to " + hit.position);
                         }
-                        if (Vector3.Dot(hit.normal, (target.position - hit.position).normalized) < hideSensitivity)
+                        if (Vector3.Dot(hit.normal, (target.position - hit.position).normalized) < runningEnemy.hideSensitivity)
                         {
                             destination = hit.position;
                             colliderChosen = colliders[i];
@@ -124,7 +122,7 @@ public class EnemyCoverState : EnemyBaseState
                                 {
                                     Debug.Log("Unable to find closest edge close to " + hit2.position);
                                 }
-                                if (Vector3.Dot(hit2.normal, (target.position - hit2.position).normalized) < hideSensitivity)
+                                if (Vector3.Dot(hit2.normal, (target.position - hit2.position).normalized) < runningEnemy.hideSensitivity)
                                 {
                                     destination = hit2.position;
                                     colliderChosen = colliders[i];
@@ -170,13 +168,13 @@ public class EnemyCoverState : EnemyBaseState
     }
     private void InCover()
     {
-        inCover= true;
+        inCover = true;
         enemyAnim.SetBool("InCover", true);
     }
     public void OutOfCover()
     {
         enemyAnim.SetBool("InCover", false);
-        runningEnemy.DelayedCallback(runningEnemy.coverState, "BackToRun", 0.3f);
+        runningEnemy.DelayedCallback(runningEnemy.coverState, "HidingDone", 0.3f);
     }
     private void Dodge()
     {
@@ -200,8 +198,16 @@ public class EnemyCoverState : EnemyBaseState
     {
         runningEnemy.SetNavMeshDestination(destination);
     }
-    public void BackToRun()
+    public void HidingDone()
     {
-        runningEnemy.SwitchState(runningEnemy.runState);
+        if (runningEnemy.playerInSight)
+        {
+            runningEnemy.SwitchState(runningEnemy.runState);
+
+        }
+        else
+        {
+            runningEnemy.SwitchState(runningEnemy.searchingState);
+        }
     }
 }

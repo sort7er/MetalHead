@@ -82,12 +82,14 @@ public class RunningEnemy : MonoBehaviour
     [HideInInspector] public NavMeshAgent agent;
     [HideInInspector] public Kickable currentKickable;
     [HideInInspector] public Animator enemyAnim;
+    [HideInInspector] public int currentBodyPart;
     [HideInInspector] public bool enemyDistanceCheck;
     [HideInInspector] public bool justKicked;
     [HideInInspector] public bool playerDetected;
     [HideInInspector] public bool playerInSight;
     [HideInInspector] public bool isDead;
     [HideInInspector] public bool inView;
+    [HideInInspector] public bool stunned;
     [HideInInspector] public float turnSmoothTime;
     [HideInInspector] public float FOV;
 
@@ -107,6 +109,7 @@ public class RunningEnemy : MonoBehaviour
     private float timeBetweenDistanceCheck;
     public float newMovementValue, currentValue;
     private bool setNewValue;
+    private string currentAnimationState;
 
 
 
@@ -183,26 +186,14 @@ public class RunningEnemy : MonoBehaviour
     {
         enemyDistanceCheck = true;
     }
-    public void EnemySus(Vector3 position)
-    {
-        if(!playerDetected)
-        {
-            SetPointOfInterest(position);
-            SwitchState(susState);
-        }
-    }
-    public void EnemyAlert(Vector3 position)
-    {
-        if (!playerInSight)
-        {
-            SetPointOfInterest(position);
-            SwitchState(searchingState);
-            PlayerDetected();
-        }
-    }
+
     public void PlayerInSight(bool state)
     {
         playerInSight = state;
+    }
+    public void SetStunned(bool state)
+    {
+        stunned = state;
     }
     public void PlayerDetected()
     {
@@ -211,6 +202,41 @@ public class RunningEnemy : MonoBehaviour
             playerDetected = true;
         }
     }
+    public void EnemySus(Vector3 position)
+    {
+        if (!playerDetected && !stunned)
+        {
+            SetPointOfInterest(position);
+            SwitchState(susState);
+        }
+    }
+    public void EnemyAlert(Vector3 position)
+    {
+        if (!playerInSight && !stunned)
+        {
+            SetPointOfInterest(position);
+            SwitchState(searchingState);
+            PlayerDetected();
+        }
+    }
+    public void Hide()
+    {
+        if (!stunned)
+        {
+            SwitchState(coverState);
+        }
+    }
+    public void Stun(int bodyPart)
+    {
+        if(currentKickable != null)
+        {
+            currentKickable.IsBeeingKicked(false);
+            currentKickable = null;
+        }
+        currentBodyPart = bodyPart;
+        SetStunned(true);
+        SwitchState(stunnedState);
+    }
     public void Die()
     {
         SwitchState(dieState);
@@ -218,16 +244,15 @@ public class RunningEnemy : MonoBehaviour
         Destroy(enemyModel.gameObject, timeDead);
         isDead = true;
     }
+    public void ChangeAnimationState(string newState)
+    {
+        enemyAnim.Play(newState);
+
+        currentAnimationState = newState;
+    }
     public void AddForce(Rigidbody rb, Vector3 damageDir)
     {
         rb.AddForce(damageDir, ForceMode.Impulse);
-    }
-    public void Hide()
-    {
-        if(playerDetected)
-        {
-            SwitchState(coverState);
-        }
     }
     public void  SetKickable(Kickable kickable)
     {

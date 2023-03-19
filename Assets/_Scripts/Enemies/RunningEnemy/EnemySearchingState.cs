@@ -10,6 +10,7 @@ public class EnemySearchingState : EnemyBaseState
     {
         Debug.Log("Entered state searching");
         enemyAnim = enemy.enemyAnim;
+        enemyAnim.SetBool("IsMoving", true);
         enemy.SetSpeed(enemy.searchingSpeed);
         enemy.SetAnimSpeed(0.25f);
         enemy.SetGlowColor(enemy.searchingColor);
