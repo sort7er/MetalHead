@@ -55,7 +55,7 @@ public class RigConstraints : MonoBehaviour
         }
         if (newTarget)
         {
-            targetTransform.position = Vector3.Lerp(targetTransform.position, newPos, Time.deltaTime * 6);
+            targetTransform.position = Vector3.Lerp(targetTransform.position, newPos, Time.deltaTime * 10);
             if((newPos - targetTransform.position).magnitude <= 0.2f)
             {
                 newTarget = false;
