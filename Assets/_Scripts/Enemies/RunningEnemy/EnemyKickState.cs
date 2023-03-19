@@ -28,17 +28,21 @@ public class EnemyKickState : EnemyBaseState
         enemy.rig.SetTarget(GameManager.instance.cam.transform.position);
         if (!arrivedToKickable)
         {
-            Debug.Log("Lol");
             enemy.SetNavMeshDestination(kickPosition);
             
             enemy.RotateToPosition(kickPosition);
-            if((kickPosition - enemy.transform.position).magnitude < 0.2f)
+            if((kickPosition - enemy.transform.position).magnitude < 0.3f)
             {
                 arrivedToKickable = true;
                 enemy.SetTurnSpeed(10);
                 enemy.DelayedCallback(enemy.kickState, "KickStartUp", 0.1f);
                 enemy.DelayedCallback(enemy.kickState, "Kick", 0.2f);
                 enemy.DelayedCallback(enemy.kickState, "KickDone", 0.4f);
+            }
+            if ((kickPosition - enemy.transform.position).magnitude > 5f)
+            {
+                kickableToKick.IsBeeingKicked(false);
+                KickDone();
             }
         }
         else
