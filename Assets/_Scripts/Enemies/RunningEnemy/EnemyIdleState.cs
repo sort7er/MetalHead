@@ -3,8 +3,8 @@ using UnityEngine.AI;
 
 public class EnemyIdleState : EnemyBaseState
 {
-    private NavMeshAgent agent;
     private Vector3 targetPos;
+    private RunningEnemy runningEnemy;
     private int currentTarget;
     private bool targetReached, nextTarget;
     private float timer;
@@ -13,15 +13,17 @@ public class EnemyIdleState : EnemyBaseState
     public override void EnterState(RunningEnemy enemy)
     {
         Debug.Log("Entered state idle");
+        runningEnemy = enemy;
         enemy.SetSpeed(enemy.idleSpeed);
         enemy.SetGlowColor(enemy.idleColor);
-        agent = enemy.agent;
-        if(targetPos != null)
+        enemy.SetAnimSpeed(0.25f);
+        targetReached = false;
+        if (targetPos != null)
         {
             currentTarget = Random.Range(0, enemy.tempIdleTargets.Length);
             targetPos = enemy.tempIdleTargets[currentTarget].position;
         }
-        NextTarget();
+        enemy.DelayedCallback(enemy.idleState, "NextTarget", 0.5f);
     }
 
     public override void UpdateState(RunningEnemy enemy)
@@ -30,7 +32,8 @@ public class EnemyIdleState : EnemyBaseState
         if ((targetPos - enemy.transform.position).magnitude <= 1f && !targetReached)
         {
             nextTarget = false;
-            agent.ResetPath();
+            enemy.agent.ResetPath();
+            enemy.enemyAnim.SetBool("IsMoving", false);
             enemy.DelayedCallback(enemy.idleState, "NextTarget", Random.Range(enemy.minTimeBetweenTargets, enemy.maxTimeBetweenTargets));
             targetPos = enemy.tempIdleTargets[currentTarget].position;
             targetReached = true;
@@ -53,11 +56,13 @@ public class EnemyIdleState : EnemyBaseState
 
         if (enemy.inView)
         {
+            enemy.rig.SetRig(true);
+            enemy.rig.SetTarget(GameManager.instance.cam.transform.position);
             enemy.SetDistanceCheck(0);
             if (timer >= enemy.timeBeforeSus)
             {
                 timer = enemy.timeBeforeSus;
-                enemy.SetPointOfInterest(GameManager.instance.XROrigin.transform.position);
+                enemy.SetPointOfInterest(GameManager.instance.cam.transform.position);
                 enemy.SwitchState(enemy.susState);
                 
             }
@@ -68,13 +73,14 @@ public class EnemyIdleState : EnemyBaseState
 
             if((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= enemy.distanceBeforeImmediateDetection)
             {
-                enemy.SetPointOfInterest(GameManager.instance.XROrigin.transform.position);
+                enemy.SetPointOfInterest(GameManager.instance.cam.transform.position);
                 enemy.SwitchState(enemy.runState);
             }
 
         }
         else
         {
+            enemy.rig.SetRig(false);
             enemy.SetDistanceCheck(enemy.defaultTimeBetweenDistanceCheck);
             if (timer > 0)
             {
@@ -88,8 +94,9 @@ public class EnemyIdleState : EnemyBaseState
     }
     public void NextTarget()
     {
+        runningEnemy.enemyAnim.SetBool("IsMoving", true);
         nextTarget = true;
-        agent.SetDestination(targetPos);
+        runningEnemy.SetNavMeshDestination(targetPos);
         targetReached = false;
     }
 }

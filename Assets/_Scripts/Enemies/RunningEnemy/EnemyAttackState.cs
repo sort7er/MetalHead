@@ -2,10 +2,13 @@ using UnityEngine;
 
 public class EnemyAttackState : EnemyBaseState
 {
+    private Animator enemyAnim;
     public override void EnterState(RunningEnemy enemy)
     {
         Debug.Log("Entered state attacking");
         enemy.agent.ResetPath();
+        enemyAnim = enemy.enemyAnim;
+        enemyAnim.SetBool("IsMoving", false);
     }
 
     public override void UpdateState(RunningEnemy enemy)
@@ -18,7 +21,8 @@ public class EnemyAttackState : EnemyBaseState
         {
             Attack();
         }
-        enemy.RotateToPosition(GameManager.instance.XROrigin.transform.position);
+        //enemy.RotateToPosition(GameManager.instance.XROrigin.transform.position);
+        enemy.rig.SetTarget(GameManager.instance.cam.transform.position);
     }
 
     private void Attack()

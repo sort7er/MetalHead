@@ -4,20 +4,23 @@ using static UnityEngine.GraphicsBuffer;
 
 public class EnemyRunState : EnemyBaseState
 {
-    private float timer, scanRadius;
-    private bool scanning, startKick, justKicked;
+    private float timer;
+    private bool scanning;
     private NavMeshAgent agent;
-    private LayerMask scanableLayer;
+    private Animator enemyAnim;
     private Kickable currentKickable;
     private Collider[] colliders = new Collider[3];
+    private RunningEnemy runningEnemy;
 
     public override void EnterState(RunningEnemy enemy)
     {
         Debug.Log("Entered state run");
+        runningEnemy = enemy;
         agent = enemy.agent;
-        agent.ResetPath();
-        scanRadius = enemy.scanRadius;
-        scanableLayer = enemy.scanableLayer;
+        enemyAnim = enemy.enemyAnim;
+        enemyAnim.SetBool("IsMoving", true);
+        enemy.SetAnimSpeed(0.75f);
+        enemy.agent.ResetPath();
         enemy.SetGlowColor(enemy.detectedColor);
         enemy.SetSpeed(enemy.runSpeed);
         enemy.PlayerInSight(true);
@@ -25,13 +28,11 @@ public class EnemyRunState : EnemyBaseState
         timer = 0;
         scanning = false;
         currentKickable = null;
-
+        enemy.rig.SetRig(true);
     }
 
     public override void UpdateState(RunningEnemy enemy)
     {
-        justKicked = enemy.justKicked;
-
         if((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= enemy.rangeBeforeAttack && enemy.CheckLineOfSight(true, enemy.transform.forward, enemy.transform.position + new Vector3(0, 0.5f, 0)))
         {
             enemy.SwitchState(enemy.attackState);
@@ -39,7 +40,8 @@ public class EnemyRunState : EnemyBaseState
         }
         else
         {
-            enemy.agent.SetDestination(GameManager.instance.XROrigin.transform.position);
+            enemy.rig.SetTarget(GameManager.instance.cam.transform.position);
+            enemy.SetNavMeshDestination(GameManager.instance.XROrigin.transform.position);
             if (enemy.CheckLineOfSight(false, enemy.directionToPlayer, enemy.headTrans.position))
             {
                 enemy.RotateToPosition(GameManager.instance.XROrigin.transform.position);
@@ -66,7 +68,7 @@ public class EnemyRunState : EnemyBaseState
             else
             {
                 timer = enemy.timeBeforeLost;
-                enemy.SetPointOfInterest(GameManager.instance.XROrigin.transform.position);
+                enemy.SetPointOfInterest(GameManager.instance.cam.transform.position);
                 enemy.SwitchState(enemy.searchingState);
             }
             
@@ -86,26 +88,19 @@ public class EnemyRunState : EnemyBaseState
         }
 
         enemy.LookingForPlayer(enemy.runSightRange);
-
-        if (startKick)
-        {
-            enemy.SetKickable(currentKickable);
-            startKick = false;
-            enemy.SwitchState(enemy.kickState);
-        }
     }
 
     private void ScanArea()
     {
         scanning = true;
-        if (!justKicked)
+        if (!runningEnemy.justKicked)
         {
             for (int i = 0; i < colliders.Length; i++)
             {
                 colliders[i] = null;
             }
 
-            int hits = Physics.OverlapSphereNonAlloc(agent.transform.position, scanRadius, colliders, scanableLayer);
+            int hits = Physics.OverlapSphereNonAlloc(agent.transform.position, runningEnemy.scanRadius, colliders, runningEnemy.scanableLayer);
 
 
             int hitReduction = 0;
@@ -128,7 +123,8 @@ public class EnemyRunState : EnemyBaseState
                     if ((GameManager.instance.XROrigin.transform.position - colliders[i].transform.position).magnitude < (agent.transform.position - colliders[i].transform.position).magnitude * 1.5f)
                     {
                         currentKickable = colliders[i].GetComponent<Kickable>();
-                        startKick = true;
+                        runningEnemy.SetKickable(currentKickable);
+                        runningEnemy.SwitchState(runningEnemy.kickState);
                         break;
                     }
                 }

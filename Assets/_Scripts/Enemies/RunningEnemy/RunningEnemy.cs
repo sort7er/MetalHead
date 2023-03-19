@@ -10,6 +10,7 @@ public class RunningEnemy : MonoBehaviour
     public float defaultTimeBetweenDistanceCheck;
     public float defaultFOV;
     public float distanceBeforeImmediateDetection;
+    public LayerMask walkableLayers;
 
     [Header("IdleState")]
     public float idleSpeed;
@@ -71,6 +72,7 @@ public class RunningEnemy : MonoBehaviour
     public Rigidbody[] limbs;
     public MeshRenderer[] glowingParts;
     public Transform[] tempIdleTargets;
+    public RigConstraints rig;
 
     [HideInInspector] public Vector3 directionToPlayer;
     [HideInInspector] public Vector3 directionToCamera;
@@ -79,6 +81,7 @@ public class RunningEnemy : MonoBehaviour
     [HideInInspector] public Vector3 movementDircetion;
     [HideInInspector] public NavMeshAgent agent;
     [HideInInspector] public Kickable currentKickable;
+    [HideInInspector] public Animator enemyAnim;
     [HideInInspector] public bool enemyDistanceCheck;
     [HideInInspector] public bool justKicked;
     [HideInInspector] public bool playerDetected;
@@ -86,6 +89,7 @@ public class RunningEnemy : MonoBehaviour
     [HideInInspector] public bool isDead;
     [HideInInspector] public bool inView;
     [HideInInspector] public float turnSmoothTime;
+    [HideInInspector] public float FOV;
 
     public EnemyRunState runState = new EnemyRunState();
     public EnemyStunnedState stunnedState = new EnemyStunnedState();
@@ -98,10 +102,11 @@ public class RunningEnemy : MonoBehaviour
     public EnemySearchingState searchingState = new EnemySearchingState();
     public EnemyKickState kickState = new EnemyKickState();
 
-    private Animator enemyAnim;
     private EnemyBaseState currentState;
     private Vector3 thisFrame, lastFrame;
-    private float timeBetweenDistanceCheck, FOV;
+    private float timeBetweenDistanceCheck;
+    public float newMovementValue, currentValue;
+    private bool setNewValue;
 
 
 
@@ -127,6 +132,30 @@ public class RunningEnemy : MonoBehaviour
         thisFrame = transform.position;
         movementDircetion = thisFrame - lastFrame;
         lastFrame = transform.position;
+        
+        if (setNewValue)
+        {
+            if(currentValue < newMovementValue)
+            {
+                currentValue += Time.deltaTime;
+            }
+            else
+            {
+                currentValue = newMovementValue;
+                setNewValue = false;
+            }
+            if (currentValue > newMovementValue)
+            {
+                currentValue -= Time.deltaTime;
+            }
+            else
+            {
+                currentValue = newMovementValue;
+                setNewValue = false;
+            }
+            enemyAnim.SetFloat("MovementSpeed", currentValue);
+        }
+
     }
 
     public void SwitchState(EnemyBaseState state)
@@ -212,9 +241,26 @@ public class RunningEnemy : MonoBehaviour
     {
         turnSmoothTime = newSpeed;
     }
+    public void SetAnimSpeed(float value)
+    {
+        newMovementValue = value;
+        setNewValue = true;
+    }
     public void SetPointOfInterest(Vector3 newInterest)
     {
         pointOfInterest = newInterest;
+    }
+    public void SetNavMeshDestination(Vector3 position)
+    {
+        NavMeshHit myNavHit;
+        if (NavMesh.SamplePosition(position, out myNavHit, 2, NavMesh.AllAreas))
+        {
+            agent.SetDestination(myNavHit.position);
+        }
+        else
+        {
+            Debug.Log("Nothing");
+        }
     }
     public void SetGlowColor(Color newColor)
     {

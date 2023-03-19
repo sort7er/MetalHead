@@ -4,15 +4,17 @@ public class EnemySearchingState : EnemyBaseState
 {
     private float timer;
     private bool targetReached, lookingDone;
-
+    private Animator enemyAnim;
 
     public override void EnterState(RunningEnemy enemy)
     {
         Debug.Log("Entered state searching");
+        enemyAnim = enemy.enemyAnim;
         enemy.SetSpeed(enemy.searchingSpeed);
+        enemy.SetAnimSpeed(0.25f);
         enemy.SetGlowColor(enemy.searchingColor);
         enemy.agent.ResetPath();
-        enemy.agent.SetDestination(enemy.pointOfInterest);
+        enemy.SetNavMeshDestination(enemy.pointOfInterest);
         enemy.PlayerInSight(false);
         //Fix this later, could probably be a problem
         targetReached = false;
@@ -26,7 +28,8 @@ public class EnemySearchingState : EnemyBaseState
         {
             enemy.agent.ResetPath();
             targetReached = true;
-            LookingAround();
+            enemyAnim.SetBool("IsMoving", false);
+            enemyAnim.SetBool("LookingAround", true);
             enemy.DelayedCallback(enemy.searchingState, "DoneLookingAround", Random.Range(enemy.minSearchDuration, enemy.maxSearchDuration));
         }
 
@@ -44,10 +47,13 @@ public class EnemySearchingState : EnemyBaseState
         enemy.LookingForPlayer(enemy.searchingSightRange);
         if (enemy.inView)
         {
+            enemy.rig.SetRig(true);
+            enemy.rig.SetTarget(GameManager.instance.cam.transform.position);
             enemy.SetDistanceCheck(0);
 
             if (timer >= enemy.timeBeforeSeen)
             {
+                enemyAnim.SetBool("LookingAround", false);
                 timer = enemy.timeBeforeSeen;
                 enemy.SwitchState(enemy.runState);
             }
@@ -57,13 +63,15 @@ public class EnemySearchingState : EnemyBaseState
             }
             if ((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= enemy.distanceBeforeImmediateDetection)
             {
-                enemy.SetPointOfInterest(GameManager.instance.XROrigin.transform.position);
+                enemyAnim.SetBool("LookingAround", false);
+                enemy.SetPointOfInterest(GameManager.instance.cam.transform.position);
                 enemy.SwitchState(enemy.runState);
             }
 
         }
         else
         {
+            enemy.rig.SetRig(false);
             enemy.SetDistanceCheck(enemy.defaultTimeBetweenDistanceCheck);
             if (timer > 0)
             {
@@ -78,12 +86,6 @@ public class EnemySearchingState : EnemyBaseState
         {
             Debug.Log("Start some walking pattern around");
         }
-    }
-
-
-    private void LookingAround()
-    {
-        Debug.Log("Looking around animation");
     }
     public void DoneLookingAround()
     {

@@ -3,21 +3,25 @@ using UnityEngine.AI;
 
 public class EnemyCoverState : EnemyBaseState
 {
+    private RunningEnemy runningEnemy;
     private NavMeshAgent agent;
-    private LayerMask hidebleLayer;
     private Collider[] colliders = new Collider[10];
     private Collider colliderChosen;
+    private Animator enemyAnim;
     private Vector3 destination;
     private Transform enemyTrans;
     private float hideSensitivity, checkCoverRadius, minPlayerDistance, dodgeSpeed;
-    private bool hideLocked, relay, inCover, outOfCover, dodge;
+    private bool hideLocked, inCover, dodge;
 
     public override void EnterState(RunningEnemy enemy)
     {
         Debug.Log("Entered state cover");
+        runningEnemy = enemy;
         agent = enemy.agent;
+        enemyAnim = enemy.enemyAnim;
+        enemyAnim.SetBool("IsMoving", true);
+        enemy.SetAnimSpeed(1f);
         agent.speed = enemy.coverSpeed;
-        hidebleLayer = enemy.hidebleLayer;
         hideSensitivity= enemy.hideSensitivity;
         checkCoverRadius= enemy.checkCoverRadius;
         minPlayerDistance = enemy.minPlayerDistance;
@@ -25,21 +29,14 @@ public class EnemyCoverState : EnemyBaseState
         dodgeSpeed = enemy.dodgeSpeed;
         colliderChosen = null;
         inCover = false;
-        outOfCover= false;
         dodge= false;
         hideLocked= false;
-        relay = false;
         Hide(GameManager.instance.XROrigin.transform);
     }
 
     public override void UpdateState(RunningEnemy enemy)
     {
         enemyTrans = enemy.transform;
-        if (outOfCover)
-        {
-            outOfCover = false;
-            enemy.SwitchState(enemy.runState);
-        }
         
         if (dodge && (destination - enemyTrans.position).magnitude < 0.2f)
         {
@@ -63,11 +60,6 @@ public class EnemyCoverState : EnemyBaseState
                 enemy.RotateToPosition(destination);
 
             }
-            if (relay)
-            {
-                enemy.DelayedCallback(enemy.coverState, "HideUnlocked", enemy.defaultTimeCoverCheck);
-                relay = false;
-            }
         }
         else if (inCover && !dodge)
         {
@@ -90,7 +82,7 @@ public class EnemyCoverState : EnemyBaseState
 
             
 
-            int hits = Physics.OverlapSphereNonAlloc(agent.transform.position, checkCoverRadius, colliders, hidebleLayer);
+            int hits = Physics.OverlapSphereNonAlloc(agent.transform.position, checkCoverRadius, colliders, runningEnemy.hidebleLayer);
 
             int hitReduction = 0;
             for (int i = 0; i < hits; i++)
@@ -123,7 +115,7 @@ public class EnemyCoverState : EnemyBaseState
                         {
                             destination = hit.position;
                             colliderChosen = colliders[i];
-                            agent.SetDestination(destination);
+                            runningEnemy.SetNavMeshDestination(destination);
                             break;
                         }
                         else
@@ -138,7 +130,7 @@ public class EnemyCoverState : EnemyBaseState
                                 {
                                     destination = hit2.position;
                                     colliderChosen = colliders[i];
-                                    agent.SetDestination(destination);
+                                    runningEnemy.SetNavMeshDestination(destination);
                                     break;
                                 }
                             }
@@ -150,11 +142,8 @@ public class EnemyCoverState : EnemyBaseState
                     }
                 }
             }
-
-            
-
             hideLocked= true;
-            relay = true;
+            runningEnemy.DelayedCallback(runningEnemy.coverState, "HideUnlocked", runningEnemy.defaultTimeCoverCheck);
         } 
     }
     private int ColliderArraySortComparer(Collider A, Collider B)
@@ -195,8 +184,7 @@ public class EnemyCoverState : EnemyBaseState
     }
     public void OutOfCover()
     {
-        inCover= false;
-        outOfCover= true;
+        runningEnemy.SwitchState(runningEnemy.runState);
     }
     private void Dodge()
     {
@@ -212,6 +200,6 @@ public class EnemyCoverState : EnemyBaseState
         {
             destination = enemyTrans.position - enemyTrans.right;
         }
-        agent.SetDestination(destination);
+        runningEnemy.SetNavMeshDestination(destination);
     }
 }
