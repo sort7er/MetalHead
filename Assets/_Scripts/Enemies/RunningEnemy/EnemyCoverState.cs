@@ -9,7 +9,6 @@ public class EnemyCoverState : EnemyBaseState
     private Collider colliderChosen;
     private Animator enemyAnim;
     private Vector3 destination;
-    private Transform enemyTrans;
     private float hideSensitivity, checkCoverRadius, minPlayerDistance, dodgeSpeed;
     private bool hideLocked, inCover, dodge;
 
@@ -36,20 +35,19 @@ public class EnemyCoverState : EnemyBaseState
 
     public override void UpdateState(RunningEnemy enemy)
     {
-        enemyTrans = enemy.transform;
         
-        if (dodge && (destination - enemyTrans.position).magnitude < 0.2f)
+        if (dodge && (destination - enemy.transform.position).magnitude < 0.2f)
         {
             agent.ResetPath();
-            dodge = false;
-            OutOfCover();
+            //dodge = false;
+            BackToRun();
             
         }
 
         if (!inCover && !dodge)
         {
             hideSensitivity = enemy.hideSensitivity;
-            if ((destination - enemyTrans.position).magnitude < 0.2f && colliderChosen != null)
+            if ((destination - enemy.transform.position).magnitude < 0.2f && colliderChosen != null)
             {
                 InCover();
                 enemy.DelayedCallback(enemy.coverState, "OutOfCover", Random.Range(enemy.minCoverDuration, enemy.maxCoverDuration));
@@ -187,13 +185,19 @@ public class EnemyCoverState : EnemyBaseState
         int direction = Random.Range(0, 2);
         if(direction == 0)
         {
-            destination = enemyTrans.position + enemyTrans.right;
+            enemyAnim.SetTrigger("DodgeRight");
+            destination = runningEnemy.transform.position + runningEnemy.transform.right;
             
         }
         else if (direction == 1)
         {
-            destination = enemyTrans.position - enemyTrans.right;
+            enemyAnim.SetTrigger("DodgeLeft");
+            destination = runningEnemy.transform.position - runningEnemy.transform.right;
         }
+        runningEnemy.DelayedCallback(runningEnemy.coverState, "StartDodge", 0.15f);
+    }
+    public void StartDodge()
+    {
         runningEnemy.SetNavMeshDestination(destination);
     }
     public void BackToRun()

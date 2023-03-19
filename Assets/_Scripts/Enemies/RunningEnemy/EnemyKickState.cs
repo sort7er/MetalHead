@@ -25,26 +25,31 @@ public class EnemyKickState : EnemyBaseState
         directionFromPlayer = GameManager.instance.XROrigin.transform.position - kickableToKick.transform.position;
         kickPosition = kickableToKick.transform.position - new Vector3(directionFromPlayer.normalized.x, kickableToKick.transform.position.y, directionFromPlayer.normalized.z);
         kickDirection = new Vector3(directionFromPlayer.normalized.x, directionFromPlayer.normalized.y + 0.7f, directionFromPlayer.normalized.z);
+        enemy.rig.SetTarget(GameManager.instance.cam.transform.position);
         if (!arrivedToKickable)
         {
             Debug.Log("Lol");
             enemy.SetNavMeshDestination(kickPosition);
-            enemy.rig.SetTarget(GameManager.instance.cam.transform.position);
+            
             enemy.RotateToPosition(kickPosition);
             if((kickPosition - enemy.transform.position).magnitude < 0.2f)
             {
                 arrivedToKickable = true;
-                enemy.enemyAnim.SetTrigger("Kick");
-                enemy.JustKicked();
-                enemy.DelayedCallback(enemy.kickState, "Kick", 0.1f);
-                enemy.DelayedCallback(enemy.kickState, "KickDone", 0.3f);
+                enemy.SetTurnSpeed(10);
+                enemy.DelayedCallback(enemy.kickState, "KickStartUp", 0.1f);
+                enemy.DelayedCallback(enemy.kickState, "Kick", 0.2f);
+                enemy.DelayedCallback(enemy.kickState, "KickDone", 0.4f);
             }
         }
         else
         {
-            enemy.rig.SetTarget(kickPosition);
             enemy.RotateToPosition(kickableToKick.transform.position);
         }
+    }
+    public void KickStartUp()
+    {
+        runningEnemy.enemyAnim.SetTrigger("Kick");
+        runningEnemy.JustKicked();
     }
     public void Kick()
     {
