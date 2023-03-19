@@ -55,7 +55,8 @@ public class EnemySusState : EnemyBaseState
         {
             enemy.SetDistanceCheck(0);
 
-
+            enemy.rig.SetRig(true);
+            enemy.rig.SetTarget(GameManager.instance.cam.transform.position);
             if (timer >= enemy.timeBeforeDetect)
             {
                 timer = enemy.timeBeforeDetect;
@@ -78,6 +79,7 @@ public class EnemySusState : EnemyBaseState
         }
         else
         {
+            enemy.rig.SetRig(false);
             enemy.SetDistanceCheck(enemy.defaultTimeBetweenDistanceCheck);
             if (timer > 0)
             {

@@ -10,7 +10,8 @@ public class RigConstraints : MonoBehaviour
     public float tooCloseDistance, angle;
 
     private Rig rig;
-    private bool rigEnabled, tooClose;
+    private Vector3 newPos;
+    private bool rigEnabled, tooClose, newTarget;
 
 
     private void Start()
@@ -52,14 +53,24 @@ public class RigConstraints : MonoBehaviour
         {
             tooClose = true;
         }
+        if (newTarget)
+        {
+            targetTransform.position = Vector3.Lerp(targetTransform.position, newPos, Time.deltaTime * 3);
+            if((newPos - targetTransform.position).magnitude <= 0.2f)
+            {
+                newTarget = false;
+            }
+        }
+
     }
 
     public void SetRig(bool state)
     {
         rigEnabled = state;
     }
-    public void SetTarget(Vector3 newPos)
+    public void SetTarget(Vector3 lookAtPos)
     {
-        targetTransform.position = newPos;
+        newTarget = true;
+        newPos = lookAtPos;
     }
 }
