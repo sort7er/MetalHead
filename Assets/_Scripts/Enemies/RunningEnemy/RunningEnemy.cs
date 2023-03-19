@@ -135,23 +135,23 @@ public class RunningEnemy : MonoBehaviour
         
         if (setNewValue)
         {
-            if(currentValue < newMovementValue)
+            if(newMovementValue > currentValue)
             {
                 currentValue += Time.deltaTime;
+                if(currentValue >= newMovementValue)
+                {
+                    currentValue = newMovementValue;
+                    setNewValue = false;
+                }
             }
-            else
-            {
-                currentValue = newMovementValue;
-                setNewValue = false;
-            }
-            if (currentValue > newMovementValue)
+            else if(newMovementValue < currentValue)
             {
                 currentValue -= Time.deltaTime;
-            }
-            else
-            {
-                currentValue = newMovementValue;
-                setNewValue = false;
+                if (currentValue <= newMovementValue)
+                {
+                    currentValue = newMovementValue;
+                    setNewValue = false;
+                }
             }
             enemyAnim.SetFloat("MovementSpeed", currentValue);
         }

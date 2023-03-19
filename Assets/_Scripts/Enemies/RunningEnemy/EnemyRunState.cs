@@ -5,7 +5,7 @@ using static UnityEngine.GraphicsBuffer;
 public class EnemyRunState : EnemyBaseState
 {
     private float timer;
-    private bool scanning;
+    private bool scanning, tooClose;
     private NavMeshAgent agent;
     private Animator enemyAnim;
     private Kickable currentKickable;
@@ -33,12 +33,12 @@ public class EnemyRunState : EnemyBaseState
 
     public override void UpdateState(RunningEnemy enemy)
     {
-        if((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= enemy.rangeBeforeAttack && enemy.CheckLineOfSight(true, enemy.transform.forward, enemy.transform.position + new Vector3(0, 0.5f, 0)))
+        if((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= enemy.rangeBeforeAttack && enemy.CheckLineOfSight(true, enemy.transform.forward, enemy.transform.position + new Vector3(0, 0.5f, 0)) && !tooClose)
         {
             enemy.SwitchState(enemy.attackState);
             enemy.agent.ResetPath();
         }
-        else
+        else if(!tooClose)
         {
             enemy.rig.SetTarget(GameManager.instance.cam.transform.position);
             enemy.SetNavMeshDestination(GameManager.instance.XROrigin.transform.position);
@@ -88,6 +88,23 @@ public class EnemyRunState : EnemyBaseState
         }
 
         enemy.LookingForPlayer(enemy.runSightRange);
+
+        //FailSafe
+        if((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude < 0.35f)
+        {
+            Debug.Log("1");
+            tooClose = true;
+            enemy.enemyAnim.SetBool("Reverse", true);
+            enemy.SetNavMeshDestination(enemy.transform.position - enemy.transform.forward * 2);
+            enemy.RotateToPosition(GameManager.instance.XROrigin.transform.position);
+        }
+        else if ((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude > 0.5f)
+        {
+            Debug.Log("2");
+            tooClose = false;
+            enemy.enemyAnim.SetBool("Reverse", false);
+        }
+
     }
 
     private void ScanArea()
