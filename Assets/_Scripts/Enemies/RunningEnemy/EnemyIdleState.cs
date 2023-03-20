@@ -3,10 +3,9 @@ using UnityEngine.AI;
 
 public class EnemyIdleState : EnemyBaseState
 {
-    private Vector3 targetPos;
+    private Vector3 targetPos, point;
     private RunningEnemy runningEnemy;
-    private int currentTarget;
-    private bool targetReached, nextTarget;
+    private bool targetReached;
     private float timer;
 
 
@@ -20,10 +19,8 @@ public class EnemyIdleState : EnemyBaseState
         targetReached = false;
         if (targetPos != null)
         {
-            currentTarget = Random.Range(0, enemy.tempIdleTargets.Length);
-            targetPos = enemy.tempIdleTargets[currentTarget].position;
+            enemy.DelayedCallback(enemy.idleState, "NextTarget", 0.5f);
         }
-        enemy.DelayedCallback(enemy.idleState, "NextTarget", 0.5f);
     }
 
     public override void UpdateState(RunningEnemy enemy)
@@ -31,25 +28,22 @@ public class EnemyIdleState : EnemyBaseState
         //Walk to target
         if ((targetPos - enemy.transform.position).magnitude <= 1f && !targetReached)
         {
-            nextTarget = false;
             enemy.agent.ResetPath();
             enemy.enemyAnim.SetBool("IsMoving", false);
-            enemy.DelayedCallback(enemy.idleState, "NextTarget", Random.Range(enemy.minTimeBetweenTargets, enemy.maxTimeBetweenTargets));
-            targetPos = enemy.tempIdleTargets[currentTarget].position;
+            enemy.DelayedCallback(enemy.idleState, "NextTarget", Random.Range(enemy.idleMinTimeBetweenTargets, enemy.idleMinTimeBetweenTargets));
             targetReached = true;
-
-            if (currentTarget >= enemy.tempIdleTargets.Length - 1)
-            {
-                currentTarget = 0;
-            }
-            else
-            {
-                currentTarget++;
-            }
         }
-        else if(nextTarget)
+        else if(!targetReached)
         {
-            enemy.RotateToPosition(targetPos);
+            //Rotate to point of interest
+            if (enemy.CheckLineOfSight(true, enemy.directionToPointOfInterest, enemy.headTrans.position))
+            {
+                enemy.RotateToPosition(enemy.pointOfInterest);
+            }
+            else if (Mathf.Abs(enemy.movementDircetion.magnitude) > 0.01f)
+            {
+                enemy.RotateToPosition(enemy.transform.position + enemy.movementDircetion);
+            }
         }
         //Looking for player
         enemy.LookingForPlayer(enemy.idleSightRange);
@@ -94,9 +88,17 @@ public class EnemyIdleState : EnemyBaseState
     }
     public void NextTarget()
     {
+        if (runningEnemy.RandomPointOnNavMesh(runningEnemy.transform.position, runningEnemy.idleRandomDestinationRange, out point))
+        {
+            targetPos = point;
+        }
+        else
+        {
+            Debug.Log("Nah");
+        }
         runningEnemy.enemyAnim.SetBool("IsMoving", true);
-        nextTarget = true;
         runningEnemy.SetNavMeshDestination(targetPos);
+        runningEnemy.SetPointOfInterest(targetPos);
         targetReached = false;
     }
 }

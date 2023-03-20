@@ -1,3 +1,4 @@
+using System.Drawing;
 using UnityEngine;
 
 public class EnemySearchingState : EnemyBaseState
@@ -5,17 +6,29 @@ public class EnemySearchingState : EnemyBaseState
     private float timer;
     private bool targetReached, lookingDone;
     private Animator enemyAnim;
+    private Vector3 targetPos, point;
+    private RunningEnemy runningEnemy;
 
     public override void EnterState(RunningEnemy enemy)
     {
         Debug.Log("Entered state searching");
+        runningEnemy = enemy;
         enemyAnim = enemy.enemyAnim;
         enemyAnim.SetBool("IsMoving", true);
         enemy.SetSpeed(enemy.searchingSpeed);
         enemy.SetAnimSpeed(0.25f);
         enemy.SetGlowColor(enemy.searchingColor);
         enemy.agent.ResetPath();
-        enemy.SetNavMeshDestination(enemy.pointOfInterest);
+        if(enemy.pointOfInterest != null)
+        {
+            enemy.SetNavMeshDestination(enemy.pointOfInterest);
+            lookingDone = false;
+        }
+        else
+        {
+            lookingDone = true;
+            enemy.DelayedCallback(enemy.searchingState, "NextTarget", 0,5f);
+        }
         enemy.PlayerInSight(false);
         //Fix this later, could probably be a problem
         targetReached = false;
@@ -25,24 +38,51 @@ public class EnemySearchingState : EnemyBaseState
     public override void UpdateState(RunningEnemy enemy)
     {
         //Walk to target
-        if ((new Vector3(enemy.pointOfInterest.x, enemy.transform.position.y, enemy.pointOfInterest.z) - enemy.transform.position).magnitude <= 0.2f && !targetReached)
+        if (!lookingDone)
         {
-            enemy.agent.ResetPath();
-            targetReached = true;
-            enemyAnim.SetBool("IsMoving", false);
-            enemyAnim.SetBool("LookingAround", true);
-            enemy.DelayedCallback(enemy.searchingState, "DoneLookingAround", Random.Range(enemy.minSearchDuration, enemy.maxSearchDuration));
-        }
+            if ((new Vector3(enemy.pointOfInterest.x, enemy.transform.position.y, enemy.pointOfInterest.z) - enemy.transform.position).magnitude <= 0.2f && !targetReached)
+            {
+                enemy.agent.ResetPath();
+                targetReached = true;
+                enemyAnim.SetBool("IsMoving", false);
+                enemyAnim.SetBool("LookingAround", true);
+                enemy.DelayedCallback(enemy.searchingState, "DoneLookingAround", Random.Range(enemy.searchMinTimeBetweenTargets, enemy.searchMaxTimeBetweenTargets));
+            }
 
-        //Rotate to point of interest
-        if (enemy.CheckLineOfSight(true, enemy.directionToPointOfInterest, enemy.headTrans.position))
-        {
-            enemy.RotateToPosition(enemy.pointOfInterest);
+            //Rotate to point of interest
+            if (enemy.CheckLineOfSight(true, enemy.directionToPointOfInterest, enemy.headTrans.position))
+            {
+                enemy.RotateToPosition(enemy.pointOfInterest);
+            }
+            else if (Mathf.Abs(enemy.movementDircetion.magnitude) > 0.01f)
+            {
+                enemy.RotateToPosition(enemy.transform.position + enemy.movementDircetion);
+            }
         }
-        else if (Mathf.Abs(enemy.movementDircetion.magnitude) > 0.01f)
+        else
         {
-            enemy.RotateToPosition(enemy.transform.position + enemy.movementDircetion);
+            if ((targetPos - enemy.transform.position).magnitude <= 1f && !targetReached)
+            {
+                enemy.agent.ResetPath();
+                enemy.enemyAnim.SetBool("IsMoving", false);
+                enemyAnim.SetBool("LookingAround", true);
+                enemy.DelayedCallback(enemy.searchingState, "NextTarget", Random.Range(enemy.searchMinTimeBetweenTargets, enemy.searchMaxTimeBetweenTargets));
+                targetReached = true;
+            }
+            else if (!targetReached)
+            {
+                //Rotate to point of interest
+                if (enemy.CheckLineOfSight(true, enemy.directionToPointOfInterest, enemy.headTrans.position))
+                {
+                    enemy.RotateToPosition(enemy.pointOfInterest);
+                }
+                else if (Mathf.Abs(enemy.movementDircetion.magnitude) > 0.01f)
+                {
+                    enemy.RotateToPosition(enemy.transform.position + enemy.movementDircetion);
+                }
+            }
         }
+        
 
         //Looking for player
         enemy.LookingForPlayer(enemy.searchingSightRange);
@@ -83,14 +123,27 @@ public class EnemySearchingState : EnemyBaseState
                 timer = 0;
             }
         }
-        if (lookingDone)
-        {
-            Debug.Log("Start some walking pattern around");
-        }
     }
     public void DoneLookingAround()
     {
         lookingDone = true;
+        runningEnemy.DelayedCallback(runningEnemy.searchingState, "NextTarget", 0.5f);
+    }
+    public void NextTarget()
+    {
+        if (runningEnemy.RandomPointOnNavMesh(runningEnemy.transform.position, runningEnemy.idleRandomDestinationRange, out point))
+        {
+            targetPos = point;
+        }
+        enemyAnim.SetBool("LookingAround", false);
+        runningEnemy.enemyAnim.SetBool("IsMoving", true);
+        targetReached = false;
+        runningEnemy.SetPointOfInterest(targetPos);
+        runningEnemy.DelayedCallback(runningEnemy.searchingState, "StartWalking", 0.3f);
+    }
+    public void StartWalking()
+    {
+        runningEnemy.SetNavMeshDestination(targetPos);
     }
 
 }

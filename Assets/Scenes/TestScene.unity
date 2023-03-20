@@ -38911,6 +38911,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
         type: 3}
+      propertyPath: susSightRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
+        type: 3}
+      propertyPath: idleSightRange
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
+        type: 3}
       propertyPath: hideSensitivity
       value: -0.8
       objectReference: {fileID: 0}
@@ -38931,6 +38941,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
         type: 3}
+      propertyPath: idleMaxTimeBetweenTargets
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
+        type: 3}
+      propertyPath: idleMinTimeBetweenTargets
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
+        type: 3}
+      propertyPath: idleRandomDestinationRange
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
+        type: 3}
+      propertyPath: searchMaxTimeBetweenTargets
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
+        type: 3}
+      propertyPath: searchMinTimeBetweenTargets
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
+        type: 3}
       propertyPath: collidersToDisable.Array.size
       value: 5
       objectReference: {fileID: 0}
@@ -38944,6 +38979,11 @@ PrefabInstance:
       propertyPath: tempIdleTargets.Array.data[1]
       value: 
       objectReference: {fileID: 157545013}
+    - target: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
+        type: 3}
+      propertyPath: searchingRandomDestinationRange
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
         type: 3}
       propertyPath: collidersToDisable.Array.data[0]

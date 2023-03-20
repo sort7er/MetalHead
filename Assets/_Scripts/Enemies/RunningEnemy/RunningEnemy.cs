@@ -16,8 +16,9 @@ public class RunningEnemy : MonoBehaviour
     public float idleSpeed;
     public float idleSightRange;
     public float timeBeforeSus;
-    public float minTimeBetweenTargets;
-    public float maxTimeBetweenTargets;
+    public float idleMinTimeBetweenTargets;
+    public float idleMaxTimeBetweenTargets;
+    public float idleRandomDestinationRange;
     public Color idleColor;
 
     [Header("SusState")]
@@ -31,9 +32,10 @@ public class RunningEnemy : MonoBehaviour
     [Header("SearchingState")]
     public float searchingSpeed;
     public float searchingSightRange;
-    public float minSearchDuration;
-    public float maxSearchDuration;
+    public float searchMinTimeBetweenTargets;
+    public float searchMaxTimeBetweenTargets;
     public float timeBeforeSeen;
+    public float searchingRandomDestinationRange;
     public Color searchingColor;
 
     [Header("RunState")]
@@ -67,13 +69,13 @@ public class RunningEnemy : MonoBehaviour
     public float timeDead;
 
     [Header("References")]
+    public RigConstraints rig;
     public Transform enemyModel;
     public Transform headTrans;
     public Rigidbody[] limbs;
     public Collider[] collidersToDisable;
     public MeshRenderer[] glowingParts;
-    public Transform[] tempIdleTargets;
-    public RigConstraints rig;
+
 
     [HideInInspector] public Vector3 directionToPlayer;
     [HideInInspector] public Vector3 directionToCamera;
@@ -284,6 +286,22 @@ public class RunningEnemy : MonoBehaviour
         {
             Debug.Log("Nothing");
         }
+    }
+    public bool RandomPointOnNavMesh(Vector3 agentPos, float range, out Vector3 result)
+    {
+        for (int i = 0; i < 30; i++)
+        {
+            Vector3 randomPoint = agentPos + Random.insideUnitSphere * range;
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+            {
+                result = hit.position;
+                return true;
+            }
+        }
+
+        result = Vector3.zero;
+        return false;
     }
     public void SetGlowColor(Color newColor)
     {
