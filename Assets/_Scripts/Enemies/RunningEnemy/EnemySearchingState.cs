@@ -25,7 +25,7 @@ public class EnemySearchingState : EnemyBaseState
     public override void UpdateState(RunningEnemy enemy)
     {
         //Walk to target
-        if ((new Vector3(enemy.pointOfInterest.x, enemy.transform.position.y, enemy.pointOfInterest.z) - enemy.transform.position).magnitude <= 1.5f && !targetReached)
+        if ((new Vector3(enemy.pointOfInterest.x, enemy.transform.position.y, enemy.pointOfInterest.z) - enemy.transform.position).magnitude <= 0.2f && !targetReached)
         {
             enemy.agent.ResetPath();
             targetReached = true;

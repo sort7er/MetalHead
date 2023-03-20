@@ -70,6 +70,7 @@ public class RunningEnemy : MonoBehaviour
     public Transform enemyModel;
     public Transform headTrans;
     public Rigidbody[] limbs;
+    public Collider[] collidersToDisable;
     public MeshRenderer[] glowingParts;
     public Transform[] tempIdleTargets;
     public RigConstraints rig;
@@ -107,9 +108,8 @@ public class RunningEnemy : MonoBehaviour
     private EnemyBaseState currentState;
     private Vector3 thisFrame, lastFrame;
     private float timeBetweenDistanceCheck;
-    public float newMovementValue, currentValue;
+    private float newMovementValue, currentValue;
     private bool setNewValue;
-    private string currentAnimationState;
 
 
 
@@ -247,8 +247,6 @@ public class RunningEnemy : MonoBehaviour
     public void ChangeAnimationState(string newState)
     {
         enemyAnim.Play(newState);
-
-        currentAnimationState = newState;
     }
     public void AddForce(Rigidbody rb, Vector3 damageDir)
     {
@@ -300,6 +298,10 @@ public class RunningEnemy : MonoBehaviour
         for (int i = 0; i < limbs.Length; i++)
         {
             limbs[i].isKinematic = !state;
+        }
+        for (int i = 0; i < collidersToDisable.Length; i++)
+        {
+            collidersToDisable[i].enabled = !state;
         }
         enemyAnim.enabled = !state;
         if (state)
