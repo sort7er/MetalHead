@@ -21,11 +21,13 @@ public class EnemySearchingState : EnemyBaseState
         enemy.agent.ResetPath();
         if(enemy.pointOfInterest != null)
         {
+            Debug.Log(enemy.pointOfInterest);
             enemy.SetNavMeshDestination(enemy.pointOfInterest);
             lookingDone = false;
         }
         else
         {
+            Debug.Log("Yeh");
             lookingDone = true;
             enemy.DelayedCallback(enemy.searchingState, "NextTarget", 0,5f);
         }

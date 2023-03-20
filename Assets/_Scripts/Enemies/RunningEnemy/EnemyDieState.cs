@@ -10,10 +10,15 @@ public class EnemyDieState : EnemyBaseState
         runningEnemy = enemy;
         enemy.SetGlowColor(Color.black);
         enemy.EnableRagdoll(true);
+        enemy.DelayedCallback(enemy.dieState, "StartDestroy", enemy.timeDead);
     }
 
     public override void UpdateState(RunningEnemy enemy)
     {
 
+    }
+    public void StartDestroy()
+    {
+        runningEnemy.DestroyNow();
     }
 }

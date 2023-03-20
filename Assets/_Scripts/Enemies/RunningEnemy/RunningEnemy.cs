@@ -241,15 +241,14 @@ public class RunningEnemy : MonoBehaviour
     }
     public void Die()
     {
-        SwitchState(dieState);
-        Destroy(gameObject, timeDead);
-        Destroy(enemyModel.gameObject, timeDead);
+        SwitchState(dieState);       
         isDead = true;
     }
-    public void OnDestroy()
+    public void DestroyNow()
     {
         EffectManager.instance.SpawnDeadEnemyEffect(enemyModel);
-        
+        Destroy(gameObject, timeDead);
+        Destroy(enemyModel.gameObject, timeDead);
     }
     public void ChangeAnimationState(string newState)
     {

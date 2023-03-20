@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public class CheckSound : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class CheckSound : MonoBehaviour
 
         foreach (Collider enemy in possibleEnemiesWhoHeardMe)
         {
-            if (enemy.GetComponentInParent <RunningEnemy>() != null)
+            if (enemy.GetComponentInParent <RunningEnemy>() != null && enemy.GetComponent<RigBuilder>() != null)
             {
                 runningEnemy = enemy.GetComponentInParent<RunningEnemy>();
                 if (justSus)
@@ -31,7 +32,6 @@ public class CheckSound : MonoBehaviour
                 {
                     runningEnemy.EnemyAlert(soundSource);
                 }
-                break;
             }
         }
     }
