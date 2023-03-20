@@ -200,6 +200,7 @@ public class EnemyCoverState : EnemyBaseState
     }
     public void HidingDone()
     {
+        runningEnemy.IsHiding(false);
         if (runningEnemy.playerInSight)
         {
             runningEnemy.SwitchState(runningEnemy.runState);

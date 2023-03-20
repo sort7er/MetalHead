@@ -93,6 +93,7 @@ public class RunningEnemy : MonoBehaviour
     [HideInInspector] public bool isDead;
     [HideInInspector] public bool inView;
     [HideInInspector] public bool stunned;
+    [HideInInspector] public bool hiding;
     [HideInInspector] public float turnSmoothTime;
     [HideInInspector] public float FOV;
 
@@ -206,7 +207,7 @@ public class RunningEnemy : MonoBehaviour
     }
     public void EnemySus(Vector3 position)
     {
-        if (!playerDetected && !stunned)
+        if (!playerDetected && !stunned && !isDead)
         {
             SetPointOfInterest(position);
             SwitchState(susState);
@@ -214,7 +215,7 @@ public class RunningEnemy : MonoBehaviour
     }
     public void EnemyAlert(Vector3 position)
     {
-        if (!playerInSight && !stunned)
+        if (!playerInSight && !stunned && !hiding && !isDead)
         {
             SetPointOfInterest(position);
             SwitchState(searchingState);
@@ -223,19 +224,25 @@ public class RunningEnemy : MonoBehaviour
     }
     public void Hide()
     {
-        if (!stunned)
+        if (!stunned && !isDead)
         {
+            IsHiding(true);
             SwitchState(coverState);
         }
     }
+    public void IsHiding(bool state)
+    {
+        hiding = state;
+    }
     public void Stun(int bodyPart)
     {
-        if(currentKickable != null)
+        if(currentKickable != null && !isDead)
         {
             currentKickable.IsBeeingKicked(false);
             currentKickable = null;
         }
         currentBodyPart = bodyPart;
+        IsHiding(false);
         SetStunned(true);
         SwitchState(stunnedState);
     }
@@ -247,8 +254,8 @@ public class RunningEnemy : MonoBehaviour
     public void DestroyNow()
     {
         EffectManager.instance.SpawnDeadEnemyEffect(enemyModel);
-        Destroy(gameObject, timeDead);
-        Destroy(enemyModel.gameObject, timeDead);
+        Destroy(gameObject);
+        Destroy(enemyModel.gameObject);
     }
     public void ChangeAnimationState(string newState)
     {
@@ -385,7 +392,6 @@ public class RunningEnemy : MonoBehaviour
     {
 
         yield return new WaitForSeconds(time);
-
         var method = state.GetType().GetMethod(methodName);
         method.Invoke(state, parameters);
     }

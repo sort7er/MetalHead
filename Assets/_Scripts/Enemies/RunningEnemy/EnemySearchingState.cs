@@ -21,7 +21,6 @@ public class EnemySearchingState : EnemyBaseState
         enemy.agent.ResetPath();
         if(enemy.pointOfInterest != null)
         {
-            Debug.Log(enemy.pointOfInterest);
             enemy.SetNavMeshDestination(enemy.pointOfInterest);
             lookingDone = false;
         }
