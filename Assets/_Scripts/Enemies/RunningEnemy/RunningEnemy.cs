@@ -246,6 +246,11 @@ public class RunningEnemy : MonoBehaviour
         Destroy(enemyModel.gameObject, timeDead);
         isDead = true;
     }
+    public void OnDestroy()
+    {
+        EffectManager.instance.SpawnDeadEnemyEffect(enemyModel);
+        
+    }
     public void ChangeAnimationState(string newState)
     {
         enemyAnim.Play(newState);

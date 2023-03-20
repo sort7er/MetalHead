@@ -9195,6 +9195,8 @@ MonoBehaviour:
     type: 3}
   hitEnemyCrit: {fileID: 3791828726597770384, guid: 7b2f0e2b6a7045240bcd386b97994a80,
     type: 3}
+  enemyDeadEffect: {fileID: 2776848704691356976, guid: 6ed49dbf151ef7b43bd6404027425ff3,
+    type: 3}
   pickUp:
   - {fileID: 5030928432243003539, guid: 4c9a9695a259f4d4fb1898133e77b5cb, type: 3}
   - {fileID: 4105155477360791956, guid: 665841814dfd7e44596d8d0a5db278b2, type: 3}
@@ -9586,13 +9588,13 @@ MonoBehaviour:
   onPressO:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2118228032}
-        m_TargetAssemblyTypeName: RunningEnemy, Assembly-CSharp
-        m_MethodName: EnableRagdoll
-        m_Mode: 6
+      - m_Target: {fileID: 590820403}
+        m_TargetAssemblyTypeName: EffectManager, Assembly-CSharp
+        m_MethodName: SpawnDeadEnemyEffect
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1851768736}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -25111,7 +25113,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1600273068}
   m_LocalRotation: {x: -0, y: -0.00000026822087, z: -0, w: -1}
-  m_LocalPosition: {x: -4.875, y: 0, z: -2.025}
+  m_LocalPosition: {x: -4.718, y: 0, z: -2.025}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -32197,7 +32199,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh29090
+  m_Name: pb_Mesh29086
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -35986,7 +35988,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1370
+  m_Name: pb_Mesh-1352
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -37266,18 +37268,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 1
---- !u!114 &2118228032 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
-    type: 3}
-  m_PrefabInstance: {fileID: 7141347437366083680}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71743dbb61a06da4da7c295f92f59968, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2118228033 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7141347437139885931, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
@@ -39197,6 +39187,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1600273070}
     m_Modifications:
+    - target: {fileID: 260480102, guid: bc37897792a96ac419f413187abaa406, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 260480102, guid: bc37897792a96ac419f413187abaa406, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.118
+      objectReference: {fileID: 0}
+    - target: {fileID: 260480102, guid: bc37897792a96ac419f413187abaa406, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.251
+      objectReference: {fileID: 0}
     - target: {fileID: 608322017, guid: bc37897792a96ac419f413187abaa406, type: 3}
       propertyPath: m_InteractionManager
       value: 

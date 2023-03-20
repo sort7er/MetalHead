@@ -7,6 +7,7 @@ public class EffectManager : MonoBehaviour
     public GameObject bulletHolePrefab;
     public GameObject hitEnemy;
     public GameObject hitEnemyCrit;
+    public GameObject enemyDeadEffect;
     public GameObject[] pickUp;
     public GameObject[] pickUpEffect;
 
@@ -67,5 +68,11 @@ public class EffectManager : MonoBehaviour
         GameObject pickup = Instantiate(pickUpEffect[pickUpID], pointToSpawn.position, Quaternion.identity);
         pickup.transform.parent = ParentManager.instance.pickups;
         Destroy(pickup, 1);
+    }
+    public void SpawnDeadEnemyEffect(Transform pointToSpawn)
+    {
+        GameObject effect = Instantiate(enemyDeadEffect, pointToSpawn.position, Quaternion.identity);
+        effect.transform.parent = ParentManager.instance.effects;
+        Destroy(effect, 4);
     }
 }
