@@ -10,7 +10,7 @@ public class RunningEnemy : MonoBehaviour
     public float defaultTimeBetweenDistanceCheck;
     public float defaultFOV;
     public float distanceBeforeImmediateDetection;
-    public LayerMask walkableLayers;
+    public LayerMask layersToCheck;
 
     [Header("IdleState")]
     public float idleSpeed;
@@ -335,7 +335,7 @@ public class RunningEnemy : MonoBehaviour
     public bool CheckLineOfSight(bool onlyLower, Vector3 directionToCheck, Vector3 startingPos)
     {
         RaycastHit hit;
-        if (Physics.Raycast(startingPos, directionToCheck, out hit, 30, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(startingPos, directionToCheck, out hit, 30, layersToCheck, QueryTriggerInteraction.Ignore))
         {
             if (hit.transform.gameObject.layer == 7)
             {
@@ -343,7 +343,7 @@ public class RunningEnemy : MonoBehaviour
             }
             else if (!onlyLower)
             {
-                if (Physics.Raycast(startingPos, directionToCamera, out hit, 30, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+                if (Physics.Raycast(startingPos, directionToCamera, out hit, 30, layersToCheck, QueryTriggerInteraction.Ignore))
                 {
                     if (hit.transform.gameObject.layer == 7)
                     {
