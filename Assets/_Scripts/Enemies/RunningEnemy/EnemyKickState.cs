@@ -41,7 +41,6 @@ public class EnemyKickState : EnemyBaseState
             }
             if ((kickPosition - enemy.transform.position).magnitude > 5f)
             {
-                kickableToKick.IsBeeingKicked(false);
                 KickDone();
             }
         }
@@ -53,7 +52,6 @@ public class EnemyKickState : EnemyBaseState
         //Switch to other states
         if (enemy.stunned)
         {
-            kickableToKick.IsBeeingKicked(false);
             enemy.SwitchState(enemy.stunnedState);
         }
     }
@@ -65,7 +63,6 @@ public class EnemyKickState : EnemyBaseState
     public void Kick()
     {
         rb.AddForce(kickDirection * kickForce, ForceMode.Impulse);
-        kickableToKick.IsBeeingKicked(false);
     }
     public void KickDone()
     {

@@ -17,7 +17,6 @@ public class PlayerHealth : MonoBehaviour
         if (!GameManager.instance.isDead)
         {
             Debug.Log(damage + " damage given to player");
-            Invoke("ColorShiftDone", 0.2f);
             currentHealth -= damage;
             camAnim.SetTrigger("Hit");
             if (currentHealth < 0)

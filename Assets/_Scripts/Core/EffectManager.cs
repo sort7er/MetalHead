@@ -82,4 +82,10 @@ public class EffectManager : MonoBehaviour
         effect.transform.parent = ParentManager.instance.effects;
         Destroy(effect, 2);
     }
+    public void SpawnBarrelHitEnemy(Vector3 positionToSpawn)
+    {
+        GameObject effect = Instantiate(hitEnemy, positionToSpawn, Quaternion.identity);
+        effect.transform.parent = ParentManager.instance.effects;
+        Destroy(effect, 2);
+    }
 }
