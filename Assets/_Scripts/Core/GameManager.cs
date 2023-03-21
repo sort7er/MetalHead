@@ -162,7 +162,7 @@ public class GameManager : MonoBehaviour
     public void IsDead()
     {
         isDead = true;
-        Invoke("DeadMenu", 0.15f);
+        Invoke("DeadMenu", 0.3f);
         EnableRays(true);
         LocomotionManager.instance.EnableMovement(false);
         LocomotionManager.instance.EnableTurning(false);
