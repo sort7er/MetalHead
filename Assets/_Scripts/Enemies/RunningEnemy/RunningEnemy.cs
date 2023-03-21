@@ -48,6 +48,10 @@ public class RunningEnemy : MonoBehaviour
     public Color detectedColor;
     public LayerMask scanableLayer;
 
+    [Header("AttackState")]
+    public float minAttackCooldown;
+    public float maxAttackCooldown;
+
     [Header("KickState")]
     public float kickForce;
     public float timeBetweenKicks;
@@ -104,7 +108,6 @@ public class RunningEnemy : MonoBehaviour
     public EnemyIdleState idleState = new EnemyIdleState();
     public EnemySusState susState = new EnemySusState();
     public EnemyCoverState coverState = new EnemyCoverState();
-    public EnemyDodgeState dodgeState = new EnemyDodgeState();
     public EnemySearchingState searchingState = new EnemySearchingState();
     public EnemyKickState kickState = new EnemyKickState();
 
@@ -408,6 +411,14 @@ public class RunningEnemy : MonoBehaviour
     private void JustKicked2()
     {
         justKicked = false;
+    }
+    public void CanAttack()
+    {
+        Invoke("CanAttack2", Random.Range(minAttackCooldown, maxAttackCooldown));
+    }
+    private void CanAttack2()
+    {
+        attackState.AttackCoolDown();
     }
 
     void OnDrawGizmosSelected()
