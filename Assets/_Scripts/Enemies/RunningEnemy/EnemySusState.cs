@@ -90,6 +90,17 @@ public class EnemySusState : EnemyBaseState
                 timer = 0;
             }
         }
+        //Switch to other states
+        if (enemy.stunned)
+        {
+            enemyAnim.SetBool("LookingAround", false);
+            enemy.SwitchState(enemy.stunnedState);
+        }
+        if (enemy.hiding)
+        {
+            enemyAnim.SetBool("LookingAround", false);
+            enemy.SwitchState(enemy.coverState);
+        }
     }
     public void CheckItOut()
     {

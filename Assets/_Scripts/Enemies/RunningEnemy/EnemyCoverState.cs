@@ -65,6 +65,13 @@ public class EnemyCoverState : EnemyBaseState
                 OutOfCover();
             }
         }
+
+        //Switch to other states
+        if (enemy.stunned)
+        {
+            runningEnemy.IsHiding(false);
+            enemy.SwitchState(enemy.stunnedState);
+        }
     }
 
     public void Hide(Transform target)

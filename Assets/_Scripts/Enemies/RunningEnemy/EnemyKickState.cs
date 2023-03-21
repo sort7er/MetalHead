@@ -49,6 +49,13 @@ public class EnemyKickState : EnemyBaseState
         {
             enemy.RotateToPosition(kickableToKick.transform.position);
         }
+        
+        //Switch to other states
+        if (enemy.stunned)
+        {
+            kickableToKick.IsBeeingKicked(false);
+            enemy.SwitchState(enemy.stunnedState);
+        }
     }
     public void KickStartUp()
     {

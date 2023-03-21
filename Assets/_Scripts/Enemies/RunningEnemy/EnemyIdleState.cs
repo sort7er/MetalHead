@@ -85,6 +85,15 @@ public class EnemyIdleState : EnemyBaseState
                 timer = 0;
             }
         }
+        //Switch to other states
+        if (enemy.stunned)
+        {
+            enemy.SwitchState(enemy.stunnedState);
+        }
+        if (enemy.hiding)
+        {
+            enemy.SwitchState(enemy.coverState);
+        }
     }
     public void NextTarget()
     {

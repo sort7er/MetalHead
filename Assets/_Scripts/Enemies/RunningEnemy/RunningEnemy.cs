@@ -134,6 +134,7 @@ public class RunningEnemy : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(hiding);
         directionToPlayer = GameManager.instance.XROrigin.transform.position - headTrans.position;
         directionToCamera = GameManager.instance.cam.transform.position - headTrans.position;
         directionToPointOfInterest = pointOfInterest - headTrans.position;
@@ -197,9 +198,13 @@ public class RunningEnemy : MonoBehaviour
     {
         playerInSight = state;
     }
-    public void SetStunned(bool state)
+    public void IsStunned(bool state)
     {
         stunned = state;
+    }
+    public void IsHiding(bool state)
+    {
+        hiding = state;
     }
     public void PlayerDetected()
     {
@@ -230,24 +235,12 @@ public class RunningEnemy : MonoBehaviour
         if (!stunned && !isDead)
         {
             IsHiding(true);
-            SwitchState(coverState);
         }
-    }
-    public void IsHiding(bool state)
-    {
-        hiding = state;
     }
     public void Stun(int bodyPart)
     {
-        if(currentKickable != null && !isDead)
-        {
-            currentKickable.IsBeeingKicked(false);
-            currentKickable = null;
-        }
         currentBodyPart = bodyPart;
-        IsHiding(false);
-        SetStunned(true);
-        SwitchState(stunnedState);
+        IsStunned(true);
     }
     public void Die()
     {

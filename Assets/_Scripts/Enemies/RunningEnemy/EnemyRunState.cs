@@ -104,6 +104,16 @@ public class EnemyRunState : EnemyBaseState
             enemy.enemyAnim.SetBool("Reverse", false);
         }
 
+
+        //Switch to other states
+        if (enemy.stunned)
+        {
+            enemy.SwitchState(enemy.stunnedState);
+        }
+        if (enemy.hiding)
+        {
+            enemy.SwitchState(enemy.coverState);
+        }
     }
 
     private void ScanArea()

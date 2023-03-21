@@ -26,7 +26,6 @@ public class EnemySearchingState : EnemyBaseState
         }
         else
         {
-            Debug.Log("Yeh");
             lookingDone = true;
             enemy.DelayedCallback(enemy.searchingState, "NextTarget", 0,5f);
         }
@@ -123,6 +122,18 @@ public class EnemySearchingState : EnemyBaseState
             {
                 timer = 0;
             }
+        }
+
+        //Switch to other states
+        if (enemy.stunned)
+        {
+            enemyAnim.SetBool("LookingAround", false);
+            enemy.SwitchState(enemy.stunnedState);
+        }
+        if (enemy.hiding)
+        {
+            enemyAnim.SetBool("LookingAround", false);
+            enemy.SwitchState(enemy.coverState);
         }
     }
     public void DoneLookingAround()

@@ -35,7 +35,7 @@ public class EnemyStunnedState : EnemyBaseState
     }
     public void StunDone()
     {
-        runningEnemy.SetStunned(false);
+        runningEnemy.IsStunned(false);
         if (runningEnemy.playerInSight)
         {
             runningEnemy.SwitchState(runningEnemy.runState);

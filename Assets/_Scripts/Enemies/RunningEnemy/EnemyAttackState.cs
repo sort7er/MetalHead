@@ -21,7 +21,6 @@ public class EnemyAttackState : EnemyBaseState
 
     public override void UpdateState(RunningEnemy enemy)
     {
-        Debug.Log(cannotAttack);
         if (((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude > enemy.rangeBeforeAttack || !enemy.CheckLineOfSight(true, enemy.transform.forward, enemy.transform.position + new Vector3(0, 0.5f, 0))) && !attackStarted)
         {
             enemy.SwitchState(enemy.runState);
@@ -48,6 +47,16 @@ public class EnemyAttackState : EnemyBaseState
                 enemy.DelayedCallback(enemy.attackState, "AttackDone", enemyAnim.GetCurrentAnimatorStateInfo(0).length);
             }
         }
+
+        //Switch to other states
+        if (enemy.stunned)
+        {
+            enemy.SwitchState(enemy.stunnedState);
+        }
+        if (enemy.hiding && !attackStarted)
+        {
+            enemy.SwitchState(enemy.coverState);
+        }
     }
 
     private void Attack()
@@ -61,7 +70,6 @@ public class EnemyAttackState : EnemyBaseState
     }
     public void AttackDone()
     {
-        Debug.Log("3");
         runningEnemy.CanAttack();
         attackStarted = false;
     }
