@@ -11,7 +11,7 @@ public class EnemyIdleState : EnemyBaseState
 
     public override void EnterState(RunningEnemy enemy)
     {
-        Debug.Log("Entered state idle");
+        //Debug.Log("Entered state idle");
         runningEnemy = enemy;
         enemy.SetSpeed(enemy.idleSpeed);
         enemy.SetGlowColor(enemy.idleColor);

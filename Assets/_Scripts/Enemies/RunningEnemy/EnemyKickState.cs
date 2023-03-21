@@ -10,7 +10,7 @@ public class EnemyKickState : EnemyBaseState
     private bool arrivedToKickable;
     public override void EnterState(RunningEnemy enemy)
     {
-        Debug.Log("Entered state kick");
+        //Debug.Log("Entered state kick");
         enemy.rig.SetRig(true);
         runningEnemy = enemy;
         enemy.agent.ResetPath();
@@ -37,10 +37,12 @@ public class EnemyKickState : EnemyBaseState
                 enemy.SetTurnSpeed(10);
                 enemy.DelayedCallback(enemy.kickState, "KickStartUp", 0.1f);
                 enemy.DelayedCallback(enemy.kickState, "Kick", 0.2f);
+                enemy.DelayedCallback(enemy.kickState, "KickCanDamage", 0.3f);
                 enemy.DelayedCallback(enemy.kickState, "KickDone", 0.4f);
             }
             if ((kickPosition - enemy.transform.position).magnitude > 5f)
             {
+                kickableToKick.IsBeeingKicked(false);
                 KickDone();
             }
         }
@@ -52,6 +54,7 @@ public class EnemyKickState : EnemyBaseState
         //Switch to other states
         if (enemy.stunned)
         {
+            kickableToKick.IsBeeingKicked(false);
             enemy.SwitchState(enemy.stunnedState);
         }
     }
@@ -63,9 +66,15 @@ public class EnemyKickState : EnemyBaseState
     public void Kick()
     {
         rb.AddForce(kickDirection * kickForce, ForceMode.Impulse);
+
+    }
+    public void KickCanDamage()
+    {
+        kickableToKick.CanDamage();
     }
     public void KickDone()
     {
+        kickableToKick.IsBeeingKicked(false);
         runningEnemy.SwitchState(runningEnemy.runState);
     }
 }

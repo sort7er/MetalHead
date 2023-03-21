@@ -14,7 +14,7 @@ public class EnemyCoverState : EnemyBaseState
 
     public override void EnterState(RunningEnemy enemy)
     {
-        Debug.Log("Entered state cover");
+        //Debug.Log("Entered state cover");
         runningEnemy = enemy;
         agent = enemy.agent;
         enemyAnim = enemy.enemyAnim;

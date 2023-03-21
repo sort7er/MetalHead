@@ -8,7 +8,7 @@ public class EnemyAttackState : EnemyBaseState
     private bool waitOneFrame, waitTwoFrames, fromRunTransition;
     public override void EnterState(RunningEnemy enemy)
     {
-        Debug.Log("Entered state attacking");
+        //Debug.Log("Entered state attacking");
         enemy.agent.ResetPath();
         runningEnemy = enemy;
         enemyAnim = enemy.enemyAnim;

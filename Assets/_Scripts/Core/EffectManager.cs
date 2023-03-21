@@ -7,6 +7,7 @@ public class EffectManager : MonoBehaviour
     public GameObject bulletHolePrefab;
     public GameObject hitPlayer;
     public GameObject hitEnemy;
+    public GameObject hitEnemyBarrel;
     public GameObject hitEnemyCrit;
     public GameObject enemyDeadEffect;
     public GameObject[] pickUp;
@@ -84,7 +85,7 @@ public class EffectManager : MonoBehaviour
     }
     public void SpawnBarrelHitEnemy(Vector3 positionToSpawn)
     {
-        GameObject effect = Instantiate(hitEnemy, positionToSpawn, Quaternion.identity);
+        GameObject effect = Instantiate(hitEnemyBarrel, positionToSpawn, Quaternion.identity);
         effect.transform.parent = ParentManager.instance.effects;
         Destroy(effect, 2);
     }

@@ -11,7 +11,7 @@ public class EnemySearchingState : EnemyBaseState
 
     public override void EnterState(RunningEnemy enemy)
     {
-        Debug.Log("Entered state searching");
+        //Debug.Log("Entered state searching");
         runningEnemy = enemy;
         enemyAnim = enemy.enemyAnim;
         enemyAnim.SetBool("IsMoving", true);

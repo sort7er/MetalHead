@@ -15,7 +15,7 @@ public class EnemyRunState : EnemyBaseState
 
     public override void EnterState(RunningEnemy enemy)
     {
-        Debug.Log("Entered state run");
+        //Debug.Log("Entered state run");
         runningEnemy = enemy;
         agent = enemy.agent;
         enemyAnim = enemy.enemyAnim;

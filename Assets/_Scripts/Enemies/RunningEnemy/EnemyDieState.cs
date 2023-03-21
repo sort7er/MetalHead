@@ -6,7 +6,7 @@ public class EnemyDieState : EnemyBaseState
     private RunningEnemy runningEnemy;
     public override void EnterState(RunningEnemy enemy)
     {
-        Debug.Log("Entered state die");
+        //Debug.Log("Entered state die");
         runningEnemy = enemy;
         enemy.SetGlowColor(Color.black);
         enemy.EnableRagdoll(true);

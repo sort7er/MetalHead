@@ -12,7 +12,7 @@ public class EnemySusState : EnemyBaseState
 
     public override void EnterState(RunningEnemy enemy)
     {
-        Debug.Log("Entered state sus");
+        //Debug.Log("Entered state sus");
         agent = enemy.agent;
         enemyAnim = enemy.enemyAnim;
         runningEnemy = enemy;

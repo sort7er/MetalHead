@@ -6,7 +6,7 @@ public class EnemyStunnedState : EnemyBaseState
     private RunningEnemy runningEnemy;
     public override void EnterState(RunningEnemy enemy)
     {
-        Debug.Log("Entered state stunned");
+        //Debug.Log("Entered state stunned");
         runningEnemy = enemy;
         enemy.agent.ResetPath();
         enemy.rig.SetRig(false);
