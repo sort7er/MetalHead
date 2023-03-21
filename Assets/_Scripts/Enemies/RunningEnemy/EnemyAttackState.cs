@@ -43,7 +43,6 @@ public class EnemyAttackState : EnemyBaseState
             else if (waitOneFrame && !waitTwoFrames)
             {
                 waitTwoFrames = true;
-                Debug.Log("2");
                 enemy.DelayedCallback(enemy.attackState, "AttackDone", enemyAnim.GetCurrentAnimatorStateInfo(0).length);
             }
         }

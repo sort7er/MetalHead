@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+
     private void Awake()
     {
         instance = this;
@@ -17,10 +18,16 @@ public class GameManager : MonoBehaviour
     public Hand leftHand, rightHand;
     public AmmoBag ammoBag;
     public Magnet magnet;
+    public Animator camAnim;
+
     [HideInInspector] public bool isUpgrading;
+    [HideInInspector] public bool isPaused;
+    [HideInInspector] public bool isDead;
 
     private XRInteractorLineVisual leftLineVisual, rightLineVisual;
     private XRDirectInteractor rHand, lHand;
+    private bool changeTimeScale;
+    private float targetTimeScale;
 
     private void Start()
     {
@@ -28,10 +35,33 @@ public class GameManager : MonoBehaviour
         EnableRays(false);
         leftLineVisual = leftRayInteractor.GetComponent<XRInteractorLineVisual>();
         rightLineVisual = rightRayInteractor.GetComponent<XRInteractorLineVisual>();
-        lHand = GameManager.instance.leftHand.gameObject.GetComponent<XRDirectInteractor>();
-        rHand = GameManager.instance.rightHand.gameObject.GetComponent<XRDirectInteractor>();
+        lHand = leftHand.gameObject.GetComponent<XRDirectInteractor>();
+        rHand = rightHand.gameObject.GetComponent<XRDirectInteractor>();
     }
-
+    private void Update()
+    {
+        if (changeTimeScale)
+        {
+            if(Time.timeScale < targetTimeScale)
+            {
+                Time.timeScale += Time.unscaledDeltaTime;
+                if(Time.timeScale >= targetTimeScale)
+                {
+                    Time.timeScale = targetTimeScale;
+                    changeTimeScale = false;
+                }
+            }
+            if(Time.timeScale > targetTimeScale)
+            {
+                Time.timeScale -= Time.unscaledDeltaTime;
+                if (Time.timeScale <= targetTimeScale)
+                {
+                    Time.timeScale = targetTimeScale;
+                    changeTimeScale = false;
+                }
+            }
+        }
+    }
     public void EnableRays(bool state)
     {
         leftRayInteractor.SetActive(state);
@@ -105,7 +135,41 @@ public class GameManager : MonoBehaviour
     public void IsUpgrading(bool state)
     {
         isUpgrading = state;
-        EnableRays(state);
-        EnableDirectInteractors(!state);
+        if(!isUpgrading && isPaused)
+        {
+            EnableRays(true);
+            EnableDirectInteractors(!false);
+        }
+        else
+        {
+            EnableRays(state);
+            EnableDirectInteractors(!state);
+        }
+        
+    }
+    public void IsPaused(bool state)
+    {
+        isPaused = state;
+    }
+
+    public void SetTargetTimeScale(float target)
+    {
+        //targetTimeScale = target;
+        //changeTimeScale = true;
+        Time.timeScale = target;
+    }
+
+    public void IsDead()
+    {
+        isDead = true;
+        Invoke("DeadMenu", 0.15f);
+        EnableRays(true);
+        LocomotionManager.instance.EnableMovement(false);
+        LocomotionManager.instance.EnableTurning(false);
+        camAnim.SetBool("Menu", true);
+    }
+    private void DeadMenu()
+    {
+        SetTargetTimeScale(0);
     }
 }

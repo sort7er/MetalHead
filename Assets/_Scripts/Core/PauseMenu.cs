@@ -1,18 +1,22 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
     public GameObject menu;
     public Transform menuPivot;
+    public Image camImage;
+    public Color pauseColor;
     public InputActionAsset menuInputAction;
 
     private InputAction menuPressed;
-    private bool paused;
+    private Color defaulColor;
     private bool followCam = true;
 
     private void Start()
     {
+        defaulColor = camImage.color;
         menu.SetActive(false);
     }
 
@@ -31,30 +35,36 @@ public class PauseMenu : MonoBehaviour
 
     private void MenuPressed(InputAction.CallbackContext context)
     {
-        if(!paused)
+        if (!GameManager.instance.isDead)
         {
-            OpenMenu();
-        }
-        else
-        {
-            CloseMenu();
+            if (!GameManager.instance.isPaused)
+            {
+                OpenMenu();
+            }
+            else
+            {
+                CloseMenu();
+            }
         }
     }
     public void OpenMenu()
     {
         RenderSettings.fog = true;
+        GameManager.instance.SetTargetTimeScale(0);
         GameManager.instance.EnableRays(true);
         GameManager.instance.EnableDirectInteractors(false);
         LocomotionManager.instance.EnableMovement(false);
         LocomotionManager.instance.EnableTurning(false);
         menu.SetActive(true);
-        paused = true;
+        GameManager.instance.IsPaused(true);
         followCam= false;
+        camImage.color = pauseColor;
     }
     public void CloseMenu()
     {
         menu.SetActive(false);
-        paused = false;
+        GameManager.instance.SetTargetTimeScale(1);
+        GameManager.instance.IsPaused(false);
         followCam = true;
         if(!GameManager.instance.isUpgrading)
         {
@@ -64,6 +74,7 @@ public class PauseMenu : MonoBehaviour
         LocomotionManager.instance.EnableMovement(true);
         LocomotionManager.instance.EnableTurning(true);
         RenderSettings.fog = false;
+        camImage.color = defaulColor;
     }
 
 
