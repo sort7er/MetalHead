@@ -27,8 +27,10 @@ public class EnemyAttackState : EnemyBaseState
         }
         else if(!attackStarted && !cannotAttack && fromRunTransition)
         {
-            Attack();
-            
+            if (AIManager.instance.CheckForAttack())
+            {
+                Attack();
+            }            
         }
         enemy.rig.SetTarget(GameManager.instance.cam.transform.position);
 
@@ -47,14 +49,32 @@ public class EnemyAttackState : EnemyBaseState
             }
         }
 
+        //Parryed
+        if (enemy.weapon.isParrying)
+        {
+            enemy.enemyAnim.SetTrigger("Parry");
+            enemy.weapon.ParryingDone();
+        }
+        else
+        {
+            enemy.enemyAnim.ResetTrigger("Parry");
+        }
+
+
         //Switch to other states
         if (enemy.stunned)
         {
             enemy.SwitchState(enemy.stunnedState);
+            AIManager.instance.DoneAttacking();
+            enemy.weapon.CannotParry();
+            enemy.weapon.NotLethal();
         }
         if (enemy.hiding && !attackStarted)
         {
             enemy.SwitchState(enemy.coverState);
+            AIManager.instance.DoneAttacking();
+            enemy.weapon.CannotParry();
+            enemy.weapon.NotLethal();
         }
     }
 
@@ -69,6 +89,7 @@ public class EnemyAttackState : EnemyBaseState
     }
     public void AttackDone()
     {
+        AIManager.instance.DoneAttacking();
         runningEnemy.CanAttack();
         attackStarted = false;
     }

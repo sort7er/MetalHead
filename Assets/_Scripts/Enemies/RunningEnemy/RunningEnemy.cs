@@ -88,6 +88,7 @@ public class RunningEnemy : MonoBehaviour
     [HideInInspector] public Vector3 movementDircetion;
     [HideInInspector] public NavMeshAgent agent;
     [HideInInspector] public Kickable currentKickable;
+    [HideInInspector] public Weapon weapon;
     [HideInInspector] public Animator enemyAnim;
     [HideInInspector] public int currentBodyPart;
     [HideInInspector] public bool enemyDistanceCheck;
@@ -125,6 +126,7 @@ public class RunningEnemy : MonoBehaviour
         SetTurnSpeed(defaultTurnSmoothTime);
         enemyAnim = enemyModel.GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        weapon = GetComponentInChildren<Weapon>();
         FOV = defaultFOV;
         DistanceCheck();
         EnableRagdoll(false);

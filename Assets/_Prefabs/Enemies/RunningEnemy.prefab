@@ -639,7 +639,7 @@ MonoBehaviour:
   searchingColor: {r: 1, g: 0.39719838, b: 0, a: 1}
   runSpeed: 3
   runSightRange: 12
-  rangeBeforeAttack: 1.5
+  rangeBeforeAttack: 1
   timeBeforeLost: 3
   timeBetweenScan: 0.25
   scanRadius: 3
@@ -647,6 +647,8 @@ MonoBehaviour:
   scanableLayer:
     serializedVersion: 2
     m_Bits: 4096
+  minAttackCooldown: 0.2
+  maxAttackCooldown: 1
   kickForce: 200
   timeBetweenKicks: 2
   minCoverDuration: 3
@@ -695,6 +697,7 @@ MonoBehaviour:
   movementDircetion: {x: 0, y: 0, z: 0}
   agent: {fileID: 0}
   currentKickable: {fileID: 0}
+  weapon: {fileID: 0}
   enemyAnim: {fileID: 0}
   currentBodyPart: 0
   enemyDistanceCheck: 0
@@ -704,6 +707,7 @@ MonoBehaviour:
   isDead: 0
   inView: 0
   stunned: 0
+  hiding: 0
   turnSmoothTime: 5
   FOV: 0
 --- !u!195 &7141347437139885934
@@ -1535,6 +1539,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1440054500}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 272604894}
     - targetCorrespondingSourceObject: {fileID: -126997817940071105, guid: ecd7d82ee55e594499c7bc762a276d3d,
         type: 3}
       insertIndex: -1
@@ -3906,6 +3914,26 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c0c196c1a2473e948bb69b669054357a, type: 3}
   enemySource: {fileID: 1440054501}
   enemySource2: {fileID: 1440054502}
+--- !u!114 &272604894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8059825374531810664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67f700f5d3cca424d875468be9566d18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointsOfDamage:
+  - {fileID: 5125690253684711298}
+  - {fileID: 6908768950094228532}
+  raduis:
+  - 0.5
+  - 0.5
+  damage: 050000000f000000
+  isParrying: 0
 --- !u!4 &8224130642395494248 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7981835845142593711, guid: ecd7d82ee55e594499c7bc762a276d3d,

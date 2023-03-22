@@ -6,13 +6,17 @@ public class Weapon : MonoBehaviour
     public float[] raduis;
     public int[] damage;
 
+    [HideInInspector] public bool isParrying;
+
+    private Parry parry;
     private Collider playerCollider;
     private PlayerHealth playerHealth;
     private int numberToCheck;
-    private bool lethal, damageGiven;
+    private bool lethal, damageGiven, canParry;
 
     private void Start()
     {
+        parry = GameManager.instance.XROrigin.GetComponent<Parry>();
         playerCollider = GameManager.instance.XROrigin.GetComponent<Collider>();
         playerHealth = GameManager.instance.XROrigin.GetComponent<PlayerHealth>();
     }
@@ -24,6 +28,14 @@ public class Weapon : MonoBehaviour
             damageGiven = true;
             EffectManager.instance.SpawnHitPlayerEffect(playerCollider.ClosestPointOnBounds(pointsOfDamage[numberToCheck].position));
             playerHealth.TakeDamage(damage[numberToCheck]);
+        }
+
+        if (parry.isParrying && canParry && !isParrying)
+        {
+            parry.DoneParrying();
+            CannotParry();
+            NotLethal();
+            isParrying  = true;
         }
     }
 
@@ -37,5 +49,18 @@ public class Weapon : MonoBehaviour
         numberToCheck = 0;
         lethal = false;
         damageGiven = false;
+    }
+
+    public void CanParry()
+    {
+        canParry = true;
+    }
+    public void CannotParry()
+    {
+        canParry = false;
+    }
+    public void ParryingDone()
+    {
+        isParrying = false;
     }
 }

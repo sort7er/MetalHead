@@ -4800,10 +4800,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: RunningEnemy (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7141347437139885925, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7141347437139885929, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 17
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 7141347437139885929, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
         type: 3}
@@ -4986,6 +4991,10 @@ MonoBehaviour:
   - 0.5
   - 0.5
   damage: 050000000f000000
+  isParrying: 0
+  lethal: 0
+  damageGiven: 0
+  canParry: 0
 --- !u!1 &274601682
 GameObject:
   m_ObjectHideFlags: 0
@@ -6900,6 +6909,10 @@ MonoBehaviour:
   - 0.5
   - 0.5
   damage: 050000000f000000
+  isParrying: 0
+  lethal: 0
+  damageGiven: 0
+  canParry: 0
 --- !u!1 &399336828
 GameObject:
   m_ObjectHideFlags: 0
@@ -9737,6 +9750,7 @@ GameObject:
   - component: {fileID: 590820404}
   - component: {fileID: 590820405}
   - component: {fileID: 590820406}
+  - component: {fileID: 590820407}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -9887,6 +9901,19 @@ MonoBehaviour:
   audioSourcesToMute:
   - {fileID: 1600273074}
   - {fileID: 1334996724}
+--- !u!114 &590820407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 590820399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48c244344a633694893d462eab24a770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerIsBeeingAttacked: 0
 --- !u!1 &597235929
 GameObject:
   m_ObjectHideFlags: 0
@@ -10263,7 +10290,19 @@ MonoBehaviour:
         m_CallState: 2
   onPressArrowUp:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1600273076}
+        m_TargetAssemblyTypeName: Parry, Assembly-CSharp
+        m_MethodName: StartParry
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onPressArrowDown:
     m_PersistentCalls:
       m_Calls: []
@@ -13698,6 +13737,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Barrel (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5948729000705972451, guid: 6756fb1e309a21740b1f8d6639aee9d4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5948729000705972457, guid: 6756fb1e309a21740b1f8d6639aee9d4,
         type: 3}
@@ -19411,6 +19455,10 @@ MonoBehaviour:
   - 0.5
   - 0.5
   damage: 050000000f000000
+  isParrying: 0
+  lethal: 0
+  damageGiven: 0
+  canParry: 0
 --- !u!1 &1165556792
 GameObject:
   m_ObjectHideFlags: 0
@@ -25818,6 +25866,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Barrel (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5948729000705972451, guid: 6756fb1e309a21740b1f8d6639aee9d4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5948729000705972457, guid: 6756fb1e309a21740b1f8d6639aee9d4,
         type: 3}
       propertyPath: m_RootOrder
@@ -26674,6 +26727,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Barrel (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5948729000705972451, guid: 6756fb1e309a21740b1f8d6639aee9d4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5948729000705972457, guid: 6756fb1e309a21740b1f8d6639aee9d4,
         type: 3}
       propertyPath: m_RootOrder
@@ -27281,6 +27339,8 @@ GameObject:
   - component: {fileID: 1600273071}
   - component: {fileID: 1600273073}
   - component: {fileID: 1600273074}
+  - component: {fileID: 1600273075}
+  - component: {fileID: 1600273076}
   m_Layer: 7
   m_Name: XR Origin
   m_TagString: Player
@@ -27477,6 +27537,35 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!208 &1600273075
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1600273068}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.4, y: 1, z: 0.4}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.9, z: 0}
+  m_TimeToStationary: 0.5
+--- !u!114 &1600273076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1600273068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbe76a141c849cd44a335ff46eafd72c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isParrying: 0
 --- !u!1 &1600393337
 GameObject:
   m_ObjectHideFlags: 0
@@ -35886,10 +35975,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: RunningEnemy (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7141347437139885925, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7141347437139885929, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7141347437139885929, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
         type: 3}
@@ -36419,6 +36513,10 @@ MonoBehaviour:
   - 0.5
   - 0.5
   damage: 050000000f000000
+  isParrying: 0
+  lethal: 0
+  damageGiven: 0
+  canParry: 0
 --- !u!1 &1838507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -37033,10 +37131,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: RunningEnemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7141347437139885925, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7141347437139885929, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 7141347437139885929, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
         type: 3}
@@ -42045,10 +42148,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Barrel
       objectReference: {fileID: 0}
+    - target: {fileID: 5948729000705972451, guid: 6756fb1e309a21740b1f8d6639aee9d4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5948729000705972457, guid: 6756fb1e309a21740b1f8d6639aee9d4,
         type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 5948729000705972457, guid: 6756fb1e309a21740b1f8d6639aee9d4,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.3359
+      objectReference: {fileID: 0}
+    - target: {fileID: 5948729000705972457, guid: 6756fb1e309a21740b1f8d6639aee9d4,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.98727494
+      objectReference: {fileID: 0}
+    - target: {fileID: 5948729000705972457, guid: 6756fb1e309a21740b1f8d6639aee9d4,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.0272002
       objectReference: {fileID: 0}
     - target: {fileID: 5948729000705972457, guid: 6756fb1e309a21740b1f8d6639aee9d4,
         type: 3}
@@ -42063,7 +42186,7 @@ PrefabInstance:
     - target: {fileID: 5948729000705972457, guid: 6756fb1e309a21740b1f8d6639aee9d4,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.6317817
+      value: 1.6317811
       objectReference: {fileID: 0}
     - target: {fileID: 5948729000705972457, guid: 6756fb1e309a21740b1f8d6639aee9d4,
         type: 3}
@@ -42251,7 +42374,7 @@ PrefabInstance:
     - target: {fileID: 7141347437139885929, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 7141347437139885929, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
         type: 3}
