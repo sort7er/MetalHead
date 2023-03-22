@@ -3,14 +3,14 @@ using UnityEngine;
 public class AIManager : MonoBehaviour
 {
     public static AIManager instance;
-    public bool playerIsBeeingAttacked;
-
-    private int currentPos;
 
     private void Awake()
     {
         instance = this;
     }
+    [HideInInspector] public bool playerIsBeeingAttacked;
+
+    private int currentPos;
 
     public bool CheckForAttack()
     {

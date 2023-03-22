@@ -9,6 +9,7 @@ public class EffectManager : MonoBehaviour
     public GameObject hitEnemy;
     public GameObject hitEnemyBarrel;
     public GameObject hitEnemyCrit;
+    public GameObject parryEffect;
     public GameObject enemyDeadEffect;
     public GameObject[] pickUp;
     public GameObject[] pickUpEffect;
@@ -86,6 +87,12 @@ public class EffectManager : MonoBehaviour
     public void SpawnBarrelHitEnemy(Vector3 positionToSpawn)
     {
         GameObject effect = Instantiate(hitEnemyBarrel, positionToSpawn, Quaternion.identity);
+        effect.transform.parent = ParentManager.instance.effects;
+        Destroy(effect, 2);
+    }
+    public void SpawnParryEffect(Vector3 positionToSpawn)
+    {
+        GameObject effect = Instantiate(parryEffect, positionToSpawn, Quaternion.identity);
         effect.transform.parent = ParentManager.instance.effects;
         Destroy(effect, 2);
     }

@@ -2209,12 +2209,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 294}
   m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!4 &80320681 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6908768950094228532, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
-    type: 3}
-  m_PrefabInstance: {fileID: 7141347437366083680}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &90394912
 GameObject:
   m_ObjectHideFlags: 0
@@ -4966,35 +4960,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 271365958}
   m_CullTransparentMesh: 1
---- !u!1 &272604881 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8059825374531810664, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
-    type: 3}
-  m_PrefabInstance: {fileID: 7141347437366083680}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &272604894
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 272604881}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67f700f5d3cca424d875468be9566d18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pointsOfDamage:
-  - {fileID: 1101711241}
-  - {fileID: 80320681}
-  raduis:
-  - 0.5
-  - 0.5
-  damage: 050000000f000000
-  isParrying: 0
-  lethal: 0
-  damageGiven: 0
-  canParry: 0
 --- !u!1 &274601682
 GameObject:
   m_ObjectHideFlags: 0
@@ -6910,9 +6875,6 @@ MonoBehaviour:
   - 0.5
   damage: 050000000f000000
   isParrying: 0
-  lethal: 0
-  damageGiven: 0
-  canParry: 0
 --- !u!1 &399336828
 GameObject:
   m_ObjectHideFlags: 0
@@ -9839,6 +9801,8 @@ MonoBehaviour:
   hitEnemyBarrel: {fileID: 8309065693326733749, guid: 61eff16b8d41b1a4e87a0a494b2bf86b,
     type: 3}
   hitEnemyCrit: {fileID: 3791828726597770384, guid: 7b2f0e2b6a7045240bcd386b97994a80,
+    type: 3}
+  parryEffect: {fileID: 5143416930204104923, guid: dd9b10cf6ae5a9c45a2e026f42680669,
     type: 3}
   enemyDeadEffect: {fileID: 7279297149270200152, guid: ce495412d389eef48b1fba1188919311,
     type: 3}
@@ -18211,12 +18175,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1098257481}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &1101711241 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5125690253684711298, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
-    type: 3}
-  m_PrefabInstance: {fileID: 7141347437366083680}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1115588995
 GameObject:
   m_ObjectHideFlags: 0
@@ -19456,9 +19414,6 @@ MonoBehaviour:
   - 0.5
   damage: 050000000f000000
   isParrying: 0
-  lethal: 0
-  damageGiven: 0
-  canParry: 0
 --- !u!1 &1165556792
 GameObject:
   m_ObjectHideFlags: 0
@@ -36514,9 +36469,6 @@ MonoBehaviour:
   - 0.5
   damage: 050000000f000000
   isParrying: 0
-  lethal: 0
-  damageGiven: 0
-  canParry: 0
 --- !u!1 &1838507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -42366,6 +42318,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 272604894, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b, type: 3}
+      propertyPath: raduis.Array.data[0]
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 272604894, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b, type: 3}
+      propertyPath: raduis.Array.data[1]
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 7141347437139885925, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
         type: 3}
       propertyPath: m_Name
@@ -42426,34 +42386,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7141347437139885931, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
-        type: 3}
-      propertyPath: timeBeforeHide
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
-        type: 3}
-      propertyPath: maxAttackCooldown
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
-        type: 3}
-      propertyPath: minAttackCooldown
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
-        type: 3}
-      propertyPath: rangeBeforeAttack
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8059825374531810664, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 272604894}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b, type: 3}
 --- !u!1 &7361458468315479192
 GameObject:

@@ -11,7 +11,7 @@ public class Weapon : MonoBehaviour
     private Parry parry;
     private Collider playerCollider;
     private PlayerHealth playerHealth;
-    private int numberToCheck;
+    private int numberToCheck, numberToCheckParry;
     private bool lethal, damageGiven, canParry;
 
     private void Start()
@@ -33,6 +33,7 @@ public class Weapon : MonoBehaviour
         if (parry.isParrying && canParry && !isParrying)
         {
             parry.DoneParrying();
+            EffectManager.instance.SpawnParryEffect(playerCollider.ClosestPointOnBounds(pointsOfDamage[numberToCheck].position));
             CannotParry();
             NotLethal();
             isParrying  = true;
@@ -51,8 +52,9 @@ public class Weapon : MonoBehaviour
         damageGiven = false;
     }
 
-    public void CanParry()
+    public void CanParry(int whichAttack)
     {
+        numberToCheckParry = whichAttack;
         canParry = true;
     }
     public void CannotParry()
