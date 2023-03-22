@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -11,6 +12,7 @@ public class LocomotionManager : MonoBehaviour
 
     public GameObject teleportationRays;
     public GameObject vignette;
+    public TextMeshProUGUI movementText, turnText, vignetteText; 
 
     [HideInInspector] public bool isUsingTeleport;
  
@@ -40,11 +42,23 @@ public class LocomotionManager : MonoBehaviour
         SetTeleport(true);
         SetCountinuousTurn(false);
         SetSnap(true);
+        movementText.text = "< Teleport >";
+        turnText.text = "< Snap >";
+        vignetteText.text = "< Disabled >";
     }
     //Locomotion
-    public void SwitchLocomotion(int locomotionValue)
+    public void SwitchLocomotion()
     {
-        currentMoveType = locomotionValue;
+        if(currentMoveType == 0)
+        {
+            currentMoveType = 1;
+            movementText.text = "< Continuous Movement >";
+        }
+        else
+        {
+            currentMoveType = 0;
+            movementText.text = "< Teleport >";
+        }
     }
 
     private void SetCountinuous(bool value)
@@ -95,9 +109,18 @@ public class LocomotionManager : MonoBehaviour
 
 
     //Turning
-    public void SwitchTurning(int turnValue)
+    public void SwitchTurning()
     {
-        currentTurnType = turnValue;
+        if(currentTurnType == 0)
+        {
+            currentTurnType = 1;
+            turnText.text = "< Continuous Turning >";
+        }
+        else
+        {
+            currentTurnType = 0;
+            turnText.text = "< Snap >";
+        }
     }
     private void SetCountinuousTurn(bool value)
     {
@@ -149,10 +172,12 @@ public class LocomotionManager : MonoBehaviour
         if (!vignette.activeSelf)
         {
             vignette.SetActive(true);
+            vignetteText.text = "< Enabled >";
         }
         else if (vignette.activeSelf)
         {
             vignette.SetActive(false);
+            vignetteText.text = "< Disabled >";
         }
     }
 

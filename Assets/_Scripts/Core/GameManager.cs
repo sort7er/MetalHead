@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -19,11 +20,13 @@ public class GameManager : MonoBehaviour
     public AmmoBag ammoBag;
     public Magnet magnet;
     public Animator camAnim;
+    public GameObject gameOverCanvas;
 
     [HideInInspector] public bool isUpgrading;
     [HideInInspector] public bool isPaused;
     [HideInInspector] public bool isDead;
 
+    private PauseMenu pauseMenu;
     private XRInteractorLineVisual leftLineVisual, rightLineVisual;
     private XRDirectInteractor rHand, lHand;
     private bool changeTimeScale;
@@ -31,8 +34,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        SetTargetTimeScale(1);
         Physics.IgnoreLayerCollision(7, 8);
         EnableRays(false);
+        pauseMenu = GetComponent<PauseMenu>();
         leftLineVisual = leftRayInteractor.GetComponent<XRInteractorLineVisual>();
         rightLineVisual = rightRayInteractor.GetComponent<XRInteractorLineVisual>();
         lHand = leftHand.gameObject.GetComponent<XRDirectInteractor>();
@@ -171,5 +176,16 @@ public class GameManager : MonoBehaviour
     private void DeadMenu()
     {
         SetTargetTimeScale(0);
+        pauseMenu.FollowCam(false);
+        gameOverCanvas.SetActive(true);
+    }
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    public void Quit()
+    {
+        Debug.Log("Quit");
+        Application.Quit();
     }
 }

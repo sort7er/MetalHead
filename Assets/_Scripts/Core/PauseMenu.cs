@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
-    public GameObject menu;
+    public Transform menu;
     public Transform menuPivot;
     public Image camImage;
     public Color pauseColor;
@@ -12,12 +12,16 @@ public class PauseMenu : MonoBehaviour
 
     private InputAction menuPressed;
     private Color defaulColor;
-    private bool followCam = true;
+    private bool followCam;
 
     private void Start()
     {
+        FollowCam(true);
         defaulColor = camImage.color;
-        menu.SetActive(false);
+        foreach (Transform t in menu)
+        {
+            t.gameObject.SetActive(false);
+        }
     }
 
     private void OnEnable()
@@ -49,23 +53,26 @@ public class PauseMenu : MonoBehaviour
     }
     public void OpenMenu()
     {
-        RenderSettings.fog = true;
         GameManager.instance.SetTargetTimeScale(0);
         GameManager.instance.EnableRays(true);
         GameManager.instance.EnableDirectInteractors(false);
         LocomotionManager.instance.EnableMovement(false);
         LocomotionManager.instance.EnableTurning(false);
-        menu.SetActive(true);
+        menu.GetChild(0).gameObject.SetActive(true);
         GameManager.instance.IsPaused(true);
-        followCam= false;
+        FollowCam(false);
         camImage.color = pauseColor;
+        AudioManager.instance.MuteSounds();
     }
     public void CloseMenu()
     {
-        menu.SetActive(false);
+        foreach (Transform t in menu)
+        {
+            t.gameObject.SetActive(false);
+        }
         GameManager.instance.SetTargetTimeScale(1);
         GameManager.instance.IsPaused(false);
-        followCam = true;
+        FollowCam(true);
         if(!GameManager.instance.isUpgrading)
         {
             GameManager.instance.EnableRays(false);
@@ -73,8 +80,8 @@ public class PauseMenu : MonoBehaviour
         }
         LocomotionManager.instance.EnableMovement(true);
         LocomotionManager.instance.EnableTurning(true);
-        RenderSettings.fog = false;
         camImage.color = defaulColor;
+        AudioManager.instance.Unmute();
     }
 
 
@@ -84,5 +91,10 @@ public class PauseMenu : MonoBehaviour
         {
             menuPivot.rotation = Quaternion.Euler(0f, GameManager.instance.cam.transform.eulerAngles.y, 0f);
         }
+    }
+
+    public void FollowCam(bool state)
+    {
+        followCam = state;
     }
 }
