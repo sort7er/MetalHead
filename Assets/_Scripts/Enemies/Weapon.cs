@@ -8,6 +8,7 @@ public class Weapon : MonoBehaviour
 
     [HideInInspector] public bool isParrying;
 
+    private EnemyHealth enemyHealth;
     private Parry parry;
     private Collider playerCollider;
     private PlayerHealth playerHealth;
@@ -19,6 +20,7 @@ public class Weapon : MonoBehaviour
         parry = GameManager.instance.XROrigin.GetComponent<Parry>();
         playerCollider = GameManager.instance.XROrigin.GetComponent<Collider>();
         playerHealth = GameManager.instance.XROrigin.GetComponent<PlayerHealth>();
+        enemyHealth = GetComponentInParent<EnemyHealth>();
     }
 
     private void Update()

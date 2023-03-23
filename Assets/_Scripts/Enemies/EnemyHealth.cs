@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
@@ -55,19 +56,23 @@ public class EnemyHealth : MonoBehaviour
         {
             rb = rb1;
             damageDir = damageDir1;
-            currentBodyPart = bodyPart;
-
+            
+            TakeStun(stun, bodyPart);
             health -= damage;
-            posture-= stun;
             if (health < 0)
             {
                 Die();
             }
-            if(posture < 0)
-            {
-                Stun();
-            }
             hideTimer += startHealth * 0.01f - health * 0.01f + 1;
+        }
+    }
+    public void TakeStun(float stun, int bodyPart)
+    {
+        posture -= stun;
+        currentBodyPart = bodyPart;
+        if (posture < 0)
+        {
+            Stun();
         }
     }
 

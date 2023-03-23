@@ -98,7 +98,7 @@ public class RunningEnemy : MonoBehaviour
     [HideInInspector] public bool isDead;
     [HideInInspector] public bool inView;
     [HideInInspector] public bool stunned;
-    [HideInInspector] public bool hiding;
+/*    [HideInInspector] */public bool hiding;
     [HideInInspector] public float turnSmoothTime;
     [HideInInspector] public float FOV;
 
@@ -136,6 +136,7 @@ public class RunningEnemy : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(currentState);
         directionToPlayer = GameManager.instance.XROrigin.transform.position - headTrans.position;
         directionToCamera = GameManager.instance.cam.transform.position - headTrans.position;
         directionToPointOfInterest = pointOfInterest - headTrans.position;
