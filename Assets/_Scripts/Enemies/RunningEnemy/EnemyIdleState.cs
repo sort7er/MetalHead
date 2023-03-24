@@ -40,7 +40,7 @@ public class EnemyIdleState : EnemyBaseState
             {
                 enemy.RotateToPosition(enemy.pointOfInterest);
             }
-            else if (Mathf.Abs(enemy.movementDircetion.magnitude) > 0.02f)
+            else if (Mathf.Abs(enemy.movementDircetion.magnitude) > 0.01f)
             {
                 enemy.RotateToPosition(enemy.transform.position + enemy.movementDircetion);
             }

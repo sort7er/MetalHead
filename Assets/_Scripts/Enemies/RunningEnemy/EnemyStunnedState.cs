@@ -29,7 +29,7 @@ public class EnemyStunnedState : EnemyBaseState
         else if (waitOneFrame && !waitTwoFrames)
         {
             waitTwoFrames = true;
-            enemy.DelayedCallback(enemy.stunnedState, "StunDone", enemy.enemyAnim.GetCurrentAnimatorStateInfo(0).length - 0.25f);
+            enemy.DelayedCallback(enemy.stunnedState, "StunDone", enemy.enemyAnim.GetCurrentAnimatorStateInfo(0).length);
         }
         
     }

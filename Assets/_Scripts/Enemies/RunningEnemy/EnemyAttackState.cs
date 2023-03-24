@@ -65,14 +65,14 @@ public class EnemyAttackState : EnemyBaseState
         if (enemy.stunned)
         {
             enemy.SwitchState(enemy.stunnedState);
-            AIManager.instance.DoneAttacking();
+            AttackDone();
             enemy.weapon.CannotParry();
             enemy.weapon.NotLethal();
         }
         if (enemy.hiding && !attackStarted)
         {
             enemy.SwitchState(enemy.coverState);
-            AIManager.instance.DoneAttacking();
+            AttackDone();
             enemy.weapon.CannotParry();
             enemy.weapon.NotLethal();
         }

@@ -210,12 +210,13 @@ public class EnemyCoverState : EnemyBaseState
             enemyAnim.SetTrigger("DodgeLeft");
             destination = runningEnemy.transform.position - runningEnemy.transform.right;
         }
-        runningEnemy.DelayedCallback(runningEnemy.coverState, "StartDodge", 0.15f);
-    }
-    public void StartDodge()
-    {
         runningEnemy.SetNavMeshDestination(destination);
+        //runningEnemy.DelayedCallback(runningEnemy.coverState, "StartDodge", 0f);
     }
+    //public void StartDodge()
+    //{
+    //    runningEnemy.SetNavMeshDestination(destination);
+    //}
     public void HidingDone()
     {
         runningEnemy.IsHiding(false);

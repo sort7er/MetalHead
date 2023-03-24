@@ -8,28 +8,29 @@ public class PlayerHealth : MonoBehaviour
 
     private int currentHealth;
     private AudioSource healthSource;
-    private float targetVolume;
+    private float targetVolume, difference, incerements;
 
     void Start()
     {
         currentHealth = startHealth;
         healthSource = GetComponent<AudioSource>();
         HitAudioDone();
+        difference = startPitch - endPitch;
+        incerements = difference / startHealth;
     }
     
     public void TakeDamage(int damage)
     {
         if (!GameManager.instance.isDead)
         {
-            Debug.Log(damage + " damage given to player");
             currentHealth -= damage;
-            HitAudio(currentHealth);
             camAnim.SetTrigger("Hit");
             if (currentHealth < 0)
             {
                 Die();
                 currentHealth = 0;
             }
+            HitAudio(currentHealth);
         }
     }
 
@@ -46,8 +47,9 @@ public class PlayerHealth : MonoBehaviour
     private void HitAudio(int health)
     {
 
-
         CancelInvoke();
+        healthSource.Play();
+        healthSource.pitch = endPitch + incerements * health;
         targetVolume = 1;
         Invoke(nameof(HitAudioDone), 0.1f);
     }

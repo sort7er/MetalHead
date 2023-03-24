@@ -27393,8 +27393,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startHealth: 100
-  startPitch: 0
-  endPitch: 0
+  startPitch: 1.5
+  endPitch: 1
   camAnim: {fileID: 2114430964}
 --- !u!82 &1600273074
 AudioSource:
@@ -27406,8 +27406,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 4e2f0f5f9a26f2546b3264abc6c3cbf2, type: 3}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: 1676a23e371687d4983734880de97d33, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 0
   m_Pitch: 1
   Loop: 0
@@ -42394,6 +42394,11 @@ PrefabInstance:
         type: 3}
       propertyPath: hideSensitivity
       value: -0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
+        type: 3}
+      propertyPath: defaultTurnSmoothTime
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7141347437366083696, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
         type: 3}
