@@ -19,7 +19,6 @@ public class GameManager : MonoBehaviour
     public Hand leftHand, rightHand;
     public AmmoBag ammoBag;
     public Magnet magnet;
-    public Animator camAnim;
     public GameObject gameOverCanvas;
 
     [HideInInspector] public bool isUpgrading;
@@ -34,7 +33,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        SetTargetTimeScale(1);
         Physics.IgnoreLayerCollision(7, 8);
         EnableRays(false);
         pauseMenu = GetComponent<PauseMenu>();
@@ -157,13 +155,6 @@ public class GameManager : MonoBehaviour
         isPaused = state;
     }
 
-    public void SetTargetTimeScale(float target)
-    {
-        //targetTimeScale = target;
-        //changeTimeScale = true;
-        Time.timeScale = target;
-    }
-
     public void IsDead()
     {
         isDead = true;
@@ -171,11 +162,9 @@ public class GameManager : MonoBehaviour
         EnableRays(true);
         LocomotionManager.instance.EnableMovement(false);
         LocomotionManager.instance.EnableTurning(false);
-        camAnim.SetBool("Menu", true);
     }
     private void DeadMenu()
     {
-        SetTargetTimeScale(0);
         pauseMenu.FollowCam(false);
         gameOverCanvas.SetActive(true);
     }

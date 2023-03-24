@@ -4,7 +4,6 @@ public class PlayerHealth : MonoBehaviour
 {
     public int startHealth;
     public float startPitch, endPitch;
-    public Animator camAnim;
 
     private int currentHealth;
     private AudioSource healthSource;
@@ -24,7 +23,6 @@ public class PlayerHealth : MonoBehaviour
         if (!GameManager.instance.isDead)
         {
             currentHealth -= damage;
-            camAnim.SetTrigger("Hit");
             if (currentHealth < 0)
             {
                 Die();

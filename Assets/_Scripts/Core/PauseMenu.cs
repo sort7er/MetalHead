@@ -6,18 +6,14 @@ public class PauseMenu : MonoBehaviour
 {
     public Transform menu;
     public Transform menuPivot;
-    public Image camImage;
-    public Color pauseColor;
     public InputActionAsset menuInputAction;
 
     private InputAction menuPressed;
-    private Color defaulColor;
     private bool followCam;
 
     private void Start()
     {
         FollowCam(true);
-        defaulColor = camImage.color;
         foreach (Transform t in menu)
         {
             t.gameObject.SetActive(false);
@@ -53,7 +49,6 @@ public class PauseMenu : MonoBehaviour
     }
     public void OpenMenu()
     {
-        GameManager.instance.SetTargetTimeScale(0);
         GameManager.instance.EnableRays(true);
         GameManager.instance.EnableDirectInteractors(false);
         LocomotionManager.instance.EnableMovement(false);
@@ -61,7 +56,6 @@ public class PauseMenu : MonoBehaviour
         menu.GetChild(0).gameObject.SetActive(true);
         GameManager.instance.IsPaused(true);
         FollowCam(false);
-        camImage.color = pauseColor;
         AudioManager.instance.MuteSounds();
     }
     public void CloseMenu()
@@ -70,7 +64,6 @@ public class PauseMenu : MonoBehaviour
         {
             t.gameObject.SetActive(false);
         }
-        GameManager.instance.SetTargetTimeScale(1);
         GameManager.instance.IsPaused(false);
         FollowCam(true);
         if(!GameManager.instance.isUpgrading)
@@ -80,7 +73,6 @@ public class PauseMenu : MonoBehaviour
         }
         LocomotionManager.instance.EnableMovement(true);
         LocomotionManager.instance.EnableTurning(true);
-        camImage.color = defaulColor;
         AudioManager.instance.Unmute();
     }
 
