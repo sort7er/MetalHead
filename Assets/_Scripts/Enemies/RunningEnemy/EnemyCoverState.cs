@@ -11,6 +11,7 @@ public class EnemyCoverState : EnemyBaseState
     private Vector3 destination;
     private float checkCoverRadius, minPlayerDistance, dodgeSpeed;
     private bool hideLocked, inCover, dodge;
+    private int hitsMissed;
 
     public override void EnterState(RunningEnemy enemy)
     {
@@ -106,6 +107,9 @@ public class EnemyCoverState : EnemyBaseState
             {
                 System.Array.Sort(colliders, ColliderArraySortComparer);
 
+                Debug.Log(hits);
+                hitsMissed = 0;
+
                 for (int i = 0; i < hits; i++)
                 {
                     if (NavMesh.SamplePosition(colliders[i].transform.position, out NavMeshHit hit, 2f, agent.areaMask))
@@ -135,6 +139,14 @@ public class EnemyCoverState : EnemyBaseState
                                     colliderChosen = colliders[i];
                                     runningEnemy.SetNavMeshDestination(destination);
                                     break;
+                                }
+                                else
+                                {
+                                    hitsMissed++;
+                                    if(hitsMissed >= hits)
+                                    {
+                                        Dodge();
+                                    }
                                 }
                             }
                         }
