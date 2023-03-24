@@ -26,6 +26,8 @@ public class LocomotionManager : MonoBehaviour
     private int currentTurnType;
 
     private InputActionReference continuousMoveInputReference;
+    private InputActionReference snapTurnInputReference;
+    private InputActionReference continuousTurnInputReference;
     private InputActionAsset teleportationInputReference;
 
     private void Start()
@@ -40,6 +42,8 @@ public class LocomotionManager : MonoBehaviour
         Invoke("SetVignette", 0.1f);
         SetContinuousMoveInputReference();
         SetTeleportationInputReference();
+        SetContinousTurnInputReference();
+        SetSnapTurnInputReference();
     }
 
     private void SetContinuousMoveInputReference()
@@ -62,7 +66,28 @@ public class LocomotionManager : MonoBehaviour
             Debug.Log("No Input Action Asset reference was found in the Teleportation Controller Fixed script. Please assign to use Locomotion Manager");
         }
     }
-
+    private void SetContinousTurnInputReference()
+    {
+        if (continuousTurnProvider.leftHandTurnAction.reference != null)
+        {
+            continuousTurnInputReference = continuousTurnProvider.leftHandTurnAction.reference;
+        }
+        else
+        {
+            Debug.Log("No Continuous Turn Provider Input Action was found on the Left Hand. Please set it on your  Left hand Turn Action found on the Continuous Move Provider use the Locomotion Manager");
+        }
+    }
+    private void SetSnapTurnInputReference()
+    {
+        if (snapTurnProvider.leftHandSnapTurnAction.reference != null)
+        {
+            snapTurnInputReference = snapTurnProvider.leftHandSnapTurnAction.reference;
+        }
+        else
+        {
+            Debug.Log("No Continuous Snap Provider Input Action was found on the Left Hand. Please set it on your  Left hand Snap Action found on the Continuous Move Provider use the Locomotion Manager");
+        }
+    }
     private void StartSettings()
     {
         SetCountinuous(false);
@@ -148,24 +173,18 @@ public class LocomotionManager : MonoBehaviour
     {
         if (value)
         {
-            workAround.EnableTurning();
+            continuousTurnProvider.leftHandTurnAction = new InputActionProperty(continuousTurnInputReference);
         }
-        else
-        {
-            continuousTurnProvider.enabled = value;
-        }
+        continuousTurnProvider.enabled = value;
     }
     private void SetSnap(bool value)
     {
         if (value)
         {
-            workAround.EnableSnap();
+            snapTurnProvider.leftHandSnapTurnAction= new InputActionProperty(snapTurnInputReference);
         }
-        else
-        {
-            snapTurnProvider.enabled = value;
-        }
-        
+        snapTurnProvider.enabled = value;
+
     }
 
     public void EnableTurning(bool state)

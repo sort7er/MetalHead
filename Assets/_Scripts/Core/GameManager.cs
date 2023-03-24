@@ -160,6 +160,7 @@ public class GameManager : MonoBehaviour
         isDead = true;
         Invoke("DeadMenu", 0.3f);
         EnableRays(true);
+        EnableDirectInteractors(false);
         LocomotionManager.instance.EnableMovement(false);
         LocomotionManager.instance.EnableTurning(false);
     }

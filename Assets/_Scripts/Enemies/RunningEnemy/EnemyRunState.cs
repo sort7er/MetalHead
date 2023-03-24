@@ -43,11 +43,7 @@ public class EnemyRunState : EnemyBaseState
         {
             enemy.rig.SetTarget(GameManager.instance.cam.transform.position);
             enemy.SetNavMeshDestination(GameManager.instance.XROrigin.transform.position);
-            if (enemy.CheckLineOfSight(false, enemy.directionToPlayer, enemy.headTrans.position))
-            {
-                enemy.RotateToPosition(GameManager.instance.XROrigin.transform.position);
-            }
-            else if(Mathf.Abs(enemy.movementDircetion.magnitude) > 0.01f)
+            if(Mathf.Abs(enemy.movementDircetion.magnitude) > 0.01f)
             {
                 enemy.RotateToPosition(enemy.transform.position + enemy.movementDircetion);
             }

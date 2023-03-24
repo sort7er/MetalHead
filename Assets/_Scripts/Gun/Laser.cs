@@ -28,10 +28,18 @@ public class Laser : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(transform.position, transform.forward, out hit, 5000, Physics.AllLayers, QueryTriggerInteraction.Ignore))
             {
-                laser.SetPosition(1, hit.point);
-                laserHit.SetActive(true);
-                laserHit.transform.position = hit.point - transform.forward * offset;
-                laserHit.transform.rotation = Quaternion.LookRotation(-hit.normal);
+                if(hit.transform.tag != "Player")
+                {
+                    laser.SetPosition(1, hit.point);
+                    laserHit.SetActive(true);
+                    laserHit.transform.position = hit.point - transform.forward * offset;
+                    laserHit.transform.rotation = Quaternion.LookRotation(-hit.normal);
+                }
+                else
+                {
+                    laser.SetPosition(1, transform.forward * 5000);
+                    laserHit.SetActive(false);
+                }
             }
             else
             {
