@@ -136,7 +136,6 @@ public class RunningEnemy : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(currentState);
         directionToPlayer = GameManager.instance.XROrigin.transform.position - headTrans.position;
         directionToCamera = GameManager.instance.cam.transform.position - headTrans.position;
         directionToPointOfInterest = pointOfInterest - headTrans.position;

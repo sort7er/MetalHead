@@ -107,7 +107,6 @@ public class EnemyCoverState : EnemyBaseState
             {
                 System.Array.Sort(colliders, ColliderArraySortComparer);
 
-                Debug.Log(hits);
                 hitsMissed = 0;
 
                 for (int i = 0; i < hits; i++)
