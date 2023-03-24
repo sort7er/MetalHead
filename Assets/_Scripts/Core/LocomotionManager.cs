@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class LocomotionManager : MonoBehaviour
@@ -17,23 +18,49 @@ public class LocomotionManager : MonoBehaviour
     [HideInInspector] public bool isUsingTeleport;
  
     private TeleportationProvider teleportationProvider;
-    private ContinuousMoveProviderBase continuousMoveProvider;
+    private ActionBasedContinuousMoveProvider continuousMoveProvider;
     private ActionBasedSnapTurnProvider snapTurnProvider;
     private ActionBasedContinuousTurnProvider continuousTurnProvider;
     private WorkAround workAround;
     private int currentMoveType;
     private int currentTurnType;
 
+    private InputActionReference continuousMoveInputReference;
+    private InputActionAsset teleportationInputReference;
+
     private void Start()
     {
         teleportationProvider = GetComponent<TeleportationProvider>();
-        continuousMoveProvider = GetComponent<ContinuousMoveProviderBase>();
+        continuousMoveProvider = GetComponent<ActionBasedContinuousMoveProvider>();
         snapTurnProvider = GetComponent<ActionBasedSnapTurnProvider>();
         continuousTurnProvider = GetComponent<ActionBasedContinuousTurnProvider>();
         workAround = GetComponent<WorkAround>();
 
         Invoke("StartSettings", 0.1f);
         Invoke("SetVignette", 0.1f);
+        SetContinuousMoveInputReference();
+        SetTeleportationInputReference();
+    }
+
+    private void SetContinuousMoveInputReference()
+    {
+        if (continuousMoveProvider.leftHandMoveAction.reference != null)
+        {
+            continuousMoveInputReference = continuousMoveProvider.leftHandMoveAction.reference;
+        }
+        else
+        {
+            Debug.Log("No Continuous Move Provider Input Action was found on the Left Hand. Please set it on your  Left hand Move Action found on the Continuous Move Provider use the Locomotion Manager");
+        }
+    }
+
+    private void SetTeleportationInputReference()
+    {
+        teleportationInputReference = teleportationRays.GetComponentInChildren<TeleportationController>().inputAction;
+        if (teleportationInputReference == null)
+        {
+            Debug.Log("No Input Action Asset reference was found in the Teleportation Controller Fixed script. Please assign to use Locomotion Manager");
+        }
     }
 
     private void StartSettings()
@@ -65,25 +92,20 @@ public class LocomotionManager : MonoBehaviour
     {
         if (value)
         {
-            workAround.EnableMove();
+            continuousMoveProvider.leftHandMoveAction = new InputActionProperty(continuousMoveInputReference);
         }
-        else
-        {
-            continuousMoveProvider.enabled = value;
-        }
+        continuousMoveProvider.enabled = value;
     }
     private void SetTeleport(bool value)
     {
-        isUsingTeleport = value;
-        teleportationRays.SetActive(value);
         if (value)
         {
-            workAround.EnableTeleport();
+            teleportationRays.GetComponentInChildren<TeleportationController>().inputAction = teleportationInputReference;
+
         }
-        else
-        {
-            teleportationProvider.enabled = value;
-        }
+        isUsingTeleport = value;
+        teleportationRays.SetActive(value);
+        teleportationProvider.enabled = value;
     }
     public void EnableMovement(bool state)
     {

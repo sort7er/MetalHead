@@ -37,6 +37,7 @@ public class TeleportationController : MonoBehaviour
     {
         teleportActivate.performed-= OnTeleportActivate;
         teleportCancel.performed -= OnTeleportCancel;
+        thumbstickInputAction.Disable();
 
     }
 
