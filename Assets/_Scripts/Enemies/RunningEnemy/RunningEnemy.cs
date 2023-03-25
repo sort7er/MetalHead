@@ -98,7 +98,7 @@ public class RunningEnemy : MonoBehaviour
     [HideInInspector] public bool isDead;
     [HideInInspector] public bool inView;
     [HideInInspector] public bool stunned;
-/*    [HideInInspector] */public bool hiding;
+    [HideInInspector] public bool hiding;
     [HideInInspector] public float turnSmoothTime;
     [HideInInspector] public float FOV;
 

@@ -6927,6 +6927,7 @@ MonoBehaviour:
   - 0.5
   damage: 050000000f000000
   isParrying: 0
+  test: 0
 --- !u!1 &399336828
 GameObject:
   m_ObjectHideFlags: 0
@@ -19360,6 +19361,7 @@ MonoBehaviour:
   - 0.5
   damage: 050000000f000000
   isParrying: 0
+  test: 0
 --- !u!1 &1165556792
 GameObject:
   m_ObjectHideFlags: 0
@@ -19449,6 +19451,7 @@ GameObject:
   - component: {fileID: 1166752411}
   - component: {fileID: 1166752410}
   - component: {fileID: 1166752412}
+  - component: {fileID: 1166752414}
   m_Layer: 2
   m_Name: Right Hand Controller
   m_TagString: Interactor
@@ -19803,6 +19806,33 @@ MonoBehaviour:
     m_Reference: {fileID: 875253871413052681, guid: c348712bda248c246b8c49b3db54643f,
       type: 3}
   m_ButtonPressPoint: 0.5
+--- !u!54 &1166752414
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166752404}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1170416642
 GameObject:
   m_ObjectHideFlags: 0
@@ -26663,6 +26693,7 @@ GameObject:
   - component: {fileID: 1595786476}
   - component: {fileID: 1595786475}
   - component: {fileID: 1595786479}
+  - component: {fileID: 1595786480}
   m_Layer: 2
   m_Name: Left Hand Controller
   m_TagString: Interactor
@@ -27017,6 +27048,33 @@ MonoBehaviour:
   handPrefab: {fileID: 2933892637611922172, guid: 125e366ce41c13a48979196a1734a52a,
     type: 3}
   controllerCharacteristics: 320
+--- !u!54 &1595786480
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1595786469}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1598150289
 GameObject:
   m_ObjectHideFlags: 0
@@ -36361,6 +36419,7 @@ MonoBehaviour:
   - 0.5
   damage: 050000000f000000
   isParrying: 0
+  test: 0
 --- !u!1 &1838507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -41967,7 +42026,7 @@ PrefabInstance:
     - target: {fileID: 7141347437139885929, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.035
       objectReference: {fileID: 0}
     - target: {fileID: 7141347437139885929, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
         type: 3}
@@ -42018,6 +42077,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Radius
       value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7141347437139885934, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
+        type: 3}
+      propertyPath: m_BaseOffset
+      value: -0.03
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

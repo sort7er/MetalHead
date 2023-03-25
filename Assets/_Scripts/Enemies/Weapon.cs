@@ -8,19 +8,20 @@ public class Weapon : MonoBehaviour
 
     [HideInInspector] public bool isParrying;
 
-    private EnemyHealth enemyHealth;
     private Parry parry;
+    private Rigidbody leftHandRigidBody;
     private Collider playerCollider;
     private PlayerHealth playerHealth;
-    private int numberToCheck, numberToCheckParry;
+    private int numberToCheck;
     private bool lethal, damageGiven, canParry;
+    public float test;
 
     private void Start()
     {
+        leftHandRigidBody = GameManager.instance.leftHand.GetComponent<Rigidbody>();
         parry = GameManager.instance.XROrigin.GetComponent<Parry>();
         playerCollider = GameManager.instance.XROrigin.GetComponent<Collider>();
         playerHealth = GameManager.instance.XROrigin.GetComponent<PlayerHealth>();
-        enemyHealth = GetComponentInParent<EnemyHealth>();
     }
 
     private void Update()
@@ -31,6 +32,8 @@ public class Weapon : MonoBehaviour
             EffectManager.instance.SpawnHitPlayerEffect(playerCollider.ClosestPointOnBounds(pointsOfDamage[numberToCheck].position));
             playerHealth.TakeDamage(damage[numberToCheck]);
         }
+        CalculateMovement(leftHandRigidBody);
+        
 
         if (parry.isParrying && canParry && !isParrying)
         {
@@ -54,9 +57,8 @@ public class Weapon : MonoBehaviour
         damageGiven = false;
     }
 
-    public void CanParry(int whichAttack)
+    public void CanParry()
     {
-        numberToCheckParry = whichAttack;
         canParry = true;
     }
     public void CannotParry()
@@ -66,5 +68,9 @@ public class Weapon : MonoBehaviour
     public void ParryingDone()
     {
         isParrying = false;
+    }
+    public void CalculateMovement(Rigidbody hand)
+    {
+        Debug.Log(hand.velocity);
     }
 }
