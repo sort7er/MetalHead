@@ -7,12 +7,16 @@ public class PauseMenu : MonoBehaviour
     public Transform menu;
     public Transform menuPivot;
     public InputActionAsset menuInputAction;
+    public GameObject pauseVignette;
 
+    private Renderer pauseVignetteRenderer;
     private InputAction menuPressed;
     private bool followCam;
 
     private void Start()
     {
+        pauseVignetteRenderer = pauseVignette.GetComponent<Renderer>();
+        pauseVignetteRenderer.sharedMaterial.SetFloat("_ApertureSize", 1);
         FollowCam(true);
         foreach (Transform t in menu)
         {
@@ -49,6 +53,7 @@ public class PauseMenu : MonoBehaviour
     }
     public void OpenMenu()
     {
+        pauseVignetteRenderer.sharedMaterial.SetFloat("_ApertureSize", 0);
         GameManager.instance.EnableRays(true);
         GameManager.instance.EnableDirectInteractors(false);
         LocomotionManager.instance.EnableMovement(false);
@@ -66,7 +71,8 @@ public class PauseMenu : MonoBehaviour
         }
         GameManager.instance.IsPaused(false);
         FollowCam(true);
-        if(!GameManager.instance.isUpgrading)
+        pauseVignetteRenderer.sharedMaterial.SetFloat("_ApertureSize", 1);
+        if (!GameManager.instance.isUpgrading)
         {
             GameManager.instance.EnableRays(false);
             GameManager.instance.EnableDirectInteractors(true);

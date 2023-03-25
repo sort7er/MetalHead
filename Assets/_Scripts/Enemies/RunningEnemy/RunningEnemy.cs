@@ -141,7 +141,7 @@ public class RunningEnemy : MonoBehaviour
         directionToPointOfInterest = pointOfInterest - headTrans.position;
         currentState.UpdateState(this);
         thisFrame = transform.position;
-        movementDircetion = thisFrame - lastFrame;
+        movementDircetion = (thisFrame - lastFrame) * 10;
         lastFrame = transform.position;
         
         if (setNewValue)
@@ -418,7 +418,7 @@ public class RunningEnemy : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position + new Vector3(0, 0.5f, 0), transform.forward * 5);
+        Gizmos.DrawRay(transform.position, movementDircetion * 5);
         Gizmos.color = Color.yellow;
         Gizmos.DrawRay(headTrans.position, directionToCamera * 5);
         Gizmos.color = Color.blue;

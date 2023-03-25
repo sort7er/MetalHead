@@ -6,12 +6,13 @@ using static UnityEngine.GraphicsBuffer;
 public class EnemyRunState : EnemyBaseState
 {
     private float timer;
-    private bool scanning;
+    private bool scanning, distanceSet;
     private NavMeshAgent agent;
     private Animator enemyAnim;
     private Kickable currentKickable;
     private Collider[] colliders = new Collider[3];
     private RunningEnemy runningEnemy;
+    private float randomDistance;
 
     public override void EnterState(RunningEnemy enemy)
     {
@@ -30,6 +31,7 @@ public class EnemyRunState : EnemyBaseState
         scanning = false;
         currentKickable = null;
         enemy.rig.SetRig(true);
+        randomDistance = Random.Range(enemy.rangeBeforeAttack, enemy.rangeBeforeAttack + 3);
     }
 
     public override void UpdateState(RunningEnemy enemy)
@@ -42,7 +44,29 @@ public class EnemyRunState : EnemyBaseState
         else
         {
             enemy.rig.SetTarget(GameManager.instance.cam.transform.position);
-            enemy.SetNavMeshDestination(GameManager.instance.XROrigin.transform.position);
+            enemy.SetNavMeshDestination(enemy.transform.position + enemy.directionToPlayer * 0.9f);
+            if((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= randomDistance)
+            {
+                if (!distanceSet)
+                {
+                    Debug.Log("Start walking");
+                    enemy.SetAnimSpeed(0.25f);
+                    enemy.SetSpeed(enemy.idleSpeed);
+                    distanceSet = true;
+                }
+            }
+            else if((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude > enemy.rangeBeforeAttack + 3)
+            {
+                if (distanceSet)
+                {
+                    Debug.Log("Start running");
+                    enemy.SetAnimSpeed(0.75f);
+                    enemy.SetSpeed(enemy.runSpeed);
+                    randomDistance = Random.Range(enemy.rangeBeforeAttack, enemy.rangeBeforeAttack + 3);
+                    distanceSet = false;
+                }
+            }
+
             if(Mathf.Abs(enemy.movementDircetion.magnitude) > 0.01f)
             {
                 enemy.RotateToPosition(enemy.transform.position + enemy.movementDircetion);
