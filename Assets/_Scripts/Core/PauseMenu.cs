@@ -16,7 +16,7 @@ public class PauseMenu : MonoBehaviour
     private void Start()
     {
         pauseVignetteRenderer = pauseVignette.GetComponent<Renderer>();
-        pauseVignetteRenderer.sharedMaterial.SetFloat("_ApertureSize", 1);
+        PauseVignette(1);
         FollowCam(true);
         foreach (Transform t in menu)
         {
@@ -53,7 +53,8 @@ public class PauseMenu : MonoBehaviour
     }
     public void OpenMenu()
     {
-        pauseVignetteRenderer.sharedMaterial.SetFloat("_ApertureSize", 0);
+        GameManager.instance.SetTimeScale(0);
+        PauseVignette(0);
         GameManager.instance.EnableRays(true);
         GameManager.instance.EnableDirectInteractors(false);
         LocomotionManager.instance.EnableMovement(false);
@@ -69,9 +70,10 @@ public class PauseMenu : MonoBehaviour
         {
             t.gameObject.SetActive(false);
         }
+        GameManager.instance.SetTimeScale(1);
         GameManager.instance.IsPaused(false);
         FollowCam(true);
-        pauseVignetteRenderer.sharedMaterial.SetFloat("_ApertureSize", 1);
+        PauseVignette(1);
         if (!GameManager.instance.isUpgrading)
         {
             GameManager.instance.EnableRays(false);
@@ -94,5 +96,9 @@ public class PauseMenu : MonoBehaviour
     public void FollowCam(bool state)
     {
         followCam = state;
+    }
+    public void PauseVignette(float newSize)
+    {
+        pauseVignetteRenderer.sharedMaterial.SetFloat("_ApertureSize", newSize);
     }
 }

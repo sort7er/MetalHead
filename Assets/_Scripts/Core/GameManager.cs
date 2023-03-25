@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public AmmoBag ammoBag;
     public Magnet magnet;
     public GameObject gameOverCanvas;
+    public Animator pauseVignetteAnim;
 
     [HideInInspector] public bool isUpgrading;
     [HideInInspector] public bool isPaused;
@@ -28,11 +29,10 @@ public class GameManager : MonoBehaviour
     private PauseMenu pauseMenu;
     private XRInteractorLineVisual leftLineVisual, rightLineVisual;
     private XRDirectInteractor rHand, lHand;
-    private bool changeTimeScale;
-    private float targetTimeScale;
 
     private void Start()
     {
+        pauseVignetteAnim.enabled = false;
         Physics.IgnoreLayerCollision(7, 8);
         EnableRays(false);
         pauseMenu = GetComponent<PauseMenu>();
@@ -40,30 +40,7 @@ public class GameManager : MonoBehaviour
         rightLineVisual = rightRayInteractor.GetComponent<XRInteractorLineVisual>();
         lHand = leftHand.gameObject.GetComponent<XRDirectInteractor>();
         rHand = rightHand.gameObject.GetComponent<XRDirectInteractor>();
-    }
-    private void Update()
-    {
-        if (changeTimeScale)
-        {
-            if(Time.timeScale < targetTimeScale)
-            {
-                Time.timeScale += Time.unscaledDeltaTime;
-                if(Time.timeScale >= targetTimeScale)
-                {
-                    Time.timeScale = targetTimeScale;
-                    changeTimeScale = false;
-                }
-            }
-            if(Time.timeScale > targetTimeScale)
-            {
-                Time.timeScale -= Time.unscaledDeltaTime;
-                if (Time.timeScale <= targetTimeScale)
-                {
-                    Time.timeScale = targetTimeScale;
-                    changeTimeScale = false;
-                }
-            }
-        }
+        SetTimeScale(1);
     }
     public void EnableRays(bool state)
     {
@@ -154,7 +131,10 @@ public class GameManager : MonoBehaviour
     {
         isPaused = state;
     }
-
+    public void SetTimeScale(float newTime)
+    {
+        Time.timeScale = newTime;
+    }
     public void IsDead()
     {
         isDead = true;
@@ -163,11 +143,17 @@ public class GameManager : MonoBehaviour
         EnableDirectInteractors(false);
         LocomotionManager.instance.EnableMovement(false);
         LocomotionManager.instance.EnableTurning(false);
+        pauseVignetteAnim.enabled = true;
+        pauseVignetteAnim.SetTrigger("Die");
+
     }
     private void DeadMenu()
     {
+        pauseVignetteAnim.enabled = false;
+        pauseMenu.PauseVignette(0);
         pauseMenu.FollowCam(false);
         gameOverCanvas.SetActive(true);
+        SetTimeScale(0f);
     }
     public void RestartLevel()
     {

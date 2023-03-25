@@ -31,7 +31,8 @@ public class EnemyRunState : EnemyBaseState
         scanning = false;
         currentKickable = null;
         enemy.rig.SetRig(true);
-        randomDistance = Random.Range(enemy.rangeBeforeAttack, enemy.rangeBeforeAttack + 3);
+        distanceSet = false;
+        randomDistance = Random.Range(enemy.rangeBeforeAttack + 1, enemy.rangeBeforeAttack + 5);
     }
 
     public override void UpdateState(RunningEnemy enemy)
@@ -55,14 +56,14 @@ public class EnemyRunState : EnemyBaseState
                     distanceSet = true;
                 }
             }
-            else if((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude > enemy.rangeBeforeAttack + 3)
+            else if((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude > enemy.rangeBeforeAttack + 5)
             {
                 if (distanceSet)
                 {
                     Debug.Log("Start running");
                     enemy.SetAnimSpeed(0.75f);
                     enemy.SetSpeed(enemy.runSpeed);
-                    randomDistance = Random.Range(enemy.rangeBeforeAttack, enemy.rangeBeforeAttack + 3);
+                    randomDistance = Random.Range(enemy.rangeBeforeAttack + 1, enemy.rangeBeforeAttack + 5);
                     distanceSet = false;
                 }
             }
