@@ -45,12 +45,11 @@ public class EnemyRunState : EnemyBaseState
         else
         {
             enemy.rig.SetTarget(GameManager.instance.cam.transform.position);
-            enemy.SetNavMeshDestination(enemy.transform.position + enemy.directionToPlayer * 0.9f);
+            enemy.SetNavMeshDestination(enemy.transform.position + enemy.directionToPlayer * 0.4f);
             if((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= randomDistance)
             {
                 if (!distanceSet)
                 {
-                    Debug.Log("Start walking");
                     enemy.SetAnimSpeed(0.25f);
                     enemy.SetSpeed(enemy.idleSpeed);
                     distanceSet = true;
@@ -60,7 +59,6 @@ public class EnemyRunState : EnemyBaseState
             {
                 if (distanceSet)
                 {
-                    Debug.Log("Start running");
                     enemy.SetAnimSpeed(0.75f);
                     enemy.SetSpeed(enemy.runSpeed);
                     randomDistance = Random.Range(enemy.rangeBeforeAttack + 1, enemy.rangeBeforeAttack + 5);

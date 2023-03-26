@@ -32,7 +32,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        pauseVignetteAnim.enabled = false;
         Physics.IgnoreLayerCollision(7, 8);
         EnableRays(false);
         pauseMenu = GetComponent<PauseMenu>();
@@ -143,14 +142,11 @@ public class GameManager : MonoBehaviour
         EnableDirectInteractors(false);
         LocomotionManager.instance.EnableMovement(false);
         LocomotionManager.instance.EnableTurning(false);
-        pauseVignetteAnim.enabled = true;
         pauseVignetteAnim.SetTrigger("Die");
 
     }
     private void DeadMenu()
     {
-        pauseVignetteAnim.enabled = false;
-        pauseMenu.PauseVignette(0);
         pauseMenu.FollowCam(false);
         gameOverCanvas.SetActive(true);
         SetTimeScale(0f);

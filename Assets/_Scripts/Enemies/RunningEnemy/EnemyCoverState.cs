@@ -40,8 +40,7 @@ public class EnemyCoverState : EnemyBaseState
         if (dodge && (destination - enemy.transform.position).magnitude < 0.2f)
         {
             agent.ResetPath();
-            HidingDone();
-            
+            enemy.DelayedCallback(enemy.coverState, "HidingDone", 0.5f);
         }
 
         if (!inCover && !dodge)
@@ -131,6 +130,7 @@ public class EnemyCoverState : EnemyBaseState
                                 if (!NavMesh.FindClosestEdge(hit2.position, out hit2, agent.areaMask))
                                 {
                                     Debug.Log("Unable to find closest edge close to " + hit2.position);
+                                    Dodge();
                                 }
                                 if (Vector3.Dot(hit2.normal, (target.position - hit2.position).normalized) < runningEnemy.hideSensitivity)
                                 {
@@ -152,6 +152,7 @@ public class EnemyCoverState : EnemyBaseState
                     }
                     else
                     {
+                        Dodge();
                         Debug.Log("Unable to find NavMesh near object " + colliders[i].name + " at " + colliders[i].transform.position);
                     }
                 }

@@ -39,9 +39,8 @@ public class EnemyIdleState : EnemyBaseState
             if (enemy.CheckLineOfSight(true, enemy.directionToPointOfInterest, enemy.headTrans.position))
             {
                 enemy.RotateToPosition(enemy.pointOfInterest);
-                Debug.Log("1");
             }
-            else if (Mathf.Abs(enemy.movementDircetion.magnitude) > 0.01f)
+            else if (Mathf.Abs(enemy.movementDircetion.magnitude) > 0.02f)
             {
                 enemy.RotateToPosition(enemy.transform.position + enemy.movementDircetion);
             }

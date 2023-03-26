@@ -4,10 +4,13 @@ public class PlayerHealth : MonoBehaviour
 {
     public int startHealth;
     public float startPitch, endPitch;
+    public Animator healthVignette;
 
     private int currentHealth;
+    private Watch watch;
     private AudioSource healthSource;
     private float targetVolume, difference, incerements;
+    private bool watchFound;
 
     void Start()
     {
@@ -22,11 +25,16 @@ public class PlayerHealth : MonoBehaviour
     {
         if (!GameManager.instance.isDead)
         {
+            healthVignette.SetTrigger("Hit");
             currentHealth -= damage;
             if (currentHealth < 0)
             {
                 Die();
                 currentHealth = 0;
+            }
+            if(watch != null)
+            {
+                watch.SetNewHealth(currentHealth);
             }
             HitAudio(currentHealth);
         }
@@ -34,7 +42,21 @@ public class PlayerHealth : MonoBehaviour
 
     private void Update()
     {
-        healthSource.volume = Mathf.Lerp(healthSource.volume, targetVolume, Time.deltaTime * 20);
+        healthSource.volume = Mathf.Lerp(healthSource.volume, targetVolume, Time.deltaTime * 50);
+        if(watch == null)
+        {
+            watch = FindObjectOfType<Watch>();
+            watchFound= false;
+        }
+        else
+        {
+            if (!watchFound)
+            {
+                watchFound = true;
+                Debug.Log("Watch found");
+                watch.SetNewHealth(currentHealth);
+            }
+        }
     }
 
     private void Die()

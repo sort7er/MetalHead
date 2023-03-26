@@ -191,7 +191,7 @@ MonoBehaviour:
   targetTransform: {fileID: 789403810}
   headTrans: {fileID: 3173534719420928397}
   tooCloseDistance: 0.35
-  angle: 170
+  angle: 120
 --- !u!1 &2097775654
 GameObject:
   m_ObjectHideFlags: 0
@@ -631,7 +631,7 @@ MonoBehaviour:
   maxSusDuration: 4
   susColor: {r: 1, g: 0.90713394, b: 0, a: 1}
   searchingSpeed: 2
-  searchingSightRange: 12
+  searchingSightRange: 15
   searchMinTimeBetweenTargets: 2
   searchMaxTimeBetweenTargets: 5
   timeBeforeSeen: 1
@@ -639,7 +639,7 @@ MonoBehaviour:
   searchingColor: {r: 1, g: 0.39719838, b: 0, a: 1}
   runSpeed: 3
   runSightRange: 12
-  rangeBeforeAttack: 1.2
+  rangeBeforeAttack: 1.3
   timeBeforeLost: 3
   timeBetweenScan: 0.25
   scanRadius: 3
@@ -721,15 +721,15 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.4
   m_Speed: 2
-  m_Acceleration: 60
+  m_Acceleration: 150
   avoidancePriority: 50
-  m_AngularSpeed: 10
+  m_AngularSpeed: 20
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: -0.08
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!1 &7141347437256946666
@@ -3930,10 +3930,12 @@ MonoBehaviour:
   - {fileID: 5125690253684711298}
   - {fileID: 6908768950094228532}
   raduis:
-  - 0.4
-  - 0.3
+  - 0.5
+  - 0.5
   damage: 050000000f000000
+  parrySensetivity: 5
   isParrying: 0
+  test: 0
 --- !u!4 &8224130642395494248 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7981835845142593711, guid: ecd7d82ee55e594499c7bc762a276d3d,
