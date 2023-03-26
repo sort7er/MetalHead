@@ -37,7 +37,7 @@ public class EnemyRunState : EnemyBaseState
 
     public override void UpdateState(RunningEnemy enemy)
     {
-        if ((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= enemy.rangeBeforeAttack && enemy.CheckLineOfSight(true, enemy.transform.forward, enemy.transform.position + new Vector3(0, 0.5f, 0)))
+        if ((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= enemy.rangeBeforeAttack && enemy.CheckLineOfSight(true, GameManager.instance.XROrigin.transform.position - enemy.transform.position, enemy.transform.position + new Vector3(0, 0.5f, 0)))
         {
             enemy.SwitchState(enemy.attackState);
             enemy.agent.ResetPath();
