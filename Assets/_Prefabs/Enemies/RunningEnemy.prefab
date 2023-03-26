@@ -580,7 +580,7 @@ Transform:
   - {fileID: 7141347436004945929}
   - {fileID: 7246732520624336850}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7141347437139885931
 MonoBehaviour:
@@ -623,7 +623,7 @@ MonoBehaviour:
   idleMinTimeBetweenTargets: 3
   idleMaxTimeBetweenTargets: 7
   idleRandomDestinationRange: 7
-  idleColor: {r: 0.110991, g: 1, b: 0, a: 1}
+  idleColor: {r: 0, g: 0.649231, b: 0.8490566, a: 1}
   susSpeed: 1.5
   timeBeforeDetect: 2
   susSightRange: 10
@@ -634,7 +634,7 @@ MonoBehaviour:
   searchingSightRange: 15
   searchMinTimeBetweenTargets: 2
   searchMaxTimeBetweenTargets: 5
-  timeBeforeSeen: 1
+  timeBeforeSeen: 0.5
   searchingRandomDestinationRange: 12
   searchingColor: {r: 1, g: 0.39719838, b: 0, a: 1}
   runSpeed: 3

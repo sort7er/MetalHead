@@ -136,6 +136,7 @@ public class RunningEnemy : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(currentState);
         directionToPlayer = GameManager.instance.XROrigin.transform.position - headTrans.position;
         directionToCamera = GameManager.instance.cam.transform.position - headTrans.position;
         directionToPointOfInterest = pointOfInterest - headTrans.position;
@@ -286,7 +287,7 @@ public class RunningEnemy : MonoBehaviour
     public void SetNavMeshDestination(Vector3 position)
     {
         NavMeshHit myNavHit;
-        if (NavMesh.SamplePosition(position, out myNavHit, 2, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(position, out myNavHit, 10, NavMesh.AllAreas))
         {
             agent.SetDestination(myNavHit.position);
         }

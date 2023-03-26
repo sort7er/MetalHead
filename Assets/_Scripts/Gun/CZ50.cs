@@ -50,7 +50,7 @@ public class CZ50 : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, 5000, Physics.AllLayers, QueryTriggerInteraction.Ignore))
                 {
-                    if (!hit.transform.CompareTag("Player") && !hit.transform.CompareTag("Gun") && hit.transform.gameObject.layer != 9)
+                    if (!hit.transform.CompareTag("Player") && !hit.transform.CompareTag("Gun") && !hit.transform.CompareTag("InvisibleWall") && hit.transform.gameObject.layer != 9)
                     {
                         if (hit.rigidbody != null)
                         {

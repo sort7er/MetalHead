@@ -42,12 +42,10 @@ public class Weapon : MonoBehaviour
             if (leftParry)
             {
                 positionToSpawn = GameManager.instance.leftHand.transform.position + (pointsOfDamage[numberToCheck].position - GameManager.instance.leftHand.transform.position) * 0.2f;
-                Debug.Log("1");
             }
             else
             {
                 positionToSpawn = GameManager.instance.rightHand.transform.position + (pointsOfDamage[numberToCheck].position - GameManager.instance.rightHand.transform.position) * 0.2f;
-                Debug.Log("2");
             }
             EffectManager.instance.SpawnParryEffect(positionToSpawn);
             CannotParry();

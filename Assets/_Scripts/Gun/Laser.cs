@@ -28,7 +28,7 @@ public class Laser : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(transform.position, transform.forward, out hit, 5000, Physics.AllLayers, QueryTriggerInteraction.Ignore))
             {
-                if(hit.transform.tag != "Player" || hit.transform.gameObject.layer != 9)
+                if(hit.transform.tag != "Player" && hit.transform.gameObject.layer != 9 && hit.transform.tag != "InvisibleWall")
                 {
                     laser.SetPosition(1, hit.point);
                     laserHit.SetActive(true);

@@ -45,7 +45,8 @@ public class EnemyRunState : EnemyBaseState
         else
         {
             enemy.rig.SetTarget(GameManager.instance.cam.transform.position);
-            enemy.SetNavMeshDestination(enemy.transform.position + enemy.directionToPlayer * 0.4f);
+            //enemy.SetNavMeshDestination(enemy.transform.position + enemy.directionToPlayer * 0.4f);
+            enemy.agent.SetDestination(GameManager.instance.cam.transform.position);
             if((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= randomDistance)
             {
                 if (!distanceSet)
