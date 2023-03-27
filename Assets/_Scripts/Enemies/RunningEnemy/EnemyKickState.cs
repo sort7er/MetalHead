@@ -23,7 +23,7 @@ public class EnemyKickState : EnemyBaseState
     public override void UpdateState(RunningEnemy enemy)
     {
         directionFromPlayer = GameManager.instance.XROrigin.transform.position - kickableToKick.transform.position;
-        kickPosition = kickableToKick.transform.position - new Vector3(directionFromPlayer.normalized.x, kickableToKick.transform.position.y, directionFromPlayer.normalized.z);
+        kickPosition = kickableToKick.transform.position - new Vector3(directionFromPlayer.normalized.x, 0, directionFromPlayer.normalized.z);
         kickDirection = new Vector3(directionFromPlayer.normalized.x, directionFromPlayer.normalized.y + 0.7f, directionFromPlayer.normalized.z);
         enemy.rig.SetTarget(GameManager.instance.cam.transform.position);
         if (!arrivedToKickable)
@@ -31,7 +31,7 @@ public class EnemyKickState : EnemyBaseState
             enemy.SetNavMeshDestination(kickPosition);
             
             enemy.RotateToPosition(kickPosition);
-            if((kickPosition - enemy.transform.position).magnitude < 0.3f)
+            if((kickPosition - enemy.transform.position).magnitude < 0.5f)
             {
                 arrivedToKickable = true;
                 enemy.SetTurnSpeed(10);

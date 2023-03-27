@@ -37,17 +37,22 @@ public class EnemyRunState : EnemyBaseState
 
     public override void UpdateState(RunningEnemy enemy)
     {
-        if ((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= enemy.rangeBeforeAttack && enemy.CheckLineOfSight(true, GameManager.instance.XROrigin.transform.position - enemy.transform.position, enemy.transform.position + new Vector3(0, 0.5f, 0)))
+        if ((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= enemy.rangeBeforeAttack)
         {
-            enemy.SwitchState(enemy.attackState);
-            enemy.agent.ResetPath();
+            if (enemy.CheckLineOfSight(true, GameManager.instance.XROrigin.transform.position - enemy.transform.position, enemy.transform.position + new Vector3(0, 0.5f, 0)))
+            {
+                enemy.SwitchState(enemy.attackState);
+                enemy.agent.ResetPath();
+            }
+            Debug.Log("Lol1");
         }
         else
         {
             enemy.rig.SetTarget(GameManager.instance.cam.transform.position);
             //enemy.SetNavMeshDestination(enemy.transform.position + enemy.directionToPlayer * 0.4f);
-            enemy.agent.SetDestination(GameManager.instance.cam.transform.position);
-            if((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= randomDistance)
+            
+
+            if ((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= randomDistance)
             {
                 if (!distanceSet)
                 {
@@ -67,7 +72,24 @@ public class EnemyRunState : EnemyBaseState
                 }
             }
 
-            if(Mathf.Abs(enemy.movementDircetion.magnitude) > 0.01f)
+            if (CheckForEnemies() && (GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude < enemy.rangeBeforeAttack + 5)
+            {
+                enemy.agent.ResetPath();
+                enemyAnim.SetBool("IsMoving", false);
+            }
+            else
+            {
+                enemyAnim.SetBool("IsMoving", true);
+                enemy.agent.SetDestination(GameManager.instance.XROrigin.transform.position);
+            }
+
+
+
+            if (enemy.CheckLineOfSight(true, GameManager.instance.XROrigin.transform.position - enemy.transform.position, enemy.transform.position + new Vector3(0, 0.5f, 0)))
+            {
+                enemy.RotateToPosition(GameManager.instance.XROrigin.transform.position);
+            }
+            else if (Mathf.Abs(enemy.movementDircetion.magnitude) > 0.01f)
             {
                 enemy.RotateToPosition(enemy.transform.position + enemy.movementDircetion);
             }
@@ -189,6 +211,25 @@ public class EnemyRunState : EnemyBaseState
         else
         {
             return Vector3.Distance(agent.transform.position, A.transform.position).CompareTo(Vector3.Distance(agent.transform.position, B.transform.position));
+        }
+    }
+    private bool CheckForEnemies()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(runningEnemy.transform.position + new Vector3(0, 0.5f, 0), GameManager.instance.XROrigin.transform.position - runningEnemy.transform.position, out hit, 2, runningEnemy.enemyLayer, QueryTriggerInteraction.Ignore))
+        {
+            if (hit.transform.gameObject.layer == 11)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
         }
     }
 }

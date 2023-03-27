@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 252074631}
   - component: {fileID: 252074632}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ChestConstraint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 789403810}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 1186588954}
   - component: {fileID: 1186588955}
   - component: {fileID: 1186588956}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: EnemyRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,7 +202,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2097775655}
   - component: {fileID: 2097775656}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: HeadConstraint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -580,7 +580,7 @@ Transform:
   - {fileID: 7141347436004945929}
   - {fileID: 7246732520624336850}
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7141347437139885931
 MonoBehaviour:
@@ -647,6 +647,9 @@ MonoBehaviour:
   scanableLayer:
     serializedVersion: 2
     m_Bits: 4096
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 2048
   minAttackCooldown: 0.2
   maxAttackCooldown: 1
   kickForce: 200
@@ -933,6 +936,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RunningEnemyGlow2
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 09aa34aca72e351408d3b4615ff74d6b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -963,10 +971,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: LeftFinger2
       objectReference: {fileID: 0}
+    - target: {fileID: -8772850634812294480, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: -8766652112080958440, guid: ecd7d82ee55e594499c7bc762a276d3d,
         type: 3}
       propertyPath: m_Name
       value: RightBicep
+      objectReference: {fileID: 0}
+    - target: {fileID: -8766652112080958440, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ecd7d82ee55e594499c7bc762a276d3d,
         type: 3}
@@ -1048,15 +1066,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: LeftBicep
       objectReference: {fileID: 0}
+    - target: {fileID: -8468230128814911659, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: -8184685949630962031, guid: ecd7d82ee55e594499c7bc762a276d3d,
         type: 3}
       propertyPath: m_Name
       value: LeftHip
       objectReference: {fileID: 0}
+    - target: {fileID: -8184685949630962031, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: -8064235855696579609, guid: ecd7d82ee55e594499c7bc762a276d3d,
         type: 3}
       propertyPath: m_Name
       value: LeftOuterFinger1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8064235855696579609, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: -7981835845142593711, guid: ecd7d82ee55e594499c7bc762a276d3d,
         type: 3}
@@ -1073,10 +1106,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: RightOuterFinger3
       objectReference: {fileID: 0}
+    - target: {fileID: -7546204720914814087, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: -7487598320586076415, guid: ecd7d82ee55e594499c7bc762a276d3d,
         type: 3}
       propertyPath: m_Name
       value: RightOuterFinger1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7487598320586076415, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: -7098019943366368091, guid: ecd7d82ee55e594499c7bc762a276d3d,
         type: 3}
@@ -1117,6 +1160,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RightFinger2
+      objectReference: {fileID: 0}
+    - target: {fileID: -5905662937880232483, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: -5596373833509766001, guid: ecd7d82ee55e594499c7bc762a276d3d,
         type: 3}
@@ -1178,6 +1226,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: LeftOuterFinger2
       objectReference: {fileID: 0}
+    - target: {fileID: -3638565732155265945, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -3469062452279440913, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: -3380176097789927003, guid: ecd7d82ee55e594499c7bc762a276d3d,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -1188,20 +1246,40 @@ PrefabInstance:
       propertyPath: m_Name
       value: LeftFinger3
       objectReference: {fileID: 0}
+    - target: {fileID: -2957527680921283540, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: -2920004351428823979, guid: ecd7d82ee55e594499c7bc762a276d3d,
         type: 3}
       propertyPath: m_Name
       value: RightFinger3
+      objectReference: {fileID: 0}
+    - target: {fileID: -2920004351428823979, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: -2572791205272518249, guid: ecd7d82ee55e594499c7bc762a276d3d,
         type: 3}
       propertyPath: m_Name
       value: RightOuterFinger2
       objectReference: {fileID: 0}
+    - target: {fileID: -2572791205272518249, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: -2491701432641969814, guid: ecd7d82ee55e594499c7bc762a276d3d,
         type: 3}
       propertyPath: m_Name
       value: RightOuterFinger4
+      objectReference: {fileID: 0}
+    - target: {fileID: -2491701432641969814, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: -2348352986862358887, guid: ecd7d82ee55e594499c7bc762a276d3d,
         type: 3}
@@ -1218,6 +1296,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RightFinger4
       objectReference: {fileID: 0}
+    - target: {fileID: -2292985323573348575, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: -1326072374042084049, guid: ecd7d82ee55e594499c7bc762a276d3d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1232,6 +1315,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RightSholderJoint
+      objectReference: {fileID: 0}
+    - target: {fileID: -846364016012460559, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: -648290499246118619, guid: ecd7d82ee55e594499c7bc762a276d3d,
         type: 3}
@@ -1253,10 +1341,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: LeftSholderJoint
       objectReference: {fileID: 0}
+    - target: {fileID: -519425180253522854, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: -193672364675515751, guid: ecd7d82ee55e594499c7bc762a276d3d,
         type: 3}
       propertyPath: m_Name
       value: LeftFinger4
+      objectReference: {fileID: 0}
+    - target: {fileID: -193672364675515751, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: -126997817940071105, guid: ecd7d82ee55e594499c7bc762a276d3d,
         type: 3}
@@ -1293,10 +1391,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: RightFinger1
       objectReference: {fileID: 0}
+    - target: {fileID: 1079552927049225374, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 1478938379243548879, guid: ecd7d82ee55e594499c7bc762a276d3d,
         type: 3}
       propertyPath: m_Name
       value: LeftFinger1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1478938379243548879, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 1798113229594589225, guid: ecd7d82ee55e594499c7bc762a276d3d,
         type: 3}
@@ -1323,15 +1431,30 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 2517548005174987721, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 2521431665751493335, guid: ecd7d82ee55e594499c7bc762a276d3d,
         type: 3}
       propertyPath: m_Name
       value: LeftOuterFinger3
       objectReference: {fileID: 0}
+    - target: {fileID: 2521431665751493335, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 3373021214802470587, guid: ecd7d82ee55e594499c7bc762a276d3d,
         type: 3}
       propertyPath: m_Name
       value: LeftOuterFinger4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3373021214802470587, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 3706851974320559537, guid: ecd7d82ee55e594499c7bc762a276d3d,
         type: 3}
@@ -1482,6 +1605,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RightHip
+      objectReference: {fileID: 0}
+    - target: {fileID: 8644743743915174031, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4428,6 +4556,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RunningEnemyGlow
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7855c0bdfb77458488ee676c8dbc9b6a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -22,16 +22,23 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverCanvas;
     public Animator pauseVignetteAnim;
 
+    public Animator tempAnim;
+    public GameObject[] enemies;
+
+
     [HideInInspector] public bool isUpgrading;
     [HideInInspector] public bool isPaused;
     [HideInInspector] public bool isDead;
 
+    private int tempNumber;
+    private bool tempDone;
     private PauseMenu pauseMenu;
     private XRInteractorLineVisual leftLineVisual, rightLineVisual;
     private XRDirectInteractor rHand, lHand;
 
     private void Start()
     {
+        tempDone= false;
         Physics.IgnoreLayerCollision(7, 8);
         EnableRays(false);
         pauseMenu = GetComponent<PauseMenu>();
@@ -159,5 +166,22 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Quit");
         Application.Quit();
+    }
+    public void TempAddOne()
+    {
+        if (!tempDone)
+        {
+            Debug.Log("lol");
+            tempNumber++;
+            if (tempNumber >= 5)
+            {
+                for (int i = 0; i < enemies.Length; i++)
+                {
+                    enemies[i].SetActive(true);
+                }
+                tempAnim.SetTrigger("Open");
+                tempDone = true;
+            }
+        }
     }
 }

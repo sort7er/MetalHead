@@ -11,6 +11,8 @@ public class EnemyDieState : EnemyBaseState
         enemy.SetGlowColor(Color.black);
         enemy.EnableRagdoll(true);
         enemy.DelayedCallback(enemy.dieState, "StartDestroy", enemy.timeDead);
+        GameManager.instance.TempAddOne();
+        AIManager.instance.DoneAttacking();
     }
 
     public override void UpdateState(RunningEnemy enemy)

@@ -21,12 +21,13 @@ public class EnemyAttackState : EnemyBaseState
 
     public override void UpdateState(RunningEnemy enemy)
     {
-        if (((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude > enemy.rangeBeforeAttack || !enemy.CheckLineOfSight(true, enemy.transform.forward, enemy.transform.position + new Vector3(0, 0.5f, 0))) && !attackStarted)
+        if (((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude > enemy.rangeBeforeAttack || !enemy.CheckLineOfSight(true, GameManager.instance.XROrigin.transform.position - enemy.transform.position, enemy.transform.position + new Vector3(0, 0.5f, 0))) && !attackStarted)
         {
             enemy.SwitchState(enemy.runState);
         }
         else if(!attackStarted && !cannotAttack && fromRunTransition)
         {
+            enemy.RotateToPosition(GameManager.instance.XROrigin.transform.position);
             if (AIManager.instance.CheckForAttack())
             {
                 Attack();

@@ -47,6 +47,7 @@ public class RunningEnemy : MonoBehaviour
     public float scanRadius;
     public Color detectedColor;
     public LayerMask scanableLayer;
+    public LayerMask enemyLayer;
 
     [Header("AttackState")]
     public float minAttackCooldown;
@@ -113,7 +114,7 @@ public class RunningEnemy : MonoBehaviour
     public EnemyKickState kickState = new EnemyKickState();
 
     private EnemyBaseState currentState;
-    private Vector3 thisFrame, lastFrame;
+    private Vector3 thisFrame, lastFrame, currentDestination;
     private float timeBetweenDistanceCheck;
     private float newMovementValue, currentValue;
     private bool setNewValue;
@@ -136,7 +137,6 @@ public class RunningEnemy : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(currentState);
         directionToPlayer = GameManager.instance.XROrigin.transform.position - headTrans.position;
         directionToCamera = GameManager.instance.cam.transform.position - headTrans.position;
         directionToPointOfInterest = pointOfInterest - headTrans.position;
@@ -304,12 +304,21 @@ public class RunningEnemy : MonoBehaviour
             NavMeshHit hit;
             if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
             {
-                result = hit.position;
-                return true;
+                
+                if(!CheckLineOfSight(true, hit.position - headTrans.position, headTrans.position))
+                {
+                    result = hit.position;
+                    currentDestination = hit.position;
+                    Debug.Log("lol");
+                    return true;
+                    
+                }
+                
             }
         }
 
         result = Vector3.zero;
+        Debug.Log("lol2");
         return false;
     }
     public void SetGlowColor(Color newColor)
@@ -419,7 +428,7 @@ public class RunningEnemy : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, movementDircetion * 5);
+        Gizmos.DrawRay(headTrans.position, currentDestination - headTrans.position* 5);
         Gizmos.color = Color.yellow;
         Gizmos.DrawRay(headTrans.position, directionToCamera * 5);
         Gizmos.color = Color.blue;

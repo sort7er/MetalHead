@@ -53,7 +53,15 @@ public class EnemyCoverState : EnemyBaseState
             else
             {
                 Hide(GameManager.instance.XROrigin.transform);
-                enemy.RotateToPosition(destination);
+                if (enemy.CheckLineOfSight(true, destination - enemy.transform.position, enemy.transform.position + new Vector3(0, 0.5f, 0)))
+                {
+                    enemy.RotateToPosition(destination);
+                }
+                else if (Mathf.Abs(enemy.movementDircetion.magnitude) > 0.01f)
+                {
+                    enemy.RotateToPosition(enemy.transform.position + enemy.movementDircetion);
+                }
+                
 
             }
         }
@@ -211,7 +219,7 @@ public class EnemyCoverState : EnemyBaseState
             enemyAnim.SetTrigger("DodgeLeft");
             destination = runningEnemy.transform.position - runningEnemy.transform.right;
         }
-        runningEnemy.SetNavMeshDestination(destination);
+        runningEnemy.agent.SetDestination(destination);
         //runningEnemy.DelayedCallback(runningEnemy.coverState, "StartDodge", 0f);
     }
     //public void StartDodge()
