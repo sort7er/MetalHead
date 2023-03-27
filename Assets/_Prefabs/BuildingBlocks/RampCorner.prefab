@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6867973663395474010}
   - component: {fileID: 6867973663395474011}
   - component: {fileID: 6867973663395473988}
+  - component: {fileID: 7918684358695336869}
   m_Layer: 0
   m_Name: RampCorner
   m_TagString: Untagged
@@ -34,7 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 23
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6867973663395474008
 MonoBehaviour:
@@ -982,17 +983,9 @@ MonoBehaviour:
   m_Mesh: {fileID: 0}
   m_VersionIndex: 4674
   m_IsSelectable: 1
-  m_SelectedFaces: 03000000
-  m_SelectedEdges:
-  - a: 12
-    b: 13
-  - a: 14
-    b: 12
-  - a: 13
-    b: 15
-  - a: 15
-    b: 14
-  m_SelectedVertices: 0c0000000d0000000e0000000f000000
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
 --- !u!114 &6867973663395474009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1092,3 +1085,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &7918684358695336869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6867973663395473989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Size: {x: 1.75, y: 0.63, z: 1.74}
+  m_Center: {x: 0, y: 0.14, z: 0}
+  m_Area: 1
+  m_AffectedAgents: ffffffff

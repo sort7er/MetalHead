@@ -722,7 +722,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 7141347437139885925}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.4
+  m_Radius: 0.6
   m_Speed: 2
   m_Acceleration: 150
   avoidancePriority: 50
@@ -3844,7 +3844,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 2
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -3940,7 +3940,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 2
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -4058,8 +4058,8 @@ MonoBehaviour:
   - {fileID: 5125690253684711298}
   - {fileID: 6908768950094228532}
   raduis:
-  - 0.5
-  - 0.5
+  - 0.7
+  - 0.7
   damage: 050000000f000000
   parrySensetivity: 5
   isParrying: 0
