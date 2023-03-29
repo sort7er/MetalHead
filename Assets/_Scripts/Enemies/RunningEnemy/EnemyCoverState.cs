@@ -11,8 +11,8 @@ public class EnemyCoverState : EnemyBaseState
     private Animator enemyAnim;
     private Vector3 destination, dodgeDestination;
     private float checkCoverRadius, minPlayerDistance, dodgeSpeed;
-    private bool hideLocked, inCover, dodge;
-    private int hitsMissed;
+    private bool hideLocked, inCover, dodge, canLeft, canRight;
+    private int hitsMissed, direction;
 
     public override void EnterState(RunningEnemy enemy)
     {
@@ -32,7 +32,10 @@ public class EnemyCoverState : EnemyBaseState
         colliderChosen = null;
         inCover = false;
         dodge= false;
-        hideLocked= false;
+        hideLocked = false;
+        canLeft = false;
+        canRight = false;
+        direction = 0;
         Hide(GameManager.instance.XROrigin.transform);
     }
 
@@ -227,8 +230,34 @@ public class EnemyCoverState : EnemyBaseState
     {
         if (!dodge)
         {
-            agent.speed = dodgeSpeed;
-            int direction = Random.Range(0, 2);
+            if(Physics.Raycast(runningEnemy.transform.position + new Vector3(0,0.5f,0), runningEnemy.transform.right, 1, runningEnemy.layersToCheck))
+            {
+                canRight = true;
+            }
+            if (Physics.Raycast(runningEnemy.transform.position + new Vector3(0, 0.5f, 0), -runningEnemy.transform.right, 1, runningEnemy.layersToCheck))
+            {
+                canLeft = true;
+            }
+
+            
+            
+            if(canLeft && canRight)
+            {
+                direction = Random.Range(0, 2);
+            }
+            else if(!canLeft && canRight)
+            {
+                direction = 0;
+            }
+            else if (canLeft && !canRight)
+            {
+                direction = 1;
+            }
+            else
+            {
+                direction = 2;
+                dodgeDestination = runningEnemy.transform.position;
+            }
             if (direction == 0)
             {
                 enemyAnim.SetTrigger("DodgeRight");
@@ -240,12 +269,15 @@ public class EnemyCoverState : EnemyBaseState
                 enemyAnim.SetTrigger("DodgeLeft");
                 dodgeDestination = runningEnemy.transform.position - runningEnemy.transform.right;
             }
+            agent.speed = dodgeSpeed;
             runningEnemy.SetNavMeshDestination(dodgeDestination);
             dodge = true;
         }
     }
     public void HidingDone()
     {
+        enemyAnim.ResetTrigger("DodgeLeft");
+        enemyAnim.ResetTrigger("DodgeRight");
         runningEnemy.IsHiding(false);
         if (runningEnemy.playerInSight)
         {
