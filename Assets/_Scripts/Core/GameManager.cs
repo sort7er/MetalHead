@@ -171,7 +171,6 @@ public class GameManager : MonoBehaviour
     {
         if (!tempDone)
         {
-            Debug.Log("lol");
             tempNumber++;
             if (tempNumber >= 5)
             {

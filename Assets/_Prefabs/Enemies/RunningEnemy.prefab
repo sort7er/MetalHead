@@ -75,7 +75,7 @@ MonoBehaviour:
         weight: 0
     m_Offset: {x: 0, y: 0, z: 0}
     m_MinLimit: -180
-    m_MaxLimit: 180
+    m_MaxLimit: 50
     m_AimAxis: 4
     m_UpAxis: 2
     m_WorldUpType: 0
@@ -191,7 +191,7 @@ MonoBehaviour:
   targetTransform: {fileID: 789403810}
   headTrans: {fileID: 3173534719420928397}
   tooCloseDistance: 0.35
-  angle: 120
+  angle: 90
 --- !u!1 &2097775654
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,14 +658,14 @@ MonoBehaviour:
   maxCoverDuration: 6
   coverSpeed: 5
   dodgeSpeed: 30
-  sightRangeForCover: 3
+  sightRangeForCover: 2
   checkCoverRadius: 5
   minPlayerDistance: 1
   defaultTimeCoverCheck: 0.25
-  hideSensitivity: -0.6
+  hideSensitivity: -0.8
   hidebleLayer:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 1088
   timeDead: 4
   rig: {fileID: 1186588956}
   enemyModel: {fileID: 7246732520624336850}
@@ -693,6 +693,7 @@ MonoBehaviour:
   glowingParts:
   - {fileID: 8420249202725281676}
   - {fileID: 8420249203053017051}
+  testCube: {fileID: 0}
   directionToPlayer: {x: 0, y: 0, z: 0}
   directionToCamera: {x: 0, y: 0, z: 0}
   pointOfInterest: {x: 0, y: 0, z: 0}

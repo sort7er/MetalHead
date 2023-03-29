@@ -178,6 +178,7 @@ public class RunningEnemy : MonoBehaviour
         if(!isDead)
         {
             DistanceCheckOff();
+            agent.avoidancePriority = 50;
             currentState = state;
             SetDistanceCheck(defaultTimeBetweenDistanceCheck);
             SetTurnSpeed(defaultTurnSmoothTime);
@@ -256,6 +257,7 @@ public class RunningEnemy : MonoBehaviour
         EffectManager.instance.SpawnDeadEnemyEffect(enemyModel);
         Destroy(gameObject);
         Destroy(enemyModel.gameObject);
+        AIManager.instance.UpdateArray();
     }
     public void ChangeAnimationState(string newState)
     {
