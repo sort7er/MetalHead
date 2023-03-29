@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
 public class EnemyRunState : EnemyBaseState
@@ -37,7 +38,6 @@ public class EnemyRunState : EnemyBaseState
 
     public override void UpdateState(RunningEnemy enemy)
     {
-        Debug.Log(CheckForEnemies());
         if ((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= enemy.rangeBeforeAttack)
         {
             if (enemy.CheckLineOfSight(true, GameManager.instance.XROrigin.transform.position - enemy.transform.position, enemy.transform.position + new Vector3(0, 0.5f, 0)))
@@ -45,7 +45,6 @@ public class EnemyRunState : EnemyBaseState
                 enemy.SwitchState(enemy.attackState);
                 enemy.agent.ResetPath();
             }
-            Debug.Log("1");
         }
         else
         {
@@ -54,12 +53,10 @@ public class EnemyRunState : EnemyBaseState
             if (CheckForEnemies() && (GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude < enemy.rangeBeforeAttack + 5)
             {
                 enemy.agent.ResetPath();
-                Debug.Log("2");
                 enemyAnim.SetBool("IsMoving", false);
             }
             else
             {
-                Debug.Log("3");
                 enemyAnim.SetBool("IsMoving", true);
                 enemy.agent.SetDestination(GameManager.instance.cam.transform.position);
             }
@@ -68,7 +65,6 @@ public class EnemyRunState : EnemyBaseState
             {
                 if (!distanceSet)
                 {
-                    Debug.Log("4");
                     enemy.SetAnimSpeed(0.25f);
                     enemy.SetSpeed(enemy.idleSpeed);
                     distanceSet = true;
@@ -78,7 +74,6 @@ public class EnemyRunState : EnemyBaseState
             {
                 if (distanceSet)
                 {
-                    Debug.Log("5");
                     enemy.SetAnimSpeed(0.75f);
                     enemy.SetSpeed(enemy.runSpeed);
                     randomDistance = Random.Range(enemy.rangeBeforeAttack + 1, enemy.rangeBeforeAttack + 5);
@@ -86,12 +81,6 @@ public class EnemyRunState : EnemyBaseState
                 }
             }
 
-
-
-            //if (enemy.CheckLineOfSight(true, GameManager.instance.XROrigin.transform.position - enemy.transform.position, enemy.transform.position + new Vector3(0, 0.5f, 0)))
-            //{
-            //    enemy.RotateToPosition(GameManager.instance.XROrigin.transform.position);
-            //}
             if (Mathf.Abs(enemy.movementDircetion.magnitude) > 0.01f)
             {
                 enemy.RotateToPosition(enemy.transform.position + enemy.movementDircetion);
@@ -181,11 +170,24 @@ public class EnemyRunState : EnemyBaseState
                     {
                         if (Vector3.Angle(colliders[i].transform.position - agent.transform.position, runningEnemy.transform.forward) <= runningEnemy.FOV * 0.5f)
                         {
-                            currentKickable = colliders[i].GetComponent<Kickable>();
-                            currentKickable.IsBeeingKicked(true);
-                            runningEnemy.SetKickable(currentKickable);
-                            runningEnemy.SwitchState(runningEnemy.kickState);
-                            break;
+                            Vector3 pointOnNavMesh;
+                            NavMeshHit myNavHit;
+                            if (NavMesh.SamplePosition(colliders[i].transform.position, out myNavHit, 10, NavMesh.AllAreas))
+                            {
+                                pointOnNavMesh = myNavHit.position;
+                                NavMeshHit hit;
+                                if (NavMesh.FindClosestEdge(pointOnNavMesh, out hit, NavMesh.AllAreas))
+                                {
+                                    if ((hit.position - colliders[i].transform.position).magnitude >= 1)
+                                    {
+                                        currentKickable = colliders[i].GetComponent<Kickable>();
+                                        currentKickable.IsBeeingKicked(true);
+                                        runningEnemy.SetKickable(currentKickable);
+                                        runningEnemy.SwitchState(runningEnemy.kickState);
+                                        break;
+                                    }
+                                }
+                            }
                         }
                     }
                 }

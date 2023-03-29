@@ -53,7 +53,6 @@ public class PlayerHealth : MonoBehaviour
             if (!watchFound)
             {
                 watchFound = true;
-                Debug.Log("Watch found");
                 watch.SetNewHealth(currentHealth);
             }
         }

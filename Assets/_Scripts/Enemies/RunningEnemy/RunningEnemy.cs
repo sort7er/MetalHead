@@ -80,6 +80,7 @@ public class RunningEnemy : MonoBehaviour
     public Rigidbody[] limbs;
     public Collider[] collidersToDisable;
     public MeshRenderer[] glowingParts;
+    public Transform testCube;
 
 
     [HideInInspector] public Vector3 directionToPlayer;
@@ -137,6 +138,7 @@ public class RunningEnemy : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(currentState);
         directionToPlayer = GameManager.instance.XROrigin.transform.position - headTrans.position;
         directionToCamera = GameManager.instance.cam.transform.position - headTrans.position;
         directionToPointOfInterest = pointOfInterest - headTrans.position;
@@ -309,7 +311,6 @@ public class RunningEnemy : MonoBehaviour
                 {
                     result = hit.position;
                     currentDestination = hit.position;
-                    Debug.Log("lol");
                     return true;
                     
                 }

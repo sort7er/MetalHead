@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyKickState : EnemyBaseState
 {
@@ -7,7 +8,7 @@ public class EnemyKickState : EnemyBaseState
     private Kickable kickableToKick;
     private Rigidbody rb;
     private float kickForce;
-    private bool arrivedToKickable;
+    private bool arrivedToKickable, abort;
     public override void EnterState(RunningEnemy enemy)
     {
         //Debug.Log("Entered state kick");
@@ -18,6 +19,7 @@ public class EnemyKickState : EnemyBaseState
         kickableToKick = enemy.currentKickable;
         rb = kickableToKick.GetComponent<Rigidbody>();
         arrivedToKickable = false;
+        abort = false;
     }
 
     public override void UpdateState(RunningEnemy enemy)
@@ -40,10 +42,12 @@ public class EnemyKickState : EnemyBaseState
                 enemy.DelayedCallback(enemy.kickState, "KickCanDamage", 0.3f);
                 enemy.DelayedCallback(enemy.kickState, "KickDone", 0.4f);
             }
-            if ((kickPosition - enemy.transform.position).magnitude > 5f)
+            if ((kickPosition - enemy.transform.position).magnitude > 3f || (GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude > 10f || CheckIfTooCloseTooWall() && !abort)
             {
+                abort = true;
                 kickableToKick.IsBeeingKicked(false);
                 KickDone();
+                runningEnemy.JustKicked();
             }
         }
         else
@@ -76,5 +80,37 @@ public class EnemyKickState : EnemyBaseState
     {
         kickableToKick.IsBeeingKicked(false);
         runningEnemy.SwitchState(runningEnemy.runState);
+    }
+    private bool CheckIfTooCloseTooWall()
+    {
+        Vector3 pointOnNavMesh;
+        NavMeshHit myNavHit;
+        if (NavMesh.SamplePosition(kickableToKick.transform.position, out myNavHit, 10, NavMesh.AllAreas))
+        {
+            pointOnNavMesh = myNavHit.position;
+            NavMeshHit hit;
+            if (NavMesh.FindClosestEdge(pointOnNavMesh, out hit, NavMesh.AllAreas))
+            {
+                if ((hit.position - kickableToKick.transform.position).magnitude >= 1)
+                {
+                    return false;
+                }
+                else
+                {
+                    Debug.Log("Too close1");
+                    return true;
+                }
+            }
+            else
+            {
+                Debug.Log("Too close2");
+                return true;
+            }
+        }
+        else
+        {
+            Debug.Log("Too close3");
+            return true;
+        }
     }
 }

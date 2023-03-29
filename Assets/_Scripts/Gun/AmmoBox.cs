@@ -4,34 +4,42 @@ public class AmmoBox : MonoBehaviour
 {
     public float smoothTime;
     public GameObject box;
+    public int numberOfBulletsToAdd = 10;
 
     private Vector3 targetPos;
     private AudioSource ammoBoxSource;
     private BoxCollider boxCollider;
-    private bool left, pickedUp;
+    private Rigidbody rb;
+    private bool left, pickedUp, grabbed;
 
     private void Start()
     {
+        rb = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
         ammoBoxSource = GetComponent<AudioSource>();
     }
 
     public void GrabBox()
     {
-        if(GameManager.instance.CheckGameObject(gameObject) == 1)
+        if(!grabbed)
         {
-            left = true;
+            if (GameManager.instance.CheckGameObject(gameObject) == 1)
+            {
+                left = true;
+            }
+            else if (GameManager.instance.CheckGameObject(gameObject) == 2)
+            {
+                left = false;
+            }
+            rb.useGravity = false;
+            rb.isKinematic = true;
+            grabbed = true;
         }
-        else if(GameManager.instance.CheckGameObject(gameObject) == 2)
-        {
-            left = false;
-        }
-        pickedUp = true;
     }
 
     private void Update()
     {
-        if(pickedUp)
+        if(grabbed)
         {
             if(left)
             {
@@ -43,12 +51,13 @@ public class AmmoBox : MonoBehaviour
             }
 
             transform.position = Vector3.MoveTowards(transform.position, targetPos, smoothTime * Time.deltaTime);
-            if (Vector3.Distance(transform.position, targetPos) <= 0.05f)
+            if (Vector3.Distance(transform.position, targetPos) <= 0.05f && !pickedUp)
             {
-                pickedUp = false;
                 ammoBoxSource.Play();
+                GameManager.instance.ammoBag.AddAmmo(numberOfBulletsToAdd);
                 box.SetActive(false);
                 boxCollider.enabled = false;
+                pickedUp = true;
                 Destroy(gameObject, 0.5f);
             }
 
