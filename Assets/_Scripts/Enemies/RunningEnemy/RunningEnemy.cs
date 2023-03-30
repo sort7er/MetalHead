@@ -90,6 +90,7 @@ public class RunningEnemy : MonoBehaviour
     [HideInInspector] public Vector3 movementDircetion;
     [HideInInspector] public NavMeshAgent agent;
     [HideInInspector] public Kickable currentKickable;
+    [HideInInspector] public VoiceLines voiceLines;
     [HideInInspector] public Weapon weapon;
     [HideInInspector] public Animator enemyAnim;
     [HideInInspector] public int currentBodyPart;
@@ -129,6 +130,7 @@ public class RunningEnemy : MonoBehaviour
         enemyAnim = enemyModel.GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         weapon = GetComponentInChildren<Weapon>();
+        voiceLines = GetComponent<VoiceLines>();
         FOV = defaultFOV;
         DistanceCheck();
         EnableRagdoll(false);

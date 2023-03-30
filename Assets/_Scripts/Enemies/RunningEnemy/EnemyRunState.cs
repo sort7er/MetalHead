@@ -104,6 +104,7 @@ public class EnemyRunState : EnemyBaseState
             {
                 timer = enemy.timeBeforeLost;
                 enemy.SetPointOfInterest(GameManager.instance.cam.transform.position);
+                enemy.voiceLines.RunSearching();
                 enemy.SwitchState(enemy.searchingState);
             }
             

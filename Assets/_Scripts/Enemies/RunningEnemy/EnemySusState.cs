@@ -14,6 +14,7 @@ public class EnemySusState : EnemyBaseState
     {
         //Debug.Log("Entered state sus");
         agent = enemy.agent;
+        enemy.agent.avoidancePriority = 52;
         enemyAnim = enemy.enemyAnim;
         runningEnemy = enemy;
         enemy.SetSpeed(enemy.susSpeed);

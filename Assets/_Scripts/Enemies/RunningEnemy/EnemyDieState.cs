@@ -13,6 +13,11 @@ public class EnemyDieState : EnemyBaseState
         enemy.DelayedCallback(enemy.dieState, "StartDestroy", enemy.timeDead);
         GameManager.instance.TempAddOne();
         AIManager.instance.DoneAttacking();
+        runningEnemy.voiceLines.Dying();
+        foreach(Transform t in enemy.transform)
+        {
+            t.gameObject.layer = 0;
+        }
     }
 
     public override void UpdateState(RunningEnemy enemy)

@@ -140,6 +140,7 @@ public class EnemyCoverState : EnemyBaseState
                             destination = hit.position;
                             colliderChosen = colliders[i];
                             runningEnemy.SetNavMeshDestination(destination);
+                            runningEnemy.voiceLines.Hiding();
                             break;
                         }
                         else
@@ -157,6 +158,7 @@ public class EnemyCoverState : EnemyBaseState
                                     destination = hit2.position;
                                     colliderChosen = colliders[i];
                                     runningEnemy.SetNavMeshDestination(destination);
+                                    runningEnemy.voiceLines.Hiding();
                                     break;
                                 }
                                 else

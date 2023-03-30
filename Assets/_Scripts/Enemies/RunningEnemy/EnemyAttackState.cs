@@ -81,6 +81,7 @@ public class EnemyAttackState : EnemyBaseState
 
     private void Attack()
     {
+        runningEnemy.voiceLines.Attacking();
         attackStarted = true;
         cannotAttack = true;
         waitOneFrame = false;

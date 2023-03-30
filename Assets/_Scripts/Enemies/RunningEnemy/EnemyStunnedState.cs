@@ -16,6 +16,7 @@ public class EnemyStunnedState : EnemyBaseState
         runningEnemy.enemyAnim.SetBool("LookingAround", false);
         runningEnemy.enemyAnim.SetBool("InCover", false);
         runningEnemy.enemyAnim.SetBool("IsMoving", false);
+        enemy.agent.avoidancePriority = 49;
 
 
     }

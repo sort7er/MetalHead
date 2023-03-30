@@ -12,6 +12,7 @@ public class EnemyIdleState : EnemyBaseState
     public override void EnterState(RunningEnemy enemy)
     {
         //Debug.Log("Entered state idle");
+        enemy.agent.avoidancePriority = 52;
         runningEnemy = enemy;
         enemy.SetSpeed(enemy.idleSpeed);
         enemy.SetGlowColor(enemy.idleColor);
@@ -57,6 +58,7 @@ public class EnemyIdleState : EnemyBaseState
             {
                 timer = enemy.timeBeforeSus;
                 enemy.SetPointOfInterest(GameManager.instance.cam.transform.position);
+                enemy.voiceLines.IdleSus();
                 enemy.SwitchState(enemy.susState);
                 
             }
@@ -68,6 +70,7 @@ public class EnemyIdleState : EnemyBaseState
             if((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= enemy.distanceBeforeImmediateDetection)
             {
                 enemy.SetPointOfInterest(GameManager.instance.cam.transform.position);
+                enemy.voiceLines.IdleRun();
                 enemy.SwitchState(enemy.runState);
             }
 

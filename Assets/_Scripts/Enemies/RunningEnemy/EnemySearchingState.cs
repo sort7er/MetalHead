@@ -19,7 +19,8 @@ public class EnemySearchingState : EnemyBaseState
         enemy.SetAnimSpeed(0.25f);
         enemy.SetGlowColor(enemy.searchingColor);
         enemy.agent.ResetPath();
-        if(enemy.pointOfInterest != null)
+        enemy.agent.avoidancePriority = 51;
+        if (enemy.pointOfInterest != null)
         {
             enemy.SetNavMeshDestination(enemy.pointOfInterest);
             lookingDone = false;
