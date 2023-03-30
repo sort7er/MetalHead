@@ -41,13 +41,6 @@ public class EnemyCoverState : EnemyBaseState
 
     public override void UpdateState(RunningEnemy enemy)
     {
-        
-        if (dodge && (dodgeDestination - enemy.transform.position).magnitude < 0.2f)
-        {
-            agent.ResetPath();
-            enemy.DelayedCallback(enemy.coverState, "HidingDone", 0.5f);
-        }
-
         if (!inCover && !dodge)
         {
             if ((destination - enemy.transform.position).magnitude < 0.2f && colliderChosen != null)
@@ -157,7 +150,6 @@ public class EnemyCoverState : EnemyBaseState
                                 {
                                     Debug.Log("Unable to find closest edge close to " + hit2.position);
                                     Dodge();
-                                    Debug.Log("2");
                                     break;
                                 }
                                 if (Vector3.Dot(hit2.normal, (target.position - hit2.position).normalized) < runningEnemy.hideSensitivity)
@@ -172,7 +164,6 @@ public class EnemyCoverState : EnemyBaseState
                                     hitsMissed++;
                                     if(hitsMissed >= hits)
                                     {
-                                        Debug.Log("3");
                                         Dodge();
                                     }
                                 }
@@ -181,7 +172,6 @@ public class EnemyCoverState : EnemyBaseState
                     }
                     else
                     {
-                        Debug.Log("4");
                         Dodge();
                         Debug.Log("Unable to find NavMesh near object " + colliders[i].name + " at " + colliders[i].transform.position);
                     }
@@ -230,55 +220,63 @@ public class EnemyCoverState : EnemyBaseState
     {
         if (!dodge)
         {
-            if(Physics.Raycast(runningEnemy.transform.position + new Vector3(0,0.5f,0), runningEnemy.transform.right, 1, runningEnemy.layersToCheck))
+            NavMeshHit navHitRight;
+            if (NavMesh.SamplePosition(runningEnemy.transform.position + runningEnemy.transform.right, out navHitRight, 0.5f, NavMesh.AllAreas) && !Physics.Raycast(runningEnemy.transform.position + new Vector3(0, 0.5f, 0), runningEnemy.transform.right, 1, runningEnemy.hidebleLayer))
             {
                 canRight = true;
             }
-            if (Physics.Raycast(runningEnemy.transform.position + new Vector3(0, 0.5f, 0), -runningEnemy.transform.right, 1, runningEnemy.layersToCheck))
+            NavMeshHit navHitLeft;
+            if (NavMesh.SamplePosition(runningEnemy.transform.position - runningEnemy.transform.right, out navHitLeft, 0.5f, NavMesh.AllAreas) && !Physics.Raycast(runningEnemy.transform.position + new Vector3(0, 0.5f, 0), -runningEnemy.transform.right, 1, runningEnemy.hidebleLayer))
             {
                 canLeft = true;
             }
-
-            
-            
-            if(canLeft && canRight)
+            if (!canLeft && !canRight)
             {
-                direction = Random.Range(0, 2);
-            }
-            else if(!canLeft && canRight)
-            {
-                direction = 0;
-            }
-            else if (canLeft && !canRight)
-            {
-                direction = 1;
+                HidingDone();
             }
             else
             {
-                direction = 2;
-                dodgeDestination = runningEnemy.transform.position;
-            }
-            if (direction == 0)
-            {
-                enemyAnim.SetTrigger("DodgeRight");
-                dodgeDestination = runningEnemy.transform.position + runningEnemy.transform.right;
+                if (canLeft && canRight)
+                {
+                    direction = Random.Range(0, 2);
+                }
+                else if (!canLeft && canRight)
+                {
+                    direction = 0;
+                }
+                else if (canLeft && !canRight)
+                {
+                    direction = 1;
+                }
 
+                if (direction == 0)
+                {
+                    runningEnemy.ChangeAnimationState("DodgeRight");
+                    dodgeDestination = runningEnemy.transform.position + runningEnemy.transform.right;
+
+                }
+                else if (direction == 1)
+                {
+                    runningEnemy.ChangeAnimationState("DodgeLeft");
+                    dodgeDestination = runningEnemy.transform.position - runningEnemy.transform.right;
+                }
+                agent.speed = dodgeSpeed;
+                runningEnemy.agent.SetDestination(dodgeDestination);
+                dodge = true;
+                runningEnemy.DelayedCallback(runningEnemy.coverState, "StartDodge", 0.5f);
             }
-            else if (direction == 1)
-            {
-                enemyAnim.SetTrigger("DodgeLeft");
-                dodgeDestination = runningEnemy.transform.position - runningEnemy.transform.right;
-            }
-            agent.speed = dodgeSpeed;
-            runningEnemy.SetNavMeshDestination(dodgeDestination);
-            dodge = true;
         }
+    }
+    public void StartDodge()
+    {
+        agent.ResetPath();
+        runningEnemy.DelayedCallback(runningEnemy.coverState, "HidingDone", 0.5f);
+        enemyAnim.SetBool("IsMoving", false);
     }
     public void HidingDone()
     {
-        enemyAnim.ResetTrigger("DodgeLeft");
-        enemyAnim.ResetTrigger("DodgeRight");
         runningEnemy.IsHiding(false);
+        Debug.Log("3");
         if (runningEnemy.playerInSight)
         {
             runningEnemy.SwitchState(runningEnemy.runState);
