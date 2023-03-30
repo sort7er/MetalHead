@@ -91,7 +91,7 @@ public class EnemyKickState : EnemyBaseState
             NavMeshHit hit;
             if (NavMesh.FindClosestEdge(pointOnNavMesh, out hit, NavMesh.AllAreas))
             {
-                if ((hit.position - kickableToKick.transform.position).magnitude >= 1)
+                if ((hit.position - kickableToKick.transform.position).magnitude >= runningEnemy.barrelDistance)
                 {
                     return false;
                 }

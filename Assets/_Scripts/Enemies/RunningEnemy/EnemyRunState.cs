@@ -179,7 +179,7 @@ public class EnemyRunState : EnemyBaseState
                                 NavMeshHit hit;
                                 if (NavMesh.FindClosestEdge(pointOnNavMesh, out hit, NavMesh.AllAreas))
                                 {
-                                    if ((hit.position - colliders[i].transform.position).magnitude >= 1)
+                                    if ((hit.position - colliders[i].transform.position).magnitude >= runningEnemy.barrelDistance)
                                     {
                                         currentKickable = colliders[i].GetComponent<Kickable>();
                                         currentKickable.IsBeeingKicked(true);

@@ -656,6 +656,7 @@ MonoBehaviour:
   maxAttackCooldown: 1
   kickForce: 200
   timeBetweenKicks: 2
+  barrelDistance: 0.75
   minCoverDuration: 3
   maxCoverDuration: 6
   coverSpeed: 5
@@ -757,7 +758,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5db515217683dc646ad2adb9849ff8b6, type: 3}
   - {fileID: 8300000, guid: c8a5dbb89d2c1a14291b151d1749fc48, type: 3}
   - {fileID: 8300000, guid: a9f6415dc80a7754abf0b744c771fd85, type: 3}
-  susToIdle: []
+  susToIdle:
+  - {fileID: 8300000, guid: 52d433047b66b074dae587e86f3c645b, type: 3}
+  - {fileID: 8300000, guid: 018569b528c3e69459cf8a406d616822, type: 3}
+  - {fileID: 8300000, guid: dd5b442a65e6e334db02ad32b48e14c4, type: 3}
+  - {fileID: 8300000, guid: 549bd60148412304c9f0c14308790882, type: 3}
+  - {fileID: 8300000, guid: d08a8b5ae28476746a892bf998cd1fe5, type: 3}
+  - {fileID: 8300000, guid: 61233da24fc783847824a9165e340b57, type: 3}
   idleToRun:
   - {fileID: 8300000, guid: bff7cc331de6bc349814b77c21818b21, type: 3}
   - {fileID: 8300000, guid: f4cb63f3564cc7e47ad8d8aba92cd1e5, type: 3}

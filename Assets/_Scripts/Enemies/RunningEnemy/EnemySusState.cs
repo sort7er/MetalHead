@@ -63,6 +63,7 @@ public class EnemySusState : EnemyBaseState
                 timer = enemy.timeBeforeDetect;
                 enemy.PlayerDetected();
                 enemyAnim.SetBool("LookingAround", false);
+                enemy.voiceLines.IdleRun();
                 enemy.SwitchState(enemy.runState);
 
             }
@@ -74,6 +75,7 @@ public class EnemySusState : EnemyBaseState
             {
                 enemy.SetPointOfInterest(GameManager.instance.cam.transform.position);
                 enemyAnim.SetBool("LookingAround", false);
+                enemy.voiceLines.IdleRun();
                 enemy.SwitchState(enemy.runState);
             }
 
@@ -115,6 +117,7 @@ public class EnemySusState : EnemyBaseState
     public void DoneLookingAround()
     {
         enemyAnim.SetBool("LookingAround", false);
+        runningEnemy.voiceLines.SusIdle();
         runningEnemy.SwitchState(runningEnemy.idleState);
     }
 }

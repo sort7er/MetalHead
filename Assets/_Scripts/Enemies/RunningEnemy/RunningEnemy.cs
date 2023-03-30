@@ -56,6 +56,7 @@ public class RunningEnemy : MonoBehaviour
     [Header("KickState")]
     public float kickForce;
     public float timeBetweenKicks;
+    public float barrelDistance;
 
     [Header("CoverState")]
     public float minCoverDuration;
