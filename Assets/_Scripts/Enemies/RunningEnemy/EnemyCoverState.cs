@@ -167,6 +167,7 @@ public class EnemyCoverState : EnemyBaseState
                                     if(hitsMissed >= hits)
                                     {
                                         Dodge();
+                                        break;
                                     }
                                 }
                             }
@@ -176,6 +177,7 @@ public class EnemyCoverState : EnemyBaseState
                     {
                         Dodge();
                         Debug.Log("Unable to find NavMesh near object " + colliders[i].name + " at " + colliders[i].transform.position);
+                        break;
                     }
                 }
             }
