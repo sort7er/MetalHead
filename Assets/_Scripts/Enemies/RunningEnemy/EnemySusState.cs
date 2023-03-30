@@ -45,9 +45,13 @@ public class EnemySusState : EnemyBaseState
         else
         {
             enemy.rig.SetTarget(pointOfInterest);
-            if (startRotate)
+            if (enemy.CheckLineOfSight(true, enemy.directionToPointOfInterest, enemy.headTrans.position))
             {
-                enemy.RotateToPosition(pointOfInterest);
+                enemy.RotateToPosition(enemy.pointOfInterest);
+            }
+            else if (Mathf.Abs(enemy.movementDircetion.magnitude) > 0.01f)
+            {
+                enemy.RotateToPosition(enemy.transform.position + enemy.movementDircetion);
             }
         }
         //Looking for player

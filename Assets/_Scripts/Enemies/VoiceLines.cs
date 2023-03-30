@@ -36,7 +36,8 @@ public class VoiceLines : MonoBehaviour
             }
 
 
-            voiceLinesSource.PlayOneShot(idleToSus[randomNumber]);
+            voiceLinesSource.clip = idleToSus[randomNumber];
+            voiceLinesSource.Play();
             AIManager.instance.IdleSus(randomNumber);
             AIManager.instance.IdleSusSound(idleToSus[randomNumber].length);
         }
@@ -53,8 +54,8 @@ public class VoiceLines : MonoBehaviour
                     randomNumber = Random.Range(0, susToIdle.Length);
                 }
             }
-
-            voiceLinesSource.PlayOneShot(susToIdle[randomNumber]);
+            voiceLinesSource.clip = susToIdle[randomNumber];
+            voiceLinesSource.Play();
             AIManager.instance.SusIdle(randomNumber);
             AIManager.instance.SusIdleSound(susToIdle[randomNumber].length);
         }
@@ -73,7 +74,8 @@ public class VoiceLines : MonoBehaviour
                 }
             }
 
-            voiceLinesSource.PlayOneShot(idleToRun[randomNumber]);
+            voiceLinesSource.clip = idleToRun[randomNumber];
+            voiceLinesSource.Play();
             AIManager.instance.IdleRun(randomNumber);
             AIManager.instance.IdleRunSound(idleToRun[randomNumber].length);
         }
@@ -91,7 +93,8 @@ public class VoiceLines : MonoBehaviour
                 }
             }
 
-            voiceLinesSource.PlayOneShot(runToSearching[randomNumber]);
+            voiceLinesSource.clip = runToSearching[randomNumber];
+            voiceLinesSource.Play();
             AIManager.instance.RunSearching(randomNumber);
             AIManager.instance.RunSearchingSound(runToSearching[randomNumber].length);
         }
@@ -109,7 +112,8 @@ public class VoiceLines : MonoBehaviour
                 }
             }
 
-            voiceLinesSource.PlayOneShot(searchingToRun[randomNumber]);
+            voiceLinesSource.clip = searchingToRun[randomNumber];
+            voiceLinesSource.Play();
             AIManager.instance.SearchingRun(randomNumber);
             AIManager.instance.SearchingRunSound(searchingToRun[randomNumber].length);
         }
@@ -127,7 +131,8 @@ public class VoiceLines : MonoBehaviour
                 }
             }
 
-            voiceLinesSource.PlayOneShot(hiding[randomNumber]);
+            voiceLinesSource.clip = hiding[randomNumber];
+            voiceLinesSource.Play();
             AIManager.instance.Hiding(randomNumber);
             AIManager.instance.HidingSound(hiding[randomNumber].length);
         }
@@ -145,7 +150,8 @@ public class VoiceLines : MonoBehaviour
                 }
             }
 
-            voiceLinesSource.PlayOneShot(attacking[randomNumber]);
+            voiceLinesSource.clip = attacking[randomNumber];
+            voiceLinesSource.Play();
             AIManager.instance.Attacking(randomNumber);
             AIManager.instance.AttackingSound(attacking[randomNumber].length);
         }
@@ -164,7 +170,8 @@ public class VoiceLines : MonoBehaviour
                 }
             }
 
-            voiceLinesSource.PlayOneShot(dying[randomNumber]);
+            voiceLinesSource.clip = dying[randomNumber];
+            voiceLinesSource.Play();
             AIManager.instance.Dying(randomNumber);
             AIManager.instance.DyingSound(dying[randomNumber].length);
         }
