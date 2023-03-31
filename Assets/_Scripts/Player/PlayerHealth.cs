@@ -27,14 +27,14 @@ public class PlayerHealth : MonoBehaviour
         {
             healthVignette.SetTrigger("Hit");
             currentHealth -= damage;
-            if (currentHealth < 0)
+            if (currentHealth <= 0)
             {
                 Die();
                 currentHealth = 0;
             }
             if(watch != null)
             {
-                watch.SetNewHealth(currentHealth);
+                watch.UpdateHealth(currentHealth);
             }
             HitAudio(currentHealth);
         }
@@ -53,7 +53,7 @@ public class PlayerHealth : MonoBehaviour
             if (!watchFound)
             {
                 watchFound = true;
-                watch.SetNewHealth(currentHealth);
+                watch.SetNewHealth(currentHealth, startHealth);
             }
         }
     }
