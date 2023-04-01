@@ -64,6 +64,8 @@ public class EnemyHealth : MonoBehaviour
                 Die();
             }
             hideTimer += startHealth * 0.01f - health * 0.01f + 1;
+
+            runningEnemy.EnemyAlert(GameManager.instance.XROrigin.transform.position);
         }
     }
     public void TakeStun(float stun, int bodyPart)

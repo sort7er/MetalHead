@@ -14,6 +14,7 @@ public class AIManager : MonoBehaviour
     public float attackingDelay;
 
     [HideInInspector] public bool playerIsBeeingAttacked;
+    [HideInInspector] public bool talkingOccupied;
 
     [HideInInspector] public bool canPlayIdleSus;
     [HideInInspector] public bool canPlaySusIdle;
@@ -70,6 +71,14 @@ public class AIManager : MonoBehaviour
     private void ActualUpdate()
     {
         runningEnemiesInScene = FindObjectsOfType<RunningEnemy>();
+    }
+    public void Talking()
+    {
+        talkingOccupied = true;
+    }
+    public void TalkingDone()
+    {
+        talkingOccupied = false;
     }
     public void IdleSus(int justPlayed)
     {

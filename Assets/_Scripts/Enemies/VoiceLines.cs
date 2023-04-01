@@ -15,6 +15,7 @@ public class VoiceLines : MonoBehaviour
     public AudioClip[] dying;
 
     private AudioSource voiceLinesSource;
+    private bool canTalk;
     
 
     void Start()
@@ -24,7 +25,12 @@ public class VoiceLines : MonoBehaviour
 
     public void IdleSus()
     {
-        if (AIManager.instance.canPlayIdleSus)
+        if(!AIManager.instance.talkingOccupied)
+        {
+            canTalk = true;
+        }
+
+        if (AIManager.instance.canPlayIdleSus && canTalk)
         {
             int randomNumber = Random.Range(0, idleToSus.Length);
             if (idleToSus.Length > 1)
@@ -38,13 +44,20 @@ public class VoiceLines : MonoBehaviour
 
             voiceLinesSource.clip = idleToSus[randomNumber];
             voiceLinesSource.Play();
+            CancelInvoke();
+            Invoke(nameof(TalkingDone), idleToSus[randomNumber].length);
+            AIManager.instance.Talking();
             AIManager.instance.IdleSus(randomNumber);
             AIManager.instance.IdleSusSound(idleToSus[randomNumber].length);
         }
     }
     public void SusIdle()
     {
-        if (AIManager.instance.canPlaySusIdle)
+        if (!AIManager.instance.talkingOccupied)
+        {
+            canTalk = true;
+        }
+        if (AIManager.instance.canPlaySusIdle && canTalk)
         {
             int randomNumber = Random.Range(0, susToIdle.Length);
             if (susToIdle.Length > 1)
@@ -54,6 +67,8 @@ public class VoiceLines : MonoBehaviour
                     randomNumber = Random.Range(0, susToIdle.Length);
                 }
             }
+            CancelInvoke();
+            Invoke(nameof(TalkingDone), susToIdle[randomNumber].length);
             voiceLinesSource.clip = susToIdle[randomNumber];
             voiceLinesSource.Play();
             AIManager.instance.SusIdle(randomNumber);
@@ -63,7 +78,11 @@ public class VoiceLines : MonoBehaviour
 
     public void IdleRun()
     {
-        if (AIManager.instance.canPlayIdleRun)
+        if (!AIManager.instance.talkingOccupied)
+        {
+            canTalk = true;
+        }
+        if (AIManager.instance.canPlayIdleRun && canTalk)
         {
             int randomNumber = Random.Range(0, idleToRun.Length);
             if (idleToRun.Length > 1)
@@ -73,7 +92,8 @@ public class VoiceLines : MonoBehaviour
                     randomNumber = Random.Range(0, idleToRun.Length);
                 }
             }
-
+            CancelInvoke();
+            Invoke(nameof(TalkingDone), idleToRun[randomNumber].length);
             voiceLinesSource.clip = idleToRun[randomNumber];
             voiceLinesSource.Play();
             AIManager.instance.IdleRun(randomNumber);
@@ -82,7 +102,11 @@ public class VoiceLines : MonoBehaviour
     }
     public void RunSearching()
     {
-        if (AIManager.instance.canPlayRunSearching)
+        if (!AIManager.instance.talkingOccupied)
+        {
+            canTalk = true;
+        }
+        if (AIManager.instance.canPlayRunSearching && canTalk)
         {
             int randomNumber = Random.Range(0, runToSearching.Length);
             if (runToSearching.Length > 1)
@@ -92,7 +116,8 @@ public class VoiceLines : MonoBehaviour
                     randomNumber = Random.Range(0, runToSearching.Length);
                 }
             }
-
+            CancelInvoke();
+            Invoke(nameof(TalkingDone), runToSearching[randomNumber].length);
             voiceLinesSource.clip = runToSearching[randomNumber];
             voiceLinesSource.Play();
             AIManager.instance.RunSearching(randomNumber);
@@ -101,7 +126,11 @@ public class VoiceLines : MonoBehaviour
     }
     public void SearchingRun()
     {
-        if (AIManager.instance.canPlaySearchingRun)
+        if (!AIManager.instance.talkingOccupied)
+        {
+            canTalk = true;
+        }
+        if (AIManager.instance.canPlaySearchingRun && canTalk)
         {
             int randomNumber = Random.Range(0, searchingToRun.Length);
             if (searchingToRun.Length > 1)
@@ -111,7 +140,8 @@ public class VoiceLines : MonoBehaviour
                     randomNumber = Random.Range(0, searchingToRun.Length);
                 }
             }
-
+            CancelInvoke();
+            Invoke(nameof(TalkingDone), searchingToRun[randomNumber].length);
             voiceLinesSource.clip = searchingToRun[randomNumber];
             voiceLinesSource.Play();
             AIManager.instance.SearchingRun(randomNumber);
@@ -120,7 +150,11 @@ public class VoiceLines : MonoBehaviour
     }
     public void Hiding()
     {
-        if (AIManager.instance.canPlayHiding)
+        if (!AIManager.instance.talkingOccupied)
+        {
+            canTalk = true;
+        }
+        if (AIManager.instance.canPlayHiding && canTalk)
         {
             int randomNumber = Random.Range(0, hiding.Length);
             if (hiding.Length > 1)
@@ -130,7 +164,8 @@ public class VoiceLines : MonoBehaviour
                     randomNumber = Random.Range(0, hiding.Length);
                 }
             }
-
+            CancelInvoke();
+            Invoke(nameof(TalkingDone), hiding[randomNumber].length);
             voiceLinesSource.clip = hiding[randomNumber];
             voiceLinesSource.Play();
             AIManager.instance.Hiding(randomNumber);
@@ -139,7 +174,11 @@ public class VoiceLines : MonoBehaviour
     }
     public void Attacking()
     {
-        if (AIManager.instance.canPlayAttack)
+        if (!AIManager.instance.talkingOccupied)
+        {
+            canTalk = true;
+        }
+        if (AIManager.instance.canPlayAttack && canTalk)
         {
             int randomNumber = Random.Range(0, attacking.Length);
             if (attacking.Length > 1)
@@ -149,7 +188,8 @@ public class VoiceLines : MonoBehaviour
                     randomNumber = Random.Range(0, attacking.Length);
                 }
             }
-
+            CancelInvoke();
+            Invoke(nameof(TalkingDone), attacking[randomNumber].length);
             voiceLinesSource.clip = attacking[randomNumber];
             voiceLinesSource.Play();
             AIManager.instance.Attacking(randomNumber);
@@ -159,7 +199,11 @@ public class VoiceLines : MonoBehaviour
     }
     public void Dying()
     {
-        if (AIManager.instance.canPlayDying)
+        if (!AIManager.instance.talkingOccupied)
+        {
+            canTalk = true;
+        }
+        if (AIManager.instance.canPlayDying && canTalk)
         {
             int randomNumber = Random.Range(0, dying.Length);
             if (dying.Length > 1)
@@ -169,11 +213,17 @@ public class VoiceLines : MonoBehaviour
                     randomNumber = Random.Range(0, dying.Length);
                 }
             }
-
+            CancelInvoke();
+            Invoke(nameof(TalkingDone), dying[randomNumber].length);
             voiceLinesSource.clip = dying[randomNumber];
             voiceLinesSource.Play();
             AIManager.instance.Dying(randomNumber);
             AIManager.instance.DyingSound(dying[randomNumber].length);
         }
+    }
+    private void TalkingDone()
+    {
+        canTalk = false;
+        AIManager.instance.TalkingDone();
     }
 }
