@@ -18,6 +18,7 @@ public class TeleportationController : MonoBehaviour
     private InputAction teleportActivate;
     private InputAction teleportCancel;
     private InputAction teleportBack;
+    private InputAction snapTurn;
     private Transform teleportReticle;
     private float playerRadius;
 
@@ -40,6 +41,10 @@ public class TeleportationController : MonoBehaviour
         teleportBack.Enable();
         teleportBack.performed += OnTeleportBack;
 
+        snapTurn = inputAction.FindActionMap("XRI RightHand Locomotion").FindAction("Snap Turn");
+        snapTurn.Enable();
+        snapTurn.performed += OnSnapTurn;
+
         thumbstickInputAction = inputAction.FindActionMap("XRI LeftHand Locomotion").FindAction("Move");
         thumbstickInputAction.Enable();
     }
@@ -48,6 +53,7 @@ public class TeleportationController : MonoBehaviour
         teleportActivate.performed-= OnTeleportActivate;
         teleportCancel.performed -= OnTeleportCancel;
         teleportBack.performed -= OnTeleportBack;
+        snapTurn.performed -= OnSnapTurn;
 
     }
 
@@ -156,6 +162,13 @@ public class TeleportationController : MonoBehaviour
                 }
             }
             
+        }
+    }
+    private void OnSnapTurn(InputAction.CallbackContext context)
+    {
+        if (LocomotionManager.instance.currentTurnType == 1 && !teleportActive)
+        {
+            GameManager.instance.XROrigin.transform.Rotate(new Vector3(0, 180, 0));
         }
     }
     private void SetRay(bool state)
