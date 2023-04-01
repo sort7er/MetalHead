@@ -5,7 +5,7 @@ public class UpgradeStation : MonoBehaviour
 {
     public Color errorColor;
     public float fanSoundSmoothTime;
-    public AudioSource buttonSource;
+    public AudioSource buttonSource, screenSource;
     public AudioClip screenOn, screenOff, error, select, select2, upgrading;
     public Animator screenAnim;
     public TextMeshProUGUI titleText, normalText, currencyText, minusText;
@@ -235,7 +235,7 @@ public class UpgradeStation : MonoBehaviour
         normalType.StartTyping();
         loadingBar.SetActive(true);
         loadingBarAnim.SetTrigger("Loading");
-        buttonSource.PlayOneShot(upgrading);
+        screenSource.PlayOneShot(upgrading);
         Invoke("UpgradeDone", 4.5f);
     }
     private void UpgradeDone()
@@ -261,7 +261,7 @@ public class UpgradeStation : MonoBehaviour
     public void NotEnough()
     {
         notEnough = true;
-        buttonSource.PlayOneShot(error);
+        screenSource.PlayOneShot(error);
         minusText.color = errorColor;
         currencyText.color = errorColor;
         Invoke("NotEnoughDone", 0.1f);
@@ -278,11 +278,11 @@ public class UpgradeStation : MonoBehaviour
         {
             if(type == 0)
             {
-                buttonSource.PlayOneShot(select);
+                screenSource.PlayOneShot(select);
             }
             else
             {
-                buttonSource.PlayOneShot(select2);
+                screenSource.PlayOneShot(select2);
             }
             
         }

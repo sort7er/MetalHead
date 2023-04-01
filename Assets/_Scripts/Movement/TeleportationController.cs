@@ -120,13 +120,13 @@ public class TeleportationController : MonoBehaviour
             RaycastHit hit;
             if(Physics.Raycast(GameManager.instance.XROrigin.transform.position + new Vector3(0, 0.75f, 0), -teleportDirection, out hit, 1, bothTeleportLayers))
             {
-                if((GameManager.instance.XROrigin.transform.position + new Vector3(0, 0.75f, 0) - hit.point).magnitude < 0.5f)
+                if((GameManager.instance.XROrigin.transform.position + new Vector3(0, 0.75f, 0) - hit.point).magnitude <= 0.5f)
                 {
                     Debug.Log("NoTeleport");
                 }
                 else
                 {
-                    Vector3 downPos = hit.point + hit.normal * playerRadius;
+                    Vector3 downPos = hit.point + teleportDirection * 0.5f;
                     RaycastHit hit2;
                     if (Physics.Raycast(downPos, Vector3.down, out hit2, 2.5f, teleportLayer))
                     {

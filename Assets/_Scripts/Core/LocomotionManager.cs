@@ -18,12 +18,12 @@ public class LocomotionManager : MonoBehaviour
     [HideInInspector] public bool isUsingTeleport;
     [HideInInspector] public int currentMoveType;
     [HideInInspector] public int currentTurnType;
+    [HideInInspector] public int currentVignetteType;
 
     private TeleportationProvider teleportationProvider;
     private ActionBasedContinuousMoveProvider continuousMoveProvider;
     private ActionBasedSnapTurnProvider snapTurnProvider;
     private ActionBasedContinuousTurnProvider continuousTurnProvider;
-    private WorkAround workAround;
 
 
     private InputActionReference continuousMoveInputReference;
@@ -37,10 +37,8 @@ public class LocomotionManager : MonoBehaviour
         continuousMoveProvider = GetComponent<ActionBasedContinuousMoveProvider>();
         snapTurnProvider = GetComponent<ActionBasedSnapTurnProvider>();
         continuousTurnProvider = GetComponent<ActionBasedContinuousTurnProvider>();
-        workAround = GetComponent<WorkAround>();
 
         Invoke("StartSettings", 0.1f);
-        Invoke("SetVignette", 0.1f);
         SetContinuousMoveInputReference();
         SetTeleportationInputReference();
         SetContinousTurnInputReference();
@@ -91,13 +89,48 @@ public class LocomotionManager : MonoBehaviour
     }
     private void StartSettings()
     {
-        SetCountinuous(false);
-        SetTeleport(true);
-        SetCountinuousTurn(false);
-        SetSnap(true);
-        movementText.text = "< Teleport >";
-        turnText.text = "< Snap >";
-        vignetteText.text = "< Disabled >";
+        currentMoveType = PlayerPrefs.GetInt("MoveType", 0);
+        currentTurnType = PlayerPrefs.GetInt("TurnType", 0);
+        currentVignetteType = PlayerPrefs.GetInt("VignetteType", 1);
+
+        if(currentMoveType == 1)
+        {
+            currentMoveType = 0;
+        }
+        else
+        {
+            currentMoveType = 1;
+        }
+        if (currentTurnType == 1)
+        {
+            currentTurnType = 0;
+        }
+        else
+        {
+            currentTurnType = 1;
+        }
+        if (currentVignetteType == 1)
+        {
+            currentVignetteType = 0;
+        }
+        else
+        {
+            currentVignetteType = 1;
+        }
+        SwitchLocomotion();
+        SwitchTurning();
+        SetVignette();
+        EnableMovement(true);
+        EnableTurning(true);
+
+        //SetCountinuous(false);
+        //SetTeleport(true);
+        //SetCountinuousTurn(false);
+        //SetSnap(true);
+        //SetVignette();
+        //movementText.text = "< Teleport >";
+        //turnText.text = "< Snap >";
+        //vignetteText.text = "< Disabled >";
     }
     //Locomotion
     public void SwitchLocomotion()
@@ -112,6 +145,7 @@ public class LocomotionManager : MonoBehaviour
             currentMoveType = 0;
             movementText.text = "< Teleport >";
         }
+        PlayerPrefs.SetInt("MoveType", currentMoveType);
     }
 
     private void SetCountinuous(bool value)
@@ -162,13 +196,14 @@ public class LocomotionManager : MonoBehaviour
         if(currentTurnType == 0)
         {
             currentTurnType = 1;
-            turnText.text = "< Continuous Turning >";
+            turnText.text = "< Continuous Turning >";    
         }
         else
         {
             currentTurnType = 0;
             turnText.text = "< Snap >";
         }
+        PlayerPrefs.SetInt("TurnType", currentTurnType);
     }
     private void SetCountinuousTurn(bool value)
     {
@@ -211,16 +246,19 @@ public class LocomotionManager : MonoBehaviour
     }
     public void SetVignette()
     {
-        if (!vignette.activeSelf)
+        if (currentVignetteType == 1)
         {
+            currentVignetteType = 0;
             vignette.SetActive(true);
             vignetteText.text = "< Enabled >";
         }
-        else if (vignette.activeSelf)
+        else if (currentVignetteType == 0)
         {
+            currentVignetteType = 1;
             vignette.SetActive(false);
             vignetteText.text = "< Disabled >";
         }
+        PlayerPrefs.SetInt("VignetteType", currentVignetteType);
     }
 
 }
