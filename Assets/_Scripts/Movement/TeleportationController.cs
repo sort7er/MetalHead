@@ -10,15 +10,21 @@ public class TeleportationController : MonoBehaviour
     public XRRayInteractor rayInteractor;
     public TeleportationProvider teleportationProvider;
     public Hand leftHand;
+    public LayerMask bothTeleportLayers;
+    public LayerMask teleportLayer;
 
     private XRInteractorLineVisual leftLineVisual;
     private InputAction thumbstickInputAction;
     private InputAction teleportActivate;
     private InputAction teleportCancel;
+    private InputAction teleportBack;
     private Transform teleportReticle;
+    private float playerRadius;
 
     private void Start()
     {
+        playerRadius = GameManager.instance.XROrigin.GetComponent<CharacterController>().radius;
+        teleportActive = false;
         rayInteractor.enabled = false;
         leftLineVisual = rayInteractor.GetComponent<XRInteractorLineVisual>();
 
@@ -30,6 +36,10 @@ public class TeleportationController : MonoBehaviour
         teleportCancel.Enable();
         teleportCancel.performed += OnTeleportCancel;
 
+        teleportBack = inputAction.FindActionMap("XRI LeftHand Locomotion").FindAction("Teleport Back");
+        teleportBack.Enable();
+        teleportBack.performed += OnTeleportBack;
+
         thumbstickInputAction = inputAction.FindActionMap("XRI LeftHand Locomotion").FindAction("Move");
         thumbstickInputAction.Enable();
     }
@@ -37,7 +47,7 @@ public class TeleportationController : MonoBehaviour
     {
         teleportActivate.performed-= OnTeleportActivate;
         teleportCancel.performed -= OnTeleportCancel;
-        thumbstickInputAction.Disable();
+        teleportBack.performed -= OnTeleportBack;
 
     }
 
@@ -94,6 +104,58 @@ public class TeleportationController : MonoBehaviour
         if (teleportActive && rayInteractor.enabled)
         {
             SetRay(false);
+        }
+    }
+    private void OnTeleportBack(InputAction.CallbackContext context)
+    {
+        if(LocomotionManager.instance.currentMoveType == 0)
+        {
+            Vector3 teleportDirection = Quaternion.Euler(0, GameManager.instance.cam.transform.rotation.y, 0) * new Vector3(GameManager.instance.cam.transform.forward.x, 0, GameManager.instance.cam.transform.forward.z);
+            RaycastHit hit;
+            if(Physics.Raycast(GameManager.instance.XROrigin.transform.position + new Vector3(0, 0.75f, 0), -teleportDirection, out hit, 1, bothTeleportLayers))
+            {
+                if((GameManager.instance.XROrigin.transform.position + new Vector3(0, 0.75f, 0) - hit.point).magnitude < 0.5f)
+                {
+                    Debug.Log("NoTeleport");
+                }
+                else
+                {
+                    Vector3 downPos = hit.point + hit.normal * playerRadius;
+                    RaycastHit hit2;
+                    if (Physics.Raycast(downPos, Vector3.down, out hit2, 2.5f, teleportLayer))
+                    {
+                        TeleportRequest teleportRequest = new TeleportRequest()
+                        {
+                            destinationPosition = hit2.point,
+                        };
+
+                        teleportationProvider.QueueTeleportRequest(teleportRequest);
+                    }
+                    else
+                    {
+                        Debug.Log("NoTeleport");
+                    }
+                }
+            }
+            else
+            {
+                Vector3 downPos = GameManager.instance.XROrigin.transform.position + new Vector3(0, 0.75f, 0) - teleportDirection;
+                RaycastHit hit3;
+                if (Physics.Raycast(downPos, Vector3.down, out hit3, 2.5f, teleportLayer))
+                {
+                    TeleportRequest teleportRequest = new TeleportRequest()
+                    {
+                        destinationPosition = hit3.point,
+                    };
+
+                    teleportationProvider.QueueTeleportRequest(teleportRequest);
+                }
+                else
+                {
+                    Debug.Log("NoTeleport");
+                }
+            }
+            
         }
     }
     private void SetRay(bool state)

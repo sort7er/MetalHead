@@ -16,14 +16,15 @@ public class LocomotionManager : MonoBehaviour
     public TextMeshProUGUI movementText, turnText, vignetteText; 
 
     [HideInInspector] public bool isUsingTeleport;
- 
+    [HideInInspector] public int currentMoveType;
+    [HideInInspector] public int currentTurnType;
+
     private TeleportationProvider teleportationProvider;
     private ActionBasedContinuousMoveProvider continuousMoveProvider;
     private ActionBasedSnapTurnProvider snapTurnProvider;
     private ActionBasedContinuousTurnProvider continuousTurnProvider;
     private WorkAround workAround;
-    private int currentMoveType;
-    private int currentTurnType;
+
 
     private InputActionReference continuousMoveInputReference;
     private InputActionReference snapTurnInputReference;

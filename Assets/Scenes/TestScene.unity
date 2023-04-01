@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -35327,6 +35327,8 @@ MonoBehaviour:
   turnText: {fileID: 1884036969}
   vignetteText: {fileID: 252962018}
   isUsingTeleport: 0
+  currentMoveType: 0
+  currentTurnType: 0
 --- !u!114 &1379735249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47117,6 +47119,12 @@ MonoBehaviour:
   rayInteractor: {fileID: 1639304758}
   teleportationProvider: {fileID: 1379735244}
   leftHand: {fileID: 1595786479}
+  bothTeleportLayers:
+    serializedVersion: 2
+    m_Bits: 1088
+  teleportLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!4 &1642223461 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5948729000705972457, guid: 6756fb1e309a21740b1f8d6639aee9d4,
