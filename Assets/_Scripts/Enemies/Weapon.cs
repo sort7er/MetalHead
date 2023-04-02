@@ -10,14 +10,14 @@ public class Weapon : MonoBehaviour
     public float parrySensetivity = 5f;
 
     [HideInInspector] public bool isParrying;
+    [HideInInspector] public int numberToCheck;
 
     private Vector3 leftThisFrame, leftLastFrame, leftMovementDirection;
     private Vector3 rightThisFrame, rightLastFrame, rightMovementDirection;
     private Collider playerCollider;
     private PlayerHealth playerHealth;
-    private int numberToCheck;
+
     private bool lethal, damageGiven, canParry, leftParry, rightParry;
-    public float test;
     private GameObject effect;
 
     private void Start()
@@ -69,14 +69,14 @@ public class Weapon : MonoBehaviour
     }
     public void NotLethal()
     {
-        numberToCheck = 0;
         lethal = false;
         damageGiven = false;
     }
 
-    public void CanParry()
+    public void CanParry(int whichAttack)
     {
         canParry = true;
+        numberToCheck = whichAttack - 1;
         effect = Instantiate(windUpEffect, pointsOfDamage[numberToCheck].position, Quaternion.identity);
         effect.transform.parent = ParentManager.instance.effects;
         Destroy(effect, 0.3f);
@@ -87,6 +87,7 @@ public class Weapon : MonoBehaviour
     }
     public void ParryingDone()
     {
+        numberToCheck = -1;
         isParrying = false;
     }
     public void CalculateLeftMovement()

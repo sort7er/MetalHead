@@ -7,7 +7,7 @@ using static UnityEngine.GraphicsBuffer;
 public class EnemyRunState : EnemyBaseState
 {
     private float timer;
-    private bool scanning, distanceSet, tooClose;
+    private bool scanning, distanceSet, lineOfSightToPlayer;
     private NavMeshAgent agent;
     private Animator enemyAnim;
     private Kickable currentKickable;
@@ -30,7 +30,6 @@ public class EnemyRunState : EnemyBaseState
         enemy.PlayerDetected();
         timer = 0;
         scanning = false;
-        tooClose = false;
         currentKickable = null;
         enemy.rig.SetRig(true);
         distanceSet = false;
@@ -39,12 +38,28 @@ public class EnemyRunState : EnemyBaseState
 
     public override void UpdateState(RunningEnemy enemy)
     {
-        if ((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= enemy.rangeBeforeAttack && enemy.CheckLineOfSight(true, GameManager.instance.XROrigin.transform.position - enemy.transform.position, enemy.transform.position + new Vector3(0, 0.5f, 0)) && !tooClose)
+        RaycastHit hit;
+        if(Physics.Raycast(enemy.transform.position, (GameManager.instance.XROrigin.transform.position - enemy.transform.position), out hit, enemy.rangeBeforeAttack + 0.5f, runningEnemy.hidebleLayer))
+        {
+            if(hit.transform.tag == "Player")
+            {
+                lineOfSightToPlayer = true;
+            }
+            else
+            {
+                lineOfSightToPlayer = false;
+            }
+        }
+        else
+        {
+            lineOfSightToPlayer = false;
+        }
+        if ((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= enemy.rangeBeforeAttack && lineOfSightToPlayer)
         {
             enemy.SwitchState(enemy.attackState);
             enemy.agent.ResetPath();
         }
-        else if(!tooClose)
+        else
         {
             enemy.rig.SetTarget(GameManager.instance.cam.transform.position);
 
@@ -119,20 +134,6 @@ public class EnemyRunState : EnemyBaseState
                 timer = 0;
             }
 
-        }
-
-        if((GameManager.instance.XROrigin.transform.position - runningEnemy.transform.position).magnitude < 0.5f && !tooClose)
-        {
-            tooClose = true;
-            runningEnemy.SetNavMeshDestination(runningEnemy.transform.position - runningEnemy.transform.forward * 2f);
-            enemy.RotateToPosition(GameManager.instance.XROrigin.transform.position);
-            agent.avoidancePriority = 49;
-        }
-        else if((GameManager.instance.XROrigin.transform.position - runningEnemy.transform.position).magnitude >= 1.5f && tooClose)
-        {
-            agent.ResetPath();
-            agent.avoidancePriority = 50;
-            tooClose = false;
         }
 
         enemy.LookingForPlayer(enemy.runSightRange);

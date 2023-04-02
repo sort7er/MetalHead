@@ -619,7 +619,7 @@ MonoBehaviour:
   layersToCheck:
     serializedVersion: 2
     m_Bits: 5623
-  idleSpeed: 2
+  idleSpeed: 1
   idleSightRange: 8
   timeBeforeSus: 0.75
   idleMinTimeBetweenTargets: 3
@@ -632,16 +632,16 @@ MonoBehaviour:
   minSusDuration: 2
   maxSusDuration: 4
   susColor: {r: 1, g: 0.90713394, b: 0, a: 1}
-  searchingSpeed: 2
+  searchingSpeed: 1
   searchingSightRange: 15
   searchMinTimeBetweenTargets: 2
   searchMaxTimeBetweenTargets: 5
   timeBeforeSeen: 0.5
   searchingRandomDestinationRange: 12
   searchingColor: {r: 1, g: 0.39719838, b: 0, a: 1}
-  runSpeed: 3
+  runSpeed: 1.5
   runSightRange: 12
-  rangeBeforeAttack: 1.3
+  rangeBeforeAttack: 1.2
   timeBeforeLost: 3
   timeBetweenScan: 0.25
   scanRadius: 3
@@ -668,7 +668,7 @@ MonoBehaviour:
   hideSensitivity: -0.8
   hidebleLayer:
     serializedVersion: 2
-    m_Bits: 1088
+    m_Bits: 1216
   timeDead: 4
   rig: {fileID: 1186588956}
   enemyModel: {fileID: 7246732520624336850}
@@ -4217,7 +4217,7 @@ MonoBehaviour:
   damage: 050000000f000000
   parrySensetivity: 5
   isParrying: 0
-  test: 0
+  numberToCheck: 0
 --- !u!4 &8224130642395494248 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7981835845142593711, guid: ecd7d82ee55e594499c7bc762a276d3d,

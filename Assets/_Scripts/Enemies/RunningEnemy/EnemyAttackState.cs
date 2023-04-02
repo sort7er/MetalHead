@@ -1,3 +1,4 @@
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 
 public class EnemyAttackState : EnemyBaseState
@@ -5,7 +6,7 @@ public class EnemyAttackState : EnemyBaseState
     private RunningEnemy runningEnemy;
     private Animator enemyAnim;
     bool attackStarted, cannotAttack;
-    private bool waitOneFrame, waitTwoFrames, fromRunTransition;
+    private bool waitOneFrame, waitTwoFrames, fromRunTransition, freezeRotation, lineOfSightToPlayer;
     public override void EnterState(RunningEnemy enemy)
     {
         //Debug.Log("Entered state attacking");
@@ -15,19 +16,35 @@ public class EnemyAttackState : EnemyBaseState
         enemyAnim.SetBool("IsMoving", false);
         waitOneFrame = false;
         waitTwoFrames = false;
+        freezeRotation = false;
         fromRunTransition = false;
         enemy.DelayedCallback(enemy.attackState, "FromRunTransition", 0.1f);
     }
 
     public override void UpdateState(RunningEnemy enemy)
     {
-        if (((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude > enemy.rangeBeforeAttack || !enemy.CheckLineOfSight(true, GameManager.instance.XROrigin.transform.position - enemy.transform.position, enemy.transform.position + new Vector3(0, 0.5f, 0))) && !attackStarted)
+        RaycastHit hit;
+        if (Physics.Raycast(enemy.transform.position, (GameManager.instance.XROrigin.transform.position - enemy.transform.position), out hit, enemy.rangeBeforeAttack + 0.5f, runningEnemy.hidebleLayer))
+        {
+            if (hit.transform.tag == "Player")
+            {
+                lineOfSightToPlayer = true;
+            }
+            else
+            {
+                lineOfSightToPlayer = false;
+            }
+        }
+        else
+        {
+            lineOfSightToPlayer = false;
+        }
+        if (((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude > enemy.rangeBeforeAttack || !lineOfSightToPlayer) && !attackStarted)
         {
             enemy.SwitchState(enemy.runState);
         }
         else if(!attackStarted && !cannotAttack && fromRunTransition)
         {
-            enemy.RotateToPosition(GameManager.instance.XROrigin.transform.position);
             if (AIManager.instance.CheckForAttack())
             {
                 Attack();
@@ -35,6 +52,11 @@ public class EnemyAttackState : EnemyBaseState
         }
         enemy.rig.SetTarget(GameManager.instance.cam.transform.position);
 
+        if(!attackStarted && !freezeRotation)
+        {
+            enemy.RotateToPosition(GameManager.instance.XROrigin.transform.position);
+
+        }
 
         //Wait to get animation length
         if (attackStarted)
@@ -53,12 +75,17 @@ public class EnemyAttackState : EnemyBaseState
         //Parryed
         if (enemy.weapon.isParrying)
         {
-            enemy.enemyAnim.SetTrigger("Parry");
+            if(runningEnemy.weapon.numberToCheck == 0)
+            {
+                runningEnemy.ChangeAnimationState("ParryLeftHand");
+            }
+            else if (runningEnemy.weapon.numberToCheck == 1)
+            {
+                runningEnemy.ChangeAnimationState("ParryRightFoot");
+            }
+            freezeRotation = true;
+            runningEnemy.DelayedCallback(runningEnemy.attackState, "FreezeDone", 1);
             enemy.weapon.ParryingDone();
-        }
-        else
-        {
-            enemy.enemyAnim.ResetTrigger("Parry");
         }
 
 
@@ -102,5 +129,9 @@ public class EnemyAttackState : EnemyBaseState
     public void FromRunTransition()
     {
         fromRunTransition = true;
+    }
+    public void FreezeDone()
+    {
+        freezeRotation = false;
     }
 }
