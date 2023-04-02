@@ -6,7 +6,6 @@ public class SoundForEnemy : MonoBehaviour
 
     public AudioSource enemySource;
     public AudioSource enemySource2;
-
     private int justPlayed;
 
     private bool turn;

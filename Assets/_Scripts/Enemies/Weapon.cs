@@ -4,6 +4,7 @@ using UnityEngine.XR;
 public class Weapon : MonoBehaviour
 {
     public Transform[] pointsOfDamage;
+    public GameObject windUpEffect;
     public float[] raduis;
     public int[] damage;
     public float parrySensetivity = 5f;
@@ -17,6 +18,7 @@ public class Weapon : MonoBehaviour
     private int numberToCheck;
     private bool lethal, damageGiven, canParry, leftParry, rightParry;
     public float test;
+    private GameObject effect;
 
     private void Start()
     {
@@ -34,6 +36,12 @@ public class Weapon : MonoBehaviour
         }
         CalculateLeftMovement();
         CalculateRightMovement();
+
+
+        if(canParry && effect != null)
+        {
+            effect.transform.position = pointsOfDamage[numberToCheck].position;
+        }
 
 
         if ((leftParry || rightParry) && canParry && !isParrying)
@@ -69,6 +77,9 @@ public class Weapon : MonoBehaviour
     public void CanParry()
     {
         canParry = true;
+        effect = Instantiate(windUpEffect, pointsOfDamage[numberToCheck].position, Quaternion.identity);
+        effect.transform.parent = ParentManager.instance.effects;
+        Destroy(effect, 0.3f);
     }
     public void CannotParry()
     {
