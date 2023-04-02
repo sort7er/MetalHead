@@ -7,7 +7,7 @@ using static UnityEngine.GraphicsBuffer;
 public class EnemyRunState : EnemyBaseState
 {
     private float timer;
-    private bool scanning, distanceSet;
+    private bool scanning, distanceSet, tooClose;
     private NavMeshAgent agent;
     private Animator enemyAnim;
     private Kickable currentKickable;
@@ -30,6 +30,7 @@ public class EnemyRunState : EnemyBaseState
         enemy.PlayerDetected();
         timer = 0;
         scanning = false;
+        tooClose = false;
         currentKickable = null;
         enemy.rig.SetRig(true);
         distanceSet = false;
@@ -38,15 +39,12 @@ public class EnemyRunState : EnemyBaseState
 
     public override void UpdateState(RunningEnemy enemy)
     {
-        if ((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= enemy.rangeBeforeAttack)
+        if ((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= enemy.rangeBeforeAttack && enemy.CheckLineOfSight(true, GameManager.instance.XROrigin.transform.position - enemy.transform.position, enemy.transform.position + new Vector3(0, 0.5f, 0)) && !tooClose)
         {
-            if (enemy.CheckLineOfSight(true, GameManager.instance.XROrigin.transform.position - enemy.transform.position, enemy.transform.position + new Vector3(0, 0.5f, 0)))
-            {
-                enemy.SwitchState(enemy.attackState);
-                enemy.agent.ResetPath();
-            }
+            enemy.SwitchState(enemy.attackState);
+            enemy.agent.ResetPath();
         }
-        else
+        else if(!tooClose)
         {
             enemy.rig.SetTarget(GameManager.instance.cam.transform.position);
 
@@ -123,7 +121,24 @@ public class EnemyRunState : EnemyBaseState
 
         }
 
+        if((GameManager.instance.XROrigin.transform.position - runningEnemy.transform.position).magnitude < 0.5f && !tooClose)
+        {
+            tooClose = true;
+            runningEnemy.SetNavMeshDestination(runningEnemy.transform.position - runningEnemy.transform.forward * 2f);
+            enemy.RotateToPosition(GameManager.instance.XROrigin.transform.position);
+            agent.avoidancePriority = 49;
+        }
+        else if((GameManager.instance.XROrigin.transform.position - runningEnemy.transform.position).magnitude >= 1.5f && tooClose)
+        {
+            agent.ResetPath();
+            agent.avoidancePriority = 50;
+            tooClose = false;
+        }
+
         enemy.LookingForPlayer(enemy.runSightRange);
+
+
+
 
 
         //Switch to other states

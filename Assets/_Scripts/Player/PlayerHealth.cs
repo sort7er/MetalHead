@@ -1,16 +1,22 @@
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class PlayerHealth : MonoBehaviour
 {
     public int startHealth;
     public float startPitch, endPitch;
     public Animator healthVignette;
+    [Range(0,1)]
+    public float hapticIntensity;
+    public float duration;
+
 
     private int currentHealth;
     private Watch watch;
     private AudioSource healthSource;
     private float targetVolume, difference, incerements;
     private bool watchFound;
+    private XRDirectInteractor leftInteractor, rightInteractor;
 
     void Start()
     {
@@ -19,8 +25,10 @@ public class PlayerHealth : MonoBehaviour
         HitAudioDone();
         difference = startPitch - endPitch;
         incerements = difference / startHealth;
+        leftInteractor = GameManager.instance.leftHand.GetComponent<XRDirectInteractor>();
+        rightInteractor = GameManager.instance.rightHand.GetComponent<XRDirectInteractor>();
     }
-    
+
     public void TakeDamage(int damage)
     {
         if (!GameManager.instance.isDead)
@@ -29,14 +37,19 @@ public class PlayerHealth : MonoBehaviour
             currentHealth -= damage;
             if (currentHealth <= 0)
             {
+                leftInteractor.SendHapticImpulse(hapticIntensity*2, duration*2);
+                rightInteractor.SendHapticImpulse(hapticIntensity*2, duration*2);
                 Die();
                 currentHealth = 0;
             }
             if(watch != null)
             {
                 watch.UpdateHealth(currentHealth);
+                leftInteractor.SendHapticImpulse(hapticIntensity, duration);
+                rightInteractor.SendHapticImpulse(hapticIntensity, duration);
             }
             HitAudio(currentHealth);
+
         }
     }
 

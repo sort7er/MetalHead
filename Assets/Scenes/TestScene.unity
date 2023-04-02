@@ -16873,7 +16873,7 @@ MonoBehaviour:
   - {fileID: 1600273074}
   - {fileID: 1334996724}
   - {fileID: 293941543}
-  - {fileID: 0}
+  - {fileID: 672295281}
 --- !u!114 &590820407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16889,6 +16889,7 @@ MonoBehaviour:
   runningEnemiesInScene: []
   attackingDelay: 5
   playerIsBeeingAttacked: 0
+  talkingOccupied: 0
   canPlayIdleSus: 0
   canPlaySusIdle: 0
   canPlayIdleRun: 0
@@ -18394,6 +18395,12 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!82 &672295281 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 5859509875589540924, guid: 6a7f9a4c9e249924abf549628bb3f80b,
+    type: 3}
+  m_PrefabInstance: {fileID: 5859509876261782861}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &675313141
 GameObject:
   m_ObjectHideFlags: 0
@@ -45583,6 +45590,8 @@ MonoBehaviour:
   startPitch: 1.5
   endPitch: 1
   healthVignette: {fileID: 619871749}
+  hapticIntensity: 0.4
+  duration: 0.3
 --- !u!82 &1600273074
 AudioSource:
   m_ObjectHideFlags: 0
@@ -65150,7 +65159,7 @@ PrefabInstance:
     - target: {fileID: 5859509874283265943, guid: 6a7f9a4c9e249924abf549628bb3f80b,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 9904
+      value: 9907
       objectReference: {fileID: 0}
     - target: {fileID: 5859509874283265946, guid: 6a7f9a4c9e249924abf549628bb3f80b,
         type: 3}
@@ -65240,7 +65249,7 @@ PrefabInstance:
     - target: {fileID: 5859509874705622477, guid: 6a7f9a4c9e249924abf549628bb3f80b,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 8005
+      value: 8008
       objectReference: {fileID: 0}
     - target: {fileID: 5859509875589540899, guid: 6a7f9a4c9e249924abf549628bb3f80b,
         type: 3}
@@ -65255,12 +65264,7 @@ PrefabInstance:
     - target: {fileID: 5859509875589540902, guid: 6a7f9a4c9e249924abf549628bb3f80b,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 2772
-      objectReference: {fileID: 0}
-    - target: {fileID: 5859509875589540924, guid: 6a7f9a4c9e249924abf549628bb3f80b,
-        type: 3}
-      propertyPath: Priority
-      value: 87
+      value: 2775
       objectReference: {fileID: 0}
     - target: {fileID: 5859509875589540925, guid: 6a7f9a4c9e249924abf549628bb3f80b,
         type: 3}
@@ -65300,7 +65304,7 @@ PrefabInstance:
     - target: {fileID: 5859509876154047890, guid: 6a7f9a4c9e249924abf549628bb3f80b,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 8563
+      value: 8566
       objectReference: {fileID: 0}
     - target: {fileID: 5859509876154047894, guid: 6a7f9a4c9e249924abf549628bb3f80b,
         type: 3}
