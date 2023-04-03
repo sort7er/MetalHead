@@ -64,6 +64,7 @@ public class Mag : MonoBehaviour
     {
         if (currentAmmo <= 0)
         {
+            trigger.enabled = false;
             Invoke("DestroyMag", 15);
         }
     }

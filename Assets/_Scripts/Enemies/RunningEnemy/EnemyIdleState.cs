@@ -16,7 +16,7 @@ public class EnemyIdleState : EnemyBaseState
         runningEnemy = enemy;
         enemy.SetSpeed(enemy.idleSpeed);
         enemy.SetGlowColor(enemy.idleColor);
-        enemy.SetAnimSpeed(0.25f);
+        enemy.SetAnimSpeed(0f);
         targetReached = false;
         if (targetPos != null)
         {

@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class RunningEnemy : MonoBehaviour
 {
@@ -48,6 +49,7 @@ public class RunningEnemy : MonoBehaviour
     public Color detectedColor;
     public LayerMask scanableLayer;
     public LayerMask enemyLayer;
+    public LayerMask layersLookForPlayer;
 
     [Header("AttackState")]
     public float minAttackCooldown;
@@ -289,7 +291,12 @@ public class RunningEnemy : MonoBehaviour
     }
     public void SetPointOfInterest(Vector3 newInterest)
     {
-        pointOfInterest = newInterest;
+        NavMeshHit myNavHit;
+        if (NavMesh.SamplePosition(newInterest, out myNavHit, 10, NavMesh.AllAreas))
+        {
+            pointOfInterest = myNavHit.position;
+        }
+        
     }
     public void SetNavMeshDestination(Vector3 position)
     {

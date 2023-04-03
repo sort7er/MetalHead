@@ -24,7 +24,7 @@ public class EnemyAttackState : EnemyBaseState
     public override void UpdateState(RunningEnemy enemy)
     {
         RaycastHit hit;
-        if (Physics.Raycast(enemy.transform.position, (GameManager.instance.XROrigin.transform.position - enemy.transform.position), out hit, enemy.rangeBeforeAttack + 0.5f, runningEnemy.hidebleLayer))
+        if (Physics.Raycast(enemy.transform.position, (GameManager.instance.XROrigin.transform.position - enemy.transform.position), out hit, enemy.rangeBeforeAttack + 0.5f, runningEnemy.layersLookForPlayer))
         {
             if (hit.transform.tag == "Player")
             {

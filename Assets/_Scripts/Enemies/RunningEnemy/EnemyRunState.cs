@@ -22,7 +22,7 @@ public class EnemyRunState : EnemyBaseState
         agent = enemy.agent;
         enemyAnim = enemy.enemyAnim;
         enemyAnim.SetBool("IsMoving", true);
-        enemy.SetAnimSpeed(0.75f);
+        enemy.SetAnimSpeed(0.25f);
         enemy.agent.ResetPath();
         enemy.SetGlowColor(enemy.detectedColor);
         enemy.SetSpeed(enemy.runSpeed);
@@ -39,7 +39,7 @@ public class EnemyRunState : EnemyBaseState
     public override void UpdateState(RunningEnemy enemy)
     {
         RaycastHit hit;
-        if(Physics.Raycast(enemy.transform.position, (GameManager.instance.XROrigin.transform.position - enemy.transform.position), out hit, enemy.rangeBeforeAttack + 0.5f, runningEnemy.hidebleLayer))
+        if(Physics.Raycast(enemy.transform.position, (GameManager.instance.XROrigin.transform.position - enemy.transform.position), out hit, enemy.rangeBeforeAttack + 0.5f, runningEnemy.layersLookForPlayer))
         {
             if(hit.transform.tag == "Player")
             {
@@ -87,7 +87,7 @@ public class EnemyRunState : EnemyBaseState
             {
                 if (distanceSet)
                 {
-                    enemy.SetAnimSpeed(0.75f);
+                    enemy.SetAnimSpeed(0.25f);
                     enemy.SetSpeed(enemy.runSpeed);
                     randomDistance = Random.Range(enemy.rangeBeforeAttack + 1, enemy.rangeBeforeAttack + 5);
                     distanceSet = false;

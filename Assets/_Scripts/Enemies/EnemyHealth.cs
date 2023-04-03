@@ -65,7 +65,7 @@ public class EnemyHealth : MonoBehaviour
             }
             hideTimer += startHealth * 0.01f - health * 0.01f + 1;
 
-            runningEnemy.EnemyAlert(GameManager.instance.XROrigin.transform.position);
+            runningEnemy.EnemyAlert(GameManager.instance.XROrigin.transform.position + new Vector3(0,0.5f,0));
         }
     }
     public void TakeStun(float stun, int bodyPart)

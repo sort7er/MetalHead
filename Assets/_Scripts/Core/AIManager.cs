@@ -16,14 +16,7 @@ public class AIManager : MonoBehaviour
     [HideInInspector] public bool playerIsBeeingAttacked;
     [HideInInspector] public bool talkingOccupied;
 
-    [HideInInspector] public bool canPlayIdleSus;
-    [HideInInspector] public bool canPlaySusIdle;
-    [HideInInspector] public bool canPlayIdleRun;
-    [HideInInspector] public bool canPlayRunSearching;
-    [HideInInspector] public bool canPlaySearchingRun;
-    [HideInInspector] public bool canPlayHiding;
-    [HideInInspector] public bool canPlayAttack;
-    [HideInInspector] public bool canPlayDying;
+    [HideInInspector] public bool canPlayAttack = true;
 
     [HideInInspector] public int justPlayedIdleSus;
     [HideInInspector] public int justPlayedSusIdle;
@@ -32,21 +25,11 @@ public class AIManager : MonoBehaviour
     [HideInInspector] public int justPlayedSearchingRun;
     [HideInInspector] public int justPlayedHiding;
     [HideInInspector] public int justPlayedAttacking;
+    [HideInInspector] public int justPlayedStunned;
     [HideInInspector] public int justPlayedDying;
 
     private int currentPos;
 
-    private void Start()
-    {
-        canPlayIdleSus = true;
-        canPlaySusIdle = true;
-        canPlayIdleRun= true;
-        canPlayRunSearching= true;
-        canPlaySearchingRun= true;
-        canPlayHiding= true;
-        canPlayAttack= true;
-        canPlayDying= true;
-    }
     public bool CheckForAttack()
     {
         if (!playerIsBeeingAttacked)
@@ -108,63 +91,13 @@ public class AIManager : MonoBehaviour
     {
         justPlayedAttacking = justPlayed;
     }
+    public void Stunned(int justPlayed)
+    {
+        justPlayedStunned = justPlayed;
+    }
     public void Dying(int justPlayed)
     {
         justPlayedDying = justPlayed;
-    }
-    public void IdleSusSound(float clipLength)
-    {
-        canPlayIdleSus = false;
-        Invoke(nameof(IdleSusSoundDone), clipLength);
-    }
-    public void IdleSusSoundDone()
-    {
-        canPlayIdleSus = true;
-    }
-    public void SusIdleSound(float clipLength)
-    {
-        canPlaySusIdle = false;
-        Invoke(nameof(SusIdleSoundDone), clipLength);
-    }
-    public void SusIdleSoundDone()
-    {
-        canPlaySusIdle = true;
-    }
-    public void IdleRunSound(float clipLength)
-    {
-        canPlayIdleRun = false;
-        Invoke(nameof(IdleRunSoundDone), clipLength);
-    }
-    public void IdleRunSoundDone()
-    {
-        canPlayIdleRun = true;
-    }
-    public void RunSearchingSound(float clipLength)
-    {
-        canPlayRunSearching = false;
-        Invoke(nameof(RunSearchingSoundDone), clipLength);
-    }
-    public void RunSearchingSoundDone()
-    {
-        canPlayRunSearching = true;
-    }
-    public void SearchingRunSound(float clipLength)
-    {
-        canPlaySearchingRun = false;
-        Invoke(nameof(SearchingRunSoundDone), clipLength);
-    }
-    public void SearchingRunSoundDone()
-    {
-        canPlaySearchingRun = true;
-    }
-    public void HidingSound(float clipLength)
-    {
-        canPlayHiding = false;
-        Invoke(nameof(HidingSoundDone), clipLength);
-    }
-    public void HidingSoundDone()
-    {
-        canPlayHiding = true;
     }
     public void AttackingSound(float clipLength)
     {
@@ -174,14 +107,5 @@ public class AIManager : MonoBehaviour
     public void AttackingSoundDone()
     {
         canPlayAttack = true;
-    }
-    public void DyingSound(float clipLength)
-    {
-        canPlayDying = false;
-        Invoke(nameof(DyingSoundDone), clipLength);
-    }
-    public void DyingSoundDone()
-    {
-        canPlayDying = true;
     }
 }
