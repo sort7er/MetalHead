@@ -10,6 +10,8 @@ public class EffectManager : MonoBehaviour
     public GameObject hitEnemyBarrel;
     public GameObject hitEnemyCrit;
     public GameObject parryEffect;
+    public GameObject parrySoundEffect;
+    public GameObject parryEffectUI;
     public GameObject enemyDeadEffect;
     public GameObject[] pickUp;
     public GameObject[] pickUpEffect;
@@ -93,6 +95,18 @@ public class EffectManager : MonoBehaviour
     public void SpawnParryEffect(Vector3 positionToSpawn)
     {
         GameObject effect = Instantiate(parryEffect, positionToSpawn, Quaternion.identity);
+        effect.transform.parent = ParentManager.instance.effects;
+        Destroy(effect, 2);
+    }
+    public void SpawnParrySoundEffect(Vector3 positionToSpawn)
+    {
+        GameObject effect = Instantiate(parrySoundEffect, positionToSpawn, Quaternion.identity);
+        effect.transform.parent = ParentManager.instance.effects;
+        Destroy(effect, 2);
+    }
+    public void SpawnParryEffectUI(Vector3 positionToSpawn)
+    {
+        GameObject effect = Instantiate(parryEffectUI, positionToSpawn, Quaternion.identity);
         effect.transform.parent = ParentManager.instance.effects;
         Destroy(effect, 2);
     }

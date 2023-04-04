@@ -4,10 +4,10 @@ using UnityEngine.XR;
 public class Weapon : MonoBehaviour
 {
     public Transform[] pointsOfDamage;
-    public GameObject windUpEffect;
     public float[] raduis;
     public int[] damage;
     public float parrySensetivity = 5f;
+    public Transform canvasPos;
 
     [HideInInspector] public bool isParrying;
     [HideInInspector] public int numberToCheck;
@@ -18,7 +18,6 @@ public class Weapon : MonoBehaviour
     private PlayerHealth playerHealth;
 
     private bool lethal, damageGiven, canParry, leftParry, rightParry;
-    private GameObject effect;
 
     private void Start()
     {
@@ -38,12 +37,6 @@ public class Weapon : MonoBehaviour
         CalculateRightMovement();
 
 
-        if(canParry && effect != null)
-        {
-            effect.transform.position = pointsOfDamage[numberToCheck].position;
-        }
-
-
         if ((leftParry || rightParry) && canParry && !isParrying)
         {
             Vector3 positionToSpawn;
@@ -56,6 +49,7 @@ public class Weapon : MonoBehaviour
                 positionToSpawn = GameManager.instance.rightHand.transform.position + (pointsOfDamage[numberToCheck].position - GameManager.instance.rightHand.transform.position) * 0.2f;
             }
             EffectManager.instance.SpawnParryEffect(positionToSpawn);
+            EffectManager.instance.SpawnParryEffectUI(canvasPos.position);
             CannotParry();
             NotLethal();
             isParrying = true;
@@ -77,9 +71,7 @@ public class Weapon : MonoBehaviour
     {
         canParry = true;
         numberToCheck = whichAttack - 1;
-        effect = Instantiate(windUpEffect, pointsOfDamage[numberToCheck].position, Quaternion.identity);
-        effect.transform.parent = ParentManager.instance.effects;
-        Destroy(effect, 0.3f);
+        EffectManager.instance.SpawnParrySoundEffect(transform.position);
     }
     public void CannotParry()
     {

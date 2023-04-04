@@ -18,8 +18,8 @@ public class AIManager : MonoBehaviour
     [HideInInspector] public bool talkingOccupied;
     [HideInInspector] public bool idleTalkingOccupied;
 
-    [HideInInspector] public bool canPlayAttack = true;
-    [HideInInspector] public bool canPlayIdle = true;
+    [HideInInspector] public bool canPlayAttack;
+    [HideInInspector] public bool canPlayIdle;
 
     [HideInInspector] public int justPlayedIdle;
     [HideInInspector] public int justPlayedIdleSus;
@@ -35,6 +35,12 @@ public class AIManager : MonoBehaviour
     private int currentPos;
 
     private AudioSource idleSource;
+
+    private void Start()
+    {
+        canPlayAttack = true;
+        canPlayIdle = true;
+    }
 
     public bool CheckForAttack()
     {

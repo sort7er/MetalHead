@@ -63,12 +63,12 @@ public class Magnet : MonoBehaviour
     public void GrabMagnet()
     {
         magnetAnimation.GrabMagnetRelay();
-        if (GameManager.instance.CheckHand("Magnet") == 1)
+        if (GameManager.instance.CheckHand("Handle") == 1)
         {
             xrGrabInteractable.attachTransform = leftAttach;
             GameManager.instance.leftHand.GrabHandle(true);
         }
-        if (GameManager.instance.CheckHand("Magnet") == 2)
+        if (GameManager.instance.CheckHand("Handle") == 2)
         {
             xrGrabInteractable.attachTransform = rightAttach;
             GameManager.instance.rightHand.GrabHandle(true);
