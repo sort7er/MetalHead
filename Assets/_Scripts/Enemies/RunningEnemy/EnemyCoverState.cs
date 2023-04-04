@@ -41,6 +41,7 @@ public class EnemyCoverState : EnemyBaseState
 
     public override void UpdateState(RunningEnemy enemy)
     {
+        Debug.Log(destination);
         if (!inCover && !dodge)
         {
             if ((destination - enemy.transform.position).magnitude < 0.2f && colliderChosen != null)
@@ -151,6 +152,7 @@ public class EnemyCoverState : EnemyBaseState
                                 {
                                     Debug.Log("Unable to find closest edge close to " + hit2.position);
                                     Dodge();
+                                    Debug.Log("2");
                                     break;
                                 }
                                 if (Vector3.Dot(hit2.normal, (target.position - hit2.position).normalized) < runningEnemy.hideSensitivity)
@@ -158,6 +160,7 @@ public class EnemyCoverState : EnemyBaseState
                                     destination = hit2.position;
                                     colliderChosen = colliders[i];
                                     runningEnemy.SetNavMeshDestination(destination);
+                                    Debug.Log("h2");
                                     runningEnemy.voiceLines.Hiding();
                                     break;
                                 }
@@ -167,6 +170,7 @@ public class EnemyCoverState : EnemyBaseState
                                     if(hitsMissed >= hits)
                                     {
                                         Dodge();
+                                        Debug.Log("3");
                                         break;
                                     }
                                 }
@@ -176,6 +180,7 @@ public class EnemyCoverState : EnemyBaseState
                     else
                     {
                         Dodge();
+                        Debug.Log("4");
                         Debug.Log("Unable to find NavMesh near object " + colliders[i].name + " at " + colliders[i].transform.position);
                         break;
                     }

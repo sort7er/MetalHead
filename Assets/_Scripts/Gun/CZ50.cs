@@ -59,7 +59,7 @@ public class CZ50 : MonoBehaviour
                         if (hit.transform.CompareTag("Enemy"))
                         {
                             hit.transform.GetComponent<BodyPart>().TakeDamage(damage, damage, hit.transform.forward - hit.normal * bulletForce);
-                            if (hit.transform.GetComponent<BodyPart>().crit)
+                            if (hit.transform.GetComponent<BodyPart>() != null && hit.transform.GetComponent<BodyPart>().crit)
                             {
                                 EffectManager.instance.SpawnBulletHole(hit, 2);
                             }
@@ -92,7 +92,7 @@ public class CZ50 : MonoBehaviour
                                         {
                                             secondHit.transform.GetComponent<BodyPart>().TakeDamage(damage, damage, secondHit.transform.forward - hit.normal * bulletForce);
                                             
-                                            if (hit.transform.GetComponent<BodyPart>().crit)
+                                            if (hit.transform.GetComponent<BodyPart>() != null && hit.transform.GetComponent<BodyPart>().crit)
                                             {
                                                 EffectManager.instance.SpawnBulletHole(hit, 2);
                                             }

@@ -22,7 +22,7 @@ public class EnemySearchingState : EnemyBaseState
         enemy.agent.avoidancePriority = 51;
         if (enemy.pointOfInterest != null)
         {
-            enemy.SetNavMeshDestination(enemy.pointOfInterest);
+            enemy.DelayedCallback(enemy.searchingState, "PointOfInterestDelay", 0.1f);
             lookingDone = false;
         }
         else
@@ -40,7 +40,6 @@ public class EnemySearchingState : EnemyBaseState
         //Walk to target
         if (!lookingDone)
         {
-            Debug.Log("-1");
             if ((new Vector3(enemy.pointOfInterest.x, enemy.transform.position.y, enemy.pointOfInterest.z) - enemy.transform.position).magnitude <= 1.5f && !targetReached)
             {
                 enemy.agent.ResetPath();
@@ -161,6 +160,10 @@ public class EnemySearchingState : EnemyBaseState
         targetReached = false;
         runningEnemy.SetPointOfInterest(targetPos);
         runningEnemy.DelayedCallback(runningEnemy.searchingState, "StartWalking", 0.3f);
+    }
+    public void PointOfInterestDelay()
+    {
+        runningEnemy.SetNavMeshDestination(runningEnemy.pointOfInterest);
     }
     public void StartWalking()
     {

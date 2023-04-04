@@ -597,9 +597,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startHealth: 100
-  startPosture: 50
+  startPosture: 30
   postureRegenerationSpeed: 2.5
-  timeBeforeHide: 2
+  timeBeforeHide: 0.5
 --- !u!114 &7141347437139885933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -659,19 +659,19 @@ MonoBehaviour:
   maxAttackCooldown: 1
   kickForce: 200
   timeBetweenKicks: 2
-  barrelDistance: 0.75
+  barrelDistance: 0.5
   minCoverDuration: 3
   maxCoverDuration: 6
   coverSpeed: 5
   dodgeSpeed: 30
   sightRangeForCover: 2
-  checkCoverRadius: 2
+  checkCoverRadius: 1.96
   minPlayerDistance: 1
   defaultTimeCoverCheck: 0.25
   hideSensitivity: -0.8
   hidebleLayer:
     serializedVersion: 2
-    m_Bits: 1088
+    m_Bits: 1024
   timeDead: 4
   rig: {fileID: 1186588956}
   enemyModel: {fileID: 7246732520624336850}
