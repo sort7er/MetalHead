@@ -755,7 +755,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65beb5ce58e84c5498d9814a9937e5c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idle: []
+  idle:
+  - {fileID: 8300000, guid: 075d0e20a6637b1488e65c8ed59eaf41, type: 3}
+  - {fileID: 8300000, guid: 0eea301e61d049a4ab5e6900e537f248, type: 3}
+  - {fileID: 8300000, guid: 54123a6021ef19347a58449940545e96, type: 3}
+  - {fileID: 8300000, guid: 85ecc9717c47de346bab9a74ba9948d3, type: 3}
+  - {fileID: 8300000, guid: d27e8693e3a9eb0468e2c38db78a528e, type: 3}
+  - {fileID: 8300000, guid: a3eef23f724f4f74dbfe262601860f0c, type: 3}
+  - {fileID: 8300000, guid: d57bb075e0399b44188f9e8880816444, type: 3}
   idleToSus:
   - {fileID: 8300000, guid: e1ca10a6bfbaa334eb47a4fe60d1915a, type: 3}
   - {fileID: 8300000, guid: 362583cea4e62c24a86b6b2e5fbcf155, type: 3}
@@ -780,6 +787,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: bcda6b3ea67c40f49b548743289df75b, type: 3}
   - {fileID: 8300000, guid: f7d0fc7ce64604740aa20d48ecef6936, type: 3}
   - {fileID: 8300000, guid: 7a91684d57b8fca4a88f190d7159c297, type: 3}
+  - {fileID: 8300000, guid: 11080cfa6c7a5b54b8b29d5fde5d7d0e, type: 3}
   - {fileID: 8300000, guid: 113bd030d2ada6c419ce4f2f3ddfa126, type: 3}
   - {fileID: 8300000, guid: 6c79093767412964a9e9e4338cb1a0f3, type: 3}
   searchingToRun:
@@ -843,7 +851,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 5
+  MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -4028,7 +4036,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 3
+  MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -4124,7 +4132,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 3
+  MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0

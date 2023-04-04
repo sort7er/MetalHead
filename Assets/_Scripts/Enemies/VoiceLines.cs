@@ -16,14 +16,39 @@ public class VoiceLines : MonoBehaviour
     public AudioClip[] dying;
 
     private AudioSource voiceLinesSource;
-    private bool canTalk;
+    private bool canTalk, canTalkIdle;
     
 
     void Start()
     {
         voiceLinesSource = GetComponent<AudioSource>();
     }
+    public void Idle()
+    {
+        if (!AIManager.instance.idleTalkingOccupied && !AIManager.instance.talkingOccupied)
+        {
+            canTalkIdle = true;
+            AIManager.instance.IdleTalking(voiceLinesSource);
+        }
+        if (AIManager.instance.canPlayIdle && !canTalk && canTalkIdle)
+        {
+            int randomNumber = Random.Range(0, idle.Length);
+            if (idle.Length > 1)
+            {
+                while (AIManager.instance.justPlayedIdle == randomNumber)
+                {
+                    randomNumber = Random.Range(0, idle.Length);
+                }
+            }
+            CancelInvoke();
+            Invoke(nameof(TalkingDone), idle[randomNumber].length);
+            voiceLinesSource.clip = idle[randomNumber];
+            voiceLinesSource.Play();
+            AIManager.instance.Idle(randomNumber);
+            AIManager.instance.IdleSound(idle[randomNumber].length);
+        }
 
+    }
     public void IdleSus()
     {
         if(!AIManager.instance.talkingOccupied)
@@ -253,6 +278,8 @@ public class VoiceLines : MonoBehaviour
     private void TalkingDone()
     {
         canTalk = false;
+        canTalkIdle = false;
         AIManager.instance.TalkingDone();
+        AIManager.instance.IdleTalkingDone();
     }
 }

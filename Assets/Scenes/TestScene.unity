@@ -16897,10 +16897,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runningEnemiesInScene: []
+  idleDelay: 7
   attackingDelay: 5
   playerIsBeeingAttacked: 0
   talkingOccupied: 0
+  idleTalkingOccupied: 0
   canPlayAttack: 0
+  canPlayIdle: 1
+  justPlayedIdle: 0
   justPlayedIdleSus: 0
   justPlayedSusIdle: 0
   justPlayedIdleRun: 0
@@ -31298,7 +31302,7 @@ PrefabInstance:
     - target: {fileID: 7141347437139885925, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7141347437139885929, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
         type: 3}
@@ -31716,7 +31720,7 @@ PrefabInstance:
     - target: {fileID: 7141347437139885925, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7141347437139885929, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
         type: 3}
@@ -41260,7 +41264,7 @@ PrefabInstance:
     - target: {fileID: 7141347437139885925, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7141347437139885929, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
         type: 3}
@@ -60568,7 +60572,7 @@ PrefabInstance:
     - target: {fileID: 7141347437139885925, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7141347437139885929, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
         type: 3}
@@ -66158,6 +66162,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 698599808}
     m_Modifications:
+    - target: {fileID: 807031466, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b, type: 3}
+      propertyPath: MinDistance
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7141347437139885925, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
         type: 3}
       propertyPath: m_Name

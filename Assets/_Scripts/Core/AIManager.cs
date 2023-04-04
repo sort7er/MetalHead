@@ -11,13 +11,17 @@ public class AIManager : MonoBehaviour
         ActualUpdate();
     }
 
+    public float idleDelay;
     public float attackingDelay;
 
     [HideInInspector] public bool playerIsBeeingAttacked;
     [HideInInspector] public bool talkingOccupied;
+    [HideInInspector] public bool idleTalkingOccupied;
 
     [HideInInspector] public bool canPlayAttack = true;
+    [HideInInspector] public bool canPlayIdle = true;
 
+    [HideInInspector] public int justPlayedIdle;
     [HideInInspector] public int justPlayedIdleSus;
     [HideInInspector] public int justPlayedSusIdle;
     [HideInInspector] public int justPlayedIdleRun;
@@ -29,6 +33,8 @@ public class AIManager : MonoBehaviour
     [HideInInspector] public int justPlayedDying;
 
     private int currentPos;
+
+    private AudioSource idleSource;
 
     public bool CheckForAttack()
     {
@@ -58,10 +64,32 @@ public class AIManager : MonoBehaviour
     public void Talking()
     {
         talkingOccupied = true;
+        StopIdle();
     }
     public void TalkingDone()
     {
         talkingOccupied = false;
+    }
+    public void IdleTalking(AudioSource idle)
+    {
+        idleTalkingOccupied = true;
+        idleSource = idle;
+    }
+    public void StopIdle()
+    {
+        if(idleSource != null)
+        {
+            idleSource.Stop();
+        }
+    }
+    public void IdleTalkingDone()
+    {
+        idleTalkingOccupied = false;
+        idleSource = null;
+    }
+    public void Idle(int justPlayed)
+    {
+        justPlayedIdle = justPlayed;
     }
     public void IdleSus(int justPlayed)
     {
@@ -98,6 +126,16 @@ public class AIManager : MonoBehaviour
     public void Dying(int justPlayed)
     {
         justPlayedDying = justPlayed;
+    }
+
+    public void IdleSound(float clipLength)
+    {
+        canPlayIdle = false;
+        Invoke(nameof(IdleSoundDone), clipLength + idleDelay);
+    }
+    public void IdleSoundDone()
+    {
+        canPlayIdle = true;
     }
     public void AttackingSound(float clipLength)
     {

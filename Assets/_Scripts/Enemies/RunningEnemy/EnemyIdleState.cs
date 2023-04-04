@@ -108,6 +108,7 @@ public class EnemyIdleState : EnemyBaseState
         {
             Debug.Log("Nah");
         }
+        runningEnemy.voiceLines.Idle();
         runningEnemy.enemyAnim.SetBool("IsMoving", true);
         runningEnemy.SetNavMeshDestination(targetPos);
         runningEnemy.SetPointOfInterest(targetPos);
