@@ -6,13 +6,14 @@ public class MeleeWeapon : MonoBehaviour
     public int damage, stun;
     public float hitSensetivity;
     public float refreshRate;
+    public float test;
     public Transform leftAttach, rightAttach;
     public Transform tip;
 
     private MeshRenderer mesh;
     private Vector3 tipThisFrame, tipLastFrame, distanceTraveled;
     private XRGrabInteractable xrGrabInteractable;
-    private bool waitTime, lethal, damageGiven;
+    private bool waitTime, lethal, damageGiven, isHolding, left;
 
     private void Start()
     {
@@ -38,12 +39,14 @@ public class MeleeWeapon : MonoBehaviour
         {
             xrGrabInteractable.attachTransform = rightAttach;
             GameManager.instance.rightHand.GrabHandle(true);
-        } 
+        }
+        isHolding = true;
     }
     public void ReleaseMeleeWeapon()
     {
         GameManager.instance.leftHand.GrabHandle(false);
         GameManager.instance.rightHand.GrabHandle(false);
+        isHolding = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -62,7 +65,6 @@ public class MeleeWeapon : MonoBehaviour
                 {
                     EffectManager.instance.SpawnMeleeEffect(other.ClosestPointOnBounds(transform.position), 0);
                 }
-
                 damageGiven = true;
             }
         }
@@ -71,13 +73,31 @@ public class MeleeWeapon : MonoBehaviour
 
     private void CalculateMovement()
     {
+
         waitTime = true;
         Invoke(nameof(CalculateAgain), refreshRate);
 
+        if (isHolding)
+        {
+            tipThisFrame = tip.transform.position - GameManager.instance.XROrigin.transform.position;
+            distanceTraveled = (tipThisFrame - tipLastFrame) * 100;
+            if((tipThisFrame - GameManager.instance.XROrigin.transform.position).x - (tipLastFrame - GameManager.instance.XROrigin.transform.position).x < 0)
+            {
+                left = true;
+            }
+            else
+            {
+                left = false;
+            }
 
-        tipThisFrame = tip.transform.position - GameManager.instance.XROrigin.transform.position;
-        distanceTraveled = (tipThisFrame - tipLastFrame) * 100;
-        tipLastFrame = tip.transform.position - GameManager.instance.XROrigin.transform.position;
+            tipLastFrame = tip.transform.position - GameManager.instance.XROrigin.transform.position;
+        }
+        else
+        {
+            tipThisFrame = tip.transform.position;
+            distanceTraveled = (tipThisFrame - tipLastFrame) * 100;
+            tipLastFrame = tip.transform.position;
+        }
 
         if (distanceTraveled.magnitude > hitSensetivity)
         {
@@ -86,8 +106,28 @@ public class MeleeWeapon : MonoBehaviour
         else
         {
             lethal = false;
+        }
+        
+        if(distanceTraveled.magnitude > hitSensetivity && left)
+        {
+            if (!left)
+            {
+                damageGiven = false;
+            }
+        }
+        else if (distanceTraveled.magnitude > hitSensetivity && !left)
+        {
+            if (left)
+            {
+                damageGiven = false;
+            }
+        }
+        else if (distanceTraveled.magnitude < hitSensetivity)
+        {
             damageGiven = false;
         }
+        
+
 
     }
     private void CalculateAgain()

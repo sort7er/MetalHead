@@ -373,7 +373,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7141347436004945929
 RectTransform:
   m_ObjectHideFlags: 0
@@ -521,7 +521,7 @@ MonoBehaviour:
   startHealth: 100
   startPosture: 30
   postureRegenerationSpeed: 2.5
-  timeBeforeHide: 0.5
+  timeBeforeHide: 1.8
 --- !u!114 &7141347437139885933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -622,6 +622,7 @@ MonoBehaviour:
   - {fileID: 8420249202725281676}
   - {fileID: 8420249203053017051}
   testCube: {fileID: 0}
+  parryCanvas: {fileID: 7141347436004945928}
   directionToPlayer: {x: 0, y: 0, z: 0}
   directionToCamera: {x: 0, y: 0, z: 0}
   pointOfInterest: {x: 0, y: 0, z: 0}

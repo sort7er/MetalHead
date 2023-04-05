@@ -47,7 +47,6 @@ public class EnemySearchingState : EnemyBaseState
                 enemyAnim.SetBool("IsMoving", false);
                 enemyAnim.SetBool("LookingAround", true);
                 enemy.DelayedCallback(enemy.searchingState, "DoneLookingAround", Random.Range(enemy.searchMinTimeBetweenTargets, enemy.searchMaxTimeBetweenTargets));
-                Debug.Log("1");
             }
 
             if (Mathf.Abs(enemy.movementDircetion.magnitude) > 0.01f)
@@ -57,7 +56,6 @@ public class EnemySearchingState : EnemyBaseState
         }
         else
         {
-            Debug.Log("2");
             if ((targetPos - enemy.transform.position).magnitude <= 1f && !targetReached)
             {
                 enemy.agent.ResetPath();
@@ -68,7 +66,6 @@ public class EnemySearchingState : EnemyBaseState
             }
             else if (!targetReached)
             {
-                Debug.Log("3");
                 //Rotate to point of interest
                 if (enemy.CheckLineOfSight(true, enemy.directionToPointOfInterest, enemy.headTrans.position))
                 {

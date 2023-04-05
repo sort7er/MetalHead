@@ -53,7 +53,6 @@ public class Weapon : MonoBehaviour
             EffectManager.instance.SpawnParryEffect(positionToSpawn);
             EffectManager.instance.SpawnParryEffectUI(canvasPos.position);
             CannotParry();
-            ErrorMarginDone();
             NotLethal();
             isParrying = true;
         }
@@ -80,13 +79,10 @@ public class Weapon : MonoBehaviour
     {
         errorMargin = true;
     }
-    public void ErrorMarginDone()
-    {
-        errorMargin = false;
-    }
     public void CanParry(int whichAttack)
     {
         canParry = true;
+        errorMargin = false;
         numberToCheck = whichAttack - 1;
         EffectManager.instance.SpawnParrySoundEffect(transform.position);
     }

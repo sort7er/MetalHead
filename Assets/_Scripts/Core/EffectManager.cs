@@ -9,6 +9,8 @@ public class EffectManager : MonoBehaviour
     public GameObject hitEnemy;
     public GameObject hitEnemyBarrel;
     public GameObject hitEnemyCrit;
+    public GameObject hitEnemyMelee;
+    public GameObject hitEnemyMeleeCrit;
     public GameObject parryEffect;
     public GameObject parrySoundEffect;
     public GameObject parryEffectUI;
@@ -115,11 +117,11 @@ public class EffectManager : MonoBehaviour
         GameObject hitEffectToInstantiate;
         if (type == 1)
         {
-            hitEffectToInstantiate = hitEnemyCrit;
+            hitEffectToInstantiate = hitEnemyMeleeCrit;
         }
         else
         {
-            hitEffectToInstantiate = hitEnemy;
+            hitEffectToInstantiate = hitEnemyMelee;
         }
 
         GameObject bulletHole = Instantiate(hitEffectToInstantiate, pos, Quaternion.identity);

@@ -84,6 +84,7 @@ public class RunningEnemy : MonoBehaviour
     public Collider[] collidersToDisable;
     public MeshRenderer[] glowingParts;
     public Transform testCube;
+    public GameObject parryCanvas;
 
 
     [HideInInspector] public Vector3 directionToPlayer;
@@ -331,7 +332,6 @@ public class RunningEnemy : MonoBehaviour
         }
 
         result = Vector3.zero;
-        Debug.Log("lol2");
         return false;
     }
     public void SetGlowColor(Color newColor)

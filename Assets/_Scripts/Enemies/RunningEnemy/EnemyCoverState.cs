@@ -41,7 +41,6 @@ public class EnemyCoverState : EnemyBaseState
 
     public override void UpdateState(RunningEnemy enemy)
     {
-        Debug.Log(destination);
         if (!inCover && !dodge)
         {
             if ((destination - enemy.transform.position).magnitude < 0.2f && colliderChosen != null)
@@ -158,7 +157,6 @@ public class EnemyCoverState : EnemyBaseState
                                     destination = hit2.position;
                                     colliderChosen = colliders[i];
                                     runningEnemy.SetNavMeshDestination(destination);
-                                    Debug.Log("h2");
                                     runningEnemy.voiceLines.Hiding();
                                     break;
                                 }
@@ -281,7 +279,6 @@ public class EnemyCoverState : EnemyBaseState
     public void HidingDone()
     {
         runningEnemy.IsHiding(false);
-        Debug.Log("3");
         if (runningEnemy.playerInSight)
         {
             runningEnemy.SwitchState(runningEnemy.runState);

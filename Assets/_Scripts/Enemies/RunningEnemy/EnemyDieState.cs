@@ -14,6 +14,7 @@ public class EnemyDieState : EnemyBaseState
         GameManager.instance.TempAddOne();
         AIManager.instance.DoneAttacking();
         runningEnemy.voiceLines.Dying();
+        runningEnemy.parryCanvas.SetActive(false);
         foreach(Transform t in enemy.transform)
         {
             t.gameObject.layer = 0;
