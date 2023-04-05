@@ -110,4 +110,20 @@ public class EffectManager : MonoBehaviour
         effect.transform.parent = ParentManager.instance.effects;
         Destroy(effect, 2);
     }
+    public void SpawnMeleeEffect(Vector3 pos, int type)
+    {
+        GameObject hitEffectToInstantiate;
+        if (type == 1)
+        {
+            hitEffectToInstantiate = hitEnemyCrit;
+        }
+        else
+        {
+            hitEffectToInstantiate = hitEnemy;
+        }
+
+        GameObject bulletHole = Instantiate(hitEffectToInstantiate, pos, Quaternion.identity);
+        bulletHole.transform.parent = ParentManager.instance.effects;
+        Destroy(bulletHole, 25f);
+    }
 }

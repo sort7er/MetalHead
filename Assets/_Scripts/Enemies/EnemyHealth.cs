@@ -81,11 +81,13 @@ public class EnemyHealth : MonoBehaviour
 
     private void Die()
     {
-        isDead = true;
-        runningEnemy.Die();
-        runningEnemy.AddForce(rb, damageDir);
-        EffectManager.instance.SpawnPickups(transform, Random.Range(3, 8));
-
+        if (!isDead)
+        {
+            isDead = true;
+            runningEnemy.Die();
+            runningEnemy.AddForce(rb, damageDir);
+            EffectManager.instance.SpawnPickups(transform, Random.Range(3, 8));
+        }
     }
     private void Stun()
     {

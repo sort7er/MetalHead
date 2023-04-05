@@ -17,7 +17,7 @@ public class Weapon : MonoBehaviour
     private Collider playerCollider;
     private PlayerHealth playerHealth;
 
-    private bool lethal, damageGiven, canParry, leftParry, rightParry;
+    private bool lethal, damageGiven, canParry, leftParry, rightParry, parryFailed, errorMargin;
 
     private void Start()
     {
@@ -33,11 +33,13 @@ public class Weapon : MonoBehaviour
             EffectManager.instance.SpawnHitPlayerEffect(playerCollider.ClosestPointOnBounds(pointsOfDamage[numberToCheck].position));
             playerHealth.TakeDamage(damage[numberToCheck]);
         }
-        CalculateLeftMovement();
-        CalculateRightMovement();
 
+        if(errorMargin && (leftParry || rightParry))
+        {
+            parryFailed = true;
+        }
 
-        if ((leftParry || rightParry) && canParry && !isParrying)
+        if ((leftParry || rightParry) && canParry && !isParrying && !parryFailed)
         {
             Vector3 positionToSpawn;
             if (leftParry)
@@ -51,9 +53,16 @@ public class Weapon : MonoBehaviour
             EffectManager.instance.SpawnParryEffect(positionToSpawn);
             EffectManager.instance.SpawnParryEffectUI(canvasPos.position);
             CannotParry();
+            ErrorMarginDone();
             NotLethal();
             isParrying = true;
         }
+    }
+
+    private void FixedUpdate()
+    {
+        CalculateLeftMovement();
+        CalculateRightMovement();
     }
 
     public void IsLethal(int whichAttack)
@@ -67,6 +76,14 @@ public class Weapon : MonoBehaviour
         damageGiven = false;
     }
 
+    public void ErrorMargin()
+    {
+        errorMargin = true;
+    }
+    public void ErrorMarginDone()
+    {
+        errorMargin = false;
+    }
     public void CanParry(int whichAttack)
     {
         canParry = true;
@@ -81,6 +98,7 @@ public class Weapon : MonoBehaviour
     {
         numberToCheck = -1;
         isParrying = false;
+        parryFailed = false;
     }
     public void CalculateLeftMovement()
     {

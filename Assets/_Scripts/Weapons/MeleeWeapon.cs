@@ -5,38 +5,25 @@ public class MeleeWeapon : MonoBehaviour
 {
     public int damage, stun;
     public float hitSensetivity;
+    public float refreshRate;
     public Transform leftAttach, rightAttach;
+    public Transform tip;
 
-    private Vector3 leftThisFrame, leftLastFrame, leftMovementDirection;
-    private Vector3 rightThisFrame, rightLastFrame, rightMovementDirection;
+    private MeshRenderer mesh;
+    private Vector3 tipThisFrame, tipLastFrame, distanceTraveled;
     private XRGrabInteractable xrGrabInteractable;
-    private bool isHolding, left, leftHit, rightHit, damageGiven;
+    private bool waitTime, lethal, damageGiven;
 
     private void Start()
     {
         xrGrabInteractable = GetComponent<XRGrabInteractable>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (isHolding)
+        if (!waitTime)
         {
-            if (left)
-            {
-                CalculateLeftMovement();
-                if(leftMovementDirection.magnitude <= 2)
-                {
-                    damageGiven = false;
-                }
-            }
-            else
-            {
-                CalculateRightMovement();
-                if (rightMovementDirection.magnitude <= 2)
-                {
-                    damageGiven = false;
-                }
-            }
+            CalculateMovement();
         }
     }
 
@@ -44,73 +31,67 @@ public class MeleeWeapon : MonoBehaviour
     {
         if (GameManager.instance.CheckHand("Handle") == 1)
         {
-            left = true;
             xrGrabInteractable.attachTransform = leftAttach;
             GameManager.instance.leftHand.GrabHandle(true);
         }
         if (GameManager.instance.CheckHand("Handle") == 2)
         {
-            left = false;
             xrGrabInteractable.attachTransform = rightAttach;
             GameManager.instance.rightHand.GrabHandle(true);
-        }
-        isHolding = true; 
+        } 
     }
     public void ReleaseMeleeWeapon()
     {
         GameManager.instance.leftHand.GrabHandle(false);
         GameManager.instance.rightHand.GrabHandle(false);
-        isHolding = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.GetComponent<BodyPart>() != null)
+        if (!damageGiven)
         {
-            if (!damageGiven)
+            if (other.GetComponent<BodyPart>() != null && lethal)
             {
-                if (left && leftHit)
+                other.GetComponent<BodyPart>().TakeDamage(damage, stun, other.transform.position - transform.position);
+
+                if (other.transform.GetComponent<BodyPart>() != null && other.transform.GetComponent<BodyPart>().crit)
                 {
-                    other.GetComponent<BodyPart>().TakeDamage(damage, stun, other.transform.position - transform.position);
-                    EffectManager.instance.SpawnBarrelHitEnemy(other.ClosestPointOnBounds(transform.position));
+                    EffectManager.instance.SpawnMeleeEffect(other.ClosestPointOnBounds(transform.position), 1);
                 }
-                else if (!left && rightHit)
+                else if(other.transform.GetComponent<BodyPart>() != null)
                 {
-                    other.GetComponent<BodyPart>().TakeDamage(damage, stun, other.transform.position - transform.position);
-                    EffectManager.instance.SpawnBarrelHitEnemy(other.ClosestPointOnBounds(transform.position));
+                    EffectManager.instance.SpawnMeleeEffect(other.ClosestPointOnBounds(transform.position), 0);
                 }
+
                 damageGiven = true;
             }
         }
     }
 
 
-    public void CalculateLeftMovement()
+    private void CalculateMovement()
     {
-        leftThisFrame = GameManager.instance.leftHand.transform.localPosition;
-        leftMovementDirection = (leftThisFrame - leftLastFrame) * 100;
-        leftLastFrame = GameManager.instance.leftHand.transform.localPosition;
-        if (leftMovementDirection.magnitude > hitSensetivity)
+        waitTime = true;
+        Invoke(nameof(CalculateAgain), refreshRate);
+
+
+        tipThisFrame = tip.transform.position - GameManager.instance.XROrigin.transform.position;
+        distanceTraveled = (tipThisFrame - tipLastFrame) * 100;
+        tipLastFrame = tip.transform.position - GameManager.instance.XROrigin.transform.position;
+
+        if (distanceTraveled.magnitude > hitSensetivity)
         {
-            leftHit = true;
+            lethal = true;
         }
         else
         {
-            leftHit = false;
+            lethal = false;
+            damageGiven = false;
         }
+
     }
-    public void CalculateRightMovement()
+    private void CalculateAgain()
     {
-        rightThisFrame = GameManager.instance.rightHand.transform.localPosition;
-        rightMovementDirection = (rightThisFrame - rightLastFrame) * 100;
-        rightLastFrame = GameManager.instance.rightHand.transform.localPosition;
-        if (rightMovementDirection.magnitude > hitSensetivity)
-        {
-            rightHit = true;
-        }
-        else
-        {
-            rightHit = false;
-        }
+        waitTime = false;
     }
 }
