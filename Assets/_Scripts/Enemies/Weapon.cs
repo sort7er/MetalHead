@@ -78,6 +78,7 @@ public class Weapon : MonoBehaviour
     public void ErrorMargin()
     {
         errorMargin = true;
+        parryFailed = false;
     }
     public void CanParry(int whichAttack)
     {
@@ -94,7 +95,6 @@ public class Weapon : MonoBehaviour
     {
         numberToCheck = -1;
         isParrying = false;
-        parryFailed = false;
     }
     public void CalculateLeftMovement()
     {

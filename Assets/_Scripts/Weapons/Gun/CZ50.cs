@@ -92,7 +92,7 @@ public class CZ50 : MonoBehaviour
                                         {
                                             secondHit.transform.GetComponent<BodyPart>().TakeDamage(damage, damage, secondHit.transform.forward - hit.normal * bulletForce);
                                             
-                                            if (secondHit.transform.GetComponent<BodyPart>() != null && hit.transform.GetComponent<BodyPart>().crit)
+                                            if (secondHit.transform.GetComponent<BodyPart>() != null && secondHit.transform.GetComponent<BodyPart>().crit)
                                             {
                                                 EffectManager.instance.SpawnBulletHole(hit, 2);
                                             }

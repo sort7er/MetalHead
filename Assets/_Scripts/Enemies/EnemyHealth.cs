@@ -94,4 +94,8 @@ public class EnemyHealth : MonoBehaviour
         posture = startPosture;
         runningEnemy.Stun(currentBodyPart);
     }
+    public int GetCurrentHealth()
+    {
+        return health;
+    }
 }

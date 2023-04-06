@@ -96,6 +96,7 @@ public class RunningEnemy : MonoBehaviour
     [HideInInspector] public Kickable currentKickable;
     [HideInInspector] public VoiceLines voiceLines;
     [HideInInspector] public Weapon weapon;
+    [HideInInspector] public EnemyHealth health;
     [HideInInspector] public Animator enemyAnim;
     [HideInInspector] public int currentBodyPart;
     [HideInInspector] public bool enemyDistanceCheck;
@@ -132,6 +133,7 @@ public class RunningEnemy : MonoBehaviour
         SetDistanceCheck(defaultTimeBetweenDistanceCheck);
         SetTurnSpeed(defaultTurnSmoothTime);
         enemyAnim = enemyModel.GetComponent<Animator>();
+        health = GetComponent<EnemyHealth>();
         agent = GetComponent<NavMeshAgent>();
         weapon = GetComponentInChildren<Weapon>();
         voiceLines = GetComponent<VoiceLines>();

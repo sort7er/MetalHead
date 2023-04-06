@@ -6,14 +6,13 @@ public class MeleeWeapon : MonoBehaviour
     public int damage, stun;
     public float hitSensetivity;
     public float refreshRate;
-    public float test;
     public Transform leftAttach, rightAttach;
     public Transform tip;
 
     private MeshRenderer mesh;
     private Vector3 tipThisFrame, tipLastFrame, distanceTraveled;
     private XRGrabInteractable xrGrabInteractable;
-    private bool waitTime, lethal, damageGiven, isHolding, left;
+    private bool waitTime, lethal, damageGiven, isHolding, left, enteredLeft;
 
     private void Start()
     {
@@ -59,11 +58,11 @@ public class MeleeWeapon : MonoBehaviour
 
                 if (other.transform.GetComponent<BodyPart>() != null && other.transform.GetComponent<BodyPart>().crit)
                 {
-                    EffectManager.instance.SpawnMeleeEffect(other.ClosestPointOnBounds(transform.position), 1);
+                    EffectManager.instance.SpawnMeleeEffect(other.ClosestPointOnBounds(transform.position), 1, Quaternion.LookRotation(distanceTraveled, transform.up));
                 }
                 else if(other.transform.GetComponent<BodyPart>() != null)
                 {
-                    EffectManager.instance.SpawnMeleeEffect(other.ClosestPointOnBounds(transform.position), 0);
+                    EffectManager.instance.SpawnMeleeEffect(other.ClosestPointOnBounds(transform.position), 0, Quaternion.LookRotation(distanceTraveled, transform.up));
                 }
                 damageGiven = true;
             }
@@ -107,26 +106,34 @@ public class MeleeWeapon : MonoBehaviour
         {
             lethal = false;
         }
-        
-        if(distanceTraveled.magnitude > hitSensetivity && left)
-        {
-            if (!left)
-            {
-                damageGiven = false;
-            }
-        }
-        else if (distanceTraveled.magnitude > hitSensetivity && !left)
+
+        if (distanceTraveled.magnitude > hitSensetivity)
         {
             if (left)
             {
-                damageGiven = false;
+                if (!enteredLeft)
+                {
+                    damageGiven = false;
+                    enteredLeft = true;
+                    Debug.Log("1");
+                }
+            }
+            else
+            {
+                if (enteredLeft)
+                {
+                    damageGiven = false;
+                    enteredLeft = false;
+                    Debug.Log("2");
+                }
             }
         }
-        else if (distanceTraveled.magnitude < hitSensetivity)
+        else
         {
             damageGiven = false;
+            Debug.Log("3");
         }
-        
+
 
 
     }

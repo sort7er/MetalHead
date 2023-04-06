@@ -12,7 +12,7 @@ public class EnemyCoverState : EnemyBaseState
     private Vector3 destination, dodgeDestination;
     private float checkCoverRadius, minPlayerDistance, dodgeSpeed;
     private bool hideLocked, inCover, dodge, canLeft, canRight;
-    private int hitsMissed, direction;
+    private int hitsMissed, direction, healthWhenInCover;
 
     public override void EnterState(RunningEnemy enemy)
     {
@@ -66,7 +66,7 @@ public class EnemyCoverState : EnemyBaseState
         else if (inCover && !dodge)
         {
             enemy.LookingForPlayer(enemy.sightRangeForCover);
-            if (enemy.inView)
+            if (enemy.inView || healthWhenInCover != runningEnemy.health.GetCurrentHealth())
             {
                 OutOfCover();
             }
@@ -211,6 +211,7 @@ public class EnemyCoverState : EnemyBaseState
     private void InCover()
     {
         inCover = true;
+        healthWhenInCover = runningEnemy.health.GetCurrentHealth();
         enemyAnim.SetBool("InCover", true);
         agent.avoidancePriority = 48;
     }
