@@ -269,7 +269,7 @@ public class VoiceLines : MonoBehaviour
                 }
             }
             CancelInvoke();
-            Invoke(nameof(TalkingDone), dying[randomNumber].length);
+            TalkingDone();
             voiceLinesSource.clip = dying[randomNumber];
             voiceLinesSource.Play();
             AIManager.instance.Dying(randomNumber);

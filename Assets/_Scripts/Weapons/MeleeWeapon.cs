@@ -6,6 +6,7 @@ public class MeleeWeapon : MonoBehaviour
     public int damage, stun;
     public float hitSensetivity;
     public float refreshRate;
+    public float timeTillDamage;
     public Transform leftAttach, rightAttach;
     public Transform tip;
 
@@ -65,6 +66,7 @@ public class MeleeWeapon : MonoBehaviour
                     EffectManager.instance.SpawnMeleeEffect(other.ClosestPointOnBounds(transform.position), 0, Quaternion.LookRotation(distanceTraveled, transform.up));
                 }
                 damageGiven = true;
+                Invoke(nameof(CanDamage), timeTillDamage);
             }
         }
     }
@@ -107,32 +109,32 @@ public class MeleeWeapon : MonoBehaviour
             lethal = false;
         }
 
-        if (distanceTraveled.magnitude > hitSensetivity)
-        {
-            if (left)
-            {
-                if (!enteredLeft)
-                {
-                    damageGiven = false;
-                    enteredLeft = true;
-                    Debug.Log("1");
-                }
-            }
-            else
-            {
-                if (enteredLeft)
-                {
-                    damageGiven = false;
-                    enteredLeft = false;
-                    Debug.Log("2");
-                }
-            }
-        }
-        else
-        {
-            damageGiven = false;
-            Debug.Log("3");
-        }
+        //if (distanceTraveled.magnitude > hitSensetivity)
+        //{
+        //    if (left)
+        //    {
+        //        if (!enteredLeft)
+        //        {
+        //            damageGiven = false;
+        //            enteredLeft = true;
+        //            Debug.Log("1");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        if (enteredLeft)
+        //        {
+        //            damageGiven = false;
+        //            enteredLeft = false;
+        //            Debug.Log("2");
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        //    damageGiven = false;
+        //    Debug.Log("3");
+        //}
 
 
 
@@ -140,5 +142,9 @@ public class MeleeWeapon : MonoBehaviour
     private void CalculateAgain()
     {
         waitTime = false;
+    }
+    private void CanDamage()
+    {
+        damageGiven = false;
     }
 }

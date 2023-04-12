@@ -8,6 +8,7 @@ public class EnemyHealth : MonoBehaviour
     public float startPosture;
     public float postureRegenerationSpeed;
     public float timeBeforeHide;
+    public HitConstraints hitConstraints;
 
     private RunningEnemy runningEnemy;
     private Vector3 damageDir;
@@ -57,7 +58,19 @@ public class EnemyHealth : MonoBehaviour
         {
             rb = rb1;
             damageDir = damageDir1;
-            
+
+            Vector3 pointToCheck = GameManager.instance.XROrigin.transform.position - transform.position;
+
+            if (Vector3.Dot(pointToCheck, transform.forward) < 0)
+            {
+                hitConstraints.Hit(true, bodyPart);
+            }
+            else
+            {
+                hitConstraints.Hit(false, bodyPart);
+            }
+
+
             TakeStun(stun, bodyPart);
             health -= damage;
             if (health < 0)
