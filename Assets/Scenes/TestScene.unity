@@ -8289,7 +8289,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 8183
+    m_Bits: 122871
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -10185,7 +10185,7 @@ GameObject:
   m_Component:
   - component: {fileID: 357764930}
   - component: {fileID: 357764929}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24606,7 +24606,8 @@ GameObject:
   - component: {fileID: 839937772}
   - component: {fileID: 839937777}
   - component: {fileID: 839937778}
-  m_Layer: 8
+  - component: {fileID: 839937780}
+  m_Layer: 0
   m_Name: MeleeWeapon
   m_TagString: Handle
   m_Icon: {fileID: 0}
@@ -24745,8 +24746,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   stun: 2
-  hitSensetivity: 5
-  minTravelDistance: 0.2
+  hitSensetivity: 4
+  minTravelDistance: 0.15
   leftAttach: {fileID: 1997029904}
   rightAttach: {fileID: 1801589346}
   tip: {fileID: 1787435087}
@@ -24807,12 +24808,36 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 839937780}
+        m_TargetAssemblyTypeName: ChangeLayer, Assembly-CSharp
+        m_MethodName: NewLayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 839937777}
         m_TargetAssemblyTypeName: MeleeWeapon, Assembly-CSharp
         m_MethodName: ReleaseMeleeWeapon
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 839937780}
+        m_TargetAssemblyTypeName: ChangeLayer, Assembly-CSharp
+        m_MethodName: OriginalLayer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -24917,6 +24942,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 4.45, y: 0.66, z: 3.4314964}
   m_Center: {x: 0, y: 0.28, z: 0}
+--- !u!114 &839937780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839937770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aa92b401616de34f9d08f5a54414e00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &859971175
 GameObject:
   m_ObjectHideFlags: 0
@@ -30976,7 +31016,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 440986eeedc720a4290b76eebf4677b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handPrefab: {fileID: 7057182658954920369, guid: 735de71f402f9f047b749a98fa2f8808,
+  handPrefab: {fileID: 5064846028820750067, guid: 9a4b9a12fedf6bd4a9ff4f9d86718936,
     type: 3}
   controllerCharacteristics: 576
 --- !u!114 &1166752413
@@ -45518,7 +45558,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 440986eeedc720a4290b76eebf4677b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handPrefab: {fileID: 2933892637611922172, guid: 125e366ce41c13a48979196a1734a52a,
+  handPrefab: {fileID: 6808413006113836237, guid: d9aaf4f30459dd943b83e8b1b433ae0f,
     type: 3}
   controllerCharacteristics: 320
 --- !u!1 &1599346081
@@ -55224,7 +55264,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1787435087}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Tip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
