@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -24,6 +25,7 @@ public class LocomotionManager : MonoBehaviour
     private ActionBasedContinuousMoveProvider continuousMoveProvider;
     private ActionBasedSnapTurnProvider snapTurnProvider;
     private ActionBasedContinuousTurnProvider continuousTurnProvider;
+    private NavMeshObstacle playerObstacle;
 
 
     private InputActionReference continuousMoveInputReference;
@@ -37,6 +39,7 @@ public class LocomotionManager : MonoBehaviour
         continuousMoveProvider = GetComponent<ActionBasedContinuousMoveProvider>();
         snapTurnProvider = GetComponent<ActionBasedSnapTurnProvider>();
         continuousTurnProvider = GetComponent<ActionBasedContinuousTurnProvider>();
+        playerObstacle = GameManager.instance.XROrigin.GetComponent<NavMeshObstacle>();
 
         Invoke("StartSettings", 0.1f);
         SetContinuousMoveInputReference();
@@ -139,11 +142,13 @@ public class LocomotionManager : MonoBehaviour
         {
             currentMoveType = 1;
             movementText.text = "< Continuous Movement >";
+            playerObstacle.enabled = false;
         }
         else
         {
             currentMoveType = 0;
             movementText.text = "< Teleport >";
+            playerObstacle.enabled = true;
         }
         PlayerPrefs.SetInt("MoveType", currentMoveType);
     }

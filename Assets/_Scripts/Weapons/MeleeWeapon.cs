@@ -1,31 +1,27 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class MeleeWeapon : MonoBehaviour
 {
     public int damage, stun;
-    public float hitSensetivity;
-    public float refreshRate;
-    public float timeTillDamage;
+    public float hitSensetivity, minTravelDistance;
     public Transform leftAttach, rightAttach;
     public Transform tip;
 
-    private MeshRenderer mesh;
+    private Vector3 handPos;
     private Vector3 tipThisFrame, tipLastFrame, distanceTraveled;
     private XRGrabInteractable xrGrabInteractable;
-    private bool waitTime, lethal, damageGiven, isHolding, left, enteredLeft;
+    private bool lethal, damageGiven, isHolding, left, savedPos;
 
     private void Start()
     {
         xrGrabInteractable = GetComponent<XRGrabInteractable>();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        if (!waitTime)
-        {
-            CalculateMovement();
-        }
+        CalculateMovement();
     }
 
     public void GrabMeleeWeapon()
@@ -34,11 +30,13 @@ public class MeleeWeapon : MonoBehaviour
         {
             xrGrabInteractable.attachTransform = leftAttach;
             GameManager.instance.leftHand.GrabHandle(true);
+            left = true;
         }
         if (GameManager.instance.CheckHand("Handle") == 2)
         {
             xrGrabInteractable.attachTransform = rightAttach;
             GameManager.instance.rightHand.GrabHandle(true);
+            left = false;
         }
         isHolding = true;
     }
@@ -51,7 +49,7 @@ public class MeleeWeapon : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!damageGiven)
+        if (!damageGiven && Vector3.Distance(handPos, tipThisFrame) >= minTravelDistance)
         {
             if (other.GetComponent<BodyPart>() != null && lethal)
             {
@@ -66,7 +64,6 @@ public class MeleeWeapon : MonoBehaviour
                     EffectManager.instance.SpawnMeleeEffect(other.ClosestPointOnBounds(transform.position), 0, Quaternion.LookRotation(distanceTraveled, transform.up));
                 }
                 damageGiven = true;
-                Invoke(nameof(CanDamage), timeTillDamage);
             }
         }
     }
@@ -74,24 +71,20 @@ public class MeleeWeapon : MonoBehaviour
 
     private void CalculateMovement()
     {
-
-        waitTime = true;
-        Invoke(nameof(CalculateAgain), refreshRate);
-
         if (isHolding)
         {
-            tipThisFrame = tip.transform.position - GameManager.instance.XROrigin.transform.position;
-            distanceTraveled = (tipThisFrame - tipLastFrame) * 100;
-            if((tipThisFrame - GameManager.instance.XROrigin.transform.position).x - (tipLastFrame - GameManager.instance.XROrigin.transform.position).x < 0)
+            if (left)
             {
-                left = true;
+                tipThisFrame = GameManager.instance.leftHand.transform.localPosition;
+                distanceTraveled = (tipThisFrame - tipLastFrame) * 100;
+                tipLastFrame = GameManager.instance.leftHand.transform.localPosition;
             }
             else
             {
-                left = false;
+                tipThisFrame = GameManager.instance.rightHand.transform.localPosition;
+                distanceTraveled = (tipThisFrame - tipLastFrame) * 100;
+                tipLastFrame = GameManager.instance.rightHand.transform.localPosition;
             }
-
-            tipLastFrame = tip.transform.position - GameManager.instance.XROrigin.transform.position;
         }
         else
         {
@@ -100,51 +93,29 @@ public class MeleeWeapon : MonoBehaviour
             tipLastFrame = tip.transform.position;
         }
 
+
         if (distanceTraveled.magnitude > hitSensetivity)
         {
             lethal = true;
+            if (!savedPos)
+            {
+                if(left)
+                {
+                    handPos = GameManager.instance.leftHand.transform.localPosition;
+                }
+                else
+                {
+                    handPos = GameManager.instance.rightHand.transform.localPosition;
+                }
+                savedPos = true;
+            }
+            
         }
         else
         {
+            savedPos = false;
             lethal = false;
+            damageGiven = false;
         }
-
-        //if (distanceTraveled.magnitude > hitSensetivity)
-        //{
-        //    if (left)
-        //    {
-        //        if (!enteredLeft)
-        //        {
-        //            damageGiven = false;
-        //            enteredLeft = true;
-        //            Debug.Log("1");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        if (enteredLeft)
-        //        {
-        //            damageGiven = false;
-        //            enteredLeft = false;
-        //            Debug.Log("2");
-        //        }
-        //    }
-        //}
-        //else
-        //{
-        //    damageGiven = false;
-        //    Debug.Log("3");
-        //}
-
-
-
-    }
-    private void CalculateAgain()
-    {
-        waitTime = false;
-    }
-    private void CanDamage()
-    {
-        damageGiven = false;
     }
 }
