@@ -13,6 +13,10 @@ public class RunningEnemy : MonoBehaviour
     public float distanceBeforeImmediateDetection;
     public LayerMask layersToCheck;
 
+    [Header("Knockback")]
+    public float knockBackAmount;
+    public float knockBackSpeed;
+
     [Header("IdleState")]
     public float idleSpeed;
     public float idleSightRange;
@@ -122,9 +126,11 @@ public class RunningEnemy : MonoBehaviour
 
     private EnemyBaseState currentState;
     private Vector3 thisFrame, lastFrame, currentDestination;
+    private Vector3 knockbackPos;
     private float timeBetweenDistanceCheck;
     private float newMovementValue, currentValue;
     private bool setNewValue;
+    private bool knockBack;
 
 
 
@@ -176,6 +182,15 @@ public class RunningEnemy : MonoBehaviour
                 }
             }
             enemyAnim.SetFloat("MovementSpeed", currentValue);
+        }
+
+        if (knockBack)
+        {
+            transform.position = Vector3.Lerp(transform.position, knockbackPos, knockBackSpeed * Time.deltaTime);
+            if (Vector3.Distance(transform.position, knockbackPos) < 0.2f)
+            {
+                knockBack = false;
+            }
         }
 
     }
@@ -448,5 +463,12 @@ public class RunningEnemy : MonoBehaviour
         Gizmos.DrawRay(headTrans.position, directionToCamera * 5);
         Gizmos.color = Color.blue;
         Gizmos.DrawRay(headTrans.position, directionToPointOfInterest * 5);
+    }
+
+    public void KnockBack()
+    {
+        knockBack = true;
+        Vector3 tempPos = transform.position + (transform.position - GameManager.instance.XROrigin.transform.position) * knockBackAmount;
+        knockbackPos = new Vector3(tempPos.x, transform.position.y, tempPos.z);
     }
 }

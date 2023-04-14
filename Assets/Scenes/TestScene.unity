@@ -3057,6 +3057,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7141347437366083680}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &118948951 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
+    type: 3}
+  m_PrefabInstance: {fileID: 7141347437366083680}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71743dbb61a06da4da7c295f92f59968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &126466445
 Mesh:
   m_ObjectHideFlags: 0
@@ -17309,9 +17321,9 @@ MonoBehaviour:
   onPressArrowUp:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 651885439}
-        m_TargetAssemblyTypeName: HealthRing, Assembly-CSharp
-        m_MethodName: GrabRing
+      - m_Target: {fileID: 118948951}
+        m_TargetAssemblyTypeName: RunningEnemy, Assembly-CSharp
+        m_MethodName: KnockBack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -67753,6 +67765,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
+        type: 3}
+      propertyPath: knockBackSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
+        type: 3}
+      propertyPath: knockBackAmount
+      value: 0.03
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
