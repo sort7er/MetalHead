@@ -19,13 +19,10 @@ public class TeleportationController : MonoBehaviour
     private InputAction teleportActivate;
     private InputAction teleportCancel;
     private InputAction teleportBack;
-    private InputAction snapTurn;
     private Transform teleportReticle;
-    private float playerRadius;
 
     private void Start()
     {
-        playerRadius = GameManager.instance.XROrigin.GetComponent<CharacterController>().radius;
         teleportActive = false;
         rayInteractor.enabled = false;
         leftLineVisual = rayInteractor.GetComponent<XRInteractorLineVisual>();
@@ -42,10 +39,6 @@ public class TeleportationController : MonoBehaviour
         teleportBack.Enable();
         teleportBack.performed += OnTeleportBack;
 
-        snapTurn = inputAction.FindActionMap("XRI RightHand Locomotion").FindAction("Snap Turn");
-        snapTurn.Enable();
-        snapTurn.performed += OnSnapTurn;
-
         thumbstickInputAction = inputAction.FindActionMap("XRI LeftHand Locomotion").FindAction("Move");
         thumbstickInputAction.Enable();
     }
@@ -54,8 +47,6 @@ public class TeleportationController : MonoBehaviour
         teleportActivate.performed-= OnTeleportActivate;
         teleportCancel.performed -= OnTeleportCancel;
         teleportBack.performed -= OnTeleportBack;
-        snapTurn.performed -= OnSnapTurn;
-
     }
 
     private void Update()
@@ -170,13 +161,6 @@ public class TeleportationController : MonoBehaviour
             
         }
     }
-    private void OnSnapTurn(InputAction.CallbackContext context)
-    {
-        if (LocomotionManager.instance.currentTurnType == 1 && !teleportActive)
-        {
-            GameManager.instance.XROrigin.transform.Rotate(new Vector3(0, 180, 0));
-        }
-    }
     private void SetRay(bool state)
     {
         if (LocomotionManager.instance.isUsingTeleport)
@@ -199,5 +183,10 @@ public class TeleportationController : MonoBehaviour
         {
             teleportReticle = FindObjectOfType<TeleportReticleRotate>().transform;
         }
+    }
+
+    public bool GetTeleportActive()
+    {
+        return teleportActive;
     }
 }

@@ -14,12 +14,15 @@ public class LocomotionManager : MonoBehaviour
 
     public GameObject teleportationRays;
     public GameObject vignette;
-    public TextMeshProUGUI movementText, turnText, vignetteText; 
+    public TextMeshProUGUI movementText, turnText, vignetteText, quickTurnText;
+    public InputActionAsset inputAction;
+    public TeleportationController teleportationController;
 
     [HideInInspector] public bool isUsingTeleport;
     [HideInInspector] public int currentMoveType;
     [HideInInspector] public int currentTurnType;
     [HideInInspector] public int currentVignetteType;
+    [HideInInspector] public int currentQuickTurnType;
 
     private TeleportationProvider teleportationProvider;
     private ActionBasedContinuousMoveProvider continuousMoveProvider;
@@ -32,6 +35,7 @@ public class LocomotionManager : MonoBehaviour
     private InputActionReference snapTurnInputReference;
     private InputActionReference continuousTurnInputReference;
     private InputActionAsset teleportationInputReference;
+    private InputAction snapTurn;
 
     private void Start()
     {
@@ -46,6 +50,15 @@ public class LocomotionManager : MonoBehaviour
         SetTeleportationInputReference();
         SetContinousTurnInputReference();
         SetSnapTurnInputReference();
+
+        snapTurn = inputAction.FindActionMap("XRI RightHand Locomotion").FindAction("Snap Turn");
+        snapTurn.Enable();
+        snapTurn.performed += OnSnapTurn;
+    }
+
+    private void OnDestroy()
+    {
+        snapTurn.performed -= OnSnapTurn;
     }
 
     private void SetContinuousMoveInputReference()
@@ -95,6 +108,7 @@ public class LocomotionManager : MonoBehaviour
         currentMoveType = PlayerPrefs.GetInt("MoveType", 0);
         currentTurnType = PlayerPrefs.GetInt("TurnType", 0);
         currentVignetteType = PlayerPrefs.GetInt("VignetteType", 1);
+        currentQuickTurnType = PlayerPrefs.GetInt("QuickTurnType", 1);
 
         if(currentMoveType == 1)
         {
@@ -120,20 +134,20 @@ public class LocomotionManager : MonoBehaviour
         {
             currentVignetteType = 1;
         }
+        if (currentQuickTurnType == 1)
+        {
+            currentQuickTurnType = 0;
+        }
+        else
+        {
+            currentQuickTurnType = 1;
+        }
         SwitchLocomotion();
         SwitchTurning();
         SetVignette();
+        SetQuickTurn();
         EnableMovement(true);
         EnableTurning(true);
-
-        //SetCountinuous(false);
-        //SetTeleport(true);
-        //SetCountinuousTurn(false);
-        //SetSnap(true);
-        //SetVignette();
-        //movementText.text = "< Teleport >";
-        //turnText.text = "< Snap >";
-        //vignetteText.text = "< Disabled >";
     }
     //Locomotion
     public void SwitchLocomotion()
@@ -264,6 +278,30 @@ public class LocomotionManager : MonoBehaviour
             vignetteText.text = "< Disabled >";
         }
         PlayerPrefs.SetInt("VignetteType", currentVignetteType);
+    }
+
+    public void SetQuickTurn()
+    {
+        if (currentQuickTurnType == 1)
+        {
+            currentQuickTurnType = 0;
+            quickTurnText.text = "< Enabled >";
+            snapTurnProvider.enableTurnAround = true;
+        }
+        else if (currentQuickTurnType == 0)
+        {
+            currentQuickTurnType = 1;
+            quickTurnText.text = "< Disabled >";
+            snapTurnProvider.enableTurnAround = false;
+        }
+        PlayerPrefs.SetInt("QuickTurnType", currentQuickTurnType);
+    }
+    private void OnSnapTurn(InputAction.CallbackContext context)
+    {
+        if (currentTurnType == 1 && !teleportationController.GetTeleportActive() && currentQuickTurnType == 0)
+        {
+            GameManager.instance.XROrigin.transform.Rotate(new Vector3(0, 180, 0));
+        }
     }
 
 }

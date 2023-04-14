@@ -63,10 +63,12 @@ public class PlayerHealth : MonoBehaviour
             startHealth = healthAtUpgrade[currentHealthLevel];
             difference = startPitch - endPitch;
             incerements = difference / startHealth;
-            watch.UpdateHealth(currentHealth);
+            watch.SetNewHealth(currentHealth, startHealth);
             watch.healthRing.SetActive(true);
             healthVignette.Play("UpgradeHealth");
             currentHealthLevel++;
+            leftInteractor.SendHapticImpulse(hapticIntensity * 2, duration * 2);
+            rightInteractor.SendHapticImpulse(hapticIntensity * 2, duration * 2);
         }
     }
 
