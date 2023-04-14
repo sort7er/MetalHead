@@ -9,9 +9,11 @@ public class PlayerHealth : MonoBehaviour
     [Range(0,1)]
     public float hapticIntensity;
     public float duration;
+    public int[] healthAtUpgrade;
 
 
     private int currentHealth;
+    private int currentHealthLevel;
     private Watch watch;
     private AudioSource healthSource;
     private float targetVolume, difference, incerements;
@@ -33,7 +35,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (!GameManager.instance.isDead)
         {
-            healthVignette.SetTrigger("Hit");
+            healthVignette.Play("Hit");
             currentHealth -= damage;
             if (currentHealth <= 0)
             {
@@ -50,6 +52,20 @@ public class PlayerHealth : MonoBehaviour
             }
             HitAudio(currentHealth);
 
+        }
+    }
+
+    public void UpgradeHealth()
+    {
+        if(currentHealthLevel < healthAtUpgrade.Length)
+        {
+            currentHealth = healthAtUpgrade[currentHealthLevel];
+            startHealth = healthAtUpgrade[currentHealthLevel];
+            difference = startPitch - endPitch;
+            incerements = difference / startHealth;
+            watch.UpdateHealth(currentHealth);
+            healthVignette.Play("UpgradeHealth");
+            currentHealthLevel++;
         }
     }
 
@@ -74,6 +90,7 @@ public class PlayerHealth : MonoBehaviour
     private void Die()
     {
         GameManager.instance.IsDead();
+        healthVignette.Play("Die");
         Debug.Log("Player Dead");
     }
     private void HitAudio(int health)

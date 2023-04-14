@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
     public AmmoBag ammoBag;
     public Magnet magnet;
     public GameObject gameOverCanvas;
-    public Animator pauseVignetteAnim;
 
     public Animator tempAnim;
     public GameObject[] enemies;
@@ -149,7 +148,6 @@ public class GameManager : MonoBehaviour
         EnableDirectInteractors(false);
         LocomotionManager.instance.EnableMovement(false);
         LocomotionManager.instance.EnableTurning(false);
-        pauseVignetteAnim.SetTrigger("Die");
 
     }
     private void DeadMenu()
