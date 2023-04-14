@@ -8,15 +8,21 @@ public class MeleeWeapon : MonoBehaviour
     public float hitSensetivity, minTravelDistance;
     public Transform leftAttach, rightAttach;
     public Transform tip;
+    [Range(0, 1)]
+    public float hapticIntensity;
+    public float duration;
 
     private Vector3 handPos;
     private Vector3 tipThisFrame, tipLastFrame, distanceTraveled;
     private XRGrabInteractable xrGrabInteractable;
-    private bool lethal, damageGiven, isHolding, left, savedPos;
+    private XRDirectInteractor leftInteractor, rightInteractor;
+    private bool lethal, canPlaySound, damageGiven, effectSpawned, isHolding, left, savedPos;
 
     private void Start()
     {
         xrGrabInteractable = GetComponent<XRGrabInteractable>();
+        leftInteractor = GameManager.instance.leftHand.GetComponent<XRDirectInteractor>();
+        rightInteractor = GameManager.instance.rightHand.GetComponent<XRDirectInteractor>();
     }
 
     private void Update()
@@ -54,6 +60,17 @@ public class MeleeWeapon : MonoBehaviour
             if (other.GetComponent<BodyPart>() != null && lethal)
             {
                 other.GetComponent<BodyPart>().TakeDamage(damage, stun, other.transform.position - transform.position);
+                other.GetComponent<BodyPart>().enemyHealth.GetComponent<RunningEnemy>().KnockBack();
+
+                if (left)
+                {
+                    leftInteractor.SendHapticImpulse(hapticIntensity, duration);
+                }
+                else
+                {
+                    rightInteractor.SendHapticImpulse(hapticIntensity, duration);
+                }
+
 
                 if (other.transform.GetComponent<BodyPart>() != null && other.transform.GetComponent<BodyPart>().crit)
                 {
@@ -65,7 +82,12 @@ public class MeleeWeapon : MonoBehaviour
                 }
                 damageGiven = true;
             }
-        }
+            else if(other.GetComponent<BodyPart>() != null && !effectSpawned && !lethal && canPlaySound)
+            {
+                EffectManager.instance.SpawnMeleeEffect(other.ClosestPointOnBounds(transform.position), 2, Quaternion.identity);
+                effectSpawned = true;
+            }
+        }  
     }
 
 
@@ -93,6 +115,18 @@ public class MeleeWeapon : MonoBehaviour
             tipLastFrame = tip.transform.position;
         }
 
+        if (distanceTraveled.magnitude > hitSensetivity * 0.4f)
+        {
+            canPlaySound = true;
+        }
+        else
+        {
+            if(isHolding)
+            {
+                effectSpawned = false;
+                canPlaySound = false;
+            }
+        }
 
         if (distanceTraveled.magnitude > hitSensetivity)
         {
@@ -115,7 +149,12 @@ public class MeleeWeapon : MonoBehaviour
         {
             savedPos = false;
             lethal = false;
-            damageGiven = false;
+            if (isHolding)
+            {
+                damageGiven = false;
+
+            }
         }
+
     }
 }

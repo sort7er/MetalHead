@@ -1068,9 +1068,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startHealth: 100
-  startPosture: 30
+  startPosture: 70
   postureRegenerationSpeed: 2.5
-  timeBeforeHide: 1.8
+  timeBeforeHide: 4
   hitConstraints: {fileID: 823870823}
 --- !u!114 &7141347437139885933
 MonoBehaviour:
@@ -1091,6 +1091,8 @@ MonoBehaviour:
   layersToCheck:
     serializedVersion: 2
     m_Bits: 5623
+  knockBackAmount: 0.7
+  knockBackSpeed: 8
   idleSpeed: 1
   idleSightRange: 8
   timeBeforeSus: 0.75
@@ -1140,7 +1142,7 @@ MonoBehaviour:
   checkCoverRadius: 1.96
   minPlayerDistance: 1
   defaultTimeCoverCheck: 0.25
-  hideSensitivity: -0.8
+  hideSensitivity: -0.6
   hidebleLayer:
     serializedVersion: 2
     m_Bits: 1024

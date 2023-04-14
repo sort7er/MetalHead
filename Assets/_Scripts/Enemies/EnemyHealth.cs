@@ -77,7 +77,7 @@ public class EnemyHealth : MonoBehaviour
             {
                 Die();
             }
-            hideTimer += startHealth * 0.01f - health * 0.01f + 1;
+            hideTimer += startHealth * 0.01f - health * 0.01f + damage * 0.1f;
 
             runningEnemy.EnemyAlert(GameManager.instance.XROrigin.transform.position);
         }

@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2153716437991282657}
   - component: {fileID: 2153716437991282686}
+  - component: {fileID: 5990708095021105431}
   m_Layer: 0
-  m_Name: WindUp
+  m_Name: HitNoDamageSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,17 +43,17 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ffafae6b1a0907246ae61c8c92a4c6bb, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
-  m_Pitch: 0.8
+  m_Pitch: 1.2
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 2
+  MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -128,3 +129,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5990708095021105431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2153716437991282685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c91fa78e6b14914587983d2ffd8735c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitSound:
+  - {fileID: 8300000, guid: 5f7f9011d9902774e934cdeeec7fe6f0, type: 3}
+  - {fileID: 8300000, guid: 731d6b13d393b4242917a3aff49617e9, type: 3}
+  - {fileID: 8300000, guid: b6b1d0e0cc638bf4fb27ef586e57a4bc, type: 3}
+  - {fileID: 8300000, guid: f85b176a89cf25b4b8192719de49c487, type: 3}

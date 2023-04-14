@@ -187,8 +187,9 @@ public class RunningEnemy : MonoBehaviour
         if (knockBack)
         {
             transform.position = Vector3.Lerp(transform.position, knockbackPos, knockBackSpeed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, knockbackPos) < 0.2f)
+            if (Vector3.Distance(transform.position, knockbackPos) <= 0.4f)
             {
+                agent.Resume();
                 knockBack = false;
             }
         }
@@ -468,7 +469,20 @@ public class RunningEnemy : MonoBehaviour
     public void KnockBack()
     {
         knockBack = true;
-        Vector3 tempPos = transform.position + (transform.position - GameManager.instance.XROrigin.transform.position) * knockBackAmount;
-        knockbackPos = new Vector3(tempPos.x, transform.position.y, tempPos.z);
+        Vector3 tempPos;
+        if (!Physics.Raycast(transform.position + new Vector3(0,1,0), (transform.position - GameManager.instance.XROrigin.transform.position).normalized, 1.5f, hidebleLayer))
+        {
+            tempPos = transform.position + (transform.position - GameManager.instance.XROrigin.transform.position).normalized * knockBackAmount;
+        }
+        else
+        {
+            tempPos = transform.position;
+        }
+        NavMeshHit myNavHit;
+        if (NavMesh.SamplePosition(new Vector3(tempPos.x, tempPos.y, tempPos.z), out myNavHit, 1, NavMesh.AllAreas))
+        {
+            knockbackPos = myNavHit.position;
+        }
+        agent.Stop();
     }
 }

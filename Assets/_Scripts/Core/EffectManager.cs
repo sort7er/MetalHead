@@ -11,6 +11,7 @@ public class EffectManager : MonoBehaviour
     public GameObject hitEnemyCrit;
     public GameObject hitEnemyMelee;
     public GameObject hitEnemyMeleeCrit;
+    public GameObject hitEnemyOnlySound;
     public GameObject parryEffect;
     public GameObject parrySoundEffect;
     public GameObject parryEffectUI;
@@ -132,6 +133,10 @@ public class EffectManager : MonoBehaviour
         {
             hitEffectToInstantiate = hitEnemyMeleeCrit;
         }
+        else if (type == 2)
+        {
+            hitEffectToInstantiate = hitEnemyOnlySound;
+        }
         else
         {
             hitEffectToInstantiate = hitEnemyMelee;
@@ -139,6 +144,6 @@ public class EffectManager : MonoBehaviour
 
         GameObject bulletHole = Instantiate(hitEffectToInstantiate, pos, rotation);
         bulletHole.transform.parent = ParentManager.instance.effects;
-        Destroy(bulletHole, 25f);
+        Destroy(bulletHole, 2f);
     }
 }
