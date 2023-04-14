@@ -8,6 +8,7 @@ public class Watch : MonoBehaviour
     public Slider healthSlider;
     public Image sliderFill;
     public Gradient healthColors;
+    public GameObject healthRing;
 
     public void SetNewHealth(int health, int maxHealth)
     {

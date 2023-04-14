@@ -64,6 +64,7 @@ public class PlayerHealth : MonoBehaviour
             difference = startPitch - endPitch;
             incerements = difference / startHealth;
             watch.UpdateHealth(currentHealth);
+            watch.healthRing.SetActive(true);
             healthVignette.Play("UpgradeHealth");
             currentHealthLevel++;
         }
