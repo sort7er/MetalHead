@@ -33,21 +33,34 @@ public class EffectManager : MonoBehaviour
     public void SpawnBulletHole(RaycastHit hit, int type)
     {
         GameObject hitEffectToInstantiate;
+        float pitch;
         if(type == 1)
         {
             hitEffectToInstantiate = hitEnemy;
+            pitch = 1;
         }
         else if(type == 2)
         {
             hitEffectToInstantiate = hitEnemyCrit;
+            pitch = 1;
+        }
+        else if (type == 3)
+        {
+            hitEffectToInstantiate = hitEnemy;
+            pitch = 1.4f;
         }
         else
         {
             hitEffectToInstantiate = bulletHolePrefab;
+            pitch = 1;
         }
 
         GameObject bulletHole = Instantiate(hitEffectToInstantiate, hit.point + hit.normal * 0.001f, Quaternion.LookRotation(hit.normal));
         bulletHole.transform.Rotate(Vector3.forward * Random.Range(-180, 180));
+        if(bulletHole.GetComponent<AudioSource>() != null)
+        {
+            bulletHole.GetComponent<AudioSource>().pitch = pitch;
+        }
         if (hit.rigidbody != null)
         {
             bulletHole.transform.parent = hit.transform;

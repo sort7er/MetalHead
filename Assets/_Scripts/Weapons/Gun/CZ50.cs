@@ -63,6 +63,10 @@ public class CZ50 : MonoBehaviour
                             {
                                 EffectManager.instance.SpawnBulletHole(hit, 2);
                             }
+                            else if (hit.transform.GetComponent<BodyPart>() != null && hit.transform.GetComponent<BodyPart>().bodyPart == 1)
+                            {
+                                EffectManager.instance.SpawnBulletHole(hit, 3);
+                            }
                             else if(hit.transform.GetComponent<BodyPart>() != null)
                             {
                                 EffectManager.instance.SpawnBulletHole(hit, 1);
@@ -95,6 +99,10 @@ public class CZ50 : MonoBehaviour
                                             if (secondHit.transform.GetComponent<BodyPart>() != null && secondHit.transform.GetComponent<BodyPart>().crit)
                                             {
                                                 EffectManager.instance.SpawnBulletHole(hit, 2);
+                                            }
+                                            else if (hit.transform.GetComponent<BodyPart>() != null && hit.transform.GetComponent<BodyPart>().bodyPart == 1)
+                                            {
+                                                EffectManager.instance.SpawnBulletHole(hit, 3);
                                             }
                                             else if(secondHit.transform.GetComponent<BodyPart>() != null)
                                             {
