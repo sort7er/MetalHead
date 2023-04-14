@@ -133,6 +133,8 @@ public class EnemyCoverState : EnemyBaseState
                         if (!NavMesh.FindClosestEdge(hit.position, out hit, agent.areaMask))
                         {
                             Debug.Log("Unable to find closest edge close to " + hit.position);
+                            Dodge();
+                            break;
                         }
                         if (Vector3.Dot(hit.normal, (target.position - hit.position).normalized) < runningEnemy.hideSensitivity)
                         {
@@ -169,6 +171,11 @@ public class EnemyCoverState : EnemyBaseState
                                         break;
                                     }
                                 }
+                            }
+                            else
+                            {
+                                Dodge();
+                                break;
                             }
                         }
                     }

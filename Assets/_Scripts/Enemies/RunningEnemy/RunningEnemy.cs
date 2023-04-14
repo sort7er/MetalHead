@@ -315,7 +315,7 @@ public class RunningEnemy : MonoBehaviour
     }
     public bool RandomPointOnNavMesh(Vector3 agentPos, float range, out Vector3 result)
     {
-        for (int i = 0; i < 30; i++)
+        for (int i = 0; i < 60; i++)
         {
             Vector3 randomPoint = agentPos + Random.insideUnitSphere * range;
             NavMeshHit hit;

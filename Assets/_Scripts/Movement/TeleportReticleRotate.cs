@@ -39,7 +39,7 @@ public class TeleportReticleRotate : MonoBehaviour
     private void Update()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, groundMask))
+        if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 2, groundMask))
         {
             normalDirection = hit.normal;
             forwardDirection = new Vector3(transform.forward.x, 0f, transform.forward.z);

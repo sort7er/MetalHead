@@ -12,6 +12,7 @@ public class TeleportationController : MonoBehaviour
     public Hand leftHand;
     public LayerMask bothTeleportLayers;
     public LayerMask teleportLayer;
+    public TeleportCheck teleportCheck;
 
     private XRInteractorLineVisual leftLineVisual;
     private InputAction thumbstickInputAction;
@@ -74,6 +75,11 @@ public class TeleportationController : MonoBehaviour
         }
         if (thumbstickInputAction.triggered)
         {
+            return;
+        }
+        if (teleportCheck.CannotTeleport())
+        {
+            SetRay(false);
             return;
         }
         if (!rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit rayCastHit))

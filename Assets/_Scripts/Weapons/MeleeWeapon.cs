@@ -29,21 +29,21 @@ public class MeleeWeapon : MonoBehaviour
         if (GameManager.instance.CheckHand("Handle") == 1)
         {
             xrGrabInteractable.attachTransform = leftAttach;
-            GameManager.instance.leftHand.GrabHandle(true);
+            GameManager.instance.leftHand.GrabWrench(true);
             left = true;
         }
         if (GameManager.instance.CheckHand("Handle") == 2)
         {
             xrGrabInteractable.attachTransform = rightAttach;
-            GameManager.instance.rightHand.GrabHandle(true);
+            GameManager.instance.rightHand.GrabWrench(true);
             left = false;
         }
         isHolding = true;
     }
     public void ReleaseMeleeWeapon()
     {
-        GameManager.instance.leftHand.GrabHandle(false);
-        GameManager.instance.rightHand.GrabHandle(false);
+        GameManager.instance.leftHand.GrabWrench(false);
+        GameManager.instance.rightHand.GrabWrench(false);
         isHolding = false;
     }
 

@@ -1094,8 +1094,8 @@ MonoBehaviour:
   idleSpeed: 1
   idleSightRange: 8
   timeBeforeSus: 0.75
-  idleMinTimeBetweenTargets: 100
-  idleMaxTimeBetweenTargets: 100
+  idleMinTimeBetweenTargets: 3
+  idleMaxTimeBetweenTargets: 7
   idleRandomDestinationRange: 7
   idleColor: {r: 0, g: 0.649231, b: 0.8490566, a: 1}
   susSpeed: 1.5
@@ -1789,6 +1789,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: -3469062452279440913, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: -3380176097789927003, guid: ecd7d82ee55e594499c7bc762a276d3d,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -1988,6 +1993,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517548005174987721, guid: ecd7d82ee55e594499c7bc762a276d3d,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 2521431665751493335, guid: ecd7d82ee55e594499c7bc762a276d3d,
         type: 3}

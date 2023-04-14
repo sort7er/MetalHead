@@ -108,6 +108,13 @@ public class Hand : MonoBehaviour
             handAnim.SetBool("GrabHandle", state);
         }
     }
+    public void GrabWrench(bool state)
+    {
+        if (handAnim != null)
+        {
+            handAnim.SetBool("GrabWrench", state);
+        }
+    }
     public void Hover(bool state)
     {
         if (handAnim != null)

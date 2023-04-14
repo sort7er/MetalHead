@@ -22,7 +22,7 @@ public class EnemySearchingState : EnemyBaseState
         enemy.agent.avoidancePriority = 51;
         if (enemy.pointOfInterest != null)
         {
-            enemy.DelayedCallback(enemy.searchingState, "PointOfInterestDelay", 0.1f);
+            enemy.DelayedCallback(enemy.searchingState, "PointOfInterestDelay", 0.02f);
             lookingDone = false;
         }
         else
