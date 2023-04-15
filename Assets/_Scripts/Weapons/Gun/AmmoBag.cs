@@ -28,10 +28,13 @@ public class AmmoBag : MonoBehaviour
         {
             CancelInvoke();
             magazineToDrop = other.gameObject;
+            handIn = true;
+            ammoPouchAnim.SetBool("Open", true);
+            CheckAmmoStatus();
         }
-        if (other.CompareTag("Interactor"))
+        if (other.CompareTag("Interactor") && GameManager.instance.CheckHand("Magazine") == 0)
         {
-            if(magPos.childCount > 0 && GameManager.instance.CheckHand("Magazine") == 0)
+            if(magPos.childCount > 0)
             {
                 foreach (Transform m in magPos)
                 {
@@ -44,6 +47,7 @@ public class AmmoBag : MonoBehaviour
             handIn= true;
             ammoPouchAnim.SetBool("Open", true);
             CheckAmmoStatus();
+            Debug.Log("2");
         }
     }
     private void OnTriggerExit(Collider other)
@@ -51,13 +55,13 @@ public class AmmoBag : MonoBehaviour
         if (other.CompareTag("Magazine"))
         {
             magazineToDrop = null;
+            handIn = false;
+            ammoPouchAnim.SetBool("Open", false);
+            CheckAmmoStatus();
         }
-        if (other.CompareTag("Interactor"))
+        if (other.CompareTag("Interactor") && GameManager.instance.CheckHand("Magazine") == 0)
         {
-            if (GameManager.instance.CheckHand("Magazine") == 0)
-            {
-                Invoke("DisableMagToDrop", 0.2f);
-            }
+            Invoke("DisableMagToDrop", 0.2f);
             handIn = false;
             if(magPos.childCount > 0)
             {

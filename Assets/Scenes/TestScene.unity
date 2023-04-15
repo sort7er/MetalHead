@@ -10393,7 +10393,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!135 &357764929
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -25189,7 +25189,6 @@ MonoBehaviour:
   m_InteractionManager: {fileID: 1932161246}
   m_Colliders:
   - {fileID: 839937773}
-  - {fileID: 357764929}
   m_InteractionLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -31620,6 +31619,7 @@ GameObject:
   - component: {fileID: 1166752410}
   - component: {fileID: 1166752412}
   - component: {fileID: 1166752414}
+  - component: {fileID: 1166752415}
   m_Layer: 2
   m_Name: Right Hand Controller
   m_TagString: Interactor
@@ -31660,7 +31660,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.1
   m_Center: {x: 0, y: 0, z: 0}
@@ -31676,7 +31676,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4253f32900bcc4d499d675566142ded0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_InteractionManager: {fileID: 0}
+  m_InteractionManager: {fileID: 1932161246}
   m_InteractionLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -32001,6 +32001,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &1166752415
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166752404}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.15, y: 0.15, z: 1.5021989}
+  m_Center: {x: -1.0741941e-10, y: 0, z: 0.67610276}
 --- !u!43 &1168235871
 Mesh:
   m_ObjectHideFlags: 0
@@ -46753,6 +46774,7 @@ GameObject:
   - component: {fileID: 1595786479}
   - component: {fileID: 1595786480}
   - component: {fileID: 1595786481}
+  - component: {fileID: 1595786482}
   m_Layer: 2
   m_Name: Left Hand Controller
   m_TagString: Interactor
@@ -46793,7 +46815,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.1
   m_Center: {x: 0, y: 0, z: 0}
@@ -46809,7 +46831,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4253f32900bcc4d499d675566142ded0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_InteractionManager: {fileID: 0}
+  m_InteractionManager: {fileID: 1932161246}
   m_InteractionLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -47146,6 +47168,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &1595786482
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1595786469}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.15, y: 0.15, z: 1.9306996}
+  m_Center: {x: 4.9595483e-10, y: 0, z: 0.8903527}
 --- !u!1 &1599346081
 GameObject:
   m_ObjectHideFlags: 0
