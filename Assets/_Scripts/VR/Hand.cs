@@ -1,11 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
+using UnityEngine.XR.Interaction.Toolkit;
+
 public class Hand : MonoBehaviour
 {
     public GameObject handPrefab;
     public InputDeviceCharacteristics controllerCharacteristics;
+    [Range(0, 1)]
+    public float hoverHapticIntensity;
+    public float hoverDuration;
 
+    private XRDirectInteractor interactor;
     private GameObject spawnedHand;
     private InputDevice targetDevice;
     private Animator handAnim;
@@ -14,6 +20,7 @@ public class Hand : MonoBehaviour
 
     private void Start()
     {
+        interactor = GetComponent<XRDirectInteractor>();
         InitializeHand();
     }
 
@@ -115,11 +122,34 @@ public class Hand : MonoBehaviour
             handAnim.SetBool("GrabWrench", state);
         }
     }
-    public void Hover(bool state)
+
+    public void Hover()
+    {
+        List<XRBaseInteractable> hoveredObjects = new List<XRBaseInteractable>();
+        interactor.GetHoverTargets(hoveredObjects);
+
+        foreach(var interactable in hoveredObjects)
+        {
+            if(interactable.GetComponent<XRGrabInteractable>() != null || interactable.GetComponent<XRSimpleInteractable>() != null)
+            {
+                if(!interactable.isSelected)
+                {
+                    if (handAnim != null)
+                    {
+                        interactor.SendHapticImpulse(hoverHapticIntensity, hoverDuration);
+                        handAnim.SetBool("Hover", true);
+                    }
+                }
+            }
+        }
+
+        
+    }
+    public void HoverDone()
     {
         if (handAnim != null)
         {
-            handAnim.SetBool("Hover", state);
+            handAnim.SetBool("Hover", false);
         }
     }
 
