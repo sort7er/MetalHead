@@ -32,13 +32,13 @@ public class MeleeWeapon : MonoBehaviour
 
     public void GrabMeleeWeapon()
     {
-        if (GameManager.instance.CheckHand("Handle") == 1)
+        if (GameManager.instance.CheckHand("Wrench") == 1)
         {
             xrGrabInteractable.attachTransform = leftAttach;
             GameManager.instance.leftHand.GrabWrench(true);
             left = true;
         }
-        if (GameManager.instance.CheckHand("Handle") == 2)
+        if (GameManager.instance.CheckHand("Wrench") == 2)
         {
             xrGrabInteractable.attachTransform = rightAttach;
             GameManager.instance.rightHand.GrabWrench(true);

@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class AmmoBox : MonoBehaviour
 {
-    public float smoothTime;
+    public float startSmoothTime;
     public GameObject box;
     public int numberOfBulletsToAdd = 10;
 
+    private float smoothTime;
     private Vector3 targetPos;
     private AudioSource ammoBoxSource;
     private BoxCollider boxCollider;
@@ -14,6 +15,7 @@ public class AmmoBox : MonoBehaviour
 
     private void Start()
     {
+        smoothTime = startSmoothTime;
         rb = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
         ammoBoxSource = GetComponent<AudioSource>();
@@ -50,6 +52,7 @@ public class AmmoBox : MonoBehaviour
                 targetPos = GameManager.instance.rightHand.transform.position;
             }
 
+            smoothTime += 0.2f;
             transform.position = Vector3.MoveTowards(transform.position, targetPos, smoothTime * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetPos) <= 0.05f && !pickedUp)
             {
