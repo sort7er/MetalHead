@@ -77,10 +77,24 @@ public class EffectManager : MonoBehaviour
     {
         for(int i = 0; i < numberOfPickups; i++)
         {
-            int randomPickup = Random.Range(0, pickUp.Length);
-            GameObject pickup = Instantiate(pickUp[randomPickup], enemy.position, Quaternion.identity);
+            int randomNumber = Random.Range(0, 100);
+            int pickupNumber;
+            if(randomNumber >= 82)
+            {
+                pickupNumber = 0;
+            }
+            else if(randomNumber >= 50)
+            {
+                pickupNumber = 1;
+            }
+            else
+            {
+                pickupNumber = 2;
+            }
+
+            GameObject pickup = Instantiate(pickUp[pickupNumber], enemy.position, Quaternion.identity);
             pickup.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-2,2), 2, Random.Range(-2, 2)), ForceMode.Impulse);
-            pickup.GetComponent<Pickup>().SetPickupID(randomPickup);
+            pickup.GetComponent<Pickup>().SetPickupID(pickupNumber);
             pickup.transform.parent = ParentManager.instance.pickups;
         }
     }

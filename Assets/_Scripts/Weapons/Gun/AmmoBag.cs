@@ -47,7 +47,6 @@ public class AmmoBag : MonoBehaviour
             handIn= true;
             ammoPouchAnim.SetBool("Open", true);
             CheckAmmoStatus();
-            Debug.Log("2");
         }
     }
     private void OnTriggerExit(Collider other)
