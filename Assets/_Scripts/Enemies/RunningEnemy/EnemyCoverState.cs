@@ -36,6 +36,12 @@ public class EnemyCoverState : EnemyBaseState
         canLeft = false;
         canRight = false;
         direction = 0;
+        NavMeshHit myNavHit;
+        if (NavMesh.SamplePosition(runningEnemy.transform.position, out myNavHit, 1, NavMesh.AllAreas))
+        {
+            runningEnemy.transform.position = myNavHit.position;
+        }
+        
         Hide(GameManager.instance.XROrigin.transform);
     }
 
@@ -138,6 +144,12 @@ public class EnemyCoverState : EnemyBaseState
                         }
                         if (Vector3.Dot(hit.normal, (target.position - hit.position).normalized) < runningEnemy.hideSensitivity)
                         {
+                            NavMeshHit myNavHit;
+                            if (NavMesh.SamplePosition(runningEnemy.transform.position, out myNavHit, 1, NavMesh.AllAreas))
+                            {
+                                runningEnemy.transform.position = myNavHit.position;
+                            }
+
                             destination = hit.position;
                             colliderChosen = colliders[i];
                             runningEnemy.SetNavMeshDestination(destination);
@@ -156,6 +168,12 @@ public class EnemyCoverState : EnemyBaseState
                                 }
                                 if (Vector3.Dot(hit2.normal, (target.position - hit2.position).normalized) < runningEnemy.hideSensitivity)
                                 {
+                                    NavMeshHit myNavHit;
+                                    if (NavMesh.SamplePosition(runningEnemy.transform.position, out myNavHit, 1, NavMesh.AllAreas))
+                                    {
+                                        runningEnemy.transform.position = myNavHit.position;
+                                    }
+
                                     destination = hit2.position;
                                     colliderChosen = colliders[i];
                                     runningEnemy.SetNavMeshDestination(destination);

@@ -1,27 +1,24 @@
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.Events;
 
-public class HealthRing : MonoBehaviour
+public class FlyToInteractorWhenPickup : MonoBehaviour
 {
-
     public float startSmoothTime;
+    public UnityEvent whenPickedUp;
 
     private Vector3 targetPos;
-    private PlayerHealth playerHealth;
     private float smoothTime;
     private bool left, pickedUp, grabbed;
 
     private void Start()
     {
         smoothTime = startSmoothTime;
-        playerHealth = GameManager.instance.XROrigin.GetComponent<PlayerHealth>();
     }
 
     private void Update()
     {
-        if(grabbed)
+        if (grabbed)
         {
-
             if (left)
             {
                 targetPos = GameManager.instance.leftHand.transform.position;
@@ -36,14 +33,13 @@ public class HealthRing : MonoBehaviour
             if (Vector3.Distance(transform.position, targetPos) <= 0.05f && !pickedUp)
             {
                 pickedUp = true;
-                playerHealth.UpgradeHealth();
-                EffectManager.instance.SpawnMessage("+ 50 max health");
+                whenPickedUp.Invoke();
                 Destroy(gameObject);
             }
         }
     }
 
-    public void GrabRing()
+    public void Grab()
     {
         if (!grabbed)
         {

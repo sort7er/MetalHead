@@ -122,7 +122,31 @@ public class Hand : MonoBehaviour
             handAnim.SetBool("GrabWrench", state);
         }
     }
+    public void CheckHover()
+    {
+        List<XRBaseInteractable> hoveredObjects = new List<XRBaseInteractable>();
+        interactor.GetHoverTargets(hoveredObjects);
 
+        foreach (var interactable in hoveredObjects)
+        {
+            if (!interactable.GetComponent<TeleportationArea>())
+            {
+                if(interactable.isSelected)
+                {
+                    handAnim.SetBool("Hover", false);
+                }
+            }
+        }
+    }
+    public void Grab()
+    {
+        if (!interactor.selectTarget.GetComponent<TeleportationArea>())
+        {
+            interactor.SendHapticImpulse(hoverHapticIntensity * 2, hoverDuration * 2);
+            GameManager.instance.rightHand.CheckHover();
+            GameManager.instance.leftHand.CheckHover();
+        }
+    }
     public void Hover()
     {
         List<XRBaseInteractable> hoveredObjects = new List<XRBaseInteractable>();

@@ -61,6 +61,11 @@ public class EnemyKickState : EnemyBaseState
             kickableToKick.IsBeeingKicked(false);
             enemy.SwitchState(enemy.stunnedState);
         }
+        if (enemy.hiding)
+        {
+            kickableToKick.IsBeeingKicked(false);
+            enemy.SwitchState(enemy.coverState);
+        }
     }
     public void KickStartUp()
     {
