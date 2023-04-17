@@ -26,7 +26,7 @@ public class Hand : MonoBehaviour
 
     private void Update()
     {
-        if(!targetDevice.isValid)
+        if (!targetDevice.isValid)
         {
             InitializeHand();
         }
@@ -41,7 +41,7 @@ public class Hand : MonoBehaviour
         List<InputDevice> devices = new List<InputDevice>();
         InputDevices.GetDevicesWithCharacteristics(controllerCharacteristics, devices);
 
-        if(devices.Count > 0 )
+        if (devices.Count > 0)
         {
             targetDevice = devices[0];
 
@@ -54,7 +54,7 @@ public class Hand : MonoBehaviour
 
     private void UpdateHand()
     {
-        if(targetDevice.TryGetFeatureValue(CommonUsages.trigger, out float triggerValue))
+        if (targetDevice.TryGetFeatureValue(CommonUsages.trigger, out float triggerValue))
         {
             handAnim.SetFloat("Trigger", triggerValue);
         }
@@ -75,7 +75,7 @@ public class Hand : MonoBehaviour
 
     public void UsingRay(bool state)
     {
-        if(handAnim!= null)
+        if (handAnim != null)
         {
             handAnim.SetBool("UsingRay", state);
         }
@@ -131,7 +131,7 @@ public class Hand : MonoBehaviour
         {
             if (!interactable.GetComponent<TeleportationArea>())
             {
-                if(interactable.isSelected)
+                if (interactable.isSelected)
                 {
                     handAnim.SetBool("Hover", false);
                 }
@@ -152,11 +152,11 @@ public class Hand : MonoBehaviour
         List<XRBaseInteractable> hoveredObjects = new List<XRBaseInteractable>();
         interactor.GetHoverTargets(hoveredObjects);
 
-        foreach(var interactable in hoveredObjects)
+        foreach (var interactable in hoveredObjects)
         {
-            if(interactable.GetComponent<XRGrabInteractable>() != null || interactable.GetComponent<XRSimpleInteractable>() != null)
+            if (interactable.GetComponent<XRGrabInteractable>() != null || interactable.GetComponent<XRSimpleInteractable>() != null)
             {
-                if(!interactable.isSelected)
+                if (!interactable.isSelected)
                 {
                     if (handAnim != null)
                     {
@@ -167,7 +167,7 @@ public class Hand : MonoBehaviour
             }
         }
 
-        
+
     }
     public void HoverDone()
     {
@@ -180,8 +180,8 @@ public class Hand : MonoBehaviour
     public void NewParent(Transform newParent, Transform attachTransform)
     {
         spawnedHand.transform.parent = newParent;
-        spawnedHand.transform.position= attachTransform.position;
-        spawnedHand.transform.rotation= attachTransform.rotation;
+        spawnedHand.transform.position = attachTransform.position;
+        spawnedHand.transform.rotation = attachTransform.rotation;
     }
     public void OriginalParent()
     {
