@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class EffectManager : MonoBehaviour
 {
+    [Header("VisualEffects")]
     public static EffectManager instance;
     public GameObject bulletPrefab;
     public GameObject bulletHolePrefab;
@@ -11,14 +12,19 @@ public class EffectManager : MonoBehaviour
     public GameObject hitEnemyCrit;
     public GameObject hitEnemyMelee;
     public GameObject hitEnemyMeleeCrit;
-    public GameObject hitEnemyOnlySound;
     public GameObject parryEffect;
-    public GameObject parrySoundEffect;
     public GameObject parryEffectUI;
     public GameObject popUpMessage;
     public GameObject enemyDeadEffect;
     public GameObject[] pickUp;
     public GameObject[] pickUpEffect;
+
+    [Header("SoundEffects")]
+    public GameObject keyPickup;
+    public GameObject keyOpen;
+    public GameObject parrySoundEffect;
+    public GameObject hitEnemyOnlySound;
+
 
     private void Awake()
     {
@@ -166,5 +172,20 @@ public class EffectManager : MonoBehaviour
         GameObject canvas = Instantiate(popUpMessage, spawnPos, Quaternion.identity, ParentManager.instance.effects);
         canvas.GetComponent<PopUpMessage>().SetMessage(text);
         Destroy(canvas, 2f);
+    }
+
+    public void Key(Vector3 position , int type)
+    {
+        GameObject effectToInstantiate;
+        if (type == 0)
+        {
+            effectToInstantiate = keyPickup;
+        }
+        else
+        {
+            effectToInstantiate = keyOpen;
+        }
+        GameObject sfx = Instantiate(effectToInstantiate, position, Quaternion.identity, ParentManager.instance.effects);
+        Destroy(sfx, 2f);
     }
 }

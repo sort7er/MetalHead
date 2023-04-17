@@ -133,6 +133,7 @@ public class Chest : MonoBehaviour
             key.transform.position = keySlot.position;
             key.transform.rotation = keySlot.rotation;
             chestAnim.SetTrigger("Open");
+            EffectManager.instance.Key(transform.position, 1);
             Invoke(nameof(SpawnPickUps), 1.1f);
             opened = true;
             holdingKey = true;
@@ -153,5 +154,6 @@ public class Chest : MonoBehaviour
     {
         keyObtained = true;
         EffectManager.instance.SpawnMessage("Key obtained");
+        EffectManager.instance.Key(GameManager.instance.XROrigin.transform.position, 0);
     }
 }
