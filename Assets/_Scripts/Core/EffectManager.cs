@@ -15,6 +15,7 @@ public class EffectManager : MonoBehaviour
     public GameObject parryEffect;
     public GameObject parrySoundEffect;
     public GameObject parryEffectUI;
+    public GameObject popUpMessage;
     public GameObject enemyDeadEffect;
     public GameObject[] pickUp;
     public GameObject[] pickUpEffect;
@@ -156,8 +157,14 @@ public class EffectManager : MonoBehaviour
             hitEffectToInstantiate = hitEnemyMelee;
         }
 
-        GameObject bulletHole = Instantiate(hitEffectToInstantiate, pos, rotation);
-        bulletHole.transform.parent = ParentManager.instance.effects;
+        GameObject bulletHole = Instantiate(hitEffectToInstantiate, pos, rotation, ParentManager.instance.effects);
         Destroy(bulletHole, 2f);
+    }
+    public void SpawnMessage(string text)
+    {
+        Vector3 spawnPos = new Vector3(GameManager.instance.XROrigin.transform.position.x + GameManager.instance.cam.transform.forward.x, GameManager.instance.cam.transform.position.y + GameManager.instance.cam.transform.forward.y, GameManager.instance.XROrigin.transform.position.z + GameManager.instance.cam.transform.forward.z);
+        GameObject canvas = Instantiate(popUpMessage, spawnPos, Quaternion.identity, ParentManager.instance.effects);
+        canvas.GetComponent<PopUpMessage>().SetMessage(text);
+        Destroy(canvas, 2f);
     }
 }

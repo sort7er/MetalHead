@@ -3,25 +3,29 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class Chest : MonoBehaviour
 {
+    public float smoothTime;
     public GameObject treasureToSpawn;
-    public Transform tresurePosition;
-    public GameObject key;
+    public Transform tresurePosition, keySlot;
+    public GameObject key, canvas;
 
+
+    private RotateObject rotateObject;
+    private DynamicTrigger dynamicTrigger;
     private Rigidbody keyrb;
-    private Collider keyCollider;
-    private SphereCollider keyTrigger;
-    private XRSocketInteractor keyHole;
+    private XRGrabInteractable keyInteractable;
     private Animator chestAnim;
-    public bool opened, keyObtained, holdingKey, insideTrigger;
+    private bool opened, keyObtained, holdingKey, insideTrigger, lerpBack;
+    private XRGrabInteractable treasueInteractable;
 
     private void Start()
     {
+        rotateObject = GetComponentInChildren<RotateObject>();
+        dynamicTrigger = GetComponentInChildren<DynamicTrigger>();
         keyrb = key.GetComponent<Rigidbody>();
-        keyCollider = key.GetComponent<Collider>();
-        keyTrigger = key.GetComponentInChildren<SphereCollider>();
-        keyHole = GetComponentInChildren<XRSocketInteractor>();
-        chestAnim= GetComponent<Animator>();
+        keyInteractable = key.GetComponent<XRGrabInteractable>();
+        chestAnim = GetComponent<Animator>();
         HideKey();
+        rotateObject.enabled = true;
     }
     private void Update()
     {
@@ -29,7 +33,7 @@ public class Chest : MonoBehaviour
         {
             if (!insideTrigger)
             {
-                Hover();
+                Inside();
                 insideTrigger = true;
             }
         }
@@ -37,60 +41,117 @@ public class Chest : MonoBehaviour
         {
             if (insideTrigger)
             {
-                HoverDone();
+                Outside();
                 insideTrigger = false;
+            }
+        }
+        if(lerpBack)
+        {
+            key.transform.localPosition = Vector3.Lerp(key.transform.localPosition, Vector3.zero, Time.deltaTime * smoothTime);
+            if(Vector3.Distance(key.transform.localPosition, Vector3.zero) < 0.2f)
+            {
+                lerpBack = false;
+                key.transform.localPosition = Vector3.zero;
+                rotateObject.enabled = true;
+                if (!insideTrigger)
+                {
+                    StartHidingKey();
+                }
             }
         }
     }
 
-    public void Hover()
+    public void Inside()
     {
         CancelInvoke();
         if (keyObtained)
         {
-            chestAnim.SetBool("Key", true);
             key.SetActive(true);
+            
         }
-    }
-    public void HoverDone()
-    {
-        if (keyObtained && !opened && !holdingKey)
+        else
         {
-            key.transform.localPosition = Vector3.zero;
-            chestAnim.SetBool("Key", false);
-            Invoke(nameof(HideKey), 0.5f);
+            canvas.SetActive(true);
+        }
+        chestAnim.SetBool("Key", true);
+        Invoke(nameof(StartShowingKey), 0.5f);
+    }
+    public void Outside()
+    {
+        if (!opened && !holdingKey && !lerpBack)
+        {
+            StartHidingKey();
         }
     }
+    private void StartShowingKey()
+    {
+        if(!opened)
+        {
+            keyInteractable.enabled = true;
+        }
+    }
+    private void StartHidingKey()
+    {
+        keyInteractable.enabled= false;
+        chestAnim.SetBool("Key", false);
+        Invoke(nameof(HideKey), 0.5f);
+    }
+
     private void HideKey()
     {
-
+        key.transform.localPosition = Vector3.zero;
         key.SetActive(false);
+        rotateObject.enabled = true;
         keyrb.useGravity = false;
         keyrb.isKinematic = true;
+        canvas.SetActive(false);
     }
-    public void HoldingKey(bool state)
+    public void GrabKey()
     {
-        holdingKey = state;
-        if(!holdingKey)
+        holdingKey = true;
+        rotateObject.enabled = false;
+    }
+    public void ReleaseKey()
+    {
+        holdingKey = false;
+        Invoke(nameof(CheckIfInChest), 0.05f);
+    }
+    private void CheckIfInChest()
+    {
+        if (!holdingKey)
         {
-            HoverDone();
+            lerpBack = true;
         }
     }
+
     public void Open()
     {
         if (!opened)
         {
-            keyCollider.enabled = false;
-            keyTrigger.enabled = false;
+            keyInteractable.enabled = false;
+            key.transform.parent = keySlot;
+            key.transform.position = keySlot.position;
+            key.transform.rotation = keySlot.rotation;
             chestAnim.SetTrigger("Open");
             Invoke(nameof(SpawnPickUps), 1.1f);
             opened = true;
-            Instantiate(treasureToSpawn, tresurePosition.position, Quaternion.identity, tresurePosition);
+            holdingKey = true;
+            GameObject ring = Instantiate(treasureToSpawn, tresurePosition.position, Quaternion.identity, tresurePosition);
+            treasueInteractable = ring.GetComponent<XRGrabInteractable>();
+            treasueInteractable.enabled = false;
         }
     }
 
     private void SpawnPickUps()
     {
         EffectManager.instance.SpawnPickups(transform, 10);
+        treasueInteractable.enabled = true;
+        
+    }
+
+    public void KeyObtained()
+    {
+        keyObtained = true;
+        EffectManager.instance.SpawnMessage("Key obtained");
     }
 }
