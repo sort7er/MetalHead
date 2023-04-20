@@ -12,6 +12,7 @@ public class MeleeWeapon : MonoBehaviour
     public float hapticIntensity;
     public float duration;
 
+    private int actualDamage, actualStun;
     private Vector3 handPos;
     private Vector3 tipThisFrame, tipLastFrame, distanceTraveled;
     private XRGrabInteractable xrGrabInteractable;
@@ -59,7 +60,27 @@ public class MeleeWeapon : MonoBehaviour
         {
             if (other.GetComponent<BodyPart>() != null && lethal)
             {
-                other.GetComponent<BodyPart>().TakeDamage(damage, stun, other.transform.position - transform.position);
+                int randomNumber = Random.Range(0, 100);
+                if (randomNumber > 65)
+                {
+                    actualDamage = damage * Random.Range(2,7);
+                    actualStun = stun * Random.Range(2,7);
+                    Debug.Log("lol");
+                }
+                else
+                {
+                    actualDamage = damage;
+                    actualStun = stun;
+                }
+
+                if (!isHolding)
+                {
+                    actualDamage *= 3;
+                    actualStun *= 3;
+                }
+
+
+                other.GetComponent<BodyPart>().TakeDamage(actualDamage, actualStun, other.transform.position - transform.position);
                 other.GetComponent<BodyPart>().enemyHealth.GetComponent<RunningEnemy>().KnockBack();
 
                 if (left)

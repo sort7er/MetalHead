@@ -23,6 +23,7 @@ public class EffectManager : MonoBehaviour
     public GameObject keyPickup;
     public GameObject keyOpen;
     public GameObject parrySoundEffect;
+    public GameObject parryFailedSoundEffect;
     public GameObject hitEnemyOnlySound;
 
 
@@ -135,9 +136,18 @@ public class EffectManager : MonoBehaviour
         effect.transform.parent = ParentManager.instance.effects;
         Destroy(effect, 2);
     }
-    public void SpawnParrySoundEffect(Vector3 positionToSpawn)
+    public void SpawnParrySoundEffect(Vector3 positionToSpawn, int type)
     {
-        GameObject effect = Instantiate(parrySoundEffect, positionToSpawn, Quaternion.identity);
+        GameObject sfxToInstantiate;
+        if (type == 1)
+        {
+            sfxToInstantiate = parryFailedSoundEffect;
+        }
+        else
+        {
+            sfxToInstantiate = parrySoundEffect;
+        }
+        GameObject effect = Instantiate(sfxToInstantiate, positionToSpawn, Quaternion.identity);
         effect.transform.parent = ParentManager.instance.effects;
         Destroy(effect, 2);
     }

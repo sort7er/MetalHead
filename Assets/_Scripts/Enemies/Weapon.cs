@@ -37,12 +37,12 @@ public class Weapon : MonoBehaviour
             playerHealth.TakeDamage(damage[numberToCheck]);
         }
 
-        if(errorMargin && (leftParry || rightParry))
+        if(errorMargin && (leftParry || rightParry) && !parryFailed)
         {
-            Debug.Log("lol");
             parryFailed = true;
             shieldImages[0].sprite = shieldSprites[2];
             shieldImages[1].gameObject.SetActive(false);
+            EffectManager.instance.SpawnParrySoundEffect(transform.position, 1);
         }
 
         if ((leftParry || rightParry) && canParry && !isParrying && !parryFailed)
@@ -58,9 +58,9 @@ public class Weapon : MonoBehaviour
             }
             EffectManager.instance.SpawnParryEffect(positionToSpawn);
             EffectManager.instance.SpawnParryEffectUI(canvasPos.position);
-            CannotParry();
-            NotLethal();
             isParrying = true;
+            NotLethal();
+            CannotParry();
         }
     }
 
@@ -74,6 +74,7 @@ public class Weapon : MonoBehaviour
     {
         numberToCheck = whichAttack - 1;
         lethal = true;
+        CannotParry();
     }
     public void NotLethal()
     {
@@ -85,6 +86,9 @@ public class Weapon : MonoBehaviour
     {
         errorMargin = true;
         parryFailed = false;
+    }
+    public void StartVisual()
+    {
         shieldImages[0].sprite = shieldSprites[0];
         shieldImages[1].gameObject.SetActive(true);
     }
@@ -93,12 +97,12 @@ public class Weapon : MonoBehaviour
         if(!parryFailed)
         {
             shieldImages[0].sprite = shieldSprites[1];
+            EffectManager.instance.SpawnParrySoundEffect(transform.position, 0);
         }
         shieldImages[1].gameObject.SetActive(false);
         canParry = true;
         errorMargin = false;
         numberToCheck = whichAttack - 1;
-        EffectManager.instance.SpawnParrySoundEffect(transform.position);
     }
     public void CannotParry()
     {

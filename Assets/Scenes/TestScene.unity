@@ -21595,6 +21595,8 @@ MonoBehaviour:
   keyOpen: {fileID: 6041325228870697367, guid: 07624485ccc8e9b4bb51f8c8bb553992, type: 3}
   parrySoundEffect: {fileID: 2153716437991282685, guid: 079bfeeba39e88d489f8b12ec706a3ae,
     type: 3}
+  parryFailedSoundEffect: {fileID: 6421501179339082572, guid: d19d3c48ccd9a7242b904fa37a9500ac,
+    type: 3}
   hitEnemyOnlySound: {fileID: 2153716437991282685, guid: a1b464b2fb779034093ad484d6d57397,
     type: 3}
 --- !u!114 &590820404
@@ -37132,8 +37134,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.15, y: 0.15, z: 1.5021989}
-  m_Center: {x: -1.0741941e-10, y: 0, z: 0.67610276}
+  m_Size: {x: 0.15, y: 0.15, z: 1.9306996}
+  m_Center: {x: 4.9595483e-10, y: 0, z: 0.8903527}
 --- !u!120 &1166752416
 LineRenderer:
   serializedVersion: 2
@@ -39696,16 +39698,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7141347437139885931, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
-        type: 3}
-      propertyPath: timeBeforeHide
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
-        type: 3}
-      propertyPath: knockBackAmount
-      value: 0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -72350,6 +72342,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7141347437139885931, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
+        type: 3}
+      propertyPath: timeBeforeHide
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7141347437139885933, guid: c3eb64ec0e31f8d46bbe18d5d8faa80b,
+        type: 3}
+      propertyPath: knockBackAmount
+      value: 0.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

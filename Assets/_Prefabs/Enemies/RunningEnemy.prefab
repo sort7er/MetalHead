@@ -1147,7 +1147,7 @@ MonoBehaviour:
   startHealth: 100
   startPosture: 70
   postureRegenerationSpeed: 2.5
-  timeBeforeHide: 4
+  timeBeforeHide: 0.5
   hitConstraints: {fileID: 823870823}
 --- !u!114 &7141347437139885933
 MonoBehaviour:
@@ -1164,11 +1164,11 @@ MonoBehaviour:
   defaultTurnSmoothTime: 10
   defaultTimeBetweenDistanceCheck: 0.25
   defaultFOV: 180
-  distanceBeforeImmediateDetection: 1.5
+  distanceBeforeImmediateDetection: 2.2
   layersToCheck:
     serializedVersion: 2
     m_Bits: 5623
-  knockBackAmount: 0.7
+  knockBackAmount: 0.4
   knockBackSpeed: 8
   idleSpeed: 1
   idleSightRange: 8
@@ -1248,8 +1248,8 @@ MonoBehaviour:
   - {fileID: 2005427138}
   - {fileID: 1031885175}
   glowingParts:
-  - {fileID: 8420249202725281676}
   - {fileID: 8420249203053017051}
+  - {fileID: 8420249202725281676}
   testCube: {fileID: 0}
   parryCanvas: {fileID: 7141347436004945928}
   directionToPlayer: {x: 0, y: 0, z: 0}
@@ -4877,8 +4877,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyHealth: {fileID: 7141347437139885931}
-  stunMultiplier: 2
-  damageMultiplier: 2
+  stunMultiplier: 2.5
+  damageMultiplier: 2.5
   bodyPart: 6
   crit: 1
 --- !u!1 &9092828022014555271 stripped
@@ -5165,8 +5165,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyHealth: {fileID: 7141347437139885931}
-  stunMultiplier: 2
-  damageMultiplier: 2
+  stunMultiplier: 2.5
+  damageMultiplier: 2.5
   bodyPart: 1
   crit: 1
 --- !u!54 &828247000

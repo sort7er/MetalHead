@@ -63,7 +63,7 @@ public class Chest : MonoBehaviour
 
     public void Inside()
     {
-        CancelInvoke();
+        CancelInvoke(nameof(HideKey));
         if (keyObtained)
         {
             key.SetActive(true);
