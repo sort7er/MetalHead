@@ -61,10 +61,10 @@ public class MeleeWeapon : MonoBehaviour
             if (other.GetComponent<BodyPart>() != null && lethal)
             {
                 int randomNumber = Random.Range(0, 100);
-                if (randomNumber > 65)
+                if (randomNumber > 72)
                 {
-                    actualDamage = damage * Random.Range(2,7);
-                    actualStun = stun * Random.Range(2,7);
+                    actualDamage = damage * Random.Range(2,6);
+                    actualStun = stun * Random.Range(2,6);
                     Debug.Log("lol");
                 }
                 else

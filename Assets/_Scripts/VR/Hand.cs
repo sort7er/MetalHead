@@ -197,17 +197,20 @@ public class Hand : MonoBehaviour
         {
             if(interactable.GetComponent<XRGrabInteractable>() != null || interactable.GetComponent<XRSimpleInteractable>() != null)
             {
-                float dist = Vector3.Distance(interactable.transform.position, transform.position);
-                if(dist < minDist)
+                if (!interactable.isSelected)
                 {
-                    closestInteractable = interactable;
-                    minDist = dist;
+                    float dist = Vector3.Distance(interactable.transform.position, transform.position);
+                    if (dist < minDist)
+                    {
+                        closestInteractable = interactable;
+                        minDist = dist;
+                    }
                 }
             }
         }
         
 
-        if (closestInteractable != null && !closestInteractable.isSelected)
+        if (closestInteractable != null)
         {
             if (handAnim != null)
             {
