@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR;
 
 public class Weapon : MonoBehaviour
@@ -8,6 +9,8 @@ public class Weapon : MonoBehaviour
     public int[] damage;
     public float parrySensetivity = 5f;
     public Transform canvasPos;
+    public Image[] shieldImages;
+    public Sprite[] shieldSprites;
 
     [HideInInspector] public bool isParrying;
     [HideInInspector] public int numberToCheck;
@@ -36,7 +39,10 @@ public class Weapon : MonoBehaviour
 
         if(errorMargin && (leftParry || rightParry))
         {
+            Debug.Log("lol");
             parryFailed = true;
+            shieldImages[0].sprite = shieldSprites[2];
+            shieldImages[1].gameObject.SetActive(false);
         }
 
         if ((leftParry || rightParry) && canParry && !isParrying && !parryFailed)
@@ -79,9 +85,16 @@ public class Weapon : MonoBehaviour
     {
         errorMargin = true;
         parryFailed = false;
+        shieldImages[0].sprite = shieldSprites[0];
+        shieldImages[1].gameObject.SetActive(true);
     }
     public void CanParry(int whichAttack)
     {
+        if(!parryFailed)
+        {
+            shieldImages[0].sprite = shieldSprites[1];
+        }
+        shieldImages[1].gameObject.SetActive(false);
         canParry = true;
         errorMargin = false;
         numberToCheck = whichAttack - 1;
