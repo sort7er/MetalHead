@@ -18,6 +18,7 @@ public class EffectManager : MonoBehaviour
     public GameObject enemyDeadEffect;
     public GameObject[] pickUp;
     public GameObject[] pickUpEffect;
+    public GameObject pickUpRingEffect;
 
     [Header("SoundEffects")]
     public GameObject keyPickup;
@@ -154,6 +155,12 @@ public class EffectManager : MonoBehaviour
     public void SpawnParryEffectUI(Vector3 positionToSpawn)
     {
         GameObject effect = Instantiate(parryEffectUI, positionToSpawn, Quaternion.identity);
+        effect.transform.parent = ParentManager.instance.effects;
+        Destroy(effect, 2);
+    }
+    public void PickUpRingEffect(Vector3 positionToSpawn)
+    {
+        GameObject effect = Instantiate(pickUpRingEffect, positionToSpawn, Quaternion.identity);
         effect.transform.parent = ParentManager.instance.effects;
         Destroy(effect, 2);
     }

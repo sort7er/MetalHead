@@ -65,6 +65,7 @@ public class PlayerHealth : MonoBehaviour
             incerements = difference / startHealth;
             watch.SetNewHealth(currentHealth, startHealth);
             watch.healthRing.SetActive(true);
+            EffectManager.instance.PickUpRingEffect(watch.healthRing.transform.position);
             healthVignette.Play("UpgradeHealth");
             currentHealthLevel++;
             leftInteractor.SendHapticImpulse(hapticIntensity * 2, duration * 2);
