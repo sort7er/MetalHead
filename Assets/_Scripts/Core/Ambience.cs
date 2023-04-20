@@ -12,6 +12,9 @@ public class Ambience : MonoBehaviour
     void Start()
     {
         ambience = GameObject.FindGameObjectsWithTag("Ambience");
-        Destroy(ambience[1]);
+        if (ambience.Length > 1)
+        {
+            Destroy(ambience[1]);
+        }
     }
 }

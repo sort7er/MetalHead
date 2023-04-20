@@ -130,6 +130,8 @@ GameObject:
   - component: {fileID: 1097068476}
   - component: {fileID: 1097068475}
   - component: {fileID: 1097068474}
+  - component: {fileID: 5472250545904802590}
+  - component: {fileID: 5539006768778285563}
   m_Layer: 8
   m_Name: Key
   m_TagString: Untagged
@@ -2153,7 +2155,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1367
+  m_VersionIndex: 1382
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -2353,6 +2355,37 @@ MonoBehaviour:
   m_ForceGravityOnDetach: 0
   m_RetainTransformParent: 1
   m_AttachPointCompatibilityMode: 0
+--- !u!114 &5472250545904802590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097068473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0, g: 0.78039217, b: 1, a: 1}
+  outlineWidth: 3
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &5539006768778285563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097068473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da58743488ba516428c4c90327df704c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outline: {fileID: 5472250545904802590}
 --- !u!1 &1374343488
 GameObject:
   m_ObjectHideFlags: 0
@@ -2838,7 +2871,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c3f10411b20fe1647a9cfc1688d7bf3f, type: 2}
+  - {fileID: 2100000, guid: 5bb7af47025f4bf4a87d77780bd809c0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2944,7 +2977,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c3f10411b20fe1647a9cfc1688d7bf3f, type: 2}
+  - {fileID: 2100000, guid: 5bb7af47025f4bf4a87d77780bd809c0, type: 2}
   - {fileID: 2100000, guid: 6f857eea85c121848882b47fb193a377, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -4520,7 +4553,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1390
+  m_VersionIndex: 1405
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -4561,7 +4594,7 @@ Transform:
   - {fileID: 1815122314}
   - {fileID: 1633341855}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: -150, z: 0}
 --- !u!95 &4619350569228767387
 Animator:
@@ -4596,7 +4629,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smoothTime: 12
-  treasureToSpawn: {fileID: 1941289335976377370, guid: 73c5e08879d23df42b2b1f0a56e3048c,
+  treasureToSpawn: {fileID: 6851587441172244789, guid: 73c5e08879d23df42b2b1f0a56e3048c,
     type: 3}
   tresurePosition: {fileID: 6623638422794458862}
   keySlot: {fileID: 1815122314}

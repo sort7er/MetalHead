@@ -13,10 +13,13 @@ public class Mag : MonoBehaviour
     private int magSize;
     private int currentAmmo;
     private Rigidbody rb;
+    private MeshRenderer meshRenderer;
 
     private void Awake()
     {
-        if(UpgradeManager.instance != null)
+        meshRenderer = GetComponent<MeshRenderer>();
+        meshRenderer.enabled = false;
+        if (UpgradeManager.instance != null)
         {
             magSize = UpgradeManager.instance.magSize;
             currentAmmo = magSize;
@@ -31,6 +34,8 @@ public class Mag : MonoBehaviour
 
     private void Start()
     {
+        
+        meshRenderer.enabled = true;
         rb = GetComponent<Rigidbody>();
         EnableGravity(false);
     }

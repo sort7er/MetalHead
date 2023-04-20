@@ -7,6 +7,7 @@ public class ReleaseMag : MonoBehaviour
     public float slideTime;
     public InputActionAsset releaseMagInputAction;
     public Transform magLocation, magEndPoint;
+    public GameObject magPrefab;
 
     [HideInInspector] public bool reloadValid;
 
@@ -32,7 +33,8 @@ public class ReleaseMag : MonoBehaviour
         dynamicTrigger.TriggerDisabled(true);
         lHand = GameManager.instance.leftHand.gameObject.GetComponent<XRDirectInteractor>();
         rHand = GameManager.instance.rightHand.gameObject.GetComponent<XRDirectInteractor>();
-        UpdateMag(magLocation.GetChild(0));
+        GameObject newMag = Instantiate(magPrefab, magLocation.position, magLocation.rotation);
+        UpdateMag(newMag.transform);
     }
     private void OnEnable()
     {
@@ -97,8 +99,6 @@ public class ReleaseMag : MonoBehaviour
             insert = true;
             soundForGun.Magazine(0);
             UpdateMag(currentGameobject);
-            magInteractable.enabled = false;
-            mag.parent = magLocation;
             mag.position = magEndPoint.position;
             mag.localRotation = Quaternion.identity;
             magInGun.EnableGravity(false);
@@ -115,6 +115,8 @@ public class ReleaseMag : MonoBehaviour
         magSphereCollider = mag.GetComponent<SphereCollider>();
         magInteractable = mag.GetComponent<XRGrabInteractable>();
         magInGun = mag.GetComponent<Mag>();
+        magInteractable.enabled = false;
+        mag.parent = magLocation;
         cz50.MagIn(magInGun);
     }
     private void ResetMag()

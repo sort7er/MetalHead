@@ -18,10 +18,33 @@ public class UpgradeManager : MonoBehaviour
     public Recoil cz50Recoil;
     public CZ50 cz50;
 
+    public CZ50Upgrades cZ50Upgrades;
+
     [HideInInspector] public int magSize;
 
     private void Start()
     {
+
+        if(startBulletLevel > cZ50Upgrades.damageLevelCap)
+        {
+            startBulletLevel = cZ50Upgrades.damageLevelCap;
+        }
+        if (startRecoilLevel > cZ50Upgrades.recoilLevelCap)
+        {
+            startRecoilLevel = cZ50Upgrades.recoilLevelCap;
+        }
+        if (startMagSizeLevel > cZ50Upgrades.damageLevelCap)
+        {
+            startMagSizeLevel = cZ50Upgrades.damageLevelCap;
+        }
+        if (startProjectileLevel > cZ50Upgrades.penetrationCap)
+        {
+            startProjectileLevel = cZ50Upgrades.penetrationCap;
+        }
+        if (startLaserLevel > cZ50Upgrades.laserCap)
+        {
+            startLaserLevel = cZ50Upgrades.laserCap;
+        }
         UpgradeCZ50(startBulletLevel, startRecoilLevel, startMagSizeLevel, startProjectileLevel, startLaserLevel);
     }
 

@@ -400,6 +400,7 @@ GameObject:
   - component: {fileID: 8917573071779765607}
   - component: {fileID: 8917573071779765606}
   - component: {fileID: 4522169933075291448}
+  - component: {fileID: 4045071937373173693}
   m_Layer: 0
   m_Name: CZ50Ammo
   m_TagString: Untagged
@@ -422,7 +423,7 @@ Transform:
   - {fileID: 8956300709796799723}
   - {fileID: 1707060939}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!54 &8917573071779765600
 Rigidbody:
@@ -717,6 +718,19 @@ MonoBehaviour:
   startSmoothTime: 12
   box: {fileID: 8575131487382552145}
   numberOfBulletsToAdd: 10
+--- !u!114 &4045071937373173693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8917573071779765598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da58743488ba516428c4c90327df704c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outline: {fileID: 772213510405776440}
 --- !u!1 &8917573072450871650
 GameObject:
   m_ObjectHideFlags: 0
@@ -883,7 +897,11 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 8917573071476299083}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4e29ffb1e5e02834fb7f66acae2b65c4,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 772213510405776440}
   m_SourcePrefab: {fileID: 100100000, guid: 4e29ffb1e5e02834fb7f66acae2b65c4, type: 3}
 --- !u!4 &4789100324935816572 stripped
 Transform:
@@ -897,6 +915,24 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8917573073284694784}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &772213510405776440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8575131487382552145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0, g: 0.78039217, b: 1, a: 1}
+  outlineWidth: 3
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!4 &8956300709796799723 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4e29ffb1e5e02834fb7f66acae2b65c4,
