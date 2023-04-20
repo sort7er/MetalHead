@@ -21617,6 +21617,7 @@ MonoBehaviour:
   magPos: {fileID: 768278392}
   cz50Recoil: {fileID: 8480215060685690224}
   cz50: {fileID: 8480215060685690229}
+  cZ50Upgrades: {fileID: 1006257395}
   magSize: 10
 --- !u!114 &590820405
 MonoBehaviour:
@@ -32990,6 +32991,18 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!114 &1006257395 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5859509874233424805, guid: 6a7f9a4c9e249924abf549628bb3f80b,
+    type: 3}
+  m_PrefabInstance: {fileID: 5859509876261782861}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5addd7d5a34eec44ea66badee574f3be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &1012111504
 Mesh:
   m_ObjectHideFlags: 0
@@ -52139,8 +52152,8 @@ LineRenderer:
     colorGradient:
       serializedVersion: 2
       key0: {r: 0, g: 0.78039217, b: 1, a: 0}
-      key1: {r: 0, g: 0.78039217, b: 1, a: 0}
-      key2: {r: 0, g: 0, b: 0, a: 0.15686275}
+      key1: {r: 0, g: 0.78039217, b: 1, a: 0.039215688}
+      key2: {r: 0, g: 0, b: 0, a: 0.39215687}
       key3: {r: 0, g: 0, b: 0, a: 1}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
@@ -52155,7 +52168,7 @@ LineRenderer:
       ctime6: 0
       ctime7: 0
       atime0: 0
-      atime1: 16384
+      atime1: 10601
       atime2: 30069
       atime3: 49922
       atime4: 59753
