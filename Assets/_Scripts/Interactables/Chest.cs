@@ -131,7 +131,7 @@ public class Chest : MonoBehaviour
             keyInteractable.enabled = false;
             key.transform.parent = keySlot;
             key.transform.position = keySlot.position;
-            key.transform.rotation = keySlot.rotation;
+            key.transform.rotation = Quaternion.Euler(0,180,0);
             chestAnim.SetTrigger("Open");
             EffectManager.instance.Key(transform.position, 1);
             Invoke(nameof(SpawnPickUps), 1.1f);
