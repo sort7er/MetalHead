@@ -7,7 +7,7 @@ public class MagnetSocket : MonoBehaviour
 
     private Rigidbody rb;
     private ReturnToHolster returnToHolster;
-    private bool canDrop, inserted;
+    public bool canDrop, inserted;
 
     private void Start()
     {
@@ -34,6 +34,7 @@ public class MagnetSocket : MonoBehaviour
     {
         upgradeStation.Screen();
         inserted = true;
+        returnToHolster.IsBeeingUpgraded(true);
         returnToHolster.enabled = false;
         rb.isKinematic = true;
         rb.useGravity = false;
@@ -45,6 +46,8 @@ public class MagnetSocket : MonoBehaviour
         upgradeStation.Screen();
         inserted = false;
         returnToHolster.enabled = true;
+        returnToHolster.IsBeeingUpgraded(false);
+
     }
     public void CanDrop(bool state)
     {

@@ -5,17 +5,16 @@ public class Chest : MonoBehaviour
 {
     public float smoothTime;
     public GameObject treasureToSpawn;
-    public Transform tresurePosition, keySlot;
+    public Transform tresurePosition, keySlot, leftAttach, rightAttach;
     public GameObject key, canvas;
 
 
     private RotateObject rotateObject;
     private DynamicTrigger dynamicTrigger;
     private Rigidbody keyrb;
-    private XRGrabInteractable keyInteractable;
+    private XRGrabInteractable keyInteractable, treasueInteractable;
     private Animator chestAnim;
     private bool opened, keyObtained, holdingKey, insideTrigger, lerpBack;
-    private XRGrabInteractable treasueInteractable;
 
     private void Start()
     {
@@ -108,11 +107,24 @@ public class Chest : MonoBehaviour
     }
     public void GrabKey()
     {
+        if (GameManager.instance.CheckGameObject(key) == 1)
+        {
+            keyInteractable.attachTransform = leftAttach;
+            GameManager.instance.leftHand.GrabWrench(true);
+        }
+        if (GameManager.instance.CheckGameObject(key) == 2)
+        {
+            keyInteractable.attachTransform = rightAttach;
+            GameManager.instance.rightHand.GrabWrench(true);
+        }
+
         holdingKey = true;
         rotateObject.enabled = false;
     }
     public void ReleaseKey()
     {
+        GameManager.instance.leftHand.GrabWrench(false);
+        GameManager.instance.rightHand.GrabWrench(false);
         holdingKey = false;
         Invoke(nameof(CheckIfInChest), 0.05f);
     }
