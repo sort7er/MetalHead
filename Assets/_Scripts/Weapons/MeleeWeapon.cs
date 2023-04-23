@@ -65,7 +65,6 @@ public class MeleeWeapon : MonoBehaviour
                 {
                     actualDamage = damage * Random.Range(2,6);
                     actualStun = stun * Random.Range(2,6);
-                    Debug.Log("lol");
                 }
                 else
                 {

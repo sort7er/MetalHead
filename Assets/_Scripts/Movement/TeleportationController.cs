@@ -68,11 +68,11 @@ public class TeleportationController : MonoBehaviour
         {
             return;
         }
-        if (teleportCheck.CannotTeleport())
-        {
-            SetRay(false);
-            return;
-        }
+        //if (teleportCheck.CannotTeleport())
+        //{
+        //    SetRay(false);
+        //    return;
+        //}
         if (!rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit rayCastHit))
         {
             SetRay(false);
