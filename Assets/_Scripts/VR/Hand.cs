@@ -216,18 +216,23 @@ public class Hand : MonoBehaviour
             {
                 interactor.SendHapticImpulse(hoverHapticIntensity, hoverDuration);
                 handAnim.SetBool("Hover", true);
-                lineRenderer.enabled = true;
-                lineActive = true;
-                lineEndPoint = closestInteractable.transform;
-                if (currentHover != null)
+
+                if(closestInteractable.GetComponent<XRSimpleInteractable>() == null)
                 {
-                    currentHover.Hovering(false);
+                    lineRenderer.enabled = true;
+                    lineActive = true;
+                    lineEndPoint = closestInteractable.transform;
+                    if (currentHover != null)
+                    {
+                        currentHover.Hovering(false);
+                    }
+                    if (closestInteractable.GetComponent<Hover>() != null)
+                    {
+                        closestInteractable.GetComponent<Hover>().Hovering(true);
+                        currentHover = closestInteractable.GetComponent<Hover>();
+                    }
                 }
-                if (closestInteractable.GetComponent<Hover>() != null)
-                {
-                    closestInteractable.GetComponent<Hover>().Hovering(true);
-                    currentHover = closestInteractable.GetComponent<Hover>();
-                }
+                
             }
         }
 

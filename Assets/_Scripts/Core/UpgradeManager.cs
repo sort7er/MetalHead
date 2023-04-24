@@ -24,27 +24,30 @@ public class UpgradeManager : MonoBehaviour
 
     private void Start()
     {
-
-        if(startBulletLevel > cZ50Upgrades.damageLevelCap)
+        if(cZ50Upgrades != null)
         {
-            startBulletLevel = cZ50Upgrades.damageLevelCap;
+            if (startBulletLevel > cZ50Upgrades.damageLevelCap)
+            {
+                startBulletLevel = cZ50Upgrades.damageLevelCap;
+            }
+            if (startRecoilLevel > cZ50Upgrades.recoilLevelCap)
+            {
+                startRecoilLevel = cZ50Upgrades.recoilLevelCap;
+            }
+            if (startMagSizeLevel > cZ50Upgrades.damageLevelCap)
+            {
+                startMagSizeLevel = cZ50Upgrades.damageLevelCap;
+            }
+            if (startProjectileLevel > cZ50Upgrades.penetrationCap)
+            {
+                startProjectileLevel = cZ50Upgrades.penetrationCap;
+            }
+            if (startLaserLevel > cZ50Upgrades.laserCap)
+            {
+                startLaserLevel = cZ50Upgrades.laserCap;
+            }
         }
-        if (startRecoilLevel > cZ50Upgrades.recoilLevelCap)
-        {
-            startRecoilLevel = cZ50Upgrades.recoilLevelCap;
-        }
-        if (startMagSizeLevel > cZ50Upgrades.damageLevelCap)
-        {
-            startMagSizeLevel = cZ50Upgrades.damageLevelCap;
-        }
-        if (startProjectileLevel > cZ50Upgrades.penetrationCap)
-        {
-            startProjectileLevel = cZ50Upgrades.penetrationCap;
-        }
-        if (startLaserLevel > cZ50Upgrades.laserCap)
-        {
-            startLaserLevel = cZ50Upgrades.laserCap;
-        }
+        
         UpgradeCZ50(startBulletLevel, startRecoilLevel, startMagSizeLevel, startProjectileLevel, startLaserLevel);
     }
 

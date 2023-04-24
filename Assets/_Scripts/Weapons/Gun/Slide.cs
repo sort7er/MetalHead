@@ -113,7 +113,10 @@ public class Slide : MonoBehaviour
     public void SlideDone()
     {
         cz50.SlideBack(false);
-        soundForGun.Slide(1);
+        if(slideValid)
+        {
+            soundForGun.Slide(1);
+        }
         if(slideValid && releaseMag.reloadValid)
         {
             cz50.Reload();

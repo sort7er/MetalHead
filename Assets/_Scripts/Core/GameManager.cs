@@ -64,8 +64,14 @@ public class GameManager : MonoBehaviour
     }
     public void EnableDirectInteractors(bool state)
     {
-        lHand.enabled = state;
-        rHand.enabled = state;
+        if(lHand != null)
+        {
+            lHand.enabled = state;
+        }
+        if(rHand != null)
+        {
+            rHand.enabled = state;
+        }
     }
     public void SetXROriginRotation(Transform newRotation)
     {
@@ -152,13 +158,20 @@ public class GameManager : MonoBehaviour
     }
     private void DeadMenu()
     {
-        pauseMenu.FollowCam(false);
+        if(pauseMenu != null)
+        {
+            pauseMenu.FollowCam(false);
+        }
         gameOverCanvas.SetActive(true);
         SetTimeScale(0f);
     }
     public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    public void NextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
     public void Quit()
     {
