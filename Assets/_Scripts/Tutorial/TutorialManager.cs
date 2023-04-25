@@ -14,11 +14,12 @@ public class TutorialManager : MonoBehaviour
     public GameObject[] gunStuff;
     public GameObject magnet;
 
-    private GameObject watch;
+    private Watch watch;
     private Renderer pauseVignetteRenderer;
     private InputAction menuPressed;
     private bool followCam, canPause;
     private bool watchFound;
+    private bool enableTurning, enableMovement;
 
     private void Start()
     {
@@ -57,7 +58,7 @@ public class TutorialManager : MonoBehaviour
 
         if (watch == null)
         {
-            watch = FindObjectOfType<Watch>().gameObject;
+            watch = FindObjectOfType<Watch>();
             watchFound = false;
         }
         else
@@ -115,8 +116,6 @@ public class TutorialManager : MonoBehaviour
         GameManager.instance.IsPaused(false);
         FollowCam(true);
         PauseVignette(1);
-        LocomotionManager.instance.EnableMovement(true);
-        LocomotionManager.instance.EnableTurning(true);
         GameManager.instance.EnableRays(false);
         GameManager.instance.EnableDirectInteractors(true);
         AudioManager.instance.Unmute();
@@ -146,8 +145,14 @@ public class TutorialManager : MonoBehaviour
         GameManager.instance.IsPaused(false);
         FollowCam(true);
         PauseVignette(1);
-        LocomotionManager.instance.EnableMovement(true);
-        LocomotionManager.instance.EnableTurning(true);
+        if(enableMovement)
+        {
+            LocomotionManager.instance.EnableMovement(true);
+        }
+        if (enableTurning)
+        {
+            LocomotionManager.instance.EnableTurning(true);
+        }
         GameManager.instance.EnableRays(false);
         GameManager.instance.EnableDirectInteractors(true);
         AudioManager.instance.Unmute();
@@ -173,11 +178,21 @@ public class TutorialManager : MonoBehaviour
     {
         if(watch != null)
         {
-            watch.SetActive(state);
+            watch.gameObject.SetActive(state);
         }
     }
     public void SetMagnet(bool state)
     {
         magnet.SetActive(state);
+    }
+    public void SetMovement(bool state)
+    {
+        enableMovement = state;
+        LocomotionManager.instance.EnableMovement(state);
+    }
+    public void SetTurning(bool state)
+    {
+        enableTurning = state;
+        LocomotionManager.instance.EnableTurning(state);
     }
 }

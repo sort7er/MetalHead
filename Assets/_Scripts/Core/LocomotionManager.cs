@@ -45,11 +45,11 @@ public class LocomotionManager : MonoBehaviour
         continuousTurnProvider = GetComponent<ActionBasedContinuousTurnProvider>();
         playerObstacle = GameManager.instance.XROrigin.GetComponent<NavMeshObstacle>();
 
-        Invoke("StartSettings", 0.1f);
         SetContinuousMoveInputReference();
         SetTeleportationInputReference();
         SetContinousTurnInputReference();
         SetSnapTurnInputReference();
+        StartSettings();
 
         snapTurn = inputAction.FindActionMap("XRI RightHand Locomotion").FindAction("Snap Turn");
         snapTurn.Enable();
