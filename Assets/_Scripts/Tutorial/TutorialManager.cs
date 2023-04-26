@@ -94,7 +94,6 @@ public class TutorialManager : MonoBehaviour
 
     public void TutorialMenu(int menuToShow)
     {
-        GameManager.instance.SetTimeScale(0);
         PauseVignette(0);
         GameManager.instance.EnableRays(true);
         GameManager.instance.EnableDirectInteractors(false);
@@ -112,7 +111,6 @@ public class TutorialManager : MonoBehaviour
         {
             t.gameObject.SetActive(false);
         }
-        GameManager.instance.SetTimeScale(1);
         GameManager.instance.IsPaused(false);
         FollowCam(true);
         PauseVignette(1);
