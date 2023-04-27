@@ -13,6 +13,7 @@ public class TV : MonoBehaviour
     public TextMeshProUGUI niceText;
     public GameObject turningDisplay;
     public GameObject quickturnDisplay;
+    public GameObject movementDisplay;
 
     [Header("Checklist")]
     public GameObject[] checkboxes;
@@ -54,6 +55,13 @@ public class TV : MonoBehaviour
             requirementCheck.CanQuickturn();
             Objective(2, "Quickturn");
         }
+    }
+
+    public void Movement()
+    {
+        movementDisplay.SetActive(true);
+        Objective(0, "Move to the pillar");
+        Objective(1, "Press the button");
     }
 
     //Checkoff
@@ -123,6 +131,7 @@ public class TV : MonoBehaviour
     {
         turningDisplay.SetActive(false);
         quickturnDisplay.SetActive(false);
+        movementDisplay.SetActive(false);
     }
     private void ResetChecklist()
     {

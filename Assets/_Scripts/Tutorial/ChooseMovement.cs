@@ -5,11 +5,21 @@ public class ChooseMovement : MonoBehaviour
 {
     public TextMeshProUGUI movementText;
     public Animator leftControllerSide;
+    public Transform character, targetPos;
+    public GameObject arm;
+    public GameObject teleportMovement;
+    public TutorialManager tutorialManager;
+    public TV tv;
 
+    private Vector3 startPos, currentTarget;
     private float currentTime;
     private int multiplier = 1;
     private bool teleport, changed;
 
+    private void Start()
+    {
+        startPos = character.localPosition;
+    }
 
     private void OnEnable()
     {
@@ -28,18 +38,22 @@ public class ChooseMovement : MonoBehaviour
         {
             if (teleport)
             {
-                CancelInvoke(nameof(StartContinuous));
+                CancelInvoke();
+                StartTeleport();
             }
             else
             {
+                CancelInvoke();
                 StartContinuous();
             }
             changed = false;
+            arm.SetActive(false);
+            character.localPosition = startPos;
         }
         if (!teleport)
         {
             currentTime += Time.deltaTime;
-            //characterPivot.po = Quaternion.Slerp(characterPivot.rotation, targetAngle, currentTime / 2);
+            character.localPosition = Vector3.Lerp(character.localPosition, currentTarget, currentTime / 2);
         }
 
     }
@@ -76,24 +90,83 @@ public class ChooseMovement : MonoBehaviour
             teleport = false;
             changed = true;
         }
+
     }
 
     private void StartContinuous()
     {
-        if (gameObject.activeSelf)
+        currentTime = 0;
+
+        if (transform.parent.gameObject.activeSelf && gameObject.activeSelf)
         {
             leftControllerSide.Play("JoystickFront");
         }
+
+        currentTarget = targetPos.localPosition;
 
         Invoke(nameof(ContinousBack), 1.75f);
     }
     private void ContinousBack()
     {
-        if (gameObject.activeSelf)
+        currentTime = 0;
+
+        if (transform.parent.gameObject.activeSelf && gameObject.activeSelf)
         {
             leftControllerSide.Play("JoystickBack");
         }
 
+        currentTarget = startPos;
+
         Invoke(nameof(StartContinuous), 1.75f);
+    }
+
+    private void StartTeleport()
+    {
+        if (transform.parent.gameObject.activeSelf && gameObject.activeSelf)
+        {
+            leftControllerSide.Play("JoystickFront");
+        }
+
+        currentTarget = targetPos.localPosition;
+
+        Invoke(nameof(ShowArm), 0.1f);
+        Invoke(nameof(ActualTeleport), 0.85f);
+
+        Invoke(nameof(TeleportBack), 1.75f);
+    }
+    private void TeleportBack()
+    {
+        if (transform.parent.gameObject.activeSelf && gameObject.activeSelf)
+        {
+            leftControllerSide.Play("JoystickBack");
+        }
+
+        currentTarget = startPos;
+
+        Invoke(nameof(ActualTeleport), 0.75f);
+        Invoke(nameof(StartTeleport), 1.75f);
+    }
+    private void ShowArm()
+    {
+        arm.SetActive(true);
+    }
+    private void ActualTeleport()
+    {
+        character.localPosition = currentTarget;
+        arm.SetActive(false);
+    }
+    public void Select()
+    {
+        tutorialManager.SetMovement(true);
+        if(LocomotionManager.instance.currentMoveType == 0)
+        {
+            teleportMovement.SetActive(true);
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            tv.Movement();
+            tutorialManager.CloseTutorialMenu();
+        }
     }
 }

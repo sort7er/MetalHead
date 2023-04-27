@@ -59,7 +59,7 @@ public class ChooseQuickTurn : MonoBehaviour
 
     private void StartSnapAnim()
     {
-        if (gameObject.activeSelf)
+        if (transform.parent.gameObject.activeSelf && gameObject.activeSelf)
         {
             rightControllerFront.Play("JoystickBack");
         }

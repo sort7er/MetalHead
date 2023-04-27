@@ -88,7 +88,7 @@ public class ChooseTurning : MonoBehaviour
         int direction = Random.Range(0, 2);
         if(direction == 0)
         {
-            if (gameObject.activeSelf)
+            if (transform.parent.gameObject.activeSelf && gameObject.activeSelf)
             {
                 rightControllerFront.Play("JoystickLeft");
             }
@@ -96,7 +96,7 @@ public class ChooseTurning : MonoBehaviour
         }
         else
         {
-            if (gameObject.activeSelf)
+            if (transform.parent.gameObject.activeSelf && gameObject.activeSelf)
             {
                 rightControllerFront.Play("JoystickRight");
             }
@@ -115,7 +115,7 @@ public class ChooseTurning : MonoBehaviour
         int direction = Random.Range(0, 2);
         if (direction == 0)
         {
-            if (gameObject.activeSelf)
+            if (transform.parent.gameObject.activeSelf && gameObject.activeSelf)
             {
                 rightControllerFront.Play("JoystickLeft");
             }
@@ -123,7 +123,7 @@ public class ChooseTurning : MonoBehaviour
         }
         else
         {
-            if (gameObject.activeSelf)
+            if (transform.parent.gameObject.activeSelf && gameObject.activeSelf)
             {
                 rightControllerFront.Play("JoystickRight");
             }
