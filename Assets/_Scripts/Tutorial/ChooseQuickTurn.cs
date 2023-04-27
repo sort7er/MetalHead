@@ -39,12 +39,18 @@ public class ChooseQuickTurn : MonoBehaviour
     {
         if (enabled)
         {
-            turnText.text = "Enabled";
+            if(turnText!= null)
+            {
+                turnText.text = "Enabled";
+            }
             quickTurn = true;
         }
         else
         {
-            turnText.text = "Disabled";
+            if (turnText != null)
+            {
+                turnText.text = "Disabled";
+            }
             quickTurn = false;
         }
         CancelInvoke();
@@ -53,7 +59,10 @@ public class ChooseQuickTurn : MonoBehaviour
 
     private void StartSnapAnim()
     {
-        rightControllerFront.Play("JoystickBack");
+        if (gameObject.activeSelf)
+        {
+            rightControllerFront.Play("JoystickBack");
+        }
         Invoke(nameof(StartSnapAnim), 1.75f);
         if(quickTurn)
         {

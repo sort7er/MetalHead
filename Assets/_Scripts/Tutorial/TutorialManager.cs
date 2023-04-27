@@ -20,6 +20,7 @@ public class TutorialManager : MonoBehaviour
     private bool followCam, canPause;
     private bool watchFound;
     private bool enableTurning, enableMovement;
+    private int currentMenu;
 
     private void Start()
     {
@@ -87,12 +88,20 @@ public class TutorialManager : MonoBehaviour
     }
     private void StartTutorial()
     {
-        TutorialMenu(0);
+        TutorialMenu();
         SetGun(false);
         SetMagnet(false);
     }
+    public void NextMenu()
+    {
+        foreach (Transform t in tutorialMenu)
+        {
+            t.gameObject.SetActive(false);
+        }
+        TutorialMenu();
+    }
 
-    public void TutorialMenu(int menuToShow)
+    public void TutorialMenu()
     {
         PauseVignette(0);
         GameManager.instance.EnableRays(true);
@@ -102,7 +111,8 @@ public class TutorialManager : MonoBehaviour
         GameManager.instance.IsPaused(true);
         FollowCam(false);
         AudioManager.instance.MuteSounds();
-        tutorialMenu.GetChild(menuToShow).gameObject.SetActive(true);
+        tutorialMenu.GetChild(currentMenu).gameObject.SetActive(true);
+        currentMenu++;
         canPause = false;
     }
     public void CloseTutorialMenu()
@@ -110,6 +120,14 @@ public class TutorialManager : MonoBehaviour
         foreach (Transform t in tutorialMenu)
         {
             t.gameObject.SetActive(false);
+        }
+        if (enableMovement)
+        {
+            LocomotionManager.instance.EnableMovement(true);
+        }
+        if (enableTurning)
+        {
+            LocomotionManager.instance.EnableTurning(true);
         }
         GameManager.instance.IsPaused(false);
         FollowCam(true);

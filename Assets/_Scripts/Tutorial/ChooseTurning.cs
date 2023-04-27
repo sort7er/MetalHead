@@ -65,13 +65,19 @@ public class ChooseTurning : MonoBehaviour
     {
         if (isSnap)
         {
-            turnText.text = "Snap turning";
+            if(turnText!= null)
+            {
+                turnText.text = "Snap turning";
+            }
             snap = true;
             changed = true;
         }
         else
         {
-            turnText.text = "Continuous turning";
+            if (turnText != null)
+            {
+                turnText.text = "Continuous turning";
+            }
             snap = false;
             changed = true;
         }
@@ -82,12 +88,18 @@ public class ChooseTurning : MonoBehaviour
         int direction = Random.Range(0, 2);
         if(direction == 0)
         {
-            rightControllerFront.Play("JoystickLeft");
+            if (gameObject.activeSelf)
+            {
+                rightControllerFront.Play("JoystickLeft");
+            }
             multiplier = 1;
         }
         else
         {
-            rightControllerFront.Play("JoystickRight");
+            if (gameObject.activeSelf)
+            {
+                rightControllerFront.Play("JoystickRight");
+            }
             multiplier = -1;
         }
         Invoke(nameof(ActualSnap), 0.25f);
@@ -103,12 +115,18 @@ public class ChooseTurning : MonoBehaviour
         int direction = Random.Range(0, 2);
         if (direction == 0)
         {
-            rightControllerFront.Play("JoystickLeft");
+            if (gameObject.activeSelf)
+            {
+                rightControllerFront.Play("JoystickLeft");
+            }
             multiplier = 1;
         }
         else
         {
-            rightControllerFront.Play("JoystickRight");
+            if (gameObject.activeSelf)
+            {
+                rightControllerFront.Play("JoystickRight");
+            }
             multiplier = -1;
         }
 
