@@ -16,6 +16,7 @@ public class RequirementCheck : MonoBehaviour
 
     private bool canTurnLeft, canTurnRight;
     private bool canQuickturn;
+    private bool liftTriggerEntererd;
 
 
     private void Start()
@@ -57,7 +58,7 @@ public class RequirementCheck : MonoBehaviour
     //Inputs
     private void OnTurnLeft(InputAction.CallbackContext context)
     {
-        if (canTurnLeft)
+        if (canTurnLeft && !GameManager.instance.isPaused)
         {
             tv.TurnLeftDone();
             canTurnLeft = false;
@@ -65,7 +66,7 @@ public class RequirementCheck : MonoBehaviour
     }
     private void OnTurnRight(InputAction.CallbackContext context)
     {
-        if(canTurnRight)
+        if(canTurnRight && !GameManager.instance.isPaused)
         {
             tv.TurnRightDone();
             canTurnRight = false;
@@ -73,10 +74,18 @@ public class RequirementCheck : MonoBehaviour
     }
     private void OnQuickturn(InputAction.CallbackContext context)
     {
-        if (canQuickturn)
+        if (canQuickturn && !GameManager.instance.isPaused)
         {
             tv.QuickturnDone();
             canQuickturn = false;
+        }
+    }
+    public void LiftTriggerEntered()
+    {
+        if (!liftTriggerEntererd)
+        {
+            tv.LiftTriggerEntered();
+            liftTriggerEntererd = true;
         }
     }
 
