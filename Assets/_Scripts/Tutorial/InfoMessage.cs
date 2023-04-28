@@ -5,6 +5,7 @@ public class InfoMessage : MonoBehaviour
 {
     [Header("Message")]
     public string messageToDisplay;
+    public string messageToDisplay2;
 
     [Header("Animation")]
     public string animationStateName;
@@ -24,7 +25,14 @@ public class InfoMessage : MonoBehaviour
     {
         infoText.text = messageToDisplay;
         Invoke(nameof(Delay), 0.01f);
-        animatorToPlay.Play(animationStateName);
+        if (messageToDisplay != "")
+        {
+            Invoke(nameof(SecondMessage), 7);
+        }
+        if(animatorToPlay != null)
+        {
+            animatorToPlay.Play(animationStateName);
+        }
     }
     private void OnDisable()
     {
@@ -32,6 +40,27 @@ public class InfoMessage : MonoBehaviour
     }
     private void Delay()
     {
-        typeWriterText.StartTyping();
+        if (typeWriterText.gameObject.activeSelf && typeWriterText.transform.parent.gameObject.activeSelf)
+        {
+            typeWriterText.StartTyping();
+        }
+    }
+    private void SecondMessage()
+    {
+        infoText.text = messageToDisplay2;
+        Invoke(nameof(Delay), 0.01f);
+        if (messageToDisplay != "")
+        {
+            Invoke(nameof(FirstMessage), 10);
+        }
+    }
+    private void FirstMessage()
+    {
+        infoText.text = messageToDisplay;
+        Invoke(nameof(Delay), 0.01f);
+        if (messageToDisplay != "")
+        {
+            Invoke(nameof(SecondMessage), 7);
+        }
     }
 }

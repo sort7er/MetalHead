@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2256,7 +2256,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-644344
+  m_Name: pb_Mesh34274
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -8404,7 +8404,7 @@ PrefabInstance:
     - target: {fileID: 8441575486767264505, guid: 896eb9f60332a1946a0023ea27d8f390,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 5532
+      value: 5556
       objectReference: {fileID: 0}
     - target: {fileID: 8441575486767264507, guid: 896eb9f60332a1946a0023ea27d8f390,
         type: 3}
@@ -19479,7 +19479,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh34188
+  m_Name: pb_Mesh34740
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -20863,7 +20863,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onPressP:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2056867957}
+        m_TargetAssemblyTypeName: RelayToTv, Assembly-CSharp
+        m_MethodName: TvReloadGun
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onReleaseP:
     m_PersistentCalls:
       m_Calls: []
@@ -20879,10 +20891,10 @@ MonoBehaviour:
   onPressArrowUp:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2056867956}
-        m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
-        m_MethodName: SetWatch
-        m_Mode: 6
+      - m_Target: {fileID: 2056867955}
+        m_TargetAssemblyTypeName: RequirementCheck, Assembly-CSharp
+        m_MethodName: MagDropped
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -20894,10 +20906,10 @@ MonoBehaviour:
   onPressArrowDown:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2056867956}
-        m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
-        m_MethodName: SetGun
-        m_Mode: 6
+      - m_Target: {fileID: 2056867955}
+        m_TargetAssemblyTypeName: RequirementCheck, Assembly-CSharp
+        m_MethodName: GrabMag
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -20909,10 +20921,10 @@ MonoBehaviour:
   onPressArrowLeft:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2056867956}
-        m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
-        m_MethodName: SetMagnet
-        m_Mode: 6
+      - m_Target: {fileID: 2056867955}
+        m_TargetAssemblyTypeName: RequirementCheck, Assembly-CSharp
+        m_MethodName: MagInserted
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -20923,7 +20935,19 @@ MonoBehaviour:
         m_CallState: 2
   onPressArrowRight:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2056867955}
+        m_TargetAssemblyTypeName: RequirementCheck, Assembly-CSharp
+        m_MethodName: SlidePulled
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &1146582517
 Transform:
   m_ObjectHideFlags: 0
@@ -21901,7 +21925,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2208
+  m_Name: pb_Mesh-3676
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -31787,7 +31811,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-677144
+  m_Name: pb_Mesh33526
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -31952,7 +31976,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh32980
+  m_Name: pb_Mesh33616
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -34998,7 +35022,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh32906
+  m_Name: pb_Mesh-1912
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -35237,7 +35261,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-596648
+  m_Name: pb_Mesh33338
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -39710,7 +39734,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-670940
+  m_Name: pb_Mesh35132
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -43532,7 +43556,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh34380
+  m_Name: pb_Mesh34920
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -43697,7 +43721,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-234652
+  m_Name: pb_Mesh-2622
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -44328,13 +44352,8 @@ PrefabInstance:
     - target: {fileID: 8441575486767264505, guid: 896eb9f60332a1946a0023ea27d8f390,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 5532
+      value: 5556
       objectReference: {fileID: 0}
-    - target: {fileID: 8441575486767264507, guid: 896eb9f60332a1946a0023ea27d8f390,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 6f857eea85c121848882b47fb193a377, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

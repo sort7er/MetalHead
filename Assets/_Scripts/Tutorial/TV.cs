@@ -15,6 +15,8 @@ public class TV : MonoBehaviour
     public GameObject menuDisplay;
     public GameObject arrowDisplay;
     public bool pathLeft;
+    public GameObject grabGunDisplay;
+    public GameObject reloadGunDisplay;
 
     [Header("Checklist")]
     public GameObject[] checkboxes;
@@ -25,11 +27,13 @@ public class TV : MonoBehaviour
     private GameObject currentDisplay;
     private TypeWriterText[] typeWriterText;
     private TypeWriterText niceTypeWriterText;
+    private ReloadGun reloadGun;
 
     private bool pausedChecked, includeReloadAfterPause;
 
     private void Start()
     {
+        reloadGun = reloadGunDisplay.GetComponent<ReloadGun>();
         niceText.text = "";
         ResetTutorial();
         ResetChecklist();
@@ -89,6 +93,27 @@ public class TV : MonoBehaviour
         Objective(0, "Proceed out of the room");
     }
 
+    public void GrabGun()
+    {
+        Objective(0, "Grab gun");
+        Objective(1, "Drop gun");
+        SetCurrentDisplay(grabGunDisplay, false);
+    }
+
+    public void ReloadGun()
+    {
+        Objective(0, "Drop mag");
+        Objective(1, "Grab mag");
+        Objective(2, "Insert mag");
+        Objective(3, "Pull slide");
+        SetCurrentDisplay(reloadGunDisplay, false);
+        NextReload();
+    }
+    public void NextReload()
+    {
+        reloadGun.Display();
+    }
+
     // Methods called from relay
     public void AllChecked()
     {
@@ -140,6 +165,8 @@ public class TV : MonoBehaviour
         movementDisplay.SetActive(false);
         menuDisplay.SetActive(false);
         arrowDisplay.SetActive(false);
+        grabGunDisplay.SetActive(false);
+        reloadGunDisplay.SetActive(false);
     }
     private void SetCurrentDisplay(GameObject display, bool reload)
     {

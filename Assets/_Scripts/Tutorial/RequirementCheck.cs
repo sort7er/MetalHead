@@ -15,6 +15,14 @@ public class RequirementCheck : MonoBehaviour
     private bool canQuickturn;
     private bool liftTriggerEntererd;
     private bool buttonPressed;
+    private bool gunGrabbed;
+    private bool gunDropped;
+
+    //Reload
+    private bool magDropped;
+    private bool magGrabbed;
+    private bool magInserted;
+    private bool slidePulled;
 
 
     private void Start()
@@ -91,6 +99,57 @@ public class RequirementCheck : MonoBehaviour
         {
             relay.CheckASpot(1);
             buttonPressed = true;
+        }
+    }
+    public void GunGrabbed()
+    {
+        if (!gunGrabbed)
+        {
+            relay.CheckASpot(0);
+            gunGrabbed = true;
+        }
+    }
+    public void GunDropped()
+    {
+        if (!gunDropped)
+        {
+            relay.CheckASpot(1);
+            gunDropped = true;
+        }
+    }
+    public void MagDropped()
+    {
+        if (!magDropped)
+        {
+            relay.NextReload();
+            relay.CheckASpot(0);
+            magDropped = true;
+        }
+    }
+    public void GrabMag()
+    {
+        if (!magGrabbed)
+        {
+            relay.NextReload();
+            relay.CheckASpot(1);
+            magGrabbed = true;
+        }
+    }
+    public void MagInserted()
+    {
+        if (!magInserted)
+        {
+            relay.NextReload();
+            relay.CheckASpot(2);
+            magInserted = true;
+        }
+    }
+    public void SlidePulled()
+    {
+        if (!slidePulled)
+        {
+            relay.CheckASpot(3);
+            slidePulled = true;
         }
     }
 

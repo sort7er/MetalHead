@@ -55,9 +55,9 @@ public class RelayToTv : MonoBehaviour
         {
             tvsInScene[i].Menu();
         }
-        Invoke(nameof(Arrow), 8f);
+        Invoke(nameof(TvArrow), 6f);
     }
-    public void Arrow()
+    public void TvArrow()
     {
         for (int i = 0; i < tvsInScene.Length; i++)
         {
@@ -65,6 +65,29 @@ public class RelayToTv : MonoBehaviour
         }
         ground2.SetActive(true);
         doorToOpen.SetTrigger("Open");
+    }
+    public void TvGrabGun()
+    {
+        AddRequirement(2);
+        for (int i = 0; i < tvsInScene.Length; i++)
+        {
+            tvsInScene[i].GrabGun();
+        }
+    }
+    public void TvReloadGun()
+    {
+        AddRequirement(4);
+        for (int i = 0; i < tvsInScene.Length; i++)
+        {
+            tvsInScene[i].ReloadGun();
+        }
+    }
+    public void NextReload()
+    {
+        for (int i = 0; i < tvsInScene.Length; i++)
+        {
+            tvsInScene[i].NextReload();
+        }
     }
 
     //Checkoff
@@ -101,6 +124,11 @@ public class RelayToTv : MonoBehaviour
             else if(currentObjective == 2)
             {
                 Invoke(nameof(TvMenu), 2.5f);
+            }
+            else if (currentObjective == 3)
+            {
+                Debug.Log("Nice");
+                //Invoke(nameof(TvMenu), 2.5f);
             }
 
         }
