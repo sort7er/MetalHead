@@ -16,6 +16,7 @@ public class TV : MonoBehaviour
     public GameObject arrowDisplay;
     public bool pathLeft;
     public GameObject grabGunDisplay;
+    public GameObject shootGunDisplay;
     public GameObject reloadGunDisplay;
 
     [Header("Checklist")]
@@ -99,7 +100,11 @@ public class TV : MonoBehaviour
         Objective(1, "Drop gun");
         SetCurrentDisplay(grabGunDisplay, false);
     }
-
+    public void ShootGun()
+    {
+        Objective(0, "Fire all bullets in gun");
+        SetCurrentDisplay(shootGunDisplay, false);
+    }
     public void ReloadGun()
     {
         Objective(0, "Drop mag");
@@ -166,6 +171,7 @@ public class TV : MonoBehaviour
         menuDisplay.SetActive(false);
         arrowDisplay.SetActive(false);
         grabGunDisplay.SetActive(false);
+        shootGunDisplay.SetActive(false);
         reloadGunDisplay.SetActive(false);
     }
     private void SetCurrentDisplay(GameObject display, bool reload)

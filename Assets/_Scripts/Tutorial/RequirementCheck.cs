@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class RequirementCheck : MonoBehaviour
 {
     public InputActionAsset inputAction;
+    public ReturnToHolster cz50ReturnToHolser;
 
     private InputAction turnLeft;
     private InputAction turnRight;
@@ -17,6 +18,10 @@ public class RequirementCheck : MonoBehaviour
     private bool buttonPressed;
     private bool gunGrabbed;
     private bool gunDropped;
+    
+    //Shooting
+    private bool gunEmptied;
+    private int bulletsShoot;
 
     //Reload
     private bool magDropped;
@@ -28,6 +33,7 @@ public class RequirementCheck : MonoBehaviour
     private void Start()
     {
         relay = GetComponent<RelayToTv>();
+        cz50ReturnToHolser.enabled = false;
 
         turnLeft = inputAction.FindActionMap("XRI RightHand Locomotion").FindAction("TurnLeft");
         turnLeft.Enable();
@@ -40,6 +46,7 @@ public class RequirementCheck : MonoBehaviour
         quickturn = inputAction.FindActionMap("XRI RightHand Locomotion").FindAction("Snap Turn");
         quickturn.Enable();
         quickturn.performed += OnQuickturn;
+
     }
 
     private void OnDestroy()
@@ -105,6 +112,7 @@ public class RequirementCheck : MonoBehaviour
     {
         if (!gunGrabbed)
         {
+            cz50ReturnToHolser.enabled = true;
             relay.CheckASpot(0);
             gunGrabbed = true;
         }
@@ -115,6 +123,18 @@ public class RequirementCheck : MonoBehaviour
         {
             relay.CheckASpot(1);
             gunDropped = true;
+        }
+    }
+    public void ShootGun()
+    {
+        if (!gunEmptied)
+        {
+            bulletsShoot++;
+            if(bulletsShoot >= 10)
+            {
+                relay.CheckASpot(0);
+                gunEmptied = true;
+            }
         }
     }
     public void MagDropped()

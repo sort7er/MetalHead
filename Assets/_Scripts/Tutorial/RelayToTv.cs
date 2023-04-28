@@ -15,7 +15,7 @@ public class RelayToTv : MonoBehaviour
     private void Start()
     {
         ground2.SetActive(false);
-        currentObjective = 0;
+        currentObjective = 2;
         tutorialManager = GetComponent<TutorialManager>();
         requirementCheck = GetComponent<RequirementCheck>();
     }
@@ -74,6 +74,14 @@ public class RelayToTv : MonoBehaviour
             tvsInScene[i].GrabGun();
         }
     }
+    public void TvShootGun()
+    {
+        AddRequirement(1);
+        for (int i = 0; i < tvsInScene.Length; i++)
+        {
+            tvsInScene[i].ShootGun();
+        }
+    }
     public void TvReloadGun()
     {
         AddRequirement(4);
@@ -127,8 +135,11 @@ public class RelayToTv : MonoBehaviour
             }
             else if (currentObjective == 3)
             {
-                Debug.Log("Nice");
-                //Invoke(nameof(TvMenu), 2.5f);
+                Invoke(nameof(TvShootGun), 2.5f);
+            }
+            else if (currentObjective == 4)
+            {
+                Invoke(nameof(TvReloadGun), 2.5f);
             }
 
         }

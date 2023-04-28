@@ -12,7 +12,7 @@ public class TutorialManager : MonoBehaviour
 
 
     [Header("Things to enable")]
-    public GameObject[] gunStuff;
+    public GameObject ammoBag;
     public GameObject magnet;
 
 
@@ -91,7 +91,7 @@ public class TutorialManager : MonoBehaviour
     private void StartTutorial()
     {
         TutorialMenu();
-        SetGun(false);
+        SetAmmoBag(false);
         SetMagnet(false);
     }
     public void NextMenu()
@@ -185,12 +185,9 @@ public class TutorialManager : MonoBehaviour
         pauseVignetteRenderer.sharedMaterial.SetFloat("_ApertureSize", newSize);
     }
 
-    public void SetGun(bool state)
+    public void SetAmmoBag(bool state)
     {
-        for(int i = 0; i < gunStuff.Length; i++)
-        {
-            gunStuff[i].SetActive(state);
-        }
+        ammoBag.SetActive(state);
     }
     public void SetWatch(bool state)
     {

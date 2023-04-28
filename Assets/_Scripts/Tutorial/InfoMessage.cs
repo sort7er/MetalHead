@@ -25,7 +25,7 @@ public class InfoMessage : MonoBehaviour
     {
         infoText.text = messageToDisplay;
         Invoke(nameof(Delay), 0.01f);
-        if (messageToDisplay != "")
+        if (messageToDisplay2 != "")
         {
             Invoke(nameof(SecondMessage), 7);
         }
