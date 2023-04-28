@@ -8,9 +8,9 @@ public class ChooseMovement : MonoBehaviour
     public Transform character, targetPos;
     public GameObject arm;
     public GameObject teleportMovement;
-    public TutorialManager tutorialManager;
-    public TV tv;
 
+    private TutorialManager tutorialManager;
+    private RelayToTv relayToTv;
     private Vector3 startPos, currentTarget;
     private float currentTime;
     private int multiplier = 1;
@@ -18,6 +18,8 @@ public class ChooseMovement : MonoBehaviour
 
     private void Start()
     {
+        tutorialManager = FindObjectOfType<TutorialManager>();
+        relayToTv = tutorialManager.GetComponent<RelayToTv>();
         startPos = character.localPosition;
     }
 
@@ -165,7 +167,7 @@ public class ChooseMovement : MonoBehaviour
         }
         else
         {
-            tv.Movement();
+            relayToTv.TvMovement();
             tutorialManager.CloseTutorialMenu();
         }
     }

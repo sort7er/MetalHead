@@ -3,16 +3,13 @@ using UnityEngine.InputSystem;
 
 public class RequirementCheck : MonoBehaviour
 {
-
     public InputActionAsset inputAction;
-
-
 
     private InputAction turnLeft;
     private InputAction turnRight;
     private InputAction quickturn;
 
-    private TV tv;
+    private RelayToTv relay;
 
     private bool canTurnLeft, canTurnRight;
     private bool canQuickturn;
@@ -21,7 +18,7 @@ public class RequirementCheck : MonoBehaviour
 
     private void Start()
     {
-        tv = GetComponent<TV>();
+        relay = GetComponent<RelayToTv>();
 
         turnLeft = inputAction.FindActionMap("XRI RightHand Locomotion").FindAction("TurnLeft");
         turnLeft.Enable();
@@ -43,7 +40,7 @@ public class RequirementCheck : MonoBehaviour
         quickturn.performed -= OnQuickturn;
     }
 
-
+    //Enable requirements
     public void CanTurn()
     {
         canTurnLeft = true;
@@ -54,13 +51,12 @@ public class RequirementCheck : MonoBehaviour
         canQuickturn = true;
     }
 
-
     //Inputs
     private void OnTurnLeft(InputAction.CallbackContext context)
     {
         if (canTurnLeft && !GameManager.instance.isPaused)
         {
-            tv.TurnLeftDone();
+            relay.TurnLeftDone();
             canTurnLeft = false;
         }
     }
@@ -68,7 +64,7 @@ public class RequirementCheck : MonoBehaviour
     {
         if(canTurnRight && !GameManager.instance.isPaused)
         {
-            tv.TurnRightDone();
+            relay.TurnRightDone();
             canTurnRight = false;
         }
     }
@@ -76,7 +72,7 @@ public class RequirementCheck : MonoBehaviour
     {
         if (canQuickturn && !GameManager.instance.isPaused)
         {
-            tv.QuickturnDone();
+            relay.QuickturnDone();
             canQuickturn = false;
         }
     }
@@ -84,7 +80,7 @@ public class RequirementCheck : MonoBehaviour
     {
         if (!liftTriggerEntererd)
         {
-            tv.LiftTriggerEntered();
+            relay.LiftTriggerEntered();
             liftTriggerEntererd = true;
         }
     }

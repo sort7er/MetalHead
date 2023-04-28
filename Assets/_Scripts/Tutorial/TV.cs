@@ -3,10 +3,6 @@ using UnityEngine;
 
 public class TV : MonoBehaviour
 {
-    [Header("Other references")]
-    public TutorialManager tutorialManager;
-    public Animator OpeningInFloor;
-
     [Header("Audio")]
     public AudioSource check;
     public AudioClip[] checkClip;
@@ -24,20 +20,16 @@ public class TV : MonoBehaviour
 
 
     private GameObject currentDisplay;
-    private RequirementCheck requirementCheck;
     private TypeWriterText[] typeWriterText;
     private TypeWriterText niceTypeWriterText;
 
-    private int numberOfRequirements;
-    private bool quickturn, pausedChecked;
-    private bool backToMenu;
+    private bool pausedChecked;
 
     private void Start()
     {
         niceText.text = "";
         ResetTutorial();
         ResetChecklist();
-        requirementCheck = GetComponent<RequirementCheck>();
         niceTypeWriterText = niceText.GetComponent<TypeWriterText>();
         typeWriterText = new TypeWriterText[objectiveText.Length];
         for(int i = 0; i < objectiveText.Length; i++)
@@ -63,99 +55,54 @@ public class TV : MonoBehaviour
     //Enable
     public void Turning()
     {
-        backToMenu = true;
         Objective(0, "Turn left");
         Objective(1, "Turn right");
         SetCurrentDisplay(turningDisplay);
-        requirementCheck.CanTurn();
         if (LocomotionManager.instance.currentQuickTurnType == 0)
         {
-            quickturn = true;
-            requirementCheck.CanQuickturn();
             Objective(2, "Quickturn");
         }
     }
 
     public void Movement()
     {
-        OpeningInFloor.SetTrigger("Lift");
-
         SetCurrentDisplay(movementDisplay);
         Objective(0, "Move to the pillar");
         Objective(1, "Press the button");
     }
 
-    //Checkoff
-    public void TurnLeftDone()
+    // Methods called from relay
+    public void AllChecked()
     {
-        Fill(0);
-        CheckOff();
+        ResetTutorial();
+        niceText.text = "Well done";
+        niceTypeWriterText.StartTyping();
+        Check(1);
+        Invoke(nameof(ResetChecklist), 2);
     }
-    public void TurnRightDone()
+    public void SetQuickTurnDisplay()
     {
-        
-        Fill(1);
-        CheckOff();
-    }
-    public void QuickturnDone()
-    {
-        quickturn = false;
-        Fill(2);
-        CheckOff();
-    }
-    public void LiftTriggerEntered()
-    {
-        CheckOff();
-        Fill(0);
+        ResetTutorial();
+        SetCurrentDisplay(quickturnDisplay);
     }
 
-
-
-    // Effective methods
-
-    private void CheckOff()
+    public void Check(int i)
     {
-        numberOfRequirements--;
-        if(numberOfRequirements == 0)
-        {
-            ResetTutorial();
-
-            niceText.text = "Well done";
-            niceTypeWriterText.StartTyping();
-            check.PlayOneShot(checkClip[1]);
-            Invoke(nameof(ResetChecklist), 2);
-
-            if (backToMenu)
-            {
-                Invoke(nameof(NextObjective), 2.5f);
-                backToMenu = false;
-            }
-        }
-        else if(numberOfRequirements == 1 && quickturn)
-        {
-            ResetTutorial();
-            SetCurrentDisplay(quickturnDisplay);
-            check.PlayOneShot(checkClip[0]);
-        }
-        else
-        {
-            check.PlayOneShot(checkClip[0]);
-        }
-
+        check.PlayOneShot(checkClip[i]);
     }
 
+    public void Fill(int whichObjective)
+    {
+        fill[whichObjective].SetActive(true);
+    }
+
+    //Methods called from script
     private void Objective(int whichObjective, string objective)
     {
         checkboxes[whichObjective].SetActive(true);
         fill[whichObjective].SetActive(false);
         objectiveText[whichObjective].text = objective;
         typeWriterText[whichObjective].StartTyping();
-        numberOfRequirements++;
-    }
-
-    private void Fill(int whichObjective)
-    {
-        fill[whichObjective].SetActive(true);
     }
 
     private void ResetTutorial()
@@ -175,16 +122,12 @@ public class TV : MonoBehaviour
             fill[i].SetActive(false);
         }
     }
-    private void NextObjective()
-    {
-        tutorialManager.NextMenu();
-    }
     private void SetCurrentDisplay(GameObject display)
     {
         currentDisplay = display;
         currentDisplay.SetActive(true);
     }
-    public void EnableCurrentDisplay(bool state)
+    private void EnableCurrentDisplay(bool state)
     {
         if(currentDisplay != null)
         {

@@ -10,9 +10,11 @@ public class TutorialManager : MonoBehaviour
     public InputActionAsset menuInputAction;
     public GameObject pauseVignette;
 
+
     [Header("Things to enable")]
     public GameObject[] gunStuff;
     public GameObject magnet;
+
 
     private Watch watch;
     private Renderer pauseVignetteRenderer;
