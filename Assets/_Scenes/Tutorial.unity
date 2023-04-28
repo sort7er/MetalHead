@@ -8239,7 +8239,12 @@ PrefabInstance:
     - target: {fileID: 8441575486767264505, guid: 896eb9f60332a1946a0023ea27d8f390,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 5514
+      value: 5526
+      objectReference: {fileID: 0}
+    - target: {fileID: 8441575486767264511, guid: 896eb9f60332a1946a0023ea27d8f390,
+        type: 3}
+      propertyPath: pathLeft
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -19657,40 +19662,16 @@ MonoBehaviour:
       m_Calls: []
   onPressO:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
-        m_MethodName: SetMovement
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
   onPressU:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
-        m_MethodName: SetTurning
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
   onPressArrowUp:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2056867956}
         m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
-        m_MethodName: SetGun
+        m_MethodName: SetWatch
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19703,9 +19684,9 @@ MonoBehaviour:
   onPressArrowDown:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2056867956}
         m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
-        m_MethodName: SetWatch
+        m_MethodName: SetGun
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19718,7 +19699,7 @@ MonoBehaviour:
   onPressArrowLeft:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2056867956}
         m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
         m_MethodName: SetMagnet
         m_Mode: 6
@@ -22713,6 +22694,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1336838098}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!82 &1341103846 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8441575486767264509, guid: 896eb9f60332a1946a0023ea27d8f390,
+    type: 3}
+  m_PrefabInstance: {fileID: 260858794}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1361318769
 GameObject:
   m_ObjectHideFlags: 0
@@ -35306,6 +35293,7 @@ MonoBehaviour:
   - {fileID: 1637843092}
   - {fileID: 1966746285}
   - {fileID: 682990582}
+  - {fileID: 1341103846}
 --- !u!114 &1678176669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44331,7 +44319,7 @@ PrefabInstance:
     - target: {fileID: 8441575486767264505, guid: 896eb9f60332a1946a0023ea27d8f390,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 5511
+      value: 5523
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -13,6 +13,8 @@ public class TV : MonoBehaviour
     public GameObject quickturnDisplay;
     public GameObject movementDisplay;
     public GameObject menuDisplay;
+    public GameObject arrowDisplay;
+    public bool pathLeft;
 
     [Header("Checklist")]
     public GameObject[] checkboxes;
@@ -77,6 +79,16 @@ public class TV : MonoBehaviour
         SetCurrentDisplay(menuDisplay, false);
     }
 
+    public void Arrow()
+    {
+        SetCurrentDisplay(arrowDisplay, false);
+        if (pathLeft)
+        {
+            arrowDisplay.transform.localScale = new Vector3(-arrowDisplay.transform.localScale.x, arrowDisplay.transform.localScale.y, arrowDisplay.transform.localScale.z);
+        }
+        Objective(0, "Proceed out of the room");
+    }
+
     // Methods called from relay
     public void AllChecked()
     {
@@ -88,7 +100,6 @@ public class TV : MonoBehaviour
     }
     public void SetQuickTurnDisplay()
     {
-        ResetTutorial();
         SetCurrentDisplay(quickturnDisplay, false);
     }
 
@@ -101,14 +112,7 @@ public class TV : MonoBehaviour
     {
         fill[whichObjective].SetActive(true);
     }
-    public void ResetTutorial()
-    {
-        currentDisplay = null;
-        turningDisplay.SetActive(false);
-        quickturnDisplay.SetActive(false);
-        movementDisplay.SetActive(false);
-        menuDisplay.SetActive(false);
-    }
+
 
     //Methods called from script
     private void Objective(int whichObjective, string objective)
@@ -128,8 +132,18 @@ public class TV : MonoBehaviour
             fill[i].SetActive(false);
         }
     }
+    private void ResetTutorial()
+    {
+        currentDisplay = null;
+        turningDisplay.SetActive(false);
+        quickturnDisplay.SetActive(false);
+        movementDisplay.SetActive(false);
+        menuDisplay.SetActive(false);
+        arrowDisplay.SetActive(false);
+    }
     private void SetCurrentDisplay(GameObject display, bool reload)
     {
+        ResetTutorial();
         includeReloadAfterPause = reload;
         currentDisplay = display;
         currentDisplay.SetActive(true);

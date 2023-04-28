@@ -9,7 +9,7 @@ public class ButtonCollision : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer == 16 || collision.gameObject.layer == 15)
+        if (collision.gameObject.layer == 16 || collision.gameObject.layer == 15 || collision.gameObject.layer == 8)
         {
             numberOfCollisions++;
         }
@@ -17,7 +17,7 @@ public class ButtonCollision : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.layer == 16 || collision.gameObject.layer == 15)
+        if (collision.gameObject.layer == 16 || collision.gameObject.layer == 15 || collision.gameObject.layer == 8)
         {
             numberOfCollisions--;
              if(numberOfCollisions <= 0)

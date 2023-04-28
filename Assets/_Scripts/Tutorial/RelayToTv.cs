@@ -52,13 +52,13 @@ public class RelayToTv : MonoBehaviour
         {
             tvsInScene[i].Menu();
         }
-        Invoke(nameof(Arrow), 10f);
+        Invoke(nameof(Arrow), 8f);
     }
     public void Arrow()
     {
         for (int i = 0; i < tvsInScene.Length; i++)
         {
-            tvsInScene[i].ResetTutorial();
+            tvsInScene[i].Arrow();
         }
     }
 
