@@ -4,10 +4,13 @@ using UnityEngine.Events;
 public class PhysicsButton : MonoBehaviour
 {
     public GameObject push;
+    public MeshRenderer visual;
     public float threshold = 0.1f;
     public float deadzone = 0.025f;
     public UnityEvent onPressed, onReleased;
-
+    public AudioClip[] buttonDown;
+    public AudioClip[] buttonUp;
+ 
     [HideInInspector] public bool frozen;
 
     private bool isPressed;
@@ -15,9 +18,11 @@ public class PhysicsButton : MonoBehaviour
     private Vector3 endPos;
     private Rigidbody rb;
     private ConfigurableJoint joint;
+    private AudioSource audioSource;
 
     private void Start()
     {
+        audioSource= GetComponent<AudioSource>();
         rb = push.GetComponent<Rigidbody>();
         startPos = push.transform.localPosition;
         joint = push.GetComponent<ConfigurableJoint>();
@@ -34,9 +39,20 @@ public class PhysicsButton : MonoBehaviour
         {
             Released();
         }
-        if (GetValue() > 0.9 && !frozen)
+        if (GetValue() > 0.9 || push.transform.localPosition.y > startPos.y + 0.002f && !frozen)
         {
-            push.transform.localPosition = endPos;
+            if(push.transform.localPosition.y > startPos.y)
+            {
+                push.transform.localPosition = startPos;
+            }
+            else
+            {
+                push.transform.localPosition = endPos;
+            }
+
+
+            CancelInvoke(nameof(Unfreeze));
+            Invoke(nameof(Unfreeze), 3);
             rb.constraints = RigidbodyConstraints.FreezeAll;
             frozen = true;
         }
@@ -60,14 +76,18 @@ public class PhysicsButton : MonoBehaviour
 
     private void Pressed()
     {
+        visual.material.EnableKeyword("_EMISSION");
         isPressed = true;
-        Debug.Log("Pressed");
         onPressed.Invoke();
+        audioSource.clip = buttonDown[Random.Range(0, buttonDown.Length)];
+        audioSource.Play();
     }
     private void Released()
     {
+        visual.material.DisableKeyword("_EMISSION");
         isPressed = false;
-        Debug.Log("Released");
         onReleased.Invoke();
+        audioSource.clip = buttonUp[Random.Range(0, buttonUp.Length)];
+        audioSource.Play();
     }
 }

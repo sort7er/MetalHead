@@ -29,7 +29,10 @@ public class AudioManager : MonoBehaviour
     {
         for (int i = 0; i < audioSourcesToMute.Length; i++)
         {
-            audioSourcesToMute[i].Play();
+            if (audioSourcesToMute[i].gameObject.activeSelf)
+            {
+                audioSourcesToMute[i].Play();
+            }
         }
     }
 }

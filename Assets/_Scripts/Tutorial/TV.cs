@@ -12,6 +12,7 @@ public class TV : MonoBehaviour
     public GameObject turningDisplay;
     public GameObject quickturnDisplay;
     public GameObject movementDisplay;
+    public GameObject menuDisplay;
 
     [Header("Checklist")]
     public GameObject[] checkboxes;
@@ -23,7 +24,7 @@ public class TV : MonoBehaviour
     private TypeWriterText[] typeWriterText;
     private TypeWriterText niceTypeWriterText;
 
-    private bool pausedChecked;
+    private bool pausedChecked, includeReloadAfterPause;
 
     private void Start()
     {
@@ -57,7 +58,7 @@ public class TV : MonoBehaviour
     {
         Objective(0, "Turn left");
         Objective(1, "Turn right");
-        SetCurrentDisplay(turningDisplay);
+        SetCurrentDisplay(turningDisplay, true);
         if (LocomotionManager.instance.currentQuickTurnType == 0)
         {
             Objective(2, "Quickturn");
@@ -66,9 +67,14 @@ public class TV : MonoBehaviour
 
     public void Movement()
     {
-        SetCurrentDisplay(movementDisplay);
+        SetCurrentDisplay(movementDisplay, true);
         Objective(0, "Move to the pillar");
         Objective(1, "Press the button");
+    }
+
+    public void Menu()
+    {
+        SetCurrentDisplay(menuDisplay, false);
     }
 
     // Methods called from relay
@@ -83,7 +89,7 @@ public class TV : MonoBehaviour
     public void SetQuickTurnDisplay()
     {
         ResetTutorial();
-        SetCurrentDisplay(quickturnDisplay);
+        SetCurrentDisplay(quickturnDisplay, false);
     }
 
     public void Check(int i)
@@ -95,6 +101,14 @@ public class TV : MonoBehaviour
     {
         fill[whichObjective].SetActive(true);
     }
+    public void ResetTutorial()
+    {
+        currentDisplay = null;
+        turningDisplay.SetActive(false);
+        quickturnDisplay.SetActive(false);
+        movementDisplay.SetActive(false);
+        menuDisplay.SetActive(false);
+    }
 
     //Methods called from script
     private void Objective(int whichObjective, string objective)
@@ -103,14 +117,6 @@ public class TV : MonoBehaviour
         fill[whichObjective].SetActive(false);
         objectiveText[whichObjective].text = objective;
         typeWriterText[whichObjective].StartTyping();
-    }
-
-    private void ResetTutorial()
-    {
-        currentDisplay = null;
-        turningDisplay.SetActive(false);
-        quickturnDisplay.SetActive(false);
-        movementDisplay.SetActive(false);
     }
     private void ResetChecklist()
     {
@@ -122,14 +128,15 @@ public class TV : MonoBehaviour
             fill[i].SetActive(false);
         }
     }
-    private void SetCurrentDisplay(GameObject display)
+    private void SetCurrentDisplay(GameObject display, bool reload)
     {
+        includeReloadAfterPause = reload;
         currentDisplay = display;
         currentDisplay.SetActive(true);
     }
     private void EnableCurrentDisplay(bool state)
     {
-        if(currentDisplay != null)
+        if(currentDisplay != null && includeReloadAfterPause)
         {
             currentDisplay.SetActive(state);
         }

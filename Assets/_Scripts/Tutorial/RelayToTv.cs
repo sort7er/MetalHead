@@ -7,11 +7,12 @@ public class RelayToTv : MonoBehaviour
 
     private TutorialManager tutorialManager;
     private RequirementCheck requirementCheck;
-    private bool backToMenu, quickturn;
-    private int numberOfRequirements;
+    private bool quickturn;
+    private int numberOfRequirements, currentObjective;
 
     private void Start()
     {
+        currentObjective = 0;
         tutorialManager = GetComponent<TutorialManager>();
         requirementCheck = GetComponent<RequirementCheck>();
     }
@@ -21,7 +22,6 @@ public class RelayToTv : MonoBehaviour
     //Enable
     public void TvTurning()
     {
-        backToMenu = true;
         requirementCheck.CanTurn();
         AddRequirement(2);
 
@@ -46,41 +46,35 @@ public class RelayToTv : MonoBehaviour
             tvsInScene[i].Movement();
         }
     }
-
-
-    //Checkoff
-    public void TurnLeftDone()
+    public void TvMenu()
     {
-        CheckOff();
         for (int i = 0; i < tvsInScene.Length; i++)
         {
-            tvsInScene[i].Fill(0);
+            tvsInScene[i].Menu();
+        }
+        Invoke(nameof(Arrow), 10f);
+    }
+    public void Arrow()
+    {
+        for (int i = 0; i < tvsInScene.Length; i++)
+        {
+            tvsInScene[i].ResetTutorial();
         }
     }
-    public void TurnRightDone()
+
+    //Checkoff
+    public void CheckASpot(int objectiveToFill)
     {
         CheckOff();
         for (int i = 0; i < tvsInScene.Length; i++)
         {
-            tvsInScene[i].Fill(1);
+            tvsInScene[i].Fill(objectiveToFill);
         }
     }
     public void QuickturnDone()
     {
-        CheckOff();
-        for (int i = 0; i < tvsInScene.Length; i++)
-        {
-            tvsInScene[i].Fill(2);
-        }
+        CheckASpot(2);
         quickturn = false;
-    }
-    public void LiftTriggerEntered()
-    {
-        CheckOff();
-        for (int i = 0; i < tvsInScene.Length; i++)
-        {
-            tvsInScene[i].Fill(0);
-        }
     }
 
     private void CheckOff()
@@ -88,16 +82,22 @@ public class RelayToTv : MonoBehaviour
         numberOfRequirements--;
         if (numberOfRequirements == 0)
         {
+            currentObjective++;
+
             for (int i = 0; i < tvsInScene.Length; i++)
             {
                 tvsInScene[i].AllChecked();
             }
 
-            if (backToMenu)
+            if(currentObjective == 1)
             {
-                Invoke(nameof(NextObjective), 2.5f);
-                backToMenu = false;
+                Invoke(nameof(NextMenu), 2.5f);
             }
+            else if(currentObjective == 2)
+            {
+                Invoke(nameof(TvMenu), 2.5f);
+            }
+
         }
         else if (numberOfRequirements == 1 && quickturn)
         {
@@ -116,14 +116,13 @@ public class RelayToTv : MonoBehaviour
         }
 
     }
-    private void NextObjective()
-    {
-        tutorialManager.NextMenu();
-    }
     public void AddRequirement(int add)
     {
         numberOfRequirements += add;
     }
-
+    private void NextMenu()
+    {
+        tutorialManager.NextMenu();
+    }
 
 }

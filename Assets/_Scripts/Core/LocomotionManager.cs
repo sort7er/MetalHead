@@ -45,10 +45,6 @@ public class LocomotionManager : MonoBehaviour
         continuousTurnProvider = GetComponent<ActionBasedContinuousTurnProvider>();
         playerObstacle = GameManager.instance.XROrigin.GetComponent<NavMeshObstacle>();
 
-        SetContinuousMoveInputReference();
-        SetTeleportationInputReference();
-        SetContinousTurnInputReference();
-        SetSnapTurnInputReference();
         StartSettings();
 
         snapTurn = inputAction.FindActionMap("XRI RightHand Locomotion").FindAction("Snap Turn");
@@ -67,19 +63,11 @@ public class LocomotionManager : MonoBehaviour
         {
             continuousMoveInputReference = continuousMoveProvider.leftHandMoveAction.reference;
         }
-        else
-        {
-            Debug.Log("No Continuous Move Provider Input Action was found on the Left Hand. Please set it on your  Left hand Move Action found on the Continuous Move Provider use the Locomotion Manager");
-        }
     }
 
     private void SetTeleportationInputReference()
     {
         teleportationInputReference = teleportationRays.GetComponentInChildren<TeleportationController>().inputAction;
-        if (teleportationInputReference == null)
-        {
-            Debug.Log("No Input Action Asset reference was found in the Teleportation Controller Fixed script. Please assign to use Locomotion Manager");
-        }
     }
     private void SetContinousTurnInputReference()
     {
@@ -87,20 +75,12 @@ public class LocomotionManager : MonoBehaviour
         {
             continuousTurnInputReference = continuousTurnProvider.leftHandTurnAction.reference;
         }
-        else
-        {
-            Debug.Log("No Continuous Turn Provider Input Action was found on the Left Hand. Please set it on your  Left hand Turn Action found on the Continuous Move Provider use the Locomotion Manager");
-        }
     }
     private void SetSnapTurnInputReference()
     {
         if (snapTurnProvider.leftHandSnapTurnAction.reference != null)
         {
             snapTurnInputReference = snapTurnProvider.leftHandSnapTurnAction.reference;
-        }
-        else
-        {
-            Debug.Log("No Continuous Snap Provider Input Action was found on the Left Hand. Please set it on your  Left hand Snap Action found on the Continuous Move Provider use the Locomotion Manager");
         }
     }
     private void StartSettings()
@@ -169,6 +149,7 @@ public class LocomotionManager : MonoBehaviour
 
     private void SetCountinuous(bool value)
     {
+        SetContinuousMoveInputReference();
         if (value)
         {
             continuousMoveProvider.leftHandMoveAction = new InputActionProperty(continuousMoveInputReference);
@@ -177,10 +158,10 @@ public class LocomotionManager : MonoBehaviour
     }
     private void SetTeleport(bool value)
     {
+        SetTeleportationInputReference();
         if (value)
         {
             teleportationRays.GetComponentInChildren<TeleportationController>().inputAction = teleportationInputReference;
-
         }
         isUsingTeleport = value;
         teleportationRays.SetActive(value);
@@ -226,6 +207,7 @@ public class LocomotionManager : MonoBehaviour
     }
     private void SetCountinuousTurn(bool value)
     {
+        SetContinousTurnInputReference();
         if (value)
         {
             continuousTurnProvider.leftHandTurnAction = new InputActionProperty(continuousTurnInputReference);
@@ -234,6 +216,7 @@ public class LocomotionManager : MonoBehaviour
     }
     private void SetSnap(bool value)
     {
+        SetSnapTurnInputReference();
         if (value)
         {
             snapTurnProvider.leftHandSnapTurnAction= new InputActionProperty(snapTurnInputReference);

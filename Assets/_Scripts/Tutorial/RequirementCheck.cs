@@ -14,6 +14,7 @@ public class RequirementCheck : MonoBehaviour
     private bool canTurnLeft, canTurnRight;
     private bool canQuickturn;
     private bool liftTriggerEntererd;
+    private bool buttonPressed;
 
 
     private void Start()
@@ -56,7 +57,7 @@ public class RequirementCheck : MonoBehaviour
     {
         if (canTurnLeft && !GameManager.instance.isPaused)
         {
-            relay.TurnLeftDone();
+            relay.CheckASpot(0);
             canTurnLeft = false;
         }
     }
@@ -64,7 +65,7 @@ public class RequirementCheck : MonoBehaviour
     {
         if(canTurnRight && !GameManager.instance.isPaused)
         {
-            relay.TurnRightDone();
+            relay.CheckASpot(1);
             canTurnRight = false;
         }
     }
@@ -80,8 +81,16 @@ public class RequirementCheck : MonoBehaviour
     {
         if (!liftTriggerEntererd)
         {
-            relay.LiftTriggerEntered();
+            relay.CheckASpot(0);
             liftTriggerEntererd = true;
+        }
+    }
+    public void ButtonPressed()
+    {
+        if (!buttonPressed)
+        {
+            relay.CheckASpot(1);
+            buttonPressed = true;
         }
     }
 
