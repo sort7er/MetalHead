@@ -3,6 +3,8 @@ using UnityEngine;
 public class RelayToTv : MonoBehaviour
 {
     public Animator OpeningInFloor;
+    public Animator doorToOpen;
+    public GameObject ground2;
     public TV[] tvsInScene;
 
     private TutorialManager tutorialManager;
@@ -12,6 +14,7 @@ public class RelayToTv : MonoBehaviour
 
     private void Start()
     {
+        ground2.SetActive(false);
         currentObjective = 0;
         tutorialManager = GetComponent<TutorialManager>();
         requirementCheck = GetComponent<RequirementCheck>();
@@ -60,6 +63,8 @@ public class RelayToTv : MonoBehaviour
         {
             tvsInScene[i].Arrow();
         }
+        ground2.SetActive(true);
+        doorToOpen.SetTrigger("Open");
     }
 
     //Checkoff
