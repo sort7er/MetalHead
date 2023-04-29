@@ -35,15 +35,15 @@ public class TV : MonoBehaviour
     private void Start()
     {
         reloadGun = reloadGunDisplay.GetComponent<ReloadGun>();
-        niceText.text = "";
-        ResetTutorial();
-        ResetChecklist();
         niceTypeWriterText = niceText.GetComponent<TypeWriterText>();
+        niceText.text = "";
         typeWriterText = new TypeWriterText[objectiveText.Length];
         for(int i = 0; i < objectiveText.Length; i++)
         {
             typeWriterText[i] = objectiveText[i].GetComponent<TypeWriterText>();
         }
+        ResetTutorial();
+        ResetChecklist();
     }
 
     private void Update()
@@ -96,16 +96,19 @@ public class TV : MonoBehaviour
 
     public void GrabGun()
     {
+        ResetChecklist();
         Objective(0, "Grab gun");
         SetCurrentDisplay(grabGunDisplay, false);
     }
     public void ShootGun()
     {
+        ResetChecklist();
         Objective(0, "Fire all bullets in gun");
         SetCurrentDisplay(shootGunDisplay, false);
     }
     public void ReloadGun()
     {
+        ResetChecklist();
         Objective(0, "Drop mag");
         Objective(1, "Grab mag");
         Objective(2, "Insert mag");
@@ -119,13 +122,14 @@ public class TV : MonoBehaviour
     }
 
     // Methods called from relay
-    public void AllChecked()
+    public void AllChecked(float delay)
     {
         ResetTutorial();
+        niceTypeWriterText.StopTyping();
         niceText.text = "Well done";
         niceTypeWriterText.StartTyping();
         Check(1);
-        Invoke(nameof(ResetChecklist), 2);
+        Invoke(nameof(ResetChecklist), delay);
     }
     public void SetQuickTurnDisplay()
     {
@@ -148,11 +152,13 @@ public class TV : MonoBehaviour
     {
         checkboxes[whichObjective].SetActive(true);
         fill[whichObjective].SetActive(false);
+        typeWriterText[whichObjective].StopTyping();
         objectiveText[whichObjective].text = objective;
         typeWriterText[whichObjective].StartTyping();
     }
     private void ResetChecklist()
     {
+        niceTypeWriterText.StopTyping();
         niceText.text = "";
         for (int i = 0; i < objectiveText.Length; i++)
         {

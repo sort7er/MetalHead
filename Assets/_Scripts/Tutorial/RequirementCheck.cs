@@ -68,10 +68,12 @@ public class RequirementCheck : MonoBehaviour
             }
             else if(!magInserted && magGrabbed && releaseMag.insert)
             {
+                Debug.Log("1");
                 MagInserted();
             }
             else if (!slidePulled && magInserted && releaseMag.reloadValid)
             {
+                Debug.Log("2");
                 SlidePulled();
             }
         }

@@ -23,6 +23,7 @@ public class InfoMessage : MonoBehaviour
 
     private void OnEnable()
     {
+        typeWriterText.StopTyping();
         infoText.text = messageToDisplay;
         Invoke(nameof(Delay), 0.01f);
         if (messageToDisplay2 != "")

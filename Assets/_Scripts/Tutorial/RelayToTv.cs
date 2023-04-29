@@ -11,6 +11,7 @@ public class RelayToTv : MonoBehaviour
     private RequirementCheck requirementCheck;
     private bool quickturn;
     private int numberOfRequirements, currentObjective;
+    float delay;
 
     private void Start()
     {
@@ -27,6 +28,7 @@ public class RelayToTv : MonoBehaviour
     {
         requirementCheck.CanTurn();
         AddRequirement(2);
+        delay = 2;
 
         if (LocomotionManager.instance.currentQuickTurnType == 0)
         {
@@ -51,11 +53,12 @@ public class RelayToTv : MonoBehaviour
     }
     public void TvMenu()
     {
+        delay = 0f;
         for (int i = 0; i < tvsInScene.Length; i++)
         {
             tvsInScene[i].Menu();
         }
-        Invoke(nameof(TvArrow), 6f);
+        Invoke(nameof(TvArrow), 4f);
     }
     public void TvArrow()
     {
@@ -86,6 +89,7 @@ public class RelayToTv : MonoBehaviour
     }
     public void TvReloadGun()
     {
+        delay = 2f;
         AddRequirement(4);
         requirementCheck.CanReload();
         for (int i = 0; i < tvsInScene.Length; i++)
@@ -125,29 +129,32 @@ public class RelayToTv : MonoBehaviour
 
             for (int i = 0; i < tvsInScene.Length; i++)
             {
-                tvsInScene[i].AllChecked();
+                tvsInScene[i].AllChecked(delay);
             }
 
-            if(currentObjective == 1)
+            if (currentObjective == 1)
             {
-                Invoke(nameof(NextMenu), 2f);
+                Invoke(nameof(NextMenu), delay);
             }
             else if(currentObjective == 2)
             {
-                Invoke(nameof(TvMenu), 2f);
+                Invoke(nameof(TvMenu), delay);
             }
             else if (currentObjective == 3)
             {
-                Invoke(nameof(TvGrabGun), 2f);
+                Invoke(nameof(TvGrabGun), delay);
             }
             else if (currentObjective == 4)
             {
-                Invoke(nameof(TvShootGun), 2f);
+                Invoke(nameof(TvShootGun), delay);
             }
             else if (currentObjective == 5)
             {
-                Invoke(nameof(TvReloadGun), 2f);
+                Invoke(nameof(TvReloadGun), delay);
             }
+
+
+
 
         }
         else if (numberOfRequirements == 1 && quickturn)

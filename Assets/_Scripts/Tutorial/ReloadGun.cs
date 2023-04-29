@@ -15,6 +15,7 @@ public class ReloadGun : MonoBehaviour
     }
     public void Display()
     {
+        typeWriterText.StopTyping();
         infoText.text = "";
         for (int i = 0; i < reloadDisplays.Length; i++)
         {

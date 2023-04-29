@@ -4,16 +4,29 @@ using UnityEngine;
 public class FiringRange : MonoBehaviour
 {
     public TextMeshProUGUI scoreText;
-    public Target[] targetsToHit;
+    public GameObject ammoPrefab;
+    public Transform ammoSpawn;
+
     public Animator[] targetsAnim;
 
     private TypeWriterText typeWriterText;
+    private Target[] targetsToHit;
+    private GameObject currentAmmo;
     private int score;
-
     private bool cannotReset;
+
 
     private void Start()
     {
+        targetsToHit = new Target[targetsAnim.Length];
+        for (int i = 0; i < targetsAnim.Length; i++)
+        {
+            if(targetsAnim[i].GetComponentInChildren<Target>() != null)
+            {
+                targetsToHit[i] = targetsAnim[i].GetComponentInChildren<Target>();
+            }
+        }
+
         typeWriterText = scoreText.GetComponent<TypeWriterText>();
         ResetScore();
     }
@@ -44,12 +57,24 @@ public class FiringRange : MonoBehaviour
     }
     private void LiftUp()
     {
+        if(currentAmmo == null)
+        {
+            currentAmmo = Instantiate(ammoPrefab, ammoSpawn.position, Quaternion.identity);
+        }
+        else if (currentAmmo != null && Vector3.Distance(ammoSpawn.position, currentAmmo.transform.position) > 4f)
+        {
+            Destroy(currentAmmo);
+            currentAmmo = Instantiate(ammoPrefab, ammoSpawn.position, Quaternion.identity);
+        }
         for (int i = 0; i < targetsAnim.Length; i++)
         {
             targetsAnim[i].SetBool("Lift", true);
-            targetsToHit[i].gameObject.SetActive(true);
+            if (targetsToHit[i] != null)
+            {
+                targetsToHit[i].gameObject.SetActive(true);
+            }
         }
-        Invoke(nameof(LiftUpDone), 2);
+        Invoke(nameof(LiftUpDone), 2f);
     }
     private void LiftUpDone()
     {
