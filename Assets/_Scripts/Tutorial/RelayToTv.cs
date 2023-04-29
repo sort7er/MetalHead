@@ -104,6 +104,14 @@ public class RelayToTv : MonoBehaviour
             tvsInScene[i].NextReload();
         }
     }
+    public void TvArrow2()
+    {
+        AddRequirement(1);
+        for (int i = 0; i < tvsInScene.Length; i++)
+        {
+            tvsInScene[i].Arrow();
+        }
+    }
 
     //Checkoff
     public void CheckASpot(int objectiveToFill)
@@ -152,7 +160,10 @@ public class RelayToTv : MonoBehaviour
             {
                 Invoke(nameof(TvReloadGun), delay);
             }
-
+            else if (currentObjective == 6)
+            {
+                Invoke(nameof(TvArrow2), delay);
+            }
 
 
 
