@@ -8,17 +8,23 @@ public class AmmoBag : MonoBehaviour
     public GameObject magazinePrefab;
     public TextMeshProUGUI ammoText;
 
+    [HideInInspector] public bool tutorialCheck;
+
     private int ammo;
     private GameObject magazineToDrop;
     private Animator ammoPouchAnim;
     private bool handIn;
-    public int rest, numberOfMags;
+    private int rest, numberOfMags;
 
     private void Start()
     {
         ammoPouchAnim = GetComponent<Animator>();
         ammo = bulletsToStartWith;
         UpdateAmmo();
+        if(FindObjectOfType<TutorialManager>() != null)
+        {
+            tutorialCheck = true;
+        }
     }
 
 
@@ -53,6 +59,13 @@ public class AmmoBag : MonoBehaviour
     {
         if (other.CompareTag("Magazine"))
         {
+            if (tutorialCheck)
+            {
+                if(other.GetComponent<Mag>().GetCurrentAmmoFromMag() > 0)
+                {
+                    tutorialCheck = false;
+                }
+            }
             magazineToDrop = null;
             handIn = false;
             ammoPouchAnim.SetBool("Open", false);

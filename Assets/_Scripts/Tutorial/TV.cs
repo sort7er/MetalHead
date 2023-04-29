@@ -97,7 +97,6 @@ public class TV : MonoBehaviour
     public void GrabGun()
     {
         Objective(0, "Grab gun");
-        Objective(1, "Drop gun");
         SetCurrentDisplay(grabGunDisplay, false);
     }
     public void ShootGun()

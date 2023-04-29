@@ -15,7 +15,7 @@ public class RelayToTv : MonoBehaviour
     private void Start()
     {
         ground2.SetActive(false);
-        currentObjective = 2;
+        currentObjective = 0;
         tutorialManager = GetComponent<TutorialManager>();
         requirementCheck = GetComponent<RequirementCheck>();
     }
@@ -59,6 +59,7 @@ public class RelayToTv : MonoBehaviour
     }
     public void TvArrow()
     {
+        AddRequirement(1);
         for (int i = 0; i < tvsInScene.Length; i++)
         {
             tvsInScene[i].Arrow();
@@ -68,7 +69,8 @@ public class RelayToTv : MonoBehaviour
     }
     public void TvGrabGun()
     {
-        AddRequirement(2);
+        AddRequirement(1);
+        requirementCheck.CanGrabGun();
         for (int i = 0; i < tvsInScene.Length; i++)
         {
             tvsInScene[i].GrabGun();
@@ -85,6 +87,7 @@ public class RelayToTv : MonoBehaviour
     public void TvReloadGun()
     {
         AddRequirement(4);
+        requirementCheck.CanReload();
         for (int i = 0; i < tvsInScene.Length; i++)
         {
             tvsInScene[i].ReloadGun();
@@ -127,19 +130,23 @@ public class RelayToTv : MonoBehaviour
 
             if(currentObjective == 1)
             {
-                Invoke(nameof(NextMenu), 2.5f);
+                Invoke(nameof(NextMenu), 2f);
             }
             else if(currentObjective == 2)
             {
-                Invoke(nameof(TvMenu), 2.5f);
+                Invoke(nameof(TvMenu), 2f);
             }
             else if (currentObjective == 3)
             {
-                Invoke(nameof(TvShootGun), 2.5f);
+                Invoke(nameof(TvGrabGun), 2f);
             }
             else if (currentObjective == 4)
             {
-                Invoke(nameof(TvReloadGun), 2.5f);
+                Invoke(nameof(TvShootGun), 2f);
+            }
+            else if (currentObjective == 5)
+            {
+                Invoke(nameof(TvReloadGun), 2f);
             }
 
         }
@@ -151,7 +158,7 @@ public class RelayToTv : MonoBehaviour
             }
         }
         
-        if(numberOfRequirements < 0) 
+        if(numberOfRequirements > 0) 
         {
             for (int i = 0; i < tvsInScene.Length; i++)
             {

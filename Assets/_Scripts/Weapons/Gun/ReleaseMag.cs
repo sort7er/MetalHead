@@ -10,6 +10,9 @@ public class ReleaseMag : MonoBehaviour
     public GameObject magPrefab;
 
     [HideInInspector] public bool reloadValid;
+    [HideInInspector] public bool canReload;
+    [HideInInspector] public bool release;
+    [HideInInspector] public bool insert;
 
     private CZ50 cz50;
     private SoundForGun soundForGun;
@@ -22,10 +25,19 @@ public class ReleaseMag : MonoBehaviour
     private XRGrabInteractable magInteractable;
     private Mag magInGun;
     private bool left;
-    private bool release, insert;
 
     private void Start()
     {
+
+        if(FindObjectOfType<TutorialManager>() != null)
+        {
+            TutorialCanReload(false);
+        }
+        else
+        {
+            TutorialCanReload(true);
+        }
+
         cz50 = GetComponent<CZ50>();
         soundForGun = GetComponent<SoundForGun>();
         returnToHolster = GetComponent<ReturnToHolster>();
@@ -176,16 +188,21 @@ public class ReleaseMag : MonoBehaviour
     }
     private void MagOutLeft(InputAction.CallbackContext context)
     {
-        if (returnToHolster.isHolding && left)
+        if (returnToHolster.isHolding && left && canReload)
         {
             StartRelease();
         }
     }
     private void MagOutRight(InputAction.CallbackContext context)
     {
-        if (returnToHolster.isHolding && !left)
+        if (returnToHolster.isHolding && !left && canReload)
         {
             StartRelease();
         }
+    }
+
+    public void TutorialCanReload(bool state)
+    {
+        canReload = state;
     }
 }

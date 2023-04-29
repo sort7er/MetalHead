@@ -5,19 +5,23 @@ public class RequirementCheck : MonoBehaviour
 {
     public InputActionAsset inputAction;
     public ReturnToHolster cz50ReturnToHolser;
+    public ReleaseMag releaseMag;
+    public AmmoBag ammoBag;
 
     private InputAction turnLeft;
     private InputAction turnRight;
     private InputAction quickturn;
 
+    private TutorialManager tutorialManager;
     private RelayToTv relay;
 
     private bool canTurnLeft, canTurnRight;
     private bool canQuickturn;
     private bool liftTriggerEntererd;
+    private bool firingRangeEntererd;
     private bool buttonPressed;
     private bool gunGrabbed;
-    private bool gunDropped;
+    private bool canGrabGun;
     
     //Shooting
     private bool gunEmptied;
@@ -33,6 +37,7 @@ public class RequirementCheck : MonoBehaviour
     private void Start()
     {
         relay = GetComponent<RelayToTv>();
+        tutorialManager = GetComponent<TutorialManager>();
         cz50ReturnToHolser.enabled = false;
 
         turnLeft = inputAction.FindActionMap("XRI RightHand Locomotion").FindAction("TurnLeft");
@@ -47,6 +52,29 @@ public class RequirementCheck : MonoBehaviour
         quickturn.Enable();
         quickturn.performed += OnQuickturn;
 
+    }
+
+    private void Update()
+    {
+        if(gunEmptied && !slidePulled)
+        {
+            if (releaseMag.release && !magDropped)
+            {
+                MagDropped();
+            }
+            else if(!magGrabbed && magDropped && !ammoBag.tutorialCheck)
+            {
+                GrabMag();
+            }
+            else if(!magInserted && magGrabbed && releaseMag.insert)
+            {
+                MagInserted();
+            }
+            else if (!slidePulled && magInserted && releaseMag.reloadValid)
+            {
+                SlidePulled();
+            }
+        }
     }
 
     private void OnDestroy()
@@ -65,6 +93,15 @@ public class RequirementCheck : MonoBehaviour
     public void CanQuickturn()
     {
         canQuickturn = true;
+    }
+    public void CanGrabGun()
+    {
+        canGrabGun = true;
+    }
+    public void CanReload()
+    {
+        releaseMag.TutorialCanReload(true);
+        tutorialManager.SetAmmoBag(true);
     }
 
     //Inputs
@@ -108,21 +145,21 @@ public class RequirementCheck : MonoBehaviour
             buttonPressed = true;
         }
     }
+    public void FiringRangeEntered()
+    {
+        if (!firingRangeEntererd)
+        {
+            relay.CheckASpot(0);
+            firingRangeEntererd = true;
+        }
+    }
     public void GunGrabbed()
     {
-        if (!gunGrabbed)
+        if (!gunGrabbed && canGrabGun)
         {
             cz50ReturnToHolser.enabled = true;
             relay.CheckASpot(0);
             gunGrabbed = true;
-        }
-    }
-    public void GunDropped()
-    {
-        if (!gunDropped)
-        {
-            relay.CheckASpot(1);
-            gunDropped = true;
         }
     }
     public void ShootGun()
