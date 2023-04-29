@@ -72,6 +72,10 @@ public class CZ50 : MonoBehaviour
                                 EffectManager.instance.SpawnBulletHole(hit, 1);
                             }
                         }
+                        else if(hit.transform.GetComponent<Target>() != null)
+                        {
+                            hit.transform.GetComponent<Target>().Hit(hit.point);
+                        }
                         else
                         {
                             EffectManager.instance.SpawnBulletHole(hit, 0);

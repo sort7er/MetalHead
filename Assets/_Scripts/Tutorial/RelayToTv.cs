@@ -43,7 +43,7 @@ public class RelayToTv : MonoBehaviour
     public void TvMovement()
     {
         AddRequirement(2);
-        OpeningInFloor.SetTrigger("Lift");
+        OpeningInFloor.SetBool("Lift", true);
         for (int i = 0; i < tvsInScene.Length; i++)
         {
             tvsInScene[i].Movement();
