@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class FiringRange : MonoBehaviour
 {
+    public int numberOfParts;
     public float startTime;
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI scoreText;
@@ -11,6 +12,7 @@ public class FiringRange : MonoBehaviour
     public Transform ammoSpawn;
 
     public Animator[] targetsAnim;
+    public Animator ammoAnim;
 
     private TypeWriterText typeWriterText;
     private TypeWriterText typeWriterTextTargetsLeft;
@@ -27,13 +29,10 @@ public class FiringRange : MonoBehaviour
         targetsToHit = new Target[targetsAnim.Length];
         for (int i = 0; i < targetsAnim.Length; i++)
         {
-            if(targetsAnim[i].GetComponentInChildren<Target>() != null)
-            {
-                targetsToHit[i] = targetsAnim[i].GetComponentInChildren<Target>();
-                numberOfTargets++;
-            }
+            targetsToHit[i] = targetsAnim[i].GetComponentInChildren<Target>();
+            targetsToHit[i].SetNumberOfParts(numberOfParts);
+            numberOfTargets++;
         }
-    
         typeWriterText = scoreText.GetComponent<TypeWriterText>();
         typeWriterTextTargetsLeft = targetsLeftText.GetComponent<TypeWriterText>();
         ResetScore();
@@ -69,7 +68,19 @@ public class FiringRange : MonoBehaviour
         targetsLeftText.text = targetsLeft.ToString() + " / " + numberOfTargets.ToString();
         typeWriterTextTargetsLeft.StartTyping();
 
-        if(!started)
+
+        int randomAnim = Random.Range(1, targetsAnim.Length);
+
+        while (targetsLeft < targetsAnim.Length - 1 && targetsAnim[randomAnim].GetBool("Lift"))
+        {
+            Debug.Log(randomAnim);
+            randomAnim = Random.Range(1, targetsAnim.Length);
+        }
+
+        Debug.Log(randomAnim);
+        targetsAnim[randomAnim].SetBool("Lift", true);
+
+        if (!started)
         {
             StartCountdown();
         }
@@ -106,6 +117,7 @@ public class FiringRange : MonoBehaviour
             {
                 targetsAnim[i].SetBool("Lift", false);
             }
+            ammoAnim.SetBool("Lift", false);
             Invoke(nameof(LiftUp), 2);
         }
     }
@@ -114,20 +126,26 @@ public class FiringRange : MonoBehaviour
         if(currentAmmo == null)
         {
             currentAmmo = Instantiate(ammoPrefab, ammoSpawn.position, Quaternion.identity);
+            currentAmmo.transform.parent = ammoSpawn;
         }
         else if (currentAmmo != null && Vector3.Distance(ammoSpawn.position, currentAmmo.transform.position) > 4f)
         {
             Destroy(currentAmmo);
             currentAmmo = Instantiate(ammoPrefab, ammoSpawn.position, Quaternion.identity);
+            currentAmmo.transform.parent = ammoSpawn;
         }
         for (int i = 0; i < targetsAnim.Length; i++)
         {
-            targetsAnim[i].SetBool("Lift", true);
-            if (targetsToHit[i] != null)
-            {
-                targetsToHit[i].gameObject.SetActive(true);
-            }
+            //targetsAnim[i].SetBool("Lift", true);
+            targetsToHit[i].gameObject.SetActive(true);
         }
+
+        ammoAnim.SetBool("Lift", true);
+        targetsAnim[0].SetBool("Lift", true);
+        targetsAnim[Random.Range(1, targetsAnim.Length)].SetBool("Lift", true);
+
+
+
         started = false;
         Invoke(nameof(LiftUpDone), 2f);
     }
