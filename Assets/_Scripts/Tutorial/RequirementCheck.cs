@@ -4,13 +4,16 @@ using UnityEngine.InputSystem;
 public class RequirementCheck : MonoBehaviour
 {
     public InputActionAsset inputAction;
-    public ReturnToHolster cz50ReturnToHolser;
-    public ReleaseMag releaseMag;
     public AmmoBag ammoBag;
+    public CZ50 cz50;
 
     private InputAction turnLeft;
     private InputAction turnRight;
     private InputAction quickturn;
+
+    private ReturnToHolster cz50ReturnToHolser;
+    private ReleaseMag releaseMag;
+
 
     private TutorialManager tutorialManager;
     private RelayToTv relay;
@@ -36,6 +39,9 @@ public class RequirementCheck : MonoBehaviour
 
     private void Start()
     {
+
+        releaseMag = cz50.GetComponent<ReleaseMag>();
+        cz50ReturnToHolser = cz50.GetComponent<ReturnToHolster>();
         relay = GetComponent<RelayToTv>();
         tutorialManager = GetComponent<TutorialManager>();
         cz50ReturnToHolser.enabled = false;
@@ -68,12 +74,10 @@ public class RequirementCheck : MonoBehaviour
             }
             else if(!magInserted && magGrabbed && releaseMag.insert)
             {
-                Debug.Log("1");
                 MagInserted();
             }
-            else if (!slidePulled && magInserted && releaseMag.reloadValid)
+            else if (!slidePulled && magInserted && !cz50.reloadNeeded)
             {
-                Debug.Log("2");
                 SlidePulled();
             }
         }

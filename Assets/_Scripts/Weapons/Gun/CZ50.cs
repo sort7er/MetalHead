@@ -14,6 +14,8 @@ public class CZ50 : MonoBehaviour
     public Material defaultMaterial, emptyMaterial;
     public ParticleSystem muzzleFlash;
 
+    [HideInInspector] public bool reloadNeeded;
+
     private TwoHandGrab twoHandGrab;
     private Recoil recoil;
     private Mag magInGun;
@@ -21,7 +23,7 @@ public class CZ50 : MonoBehaviour
     private SoundForGun soundForGun;
     private int currentAmmo;
     private int damage, singleDigit, doubleDigit;
-    private bool reloadNeeded, firstDialUpdate, projectilePenetration, slideBack;
+    private bool firstDialUpdate, projectilePenetration, slideBack;
 
     private void Start()
     {
@@ -75,6 +77,7 @@ public class CZ50 : MonoBehaviour
                         else if(hit.transform.GetComponent<Target>() != null)
                         {
                             hit.transform.GetComponent<Target>().Hit(hit.point);
+                            EffectManager.instance.SpawnBulletHole(hit, 4);
                         }
                         else
                         {

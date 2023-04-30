@@ -11,6 +11,7 @@ public class EffectManager : MonoBehaviour
     public GameObject hitEnemyBarrel;
     public GameObject hitEnemyCrit;
     public GameObject hitEnemyMelee;
+    public GameObject hitWood;
     public GameObject hitEnemyMeleeCrit;
     public GameObject parryEffect;
     public GameObject parryEffectUI;
@@ -58,6 +59,11 @@ public class EffectManager : MonoBehaviour
         {
             hitEffectToInstantiate = hitEnemy;
             pitch = 1.4f;
+        }
+        else if(type==4)
+        {
+            hitEffectToInstantiate = hitWood;
+            pitch = 1;
         }
         else
         {
