@@ -25,6 +25,7 @@ public class RequirementCheck : MonoBehaviour
     private bool buttonPressed;
     private bool gunGrabbed;
     private bool canGrabGun;
+    private bool magnetRoomEntered;
     
     //Shooting
     private bool gunEmptied;
@@ -217,6 +218,14 @@ public class RequirementCheck : MonoBehaviour
         {
             relay.CheckASpot(3);
             slidePulled = true;
+        }
+    }
+    public void MagnetRoomEntered()
+    {
+        if (!magnetRoomEntered)
+        {
+            relay.CheckASpot(0);
+            magnetRoomEntered = true;
         }
     }
 

@@ -3,8 +3,8 @@ using UnityEngine;
 public class RelayToTv : MonoBehaviour
 {
     public Animator OpeningInFloor;
-    public Animator doorToOpen;
-    public GameObject ground2;
+    public Animator[] doorToOpen;
+    public GameObject[] groundToEnable;
     public TV[] tvsInScene;
 
     private TutorialManager tutorialManager;
@@ -15,7 +15,10 @@ public class RelayToTv : MonoBehaviour
 
     private void Start()
     {
-        ground2.SetActive(false);
+        for(int i = 0; i < groundToEnable.Length; i++)
+        {
+            groundToEnable[i].SetActive(true);
+        }
         currentObjective = 0;
         tutorialManager = GetComponent<TutorialManager>();
         requirementCheck = GetComponent<RequirementCheck>();
@@ -67,8 +70,8 @@ public class RelayToTv : MonoBehaviour
         {
             tvsInScene[i].Arrow();
         }
-        ground2.SetActive(true);
-        doorToOpen.SetTrigger("Open");
+        groundToEnable[0].SetActive(true);
+        doorToOpen[0].SetTrigger("Open");
     }
     public void TvGrabGun()
     {
@@ -106,6 +109,9 @@ public class RelayToTv : MonoBehaviour
     }
     public void TvArrow2()
     {
+        delay = 0;
+        groundToEnable[1].SetActive(true);
+        doorToOpen[1].SetTrigger("Open");
         AddRequirement(1);
         for (int i = 0; i < tvsInScene.Length; i++)
         {
@@ -115,6 +121,7 @@ public class RelayToTv : MonoBehaviour
     public void TvMagnet()
     {
         delay = 2f;
+        tutorialManager.SetMagnet(true);
         AddRequirement(2);
         for (int i = 0; i < tvsInScene.Length; i++)
         {
@@ -188,6 +195,10 @@ public class RelayToTv : MonoBehaviour
                 Invoke(nameof(TvArrow2), delay);
             }
             else if (currentObjective == 7)
+            {
+                Invoke(nameof(TvMagnet), delay);
+            }
+            else if (currentObjective == 8)
             {
                 Invoke(nameof(TVMagnetMessage), delay);
             }
