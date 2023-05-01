@@ -32,7 +32,7 @@ public class Target : MonoBehaviour
         GameObject shatteredTarget = Instantiate(targets[Random.Range(0, targets.Length)], transform.position, transform.rotation, transform);
         shatteredTarget.transform.parent = ParentManager.instance.effects;
         Destroy(shatteredTarget, 3f);
-        EffectManager.instance.SpawnMessage(score.ToString());
+        EffectManager.instance.SpawnMessage(score.ToString(), 0.8f);
     }
 
     public void SetNumberOfParts(int newDivide)

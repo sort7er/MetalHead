@@ -14,14 +14,13 @@ public class LocomotionManager : MonoBehaviour
 
     public GameObject teleportationRays;
     public GameObject vignette;
-    public TextMeshProUGUI movementText, turnText, vignetteText, quickTurnText;
+    public TextMeshProUGUI movementText, turnText, quickTurnText;
     public InputActionAsset inputAction;
     public TeleportationController teleportationController;
 
     [HideInInspector] public bool isUsingTeleport;
     [HideInInspector] public int currentMoveType;
     [HideInInspector] public int currentTurnType;
-    [HideInInspector] public int currentVignetteType;
     [HideInInspector] public int currentQuickTurnType;
 
     private TeleportationProvider teleportationProvider;
@@ -87,7 +86,6 @@ public class LocomotionManager : MonoBehaviour
     {
         currentMoveType = PlayerPrefs.GetInt("MoveType", 0);
         currentTurnType = PlayerPrefs.GetInt("TurnType", 0);
-        currentVignetteType = PlayerPrefs.GetInt("VignetteType", 1);
         currentQuickTurnType = PlayerPrefs.GetInt("QuickTurnType", 1);
 
         if(currentMoveType == 1)
@@ -106,14 +104,6 @@ public class LocomotionManager : MonoBehaviour
         {
             currentTurnType = 1;
         }
-        if (currentVignetteType == 1)
-        {
-            currentVignetteType = 0;
-        }
-        else
-        {
-            currentVignetteType = 1;
-        }
         if (currentQuickTurnType == 1)
         {
             currentQuickTurnType = 0;
@@ -124,7 +114,6 @@ public class LocomotionManager : MonoBehaviour
         }
         SwitchLocomotion();
         SwitchTurning();
-        SetVignette();
         SetQuickTurn();
         EnableMovement(true);
         EnableTurning(true);
@@ -245,22 +234,6 @@ public class LocomotionManager : MonoBehaviour
                 SetCountinuousTurn(true);
             }
         }
-    }
-    public void SetVignette()
-    {
-        if (currentVignetteType == 1)
-        {
-            currentVignetteType = 0;
-            vignette.SetActive(true);
-            vignetteText.text = "< Enabled >";
-        }
-        else if (currentVignetteType == 0)
-        {
-            currentVignetteType = 1;
-            vignette.SetActive(false);
-            vignetteText.text = "< Disabled >";
-        }
-        PlayerPrefs.SetInt("VignetteType", currentVignetteType);
     }
 
     public void SetQuickTurn()

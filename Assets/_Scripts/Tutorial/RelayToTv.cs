@@ -61,14 +61,14 @@ public class RelayToTv : MonoBehaviour
         {
             tvsInScene[i].Menu();
         }
-        Invoke(nameof(TvArrow), 4f);
+        Invoke(nameof(TvArrow), 7f);
     }
     public void TvArrow()
     {
         AddRequirement(1);
         for (int i = 0; i < tvsInScene.Length; i++)
         {
-            tvsInScene[i].Arrow();
+            tvsInScene[i].Arrow("Proceed out of the room");
         }
         groundToEnable[0].SetActive(true);
         doorToOpen[0].SetTrigger("Open");
@@ -115,7 +115,7 @@ public class RelayToTv : MonoBehaviour
         AddRequirement(1);
         for (int i = 0; i < tvsInScene.Length; i++)
         {
-            tvsInScene[i].Arrow();
+            tvsInScene[i].Arrow("Proceed out of the room, or keep practicing");
         }
     }
     public void TvMagnet()
@@ -141,7 +141,7 @@ public class RelayToTv : MonoBehaviour
         {
             tvsInScene[i].MagnetMessage();
         }
-        Invoke(nameof(TvArrow3), 4f);
+        Invoke(nameof(TvArrow3), 7f);
     }
     public void TvArrow3()
     {
@@ -150,7 +150,7 @@ public class RelayToTv : MonoBehaviour
         AddRequirement(1);
         for (int i = 0; i < tvsInScene.Length; i++)
         {
-            tvsInScene[i].Arrow();
+            tvsInScene[i].Arrow("Proceed out of the room");
         }
     }
 

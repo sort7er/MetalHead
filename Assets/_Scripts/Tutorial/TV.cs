@@ -90,14 +90,14 @@ public class TV : MonoBehaviour
         SetCurrentDisplay(menuDisplay, false);
     }
 
-    public void Arrow()
+    public void Arrow(string textToPrint)
     {
         SetCurrentDisplay(arrowDisplay, false);
         if (pathLeft)
         {
             arrowDisplay.transform.localScale = new Vector3(-arrowDisplay.transform.localScale.x, arrowDisplay.transform.localScale.y, arrowDisplay.transform.localScale.z);
         }
-        Objective(0, "Proceed out of the room");
+        Objective(0,textToPrint);
     }
 
     public void GrabGun()

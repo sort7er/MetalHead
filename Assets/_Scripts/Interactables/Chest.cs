@@ -165,7 +165,7 @@ public class Chest : MonoBehaviour
     public void KeyObtained()
     {
         keyObtained = true;
-        EffectManager.instance.SpawnMessage("Key obtained");
+        EffectManager.instance.SpawnMessage("Key obtained", 0.8f);
         EffectManager.instance.Key(GameManager.instance.XROrigin.transform.position, 0);
     }
 }

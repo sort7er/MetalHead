@@ -189,11 +189,12 @@ public class EffectManager : MonoBehaviour
         GameObject bulletHole = Instantiate(hitEffectToInstantiate, pos, rotation, ParentManager.instance.effects);
         Destroy(bulletHole, 2f);
     }
-    public void SpawnMessage(string text)
+    public void SpawnMessage(string text, float multiplier)
     {
         Vector3 spawnPos = new Vector3(GameManager.instance.XROrigin.transform.position.x + GameManager.instance.cam.transform.forward.x, GameManager.instance.cam.transform.position.y + GameManager.instance.cam.transform.forward.y, GameManager.instance.XROrigin.transform.position.z + GameManager.instance.cam.transform.forward.z);
         GameObject canvas = Instantiate(popUpMessage, spawnPos, Quaternion.identity, ParentManager.instance.effects);
         canvas.GetComponent<PopUpMessage>().SetMessage(text);
+        canvas.GetComponent<Animator>().SetFloat("AnimationSpeed", multiplier);
         Destroy(canvas, 2f);
     }
 

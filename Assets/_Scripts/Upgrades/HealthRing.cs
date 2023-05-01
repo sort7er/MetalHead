@@ -37,7 +37,7 @@ public class HealthRing : MonoBehaviour
             {
                 pickedUp = true;
                 playerHealth.UpgradeHealth();
-                EffectManager.instance.SpawnMessage("+ 50 max health");
+                EffectManager.instance.SpawnMessage("+ 50 max health", 0.5f);
                 Destroy(gameObject);
             }
         }

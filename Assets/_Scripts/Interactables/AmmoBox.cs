@@ -56,7 +56,7 @@ public class AmmoBox : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, targetPos, smoothTime * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetPos) <= 0.05f && !pickedUp)
             {
-                EffectManager.instance.SpawnMessage("+ " + numberOfBulletsToAdd.ToString() + " bullets");
+                EffectManager.instance.SpawnMessage("+ " + numberOfBulletsToAdd.ToString() + " bullets", 1);
                 ammoBoxSource.Play();
                 GameManager.instance.ammoBag.AddAmmo(numberOfBulletsToAdd);
                 box.SetActive(false);
