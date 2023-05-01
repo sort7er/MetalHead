@@ -36,6 +36,10 @@ public class RequirementCheck : MonoBehaviour
     private bool magInserted;
     private bool slidePulled;
 
+    //Magnet
+    private bool magnetGrabbed;
+    private bool magnetPickedup;
+
 
     private void Start()
     {
@@ -213,6 +217,24 @@ public class RequirementCheck : MonoBehaviour
         {
             relay.CheckASpot(3);
             slidePulled = true;
+        }
+    }
+
+    public void MagnetGrabbed()
+    {
+        if (!magnetGrabbed)
+        {
+            relay.CheckASpot(0);
+            relay.NextMagnet();
+            magnetGrabbed = true;
+        }
+    }
+    public void MagnetPickedUp()
+    {
+        if (!magnetPickedup)
+        {
+            relay.CheckASpot(1);
+            magnetPickedup = true;
         }
     }
 

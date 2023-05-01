@@ -11,7 +11,7 @@ public class RelayToTv : MonoBehaviour
     private RequirementCheck requirementCheck;
     private bool quickturn;
     private int numberOfRequirements, currentObjective;
-    float delay;
+    private float delay;
 
     private void Start()
     {
@@ -112,7 +112,30 @@ public class RelayToTv : MonoBehaviour
             tvsInScene[i].Arrow();
         }
     }
-
+    public void TvMagnet()
+    {
+        delay = 2f;
+        AddRequirement(2);
+        for (int i = 0; i < tvsInScene.Length; i++)
+        {
+            tvsInScene[i].Magnet();
+        }
+    }
+    public void NextMagnet()
+    {
+        for (int i = 0; i < tvsInScene.Length; i++)
+        {
+            tvsInScene[i].NextMagnet();
+        }
+    }
+    public void TVMagnetMessage()
+    {
+        for (int i = 0; i < tvsInScene.Length; i++)
+        {
+            tvsInScene[i].MagnetMessage();
+        }
+        Invoke(nameof(TvArrow2), 6f);
+    }
     //Checkoff
     public void CheckASpot(int objectiveToFill)
     {
@@ -163,6 +186,10 @@ public class RelayToTv : MonoBehaviour
             else if (currentObjective == 6)
             {
                 Invoke(nameof(TvArrow2), delay);
+            }
+            else if (currentObjective == 7)
+            {
+                Invoke(nameof(TVMagnetMessage), delay);
             }
 
 

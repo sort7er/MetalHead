@@ -9,6 +9,8 @@ public class TV : MonoBehaviour
 
     [Header("Tutorial displays")]
     public TextMeshProUGUI niceText;
+    public Transform tutorialParent;
+
     public GameObject turningDisplay;
     public GameObject quickturnDisplay;
     public GameObject movementDisplay;
@@ -18,6 +20,8 @@ public class TV : MonoBehaviour
     public GameObject grabGunDisplay;
     public GameObject shootGunDisplay;
     public GameObject reloadGunDisplay;
+    public GameObject magnetDisplay;
+    public GameObject magnetMessageDisplay;
 
     [Header("Checklist")]
     public GameObject[] checkboxes;
@@ -28,13 +32,15 @@ public class TV : MonoBehaviour
     private GameObject currentDisplay;
     private TypeWriterText[] typeWriterText;
     private TypeWriterText niceTypeWriterText;
-    private ReloadGun reloadGun;
+    private DisplayStepByStep reloadGun;
+    private DisplayStepByStep magnet;
 
     private bool pausedChecked, includeReloadAfterPause;
 
     private void Start()
     {
-        reloadGun = reloadGunDisplay.GetComponent<ReloadGun>();
+        magnet = magnetDisplay.GetComponent<DisplayStepByStep>();
+        reloadGun = reloadGunDisplay.GetComponent<DisplayStepByStep>();
         niceTypeWriterText = niceText.GetComponent<TypeWriterText>();
         niceText.text = "";
         typeWriterText = new TypeWriterText[objectiveText.Length];
@@ -120,6 +126,23 @@ public class TV : MonoBehaviour
     {
         reloadGun.Display();
     }
+    public void Magnet()
+    {
+        ResetChecklist();
+        Objective(0, "Grab magnet from your shoulder");
+        Objective(1, "Pick up metals with magnet");
+        SetCurrentDisplay(magnetDisplay, false);
+        NextMagnet();
+    }
+    public void NextMagnet()
+    {
+        magnet.Display();
+    }
+    public void MagnetMessage()
+    {
+        ResetChecklist();
+        SetCurrentDisplay(magnetMessageDisplay, false);
+    }
 
     // Methods called from relay
     public void AllChecked(float delay)
@@ -170,14 +193,11 @@ public class TV : MonoBehaviour
     private void ResetTutorial()
     {
         currentDisplay = null;
-        turningDisplay.SetActive(false);
-        quickturnDisplay.SetActive(false);
-        movementDisplay.SetActive(false);
-        menuDisplay.SetActive(false);
-        arrowDisplay.SetActive(false);
-        grabGunDisplay.SetActive(false);
-        shootGunDisplay.SetActive(false);
-        reloadGunDisplay.SetActive(false);
+        foreach(Transform t in tutorialParent)
+        {
+            t.gameObject.SetActive(false);
+        }
+
     }
     private void SetCurrentDisplay(GameObject display, bool reload)
     {

@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class ReloadGun : MonoBehaviour
+public class DisplayStepByStep : MonoBehaviour
 {
     public TextMeshProUGUI infoText;
     public string[] textEachStep;
