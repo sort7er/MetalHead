@@ -19,7 +19,7 @@ public class FiringRange : MonoBehaviour
     private Target[] targetsToHit;
     private GameObject currentAmmo;
     private int score;
-    private bool cannotReset, started;
+    private bool cannotReset, started, stopped;
     private float timer;
     private int numberOfTargets, targetsLeft;
 
@@ -58,25 +58,29 @@ public class FiringRange : MonoBehaviour
 
     public void AddScore(int scoreToAdd)
     {
-        typeWriterText.StopTyping();
-        score += scoreToAdd;
-        scoreText.text = score.ToString();
-        typeWriterText.StartTyping();
-
-        typeWriterTextTargetsLeft.StopTyping();
-        targetsLeft++;
-        targetsLeftText.text = targetsLeft.ToString() + " / " + numberOfTargets.ToString();
-        typeWriterTextTargetsLeft.StartTyping();
-
-
-        int randomAnim = Random.Range(1, targetsAnim.Length);
-
-        while (targetsLeft < targetsAnim.Length - 1 && targetsAnim[randomAnim].GetBool("Lift"))
+        if (!stopped)
         {
-            randomAnim = Random.Range(1, targetsAnim.Length);
-        }
+            typeWriterText.StopTyping();
+            score += scoreToAdd;
+            scoreText.text = score.ToString();
+            typeWriterText.StartTyping();
 
-        targetsAnim[randomAnim].SetBool("Lift", true);
+            typeWriterTextTargetsLeft.StopTyping();
+            targetsLeft++;
+            targetsLeftText.text = targetsLeft.ToString() + " / " + numberOfTargets.ToString();
+            typeWriterTextTargetsLeft.StartTyping();
+
+
+            int randomAnim = Random.Range(1, targetsAnim.Length);
+
+            while (targetsLeft < targetsAnim.Length - 1 && targetsAnim[randomAnim].GetBool("Lift"))
+            {
+                randomAnim = Random.Range(1, targetsAnim.Length);
+            }
+
+            targetsAnim[randomAnim].SetBool("Lift", true);
+
+        }
 
         if (!started)
         {
@@ -85,6 +89,7 @@ public class FiringRange : MonoBehaviour
     }
     public void Stop()
     {
+        stopped = true;
         started = false;
         typeWriterText.StopTyping();
         scoreText.text = score.ToString();
@@ -143,7 +148,7 @@ public class FiringRange : MonoBehaviour
         targetsAnim[Random.Range(1, targetsAnim.Length)].SetBool("Lift", true);
 
 
-
+        stopped = false;
         started = false;
         Invoke(nameof(LiftUpDone), 2f);
     }
