@@ -9,6 +9,7 @@ public class TutorialManager : MonoBehaviour
     public Transform menuPivot;
     public InputActionAsset menuInputAction;
     public GameObject pauseVignette;
+    public GameObject exitTutorialMenu;
 
 
     [Header("Things to enable")]
@@ -22,6 +23,7 @@ public class TutorialManager : MonoBehaviour
     private bool followCam, canPause;
     private bool watchFound;
     private bool enableTurning, enableMovement;
+    private bool canExitTutorial;
     private int currentMenu;
 
     private void Start()
@@ -37,6 +39,7 @@ public class TutorialManager : MonoBehaviour
         }
         PauseVignette(0);
         Invoke(nameof(StartTutorial), 0.1f);
+        CanExitTutorial(true);
     }
 
     private void OnEnable()
@@ -103,16 +106,11 @@ public class TutorialManager : MonoBehaviour
         TutorialMenu();
     }
 
+
+    //Menus
     public void TutorialMenu()
     {
-        PauseVignette(0);
-        GameManager.instance.EnableRays(true);
-        GameManager.instance.EnableDirectInteractors(false);
-        LocomotionManager.instance.EnableMovement(false);
-        LocomotionManager.instance.EnableTurning(false);
-        GameManager.instance.IsPaused(true);
-        FollowCam(false);
-        AudioManager.instance.MuteSounds();
+        OpenMenuCommon();
         tutorialMenu.GetChild(currentMenu).gameObject.SetActive(true);
         currentMenu++;
         canPause = false;
@@ -123,35 +121,14 @@ public class TutorialManager : MonoBehaviour
         {
             t.gameObject.SetActive(false);
         }
-        if (enableMovement)
-        {
-            LocomotionManager.instance.EnableMovement(true);
-        }
-        if (enableTurning)
-        {
-            LocomotionManager.instance.EnableTurning(true);
-        }
-        GameManager.instance.IsPaused(false);
-        FollowCam(true);
-        PauseVignette(1);
-        GameManager.instance.EnableRays(false);
-        GameManager.instance.EnableDirectInteractors(true);
-        AudioManager.instance.Unmute();
         canPause = true;
+        CloseMenuCommon();
     }
-
     public void OpenMenu()
     {
         GameManager.instance.SetTimeScale(0);
-        PauseVignette(0);
-        GameManager.instance.EnableRays(true);
-        GameManager.instance.EnableDirectInteractors(false);
-        LocomotionManager.instance.EnableMovement(false);
-        LocomotionManager.instance.EnableTurning(false);
         menu.GetChild(0).gameObject.SetActive(true);
-        GameManager.instance.IsPaused(true);
-        FollowCam(false);
-        AudioManager.instance.MuteSounds();
+        OpenMenuCommon();
     }
     public void CloseMenu()
     {
@@ -160,22 +137,26 @@ public class TutorialManager : MonoBehaviour
             t.gameObject.SetActive(false);
         }
         GameManager.instance.SetTimeScale(1);
-        GameManager.instance.IsPaused(false);
-        FollowCam(true);
-        PauseVignette(1);
-        if(enableMovement)
+        CloseMenuCommon();
+    }
+    public void ExitTutorial()
+    {
+        if(canExitTutorial)
         {
-            LocomotionManager.instance.EnableMovement(true);
+            exitTutorialMenu.SetActive(true);
+            OpenMenuCommon();
+            canPause = false;
+            CanExitTutorial(false);
         }
-        if (enableTurning)
-        {
-            LocomotionManager.instance.EnableTurning(true);
-        }
-        GameManager.instance.EnableRays(false);
-        GameManager.instance.EnableDirectInteractors(true);
-        AudioManager.instance.Unmute();
+
+    }
+    public void CanExitTutorial(bool state)
+    {
+        canExitTutorial = state;
     }
 
+
+    //Methods
     public void FollowCam(bool state)
     {
         followCam = state;
@@ -209,5 +190,35 @@ public class TutorialManager : MonoBehaviour
     {
         enableTurning = state;
         LocomotionManager.instance.EnableTurning(state);
+    }
+
+
+    private void OpenMenuCommon()
+    {
+        PauseVignette(0);
+        GameManager.instance.EnableRays(true);
+        GameManager.instance.EnableDirectInteractors(false);
+        GameManager.instance.IsPaused(true);
+        LocomotionManager.instance.EnableMovement(false);
+        LocomotionManager.instance.EnableTurning(false);
+        AudioManager.instance.MuteSounds();
+        FollowCam(false);
+    }
+    private void CloseMenuCommon()
+    {
+        GameManager.instance.IsPaused(false);
+        GameManager.instance.EnableRays(false);
+        GameManager.instance.EnableDirectInteractors(true);
+        AudioManager.instance.Unmute();
+        FollowCam(true);
+        PauseVignette(1);
+        if (enableMovement)
+        {
+            LocomotionManager.instance.EnableMovement(true);
+        }
+        if (enableTurning)
+        {
+            LocomotionManager.instance.EnableTurning(true);
+        }
     }
 }
