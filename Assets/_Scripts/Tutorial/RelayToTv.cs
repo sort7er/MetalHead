@@ -17,7 +17,7 @@ public class RelayToTv : MonoBehaviour
     {
         for(int i = 0; i < groundToEnable.Length; i++)
         {
-            groundToEnable[i].SetActive(true);
+            groundToEnable[i].SetActive(false);
         }
         currentObjective = 0;
         tutorialManager = GetComponent<TutorialManager>();
@@ -141,8 +141,21 @@ public class RelayToTv : MonoBehaviour
         {
             tvsInScene[i].MagnetMessage();
         }
-        Invoke(nameof(TvArrow2), 6f);
+        Invoke(nameof(TvArrow3), 4f);
     }
+    public void TvArrow3()
+    {
+        groundToEnable[2].SetActive(true);
+        doorToOpen[2].SetTrigger("Open");
+        AddRequirement(1);
+        for (int i = 0; i < tvsInScene.Length; i++)
+        {
+            tvsInScene[i].Arrow();
+        }
+    }
+
+
+
     //Checkoff
     public void CheckASpot(int objectiveToFill)
     {
