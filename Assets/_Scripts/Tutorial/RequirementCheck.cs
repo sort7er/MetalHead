@@ -6,6 +6,7 @@ public class RequirementCheck : MonoBehaviour
     public InputActionAsset inputAction;
     public AmmoBag ammoBag;
     public CZ50 cz50;
+    public Magnet magnet;
 
     private InputAction turnLeft;
     private InputAction turnRight;
@@ -84,6 +85,14 @@ public class RequirementCheck : MonoBehaviour
             else if (!slidePulled && magInserted && !cz50.reloadNeeded)
             {
                 SlidePulled();
+            }
+        }
+
+        if(magnetGrabbed && !magnetPickedup)
+        {
+            if(magnet.GetMetalsCollected() > 0)
+            {
+                MagnetPickedUp();
             }
         }
     }
@@ -238,7 +247,7 @@ public class RequirementCheck : MonoBehaviour
             magnetGrabbed = true;
         }
     }
-    public void MagnetPickedUp()
+    private void MagnetPickedUp()
     {
         if (!magnetPickedup)
         {

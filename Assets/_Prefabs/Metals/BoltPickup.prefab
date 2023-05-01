@@ -4872,7 +4872,7 @@ Transform:
   m_Children:
   - {fileID: 8060971046752487518}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &5030928432243003532
 Animator:
@@ -4969,6 +4969,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 417181d72912f3b4295196baa7a6b290, type: 3}
   - {fileID: 8300000, guid: ef7b31186d706ca44a19b6db304b7028, type: 3}
   pickUpID: 0
+  willDissapear: 1
 --- !u!82 &5479702209910620291
 AudioSource:
   m_ObjectHideFlags: 0

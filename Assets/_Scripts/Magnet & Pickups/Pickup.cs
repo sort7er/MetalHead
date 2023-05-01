@@ -7,8 +7,10 @@ public class Pickup : MonoBehaviour
     public MeshRenderer pickupMesh;
     public ParticleSystem effect;
     public AudioClip[] metalSounds;
-
     public int pickUpID;
+    public bool willDissapear;
+
+
     private AudioSource pickupSource;
     private Transform magnet;
     private Vector3 smallSize;
@@ -30,34 +32,37 @@ public class Pickup : MonoBehaviour
     {
         if (!pickUp)
         {
-            if (timer > 0)
+            if (willDissapear)
             {
-                timer -= Time.deltaTime;
+                if (timer > 0)
+                {
+                    timer -= Time.deltaTime;
 
-                if (timer < 2)
-                {
-                    flashTime = startFlashTime / 4;
-                }
-                else if (timer < 4)
-                {
-                    flashTime = startFlashTime / 2;
-                }
-                else if (timer < 6)
-                {
-                    if (!flashStarted)
+                    if (timer < 2)
                     {
-                        FlashOff();
-                        flashStarted = true;
+                        flashTime = startFlashTime / 4;
                     }
-                    flashTime = startFlashTime;
+                    else if (timer < 4)
+                    {
+                        flashTime = startFlashTime / 2;
+                    }
+                    else if (timer < 6)
+                    {
+                        if (!flashStarted)
+                        {
+                            FlashOff();
+                            flashStarted = true;
+                        }
+                        flashTime = startFlashTime;
+                    }
                 }
-            }
-            else
-            {
-                effect.transform.parent = ParentManager.instance.effects;
-                effect.Stop();
-                Destroy(effect, 2);
-                Destroy(gameObject);
+                else
+                {
+                    effect.transform.parent = ParentManager.instance.effects;
+                    effect.Stop();
+                    Destroy(effect, 2);
+                    Destroy(gameObject);
+                }
             }
         }
         else

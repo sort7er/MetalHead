@@ -73,11 +73,9 @@ public class FiringRange : MonoBehaviour
 
         while (targetsLeft < targetsAnim.Length - 1 && targetsAnim[randomAnim].GetBool("Lift"))
         {
-            Debug.Log(randomAnim);
             randomAnim = Random.Range(1, targetsAnim.Length);
         }
 
-        Debug.Log(randomAnim);
         targetsAnim[randomAnim].SetBool("Lift", true);
 
         if (!started)
