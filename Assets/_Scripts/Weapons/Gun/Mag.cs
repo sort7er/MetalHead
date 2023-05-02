@@ -9,6 +9,8 @@ public class Mag : MonoBehaviour
     public Transform[] magPartPos;
     public GameObject[] bullets;
     public Collider trigger;
+    public MeshRenderer[] bulbs;
+    public Material gotAmmo, noAmmo;
 
     private int magSize;
     private int currentAmmo;
@@ -38,6 +40,10 @@ public class Mag : MonoBehaviour
         meshRenderer.enabled = true;
         rb = GetComponent<Rigidbody>();
         EnableGravity(false);
+        for (int i = 0; i < bulbs.Length; i++)
+        {
+            bulbs[i].material = gotAmmo;
+        }
     }
 
     public void GrabMag()
@@ -83,6 +89,10 @@ public class Mag : MonoBehaviour
         currentAmmo--;
         if (currentAmmo == 0)
         {
+            for (int i = 0; i < bulbs.Length; i++)
+            {
+                bulbs[i].material = noAmmo;
+            }
             bullets[0].SetActive(false);
         }
         else if (currentAmmo == 1)
