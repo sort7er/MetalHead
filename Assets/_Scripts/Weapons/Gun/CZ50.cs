@@ -1,4 +1,5 @@
 using System.Net;
+using TMPro;
 using UnityEngine;
 
 public class CZ50 : MonoBehaviour
@@ -9,24 +10,24 @@ public class CZ50 : MonoBehaviour
     [Header("References")]
     public GameObject casingPrefab, laser;
     public Transform muzzle, casingPoint, leftAttach, rightAttach;
-    public Dial doubleDial, singleDial;
-    public MeshRenderer doubleZero, singleZero;
-    public Material defaultMaterial, emptyMaterial;
+    public TextMeshProUGUI ammoText;
     public ParticleSystem muzzleFlash;
 
     [HideInInspector] public bool reloadNeeded;
 
+    private Color startColor;
     private TwoHandGrab twoHandGrab;
     private Recoil recoil;
     private Mag magInGun;
     private Animator cz50Anim;
     private SoundForGun soundForGun;
     private int currentAmmo;
-    private int damage, singleDigit, doubleDigit;
+    private int damage;
     private bool firstDialUpdate, projectilePenetration, slideBack;
 
     private void Start()
     {
+        startColor = ammoText.color;
         twoHandGrab = GetComponent<TwoHandGrab>();
         recoil = GetComponent<Recoil>();
         cz50Anim = GetComponent<Animator>();
@@ -190,10 +191,7 @@ public class CZ50 : MonoBehaviour
 
     public void UpdateDial()
     {
-        singleDigit = currentAmmo % 10;
-        doubleDigit = (currentAmmo / 10) % 10;
-        singleDial.SetDial(singleDigit);
-        doubleDial.SetDial(doubleDigit);
+        ammoText.text = currentAmmo.ToString();
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -201,13 +199,11 @@ public class CZ50 : MonoBehaviour
     }
     private void DefaultColor()
     {
-        doubleZero.material = defaultMaterial;
-        singleZero.material = defaultMaterial;
+        ammoText.color = startColor;
     }
     private void EmptyColor()
     {
-        doubleZero.material = emptyMaterial;
-        singleZero.material = emptyMaterial;
+        ammoText.color = Color.red;
     }
     public void Casing()
     {
