@@ -7,7 +7,7 @@ public class MagnetSocket : MonoBehaviour
 
     private Rigidbody rb;
     private ReturnToHolster returnToHolster;
-    public bool canDrop, inserted;
+    public bool canDrop, inserted, returnToPlayer;
 
     private void Start()
     {
@@ -17,7 +17,7 @@ public class MagnetSocket : MonoBehaviour
 
     private void Update()
     {
-        if (canDrop)
+        if (canDrop && !returnToPlayer)
         {
             if (!returnToHolster.isHolding && !returnToHolster.isHolstered && !inserted)
             {
@@ -27,6 +27,15 @@ public class MagnetSocket : MonoBehaviour
             {
                 EjectMagnet();
             }
+        }
+        if(inserted && Vector3.Distance(GameManager.instance.XROrigin.transform.position, magnet.position) > 4 && !returnToPlayer)
+        {
+            EjectMagnet();
+            returnToPlayer = true;
+        }
+        else if(returnToPlayer && returnToHolster.isHolding)
+        {
+            returnToPlayer = false;
         }
     }
 
