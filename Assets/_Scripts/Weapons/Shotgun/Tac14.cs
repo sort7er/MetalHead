@@ -43,8 +43,8 @@ public class Tac14 : MonoBehaviour
         gunAnim = GetComponent<Animator>();
         lHand = GameManager.instance.leftHand.gameObject.GetComponent<XRDirectInteractor>();
         rHand = GameManager.instance.rightHand.gameObject.GetComponent<XRDirectInteractor>();
-        slideInteractable.onSelectEnter.AddListener(SlideGrab);
-        slideInteractable.onSelectExit.AddListener(SlideRelease);
+        slideInteractable.onSelectEntered.AddListener(SlideGrab);
+        slideInteractable.onSelectExited.AddListener(SlideRelease);
         returnToHolster = GetComponent<ReturnToHolster>();
         soundForGun = GetComponent<SoundForGun>();
         startColor = currentAmmoText.color;
