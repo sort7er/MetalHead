@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class Tac14 : MonoBehaviour
 {
@@ -15,20 +16,33 @@ public class Tac14 : MonoBehaviour
 
     [Header("References")]
     public Transform muzzle;
+    public Transform casingPoint, leftAttach, rightAttach;
     public TextMeshProUGUI currentAmmoText;
     public ParticleSystem muzzleFlash;
+    public GameObject casingPrefab;
     public GameObject linePrefab;
+    public DynamicTrigger dynamicTrigger;
+    public GameObject slugInside;
 
+    private TwoHandGrab twoHandGrab;
+    private XRDirectInteractor rHand, lHand;
     private Color startColor;
     private SoundForGun soundForGun;
+    private ReturnToHolster returnToHolster;
     private Animator gunAnim;
+    private Transform currentTransform;
 
     private Vector3[] directionsToFire;
     private int currentAmmo;
-    private bool cockingNeeded, projectilePenetration;
+    private bool cockingNeeded, projectilePenetration, left;
 
     private void Start()
     {
+        twoHandGrab = GetComponent<TwoHandGrab>();
+        gunAnim = GetComponent<Animator>();
+        lHand = GameManager.instance.leftHand.gameObject.GetComponent<XRDirectInteractor>();
+        rHand = GameManager.instance.rightHand.gameObject.GetComponent<XRDirectInteractor>();
+        returnToHolster = GetComponent<ReturnToHolster>();
         soundForGun = GetComponent<SoundForGun>();
         startColor = currentAmmoText.color;
         currentAmmo = magSize;
@@ -41,7 +55,56 @@ public class Tac14 : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        if (returnToHolster.isHolding)
+        {
+            if (GameManager.instance.CheckGameObject(gameObject) == 1)
+            {
+                left = true;
+                if (rHand.GetOldestInteractableSelected() != null)
+                {
+                    currentTransform = rHand.GetOldestInteractableSelected().transform;
+                }
+                else
+                {
+                    currentTransform = null;
+                }
+            }
+            else if (GameManager.instance.CheckGameObject(gameObject) == 2)
+            {
+                left = false;
+                if (lHand.GetOldestInteractableSelected() != null)
+                {
+                    currentTransform = lHand.GetOldestInteractableSelected().transform;
+                }
+                else
+                {
+                    currentTransform = null;
+                }
+            }
+        }
+    }
 
+    public void Grab()
+    {
+        soundForGun.Grab();
+        if (GameManager.instance.CheckGameObject(gameObject) == 1)
+        {
+            twoHandGrab.attachTransform = leftAttach;
+            GameManager.instance.leftHand.GrabPistol(true);
+        }
+        if (GameManager.instance.CheckGameObject(gameObject) == 2)
+        {
+            twoHandGrab.attachTransform = rightAttach;
+            GameManager.instance.rightHand.GrabPistol(true);
+        }
+    }
+    public void Release()
+    {
+        GameManager.instance.leftHand.GrabPistol(false);
+        GameManager.instance.rightHand.GrabPistol(false);
+    }
     public void Fire()
     {
         if (currentAmmo > 0 && !cockingNeeded)
@@ -150,6 +213,10 @@ public class Tac14 : MonoBehaviour
             cockingNeeded = true;
             muzzleFlash.Play();
             UpdateDial();
+            if(currentAmmo == 0)
+            {
+                slugInside.SetActive(false);
+            }
         }
         else if(currentAmmo <= 0)
         {
@@ -174,6 +241,8 @@ public class Tac14 : MonoBehaviour
         }
     }
 
+
+
     public void AddSlug(int numberOfSlugs)
     {
         currentAmmo += numberOfSlugs;
@@ -182,6 +251,12 @@ public class Tac14 : MonoBehaviour
             currentAmmo = magSize;
         }
         UpdateDial();
+        dynamicTrigger.TriggerDisabled(false);
+        if (!slugInside.activeSelf)
+        {
+            slugInside.SetActive(true);
+        }
+
     }
     public void UpdateDial()
     {
@@ -199,12 +274,39 @@ public class Tac14 : MonoBehaviour
     {
         currentAmmoText.color = Color.red;
     }
+    public void Insert()
+    {
+        if (currentTransform != null && currentTransform.gameObject == dynamicTrigger.GetGameObject())
+        {
+            if (currentAmmo < magSize)
+            {
+                gunAnim.Play("InsertSlug");
+                dynamicTrigger.TriggerDisabled(true);
+                soundForGun.Magazine(0);
+                Invoke(nameof(PlaySecondSlugSound), 0.2f);
+                Invoke(nameof(AddSlugRelay), 0.4f);
+            }
+        }
 
-
+    }
+    private void PlaySecondSlugSound()
+    {
+        soundForGun.Magazine(1);
+    }
+    private void AddSlugRelay()
+    {
+        AddSlug(1);
+    }
+    public void Casing()
+    {
+        GameObject casing = Instantiate(casingPrefab, casingPoint.position, casingPoint.rotation);
+        casing.transform.parent = ParentManager.instance.bullets;
+    }
     //Upgrades
     public void ProjectilePenetration(bool state)
     {
         projectilePenetration = state;
     }
+
 
 }
