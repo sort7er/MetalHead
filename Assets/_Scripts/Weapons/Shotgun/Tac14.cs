@@ -21,6 +21,7 @@ public class Tac14 : MonoBehaviour
 
     private Color startColor;
     private SoundForGun soundForGun;
+    private Animator gunAnim;
 
     private Vector3[] directionsToFire;
     private int currentAmmo;
@@ -143,6 +144,7 @@ public class Tac14 : MonoBehaviour
             }
 
 
+            gunAnim.Play("Fire");
             soundForGun.Fire();
             currentAmmo--;
             cockingNeeded = true;
