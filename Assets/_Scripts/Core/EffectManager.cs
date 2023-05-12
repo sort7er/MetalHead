@@ -20,6 +20,7 @@ public class EffectManager : MonoBehaviour
     public GameObject[] pickUp;
     public GameObject[] pickUpEffect;
     public GameObject pickUpRingEffect;
+    public GameObject shotgunLines;
 
     [Header("SoundEffects")]
     public GameObject keyPickup;
@@ -85,7 +86,7 @@ public class EffectManager : MonoBehaviour
         {
             bulletHole.transform.parent = ParentManager.instance.effects;
         }
-        Destroy(bulletHole, 25f);
+        Destroy(bulletHole, 8f);
     }
 
     public void SpawnPickups(Transform enemy, int numberOfPickups)
@@ -211,5 +212,13 @@ public class EffectManager : MonoBehaviour
         }
         GameObject sfx = Instantiate(effectToInstantiate, position, Quaternion.identity, ParentManager.instance.effects);
         Destroy(sfx, 2f);
+    }
+
+    public void ShotGunLine(Vector3 position, Vector3 direction)
+    {
+        GameObject line = Instantiate(shotgunLines, position, Quaternion.identity);
+        line.transform.LookAt(position + direction);
+        line.transform.parent = ParentManager.instance.effects;
+        Destroy(line, 1f);
     }
 }

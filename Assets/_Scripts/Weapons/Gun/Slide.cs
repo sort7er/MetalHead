@@ -53,7 +53,7 @@ public class Slide : MonoBehaviour
         {
             if (follow)
             {
-                soundForGun.Slide(0);
+                soundForGun.Slide();
             }
             follow = false;
             slideValid = true;
@@ -115,7 +115,7 @@ public class Slide : MonoBehaviour
         cz50.SlideBack(false);
         if(slideValid)
         {
-            soundForGun.Slide(1);
+            soundForGun.SlideBack();
         }
         if(slideValid && releaseMag.reloadValid)
         {

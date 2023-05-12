@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class SoundForGun : MonoBehaviour
 {
-    public float soundRange;
     public LayerMask enemyMask;
 
     public AudioClip[] gunShots;
     public AudioClip[] gunGrab;
     public AudioClip[] gunEmpty;
     public AudioClip[] slide;
+    public AudioClip[] slideBack;
     public AudioClip[] magazine;
 
     private AudioSource gunSource;
@@ -26,7 +26,14 @@ public class SoundForGun : MonoBehaviour
     }
     public void Empty()
     {
-        gunSource.PlayOneShot(gunEmpty[Random.Range(0, gunEmpty.Length)]);
+        if(gunEmpty.Length > 0)
+        {
+            gunSource.PlayOneShot(gunEmpty[Random.Range(0, gunEmpty.Length)]);
+        }
+        else
+        {
+            Debug.Log("Missing empty audio");
+        }
     }
     public void Grab()
     {
@@ -41,8 +48,12 @@ public class SoundForGun : MonoBehaviour
     {
         gunSource.PlayOneShot(magazine[index]);
     }
-    public void Slide(int index)
+    public void Slide()
     {
-        gunSource.PlayOneShot(slide[index]);
+        gunSource.PlayOneShot(slide[Random.Range(0, slide.Length)]);
+    }
+    public void SlideBack()
+    {
+        gunSource.PlayOneShot(slideBack[Random.Range(0, slideBack.Length)]);
     }
 }
