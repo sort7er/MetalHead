@@ -15,6 +15,7 @@ public class Tac14 : MonoBehaviour
     public float offsetY;
 
     [Header("References")]
+    public XRSimpleInteractable slideInteractable;
     public Transform muzzle;
     public Transform casingPoint, leftAttach, rightAttach;
     public TextMeshProUGUI currentAmmoText;
@@ -42,6 +43,8 @@ public class Tac14 : MonoBehaviour
         gunAnim = GetComponent<Animator>();
         lHand = GameManager.instance.leftHand.gameObject.GetComponent<XRDirectInteractor>();
         rHand = GameManager.instance.rightHand.gameObject.GetComponent<XRDirectInteractor>();
+        slideInteractable.onSelectEnter.AddListener(SlideGrab);
+        slideInteractable.onSelectExit.AddListener(SlideRelease);
         returnToHolster = GetComponent<ReturnToHolster>();
         soundForGun = GetComponent<SoundForGun>();
         startColor = currentAmmoText.color;
@@ -105,6 +108,16 @@ public class Tac14 : MonoBehaviour
         GameManager.instance.leftHand.GrabPistol(false);
         GameManager.instance.rightHand.GrabPistol(false);
     }
+
+    public void SlideGrab(XRBaseInteractor interactor)
+    {
+
+    }
+    public void SlideRelease(XRBaseInteractor interactor)
+    {
+
+    }
+
     public void Fire()
     {
         if (currentAmmo > 0 && !cockingNeeded)
