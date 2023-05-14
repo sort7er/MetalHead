@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -20,10 +21,10 @@ public class GameManager : MonoBehaviour
     public AmmoBag ammoBag;
     public Magnet magnet;
     public GameObject gameOverCanvas;
-
+    public XRDirectInteractor rHand, lHand;
     public Animator tempAnim;
     public GameObject[] enemies;
-
+    public InputActionAsset gripInput;
 
     [HideInInspector] public bool isUpgrading;
     [HideInInspector] public bool isPaused;
@@ -33,7 +34,9 @@ public class GameManager : MonoBehaviour
     private bool tempDone;
     private PauseMenu pauseMenu;
     private XRInteractorLineVisual leftLineVisual, rightLineVisual;
-    private XRDirectInteractor rHand, lHand;
+    private InputAction gripLeft, gripRight;
+    private float leftGripValue, rightGripValue;
+    private bool cannotUseLeft, cannotUseRight;
 
     private void Start()
     {
@@ -46,6 +49,47 @@ public class GameManager : MonoBehaviour
         lHand = leftHand.gameObject.GetComponent<XRDirectInteractor>();
         rHand = rightHand.gameObject.GetComponent<XRDirectInteractor>();
         SetTimeScale(1);
+    }
+        private void OnEnable()
+    {
+        gripLeft = gripInput.FindActionMap("XRI LeftHand Interaction").FindAction("Select Value");
+        gripLeft.Enable();
+        gripLeft.performed += SelecetLeft;
+
+        gripRight = gripInput.FindActionMap("XRI RightHand Interaction").FindAction("Select Value");
+        gripRight.Enable();
+        gripRight.performed += SelecetRight;
+    }
+    private void OnDisable()
+    {
+        gripLeft.performed -= SelecetLeft;
+        gripRight.performed -= SelecetRight;
+    }
+    private void Update()
+    {
+        if (!lHand.allowSelect)
+        {
+            if(leftGripValue < 0.5f)
+            {
+                TurnOnLeftInteractor();
+            }
+        }
+        if (!rHand.allowSelect)
+        {
+            if (rightGripValue < 0.5f)
+            {
+                TurnOnRightInteractor();
+            }
+        }
+    }
+
+    private void SelecetLeft(InputAction.CallbackContext context)
+    {
+        leftGripValue = context.ReadValue<float>();
+    }
+    private void SelecetRight(InputAction.CallbackContext context)
+    {
+        rightGripValue = context.ReadValue<float>();
     }
     public void EnableRays(bool state)
     {
@@ -178,6 +222,26 @@ public class GameManager : MonoBehaviour
         Debug.Log("Quit");
         Application.Quit();
     }
+
+    public void TurnOffLeftInteractor()
+    {
+        lHand.allowSelect = false;
+    }
+    public void TurnOffRightInteractor()
+    {
+        rHand.allowSelect = false;
+    }
+
+    public void TurnOnLeftInteractor()
+    {
+        lHand.allowSelect = true;
+    }
+    public void TurnOnRightInteractor()
+    {
+        rHand.allowSelect = true;
+    }
+
+
     public void TempAddOne()
     {
         if (!tempDone)

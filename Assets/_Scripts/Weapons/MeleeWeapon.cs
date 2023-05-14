@@ -49,8 +49,16 @@ public class MeleeWeapon : MonoBehaviour
     }
     public void ReleaseMeleeWeapon()
     {
-        GameManager.instance.leftHand.GrabWrench(false);
-        GameManager.instance.rightHand.GrabWrench(false);
+        if (!GameManager.instance.leftHand.IsHoldingSomething())
+        {
+            GameManager.instance.leftHand.GrabWrench(false);
+        }
+        if (!GameManager.instance.rightHand.IsHoldingSomething())
+        {
+            GameManager.instance.rightHand.GrabWrench(false);
+        }
+        
+        
         isHolding = false;
     }
 

@@ -15,7 +15,6 @@ public class Tac14 : MonoBehaviour
     public float offsetY;
 
     [Header("References")]
-    public XRSimpleInteractable slideInteractable;
     public Transform muzzle;
     public Transform casingPoint, leftAttach, rightAttach;
     public TextMeshProUGUI currentAmmoText;
@@ -24,6 +23,8 @@ public class Tac14 : MonoBehaviour
     public GameObject linePrefab;
     public DynamicTrigger dynamicTrigger;
     public GameObject slugInside;
+    public bool auto;
+
 
     private TwoHandGrab twoHandGrab;
     private XRDirectInteractor rHand, lHand;
@@ -43,8 +44,6 @@ public class Tac14 : MonoBehaviour
         gunAnim = GetComponent<Animator>();
         lHand = GameManager.instance.leftHand.gameObject.GetComponent<XRDirectInteractor>();
         rHand = GameManager.instance.rightHand.gameObject.GetComponent<XRDirectInteractor>();
-        slideInteractable.onSelectEntered.AddListener(SlideGrab);
-        slideInteractable.onSelectExited.AddListener(SlideRelease);
         returnToHolster = GetComponent<ReturnToHolster>();
         soundForGun = GetComponent<SoundForGun>();
         startColor = currentAmmoText.color;
@@ -95,32 +94,34 @@ public class Tac14 : MonoBehaviour
         if (GameManager.instance.CheckGameObject(gameObject) == 1)
         {
             twoHandGrab.attachTransform = leftAttach;
-            GameManager.instance.leftHand.GrabPistol(true);
+            GameManager.instance.leftHand.GrabShotgun(true);
+            GameManager.instance.leftHand.NewParent(leftAttach, leftAttach);
         }
         if (GameManager.instance.CheckGameObject(gameObject) == 2)
         {
             twoHandGrab.attachTransform = rightAttach;
-            GameManager.instance.rightHand.GrabPistol(true);
+            GameManager.instance.rightHand.GrabShotgun(true);
+            GameManager.instance.rightHand.NewParent(rightAttach, rightAttach);
         }
     }
     public void Release()
     {
-        GameManager.instance.leftHand.GrabPistol(false);
-        GameManager.instance.rightHand.GrabPistol(false);
-    }
-
-    public void SlideGrab(XRBaseInteractor interactor)
-    {
-
-    }
-    public void SlideRelease(XRBaseInteractor interactor)
-    {
+        if(!GameManager.instance.leftHand.IsHoldingSomething())
+        {
+            GameManager.instance.leftHand.OriginalParent();
+            GameManager.instance.leftHand.GrabShotgun(false);
+        }
+        if (!GameManager.instance.rightHand.IsHoldingSomething())
+        {
+            GameManager.instance.rightHand.OriginalParent();
+            GameManager.instance.rightHand.GrabShotgun(false);
+        }
 
     }
 
     public void Fire()
     {
-        if (currentAmmo > 0 && !cockingNeeded)
+        if (currentAmmo > 0 && (!cockingNeeded || auto))
         {
             //Fire
             directionsToFire[0] = muzzle.transform.forward;
@@ -219,8 +220,10 @@ public class Tac14 : MonoBehaviour
                 EffectManager.instance.ShotGunLine(muzzle.transform.position, directionsToFire[i]);
             }
 
-
-            gunAnim.Play("Fire");
+            if (auto)
+            {
+                gunAnim.Play("Fire");
+            }
             soundForGun.Fire();
             currentAmmo--;
             cockingNeeded = true;
@@ -293,9 +296,18 @@ public class Tac14 : MonoBehaviour
         {
             if (currentAmmo < magSize)
             {
+                if(GameManager.instance.CheckGameObject(gameObject) == 1)
+                {
+                    GameManager.instance.TurnOffRightInteractor();
+                }
+                else
+                {
+                    GameManager.instance.TurnOffLeftInteractor();
+                }
                 gunAnim.Play("InsertSlug");
                 dynamicTrigger.TriggerDisabled(true);
                 soundForGun.Magazine(0);
+                Destroy(currentTransform.gameObject);
                 Invoke(nameof(PlaySecondSlugSound), 0.2f);
                 Invoke(nameof(AddSlugRelay), 0.4f);
             }

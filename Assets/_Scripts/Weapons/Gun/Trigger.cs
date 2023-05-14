@@ -5,6 +5,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class Trigger : MonoBehaviour
 {
     public InputActionAsset triggerInput;
+    public GameObject gunToCheck;
 
     private Animator triggerAnim;
     private InputAction triggerLeft, triggerRight;
@@ -17,11 +18,11 @@ public class Trigger : MonoBehaviour
     }
     private void Update()
     {
-        if (GameManager.instance.CheckHand("Gun") == 1)
+        if (GameManager.instance.CheckGameObject(gunToCheck) == 1)
         {
             triggerAnim.SetFloat("Trigger", leftTriggerValue);
         }
-        else if (GameManager.instance.CheckHand("Gun") == 2)
+        else if (GameManager.instance.CheckGameObject(gunToCheck) == 2)
         {
             triggerAnim.SetFloat("Trigger", rightTriggerValue);
         }

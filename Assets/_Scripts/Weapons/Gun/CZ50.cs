@@ -163,8 +163,14 @@ public class CZ50 : MonoBehaviour
     }
     public void Release()
     {
-        GameManager.instance.leftHand.GrabPistol(false);
-        GameManager.instance.rightHand.GrabPistol(false);
+        if (!GameManager.instance.leftHand.IsHoldingSomething())
+        {
+            GameManager.instance.leftHand.GrabPistol(false);
+        }
+        if (!GameManager.instance.rightHand.IsHoldingSomething())
+        {
+            GameManager.instance.rightHand.GrabPistol(false);
+        }
     }
 
     public void Reload()

@@ -56516,6 +56516,8 @@ MonoBehaviour:
   ammoBag: {fileID: 1178563558}
   magnet: {fileID: 1966746291}
   gameOverCanvas: {fileID: 2042511922}
+  rHand: {fileID: 0}
+  lHand: {fileID: 0}
   tempAnim: {fileID: 0}
   enemies:
   - {fileID: 0}
@@ -56523,6 +56525,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  gripInput: {fileID: -944628639613478452, guid: c348712bda248c246b8c49b3db54643f,
+    type: 3}
   isUpgrading: 0
   isPaused: 0
   isDead: 0
@@ -56657,6 +56661,7 @@ MonoBehaviour:
   - {fileID: 6920413416558812168, guid: 8061d8daf8a6edd4b8a00460c4385625, type: 3}
   pickUpRingEffect: {fileID: 216096699991144865, guid: 0f942f9089d14214c9bf69de7191fdd6,
     type: 3}
+  shotgunLines: {fileID: 0}
   keyPickup: {fileID: 4851129446012377072, guid: 5be97c83427b1b446aa0ac589a1ca197,
     type: 3}
   keyOpen: {fileID: 6041325228870697367, guid: 07624485ccc8e9b4bb51f8c8bb553992, type: 3}
@@ -66545,6 +66550,9 @@ MonoBehaviour:
   m_ForceGravityOnDetach: 0
   m_RetainTransformParent: 1
   m_AttachPointCompatibilityMode: 0
+  secondHandGrabPoints: []
+  twoHandRotationType: 0
+  snapToSecondHand: 1
 --- !u!54 &1966746295
 Rigidbody:
   m_ObjectHideFlags: 0

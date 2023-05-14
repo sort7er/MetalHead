@@ -37,12 +37,28 @@ public class SoundForGun : MonoBehaviour
     }
     public void Grab()
     {
-        gunSource.PlayOneShot(gunGrab[Random.Range(0, gunGrab.Length)]);
+        
+        if (gunGrab.Length > 0)
+        {
+            gunSource.PlayOneShot(gunGrab[Random.Range(0, gunGrab.Length)]);
+        }
+        else
+        {
+            Debug.Log("Missing gungrab audio");
+        }
     }
     public void Drop()
     {
-        gunSource.PlayOneShot(gunGrab[Random.Range(0, gunGrab.Length)]);
-        CheckSound.instance.CheckIfEnemyCanHearTheSound(transform.position, 5, true);
+        if (gunGrab.Length > 0)
+        {
+            gunSource.PlayOneShot(gunGrab[Random.Range(0, gunGrab.Length)]);
+            CheckSound.instance.CheckIfEnemyCanHearTheSound(transform.position, 5, true);
+        }
+        else
+        {
+            Debug.Log("Missing drop audio");
+        }
+        
     }
     public void Magazine(int index)
     {

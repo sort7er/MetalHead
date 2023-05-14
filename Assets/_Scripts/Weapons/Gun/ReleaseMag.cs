@@ -117,6 +117,15 @@ public class ReleaseMag : MonoBehaviour
             magCollider.enabled = false;
             magSphereCollider.enabled = false;
             dynamicTrigger.TriggerDisabled(true);
+
+            if (GameManager.instance.CheckGameObject(gameObject) == 1)
+            {
+                GameManager.instance.TurnOffRightInteractor();
+            }
+            else
+            {
+                GameManager.instance.TurnOffLeftInteractor();
+            }
         }
 
     }

@@ -117,6 +117,13 @@ public class Hand : MonoBehaviour
             handAnim.SetBool("GrabPistol", state);
         }
     }
+    public void GrabShotgun(bool state)
+    {
+        if (handAnim != null)
+        {
+            handAnim.SetBool("GrabShotgun", state);
+        }
+    }
     public void GrabSlide(bool state)
     {
         if (handAnim != null)
@@ -129,6 +136,13 @@ public class Hand : MonoBehaviour
         if (handAnim != null)
         {
             handAnim.SetBool("GrabSlideBack", state);
+        }
+    }
+    public void GrabShotgunSlide(bool state)
+    {
+        if (handAnim != null)
+        {
+            handAnim.SetBool("GrabShotgunSlide", state);
         }
     }
     public void GrabMag(bool state)
@@ -264,14 +278,25 @@ public class Hand : MonoBehaviour
 
     public void NewParent(Transform newParent, Transform attachTransform)
     {
-        spawnedHand.transform.parent = newParent;
         spawnedHand.transform.position= attachTransform.position;
         spawnedHand.transform.rotation= attachTransform.rotation;
+        spawnedHand.transform.parent = newParent;
     }
     public void OriginalParent()
     {
         spawnedHand.transform.parent = transform;
         spawnedHand.transform.localPosition = originalPostion;
         spawnedHand.transform.localRotation = originalRotation;
+    }
+    public bool IsHoldingSomething()
+    {
+        if (interactor.selectTarget != null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

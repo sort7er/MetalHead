@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class AmmoBox : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class AmmoBox : MonoBehaviour
     private AudioSource ammoBoxSource;
     private BoxCollider boxCollider;
     private Rigidbody rb;
+    private XRGrabInteractable interactable;
     private bool left, pickedUp, grabbed;
 
     private void Start()
@@ -19,6 +21,7 @@ public class AmmoBox : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
         ammoBoxSource = GetComponent<AudioSource>();
+        interactable = GetComponent<XRGrabInteractable>();
     }
 
     public void GrabBox()
@@ -58,6 +61,7 @@ public class AmmoBox : MonoBehaviour
             {
                 EffectManager.instance.SpawnMessage("+ " + numberOfBulletsToAdd.ToString() + " bullets", 1);
                 ammoBoxSource.Play();
+                interactable.enabled = false;
                 GameManager.instance.ammoBag.AddAmmo(numberOfBulletsToAdd);
                 box.SetActive(false);
                 boxCollider.enabled = false;
