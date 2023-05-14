@@ -32,7 +32,7 @@ public class SoundForGun : MonoBehaviour
         }
         else
         {
-            Debug.Log("Missing empty audio");
+            //Debug.Log("Missing empty audio");
         }
     }
     public void Grab()
@@ -44,7 +44,7 @@ public class SoundForGun : MonoBehaviour
         }
         else
         {
-            Debug.Log("Missing gungrab audio");
+            //Debug.Log("Missing gungrab audio");
         }
     }
     public void Drop()
@@ -56,7 +56,7 @@ public class SoundForGun : MonoBehaviour
         }
         else
         {
-            Debug.Log("Missing drop audio");
+            //Debug.Log("Missing drop audio");
         }
         
     }

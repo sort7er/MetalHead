@@ -32,6 +32,7 @@ public class Tac14 : MonoBehaviour
     private SoundForGun soundForGun;
     private ReturnToHolster returnToHolster;
     private Animator gunAnim;
+    private ShotgunSlide shotgunSlide;
     private Transform currentTransform;
 
     private Vector3[] directionsToFire;
@@ -40,6 +41,7 @@ public class Tac14 : MonoBehaviour
 
     private void Start()
     {
+        shotgunSlide = GetComponentInChildren<ShotgunSlide>();
         twoHandGrab = GetComponent<TwoHandGrab>();
         gunAnim = GetComponent<Animator>();
         lHand = GameManager.instance.leftHand.gameObject.GetComponent<XRDirectInteractor>();
@@ -121,7 +123,7 @@ public class Tac14 : MonoBehaviour
 
     public void Fire()
     {
-        if (currentAmmo > 0 && (!cockingNeeded || auto))
+        if (currentAmmo > 0 && ((!cockingNeeded && !shotgunSlide.slideStarted) || auto))
         {
             //Fire
             directionsToFire[0] = muzzle.transform.forward;
@@ -224,6 +226,7 @@ public class Tac14 : MonoBehaviour
             {
                 gunAnim.Play("Fire");
             }
+            shotgunSlide.HasFired();
             soundForGun.Fire();
             currentAmmo--;
             cockingNeeded = true;
@@ -245,7 +248,7 @@ public class Tac14 : MonoBehaviour
         {
             //Need to be cocked
             soundForGun.Empty();
-            Debug.Log("Need to cock the gun");
+            //Debug.Log("Need to cock the gun");
         }
     }
 

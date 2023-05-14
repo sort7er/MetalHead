@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -6,99 +5,75 @@ public class ShotgunSlide : MonoBehaviour
 {
     public SoundForGun soundForGun;
     public Transform attachPoint;
-    public float threshold, sensitivity, limit;
+    public float threshold;
 
-    private XRSimpleInteractable simpleInteractable;
+    [HideInInspector] public bool slideStarted;
+
+    private Transform casingPoint;
+    private GameObject casingPrefab;
     private Tac14 tac14;
-    private Vector3 startPos;
+    private Animator slideAnim;
     private Transform leftHand, rightHand;
-    private Vector3 distanceAtThreshold;
-    private bool slideValid, follow, left;
-    public float initialDistance, difference;
+    private bool slideValid, isGrabbed, hasFired;
+    public float initialDistance, closeUpDistance;
     private void Start()
     {
         tac14 = GetComponentInParent<Tac14>();
-        startPos = transform.localPosition;
-        simpleInteractable = GetComponent<XRSimpleInteractable>();
+        slideAnim = GetComponent<Animator>();
+        casingPoint = tac14.casingPoint;
+        casingPrefab = tac14.casingPrefab;
     }
 
     private void Update()
     {
-        if (!tac14.auto && simpleInteractable.enabled)
+        if (!tac14.auto && isGrabbed)
         {
             rightHand = GameManager.instance.rHand.transform;
             leftHand = GameManager.instance.lHand.transform;
 
-
-            if (left)
+            if (!slideStarted && Vector3.Distance(leftHand.position, rightHand.position) < initialDistance - threshold)
             {
-                transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z + GameManager.instance.leftHand.transform.localPosition.z - transform.localPosition.z);
+                SlideBack();
             }
-            //else
-            //{
-            //    transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z - difference * sensitivity);
-            //}
-
-
-            //if (Vector3.Distance(leftHand.position, rightHand.position) < initialDistance - threshold)
-            //{
-            //    if (!follow)
-            //    {
-            //        follow = true;
-            //        if (left)
-            //        {
-            //            distanceAtThreshold = GameManager.instance.lHand.transform.position;
-            //        }
-            //        else
-            //        {
-            //            distanceAtThreshold = GameManager.instance.rHand.transform.position;
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    if (follow)
-            //    {
-            //        follow = false;
-            //        transform.localPosition = startPos;
-            //    }
-            //}
+            else if(slideStarted && Vector3.Distance(leftHand.position, rightHand.position) > closeUpDistance + threshold * 0.5f)
+            {
+                SlideDone();
+            }
         }
-        
-        //if (follow)
-        //{
-            
+    }
 
-        //    if (left)
-        //    {
-        //        difference = (distanceAtThreshold - GameManager.instance.lHand.transform.position).magnitude;
-        //        transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z - difference * sensitivity);
-        //    }
-        //    else
-        //    {
-        //        difference = (distanceAtThreshold - GameManager.instance.rHand.transform.position).magnitude;
-        //        transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z - difference * sensitivity);
-        //    }
 
-        //    //if (transform.localPosition.z < limit)
-        //    //{
-        //    //    if (follow)
-        //    //    {
-        //    //        soundForGun.Slide();
-        //    //    }
-        //    //    follow = false;
-        //    //    slideValid = true;
-        //    //}
-
-        //}
+    private void SlideBack()
+    {
+        slideValid = true;
+        slideStarted = true;
+        slideAnim.SetBool("Slide", true);
+        soundForGun.Slide();
+        closeUpDistance = Vector3.Distance(leftHand.position, rightHand.position);
 
     }
 
+    public void CasingOut()
+    {
+        if (hasFired)
+        {
+            hasFired = false;
+            GameObject casing = Instantiate(casingPrefab, casingPoint.position, casingPoint.rotation);
+            casing.transform.parent = ParentManager.instance.bullets;
+        }
+    }
+
+
     public void SlideDone()
     {
+        slideStarted = false;
+        slideAnim.SetBool("Slide", false);
+
         if (slideValid)
         {
             soundForGun.SlideBack();
+            tac14.CockingGun();
+            slideValid = false;
         }
     }
 
@@ -106,18 +81,18 @@ public class ShotgunSlide : MonoBehaviour
     {
         if (GameManager.instance.CheckGameObject(gameObject) == 1)
         {
-            left = true;
             GameManager.instance.leftHand.GrabShotgunSlide(true);
             GameManager.instance.leftHand.NewParent(attachPoint, attachPoint);
         }
         if (GameManager.instance.CheckGameObject(gameObject) == 2)
         {
-            left = false;
             GameManager.instance.rightHand.GrabShotgunSlide(true);
             GameManager.instance.rightHand.NewParent(attachPoint, attachPoint);
         }
-
-        initialDistance = Vector3.Distance(rightHand.position, leftHand.position);
+        isGrabbed = true;
+        rightHand = GameManager.instance.rHand.transform;
+        leftHand = GameManager.instance.lHand.transform;
+        initialDistance = Vector3.Distance(leftHand.position, rightHand.position);
     }
     public void ReleaseSlide()
     {
@@ -131,5 +106,12 @@ public class ShotgunSlide : MonoBehaviour
             GameManager.instance.rightHand.OriginalParent();
             GameManager.instance.rightHand.GrabShotgunSlide(false);
         }
+        isGrabbed = false;
+        SlideDone();
     }
+    public void HasFired()
+    {
+        hasFired = true;
+    }
+
 }

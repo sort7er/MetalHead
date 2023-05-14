@@ -764,7 +764,7 @@ MonoBehaviour:
     type: 3}
   dynamicTrigger: {fileID: 369699561148395926}
   slugInside: {fileID: 5464543288960027274}
-  auto: 1
+  auto: 0
 --- !u!114 &7799122300475122259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1590,7 +1590,7 @@ PrefabInstance:
     - target: {fileID: -5078903600777333599, guid: 63fe9c9989c3dcc41bf3b605f0c346a1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.3323
+      value: 0.3353
       objectReference: {fileID: 0}
     - target: {fileID: -4056422222544854301, guid: 63fe9c9989c3dcc41bf3b605f0c346a1,
         type: 3}
@@ -1665,6 +1665,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 6815719865722117397}
+    - targetCorrespondingSourceObject: {fileID: -2059808378567916338, guid: 63fe9c9989c3dcc41bf3b605f0c346a1,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 257130934}
     - targetCorrespondingSourceObject: {fileID: 6619225641134156614, guid: 63fe9c9989c3dcc41bf3b605f0c346a1,
         type: 3}
       insertIndex: -1
@@ -1734,6 +1738,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundForGun: {fileID: 7799122300475122259}
   attachPoint: {fileID: 765860226}
+  threshold: 0.2
+  moveAmount: 3
+  limit: -0.01
 --- !u!114 &5850028145879249518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1859,6 +1866,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.12278761, y: 0.12887126, z: 0.44004083}
   m_Center: {x: -0.0000039598344, y: -2.0697739e-20, z: 0.12452031}
+--- !u!95 &257130934
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4667339903826039983}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 95ca912fdcf834f4a8690354c1a030e7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &8679449673794976551 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6619225641134156614, guid: 63fe9c9989c3dcc41bf3b605f0c346a1,
