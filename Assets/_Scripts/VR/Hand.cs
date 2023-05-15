@@ -166,6 +166,13 @@ public class Hand : MonoBehaviour
             handAnim.SetBool("GrabWrench", state);
         }
     }
+    public void GrabSlug(bool state)
+    {
+        if (handAnim != null)
+        {
+            handAnim.SetBool("GrabSlug", state);
+        }
+    }
     public void CheckHover()
     {
         List<XRBaseInteractable> hoveredObjects = new List<XRBaseInteractable>();

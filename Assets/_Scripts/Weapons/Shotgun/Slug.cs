@@ -20,9 +20,11 @@ public class Slug : MonoBehaviour
         if (GameManager.instance.CheckGameObject(gameObject) == 1)
         {
             slugInteractable.attachTransform = leftAttach;
+            GameManager.instance.leftHand.GrabSlug(true);
         }
         if (GameManager.instance.CheckGameObject(gameObject) == 2)
         {
+            GameManager.instance.rightHand.GrabSlug(true);
             slugInteractable.attachTransform = rightAttach;
         }
     }
@@ -31,6 +33,8 @@ public class Slug : MonoBehaviour
         transform.parent = ParentManager.instance.mags;
         EnableGravity(true);
         GameManager.instance.ammoBagShotgun.ReleasingSlug();
+        GameManager.instance.rightHand.GrabSlug(false);
+        GameManager.instance.leftHand.GrabSlug(false);
     }
 
     public void EnableGravity(bool state)
