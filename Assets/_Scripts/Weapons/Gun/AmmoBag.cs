@@ -73,7 +73,7 @@ public class AmmoBag : MonoBehaviour
         }
         if (other.CompareTag("Interactor") && GameManager.instance.CheckHand("Magazine") == 0)
         {
-            Invoke("DisableMagToDrop", 0.2f);
+            Invoke(nameof(DisableMagToDrop), 0.2f);
             handIn = false;
             if(magPos.childCount > 0)
             {

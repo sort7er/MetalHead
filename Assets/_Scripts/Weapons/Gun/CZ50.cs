@@ -160,6 +160,7 @@ public class CZ50 : MonoBehaviour
             twoHandGrab.attachTransform = rightAttach;
             GameManager.instance.rightHand.GrabPistol(true);
         }
+        GameManager.instance.CheckCurrentAmmoBag(1);
     }
     public void Release()
     {
@@ -171,6 +172,7 @@ public class CZ50 : MonoBehaviour
         {
             GameManager.instance.rightHand.GrabPistol(false);
         }
+        GameManager.instance.ReleaseWeapon(1);
     }
 
     public void Reload()

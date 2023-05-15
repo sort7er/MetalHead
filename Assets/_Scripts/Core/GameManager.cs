@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class GameManager : MonoBehaviour
@@ -19,6 +18,7 @@ public class GameManager : MonoBehaviour
     public GameObject leftRayInteractor, rightRayInteractor;
     public Hand leftHand, rightHand;
     public AmmoBag ammoBag;
+    public AmmoBagShotgun ammoBagShotgun;
     public Magnet magnet;
     public GameObject gameOverCanvas;
     public XRDirectInteractor rHand, lHand;
@@ -30,13 +30,14 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public bool isPaused;
     [HideInInspector] public bool isDead;
 
-    private int tempNumber;
+    public int tempNumber, waitingID, currentID;
     private bool tempDone;
     private PauseMenu pauseMenu;
     private XRInteractorLineVisual leftLineVisual, rightLineVisual;
     private InputAction gripLeft, gripRight;
     private float leftGripValue, rightGripValue;
     private bool cannotUseLeft, cannotUseRight;
+    public bool ammoBagTaken;
 
     private void Start()
     {
@@ -239,6 +240,54 @@ public class GameManager : MonoBehaviour
     public void TurnOnRightInteractor()
     {
         rHand.allowSelect = true;
+    }
+    public void CheckCurrentAmmoBag(int weaponID)
+    {
+        if (!ammoBagTaken)
+        {
+            AmmoBagToEnable(weaponID);
+            currentID = weaponID;
+            if (currentID != 0)
+            {
+                ammoBagTaken= true;
+            }
+        }
+        else
+        {
+            waitingID = weaponID;
+        }
+    }
+    public void ReleaseWeapon(int weaponID)
+    {
+        if(weaponID == currentID)
+        {
+            ammoBagTaken = false;
+            CheckCurrentAmmoBag(waitingID);
+            waitingID = 0;
+        }
+        else if(weaponID == waitingID)
+        {
+            waitingID = 0;
+        }
+    }
+
+    private void AmmoBagToEnable(int weaponID)
+    {
+        if(weaponID == 1)
+        {
+            ammoBag.gameObject.SetActive(true);
+            ammoBagShotgun.gameObject.SetActive(false);
+        }
+        else if(weaponID == 2)
+        {
+            ammoBag.gameObject.SetActive(false);
+            ammoBagShotgun.gameObject.SetActive(true);
+        }
+        else
+        {
+            ammoBag.gameObject.SetActive(false);
+            ammoBagShotgun.gameObject.SetActive(false);
+        }
     }
 
 

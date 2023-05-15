@@ -707,6 +707,7 @@ GameObject:
   - component: {fileID: 2571467258686019699}
   - component: {fileID: 2571467258686019698}
   - component: {fileID: 2571467258686019700}
+  - component: {fileID: 4157183700668536439}
   m_Layer: 8
   m_Name: Tac14
   m_TagString: Untagged
@@ -727,8 +728,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2604512861206476682}
-  - {fileID: 235376477777034950}
-  - {fileID: 3177581833010496860}
   m_Father: {fileID: 0}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -750,8 +749,8 @@ MonoBehaviour:
   numberOfPellets: 8
   bulletForce: 25
   penetrationAmount: 1
-  offsetX: 0.1
   offsetY: 0.1
+  offsetZ: 0.1
   muzzle: {fileID: 4998949264351707164}
   casingPoint: {fileID: 1250581318}
   leftAttach: {fileID: 235376477777034950}
@@ -1227,6 +1226,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 999bd58a20e5dc542935c60916b30769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4157183700668536439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2571467258054364097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c0c05ab218ade04e8d4b51f157890bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultSmoothTimeUp: 1.5
+  defaultSmoothTimeDown: 20
+  leftHandAttach: {fileID: 0}
+  rightHandAttach: {fileID: 0}
+  leftWeaponAttach: {fileID: 235376477777034950}
+  rightWeaponAttach: {fileID: 3177581833010496860}
 --- !u!1 &2571467258149496453
 GameObject:
   m_ObjectHideFlags: 0
@@ -1450,12 +1467,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5582826893111319925}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0143, y: 0.0302, z: -0.1739}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -2.0328789e-20, w: 1}
+  m_LocalPosition: {x: 0.030447451, y: 0.06430048, z: -0.37025887}
+  m_LocalScale: {x: 2.1291547, y: 2.1291547, z: 2.1291547}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2571467258054364098}
+  m_Father: {fileID: 2604512861206476682}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5691452683210385616
@@ -1481,12 +1498,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5691452683210385616}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0143, y: 0.0302, z: -0.1739}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -2.0328789e-20, w: 1}
+  m_LocalPosition: {x: -0.030447792, y: 0.06430048, z: -0.37026373}
+  m_LocalScale: {x: 2.1291547, y: 2.1291547, z: 2.1291547}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2571467258054364098}
+  m_Father: {fileID: 2604512861206476682}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2571467257177215073
@@ -1644,6 +1661,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 853583727}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 63fe9c9989c3dcc41bf3b605f0c346a1,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 235376477777034950}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 63fe9c9989c3dcc41bf3b605f0c346a1,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3177581833010496860}
     - targetCorrespondingSourceObject: {fileID: -5078903600777333599, guid: 63fe9c9989c3dcc41bf3b605f0c346a1,
         type: 3}
       insertIndex: -1
@@ -1738,9 +1763,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundForGun: {fileID: 7799122300475122259}
   attachPoint: {fileID: 765860226}
-  threshold: 0.2
-  moveAmount: 3
-  limit: -0.01
+  threshold: 0.15
+  slideStarted: 0
+  initialDistance: 0
+  closeUpDistance: 0
 --- !u!114 &5850028145879249518
 MonoBehaviour:
   m_ObjectHideFlags: 0

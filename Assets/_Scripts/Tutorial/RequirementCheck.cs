@@ -121,7 +121,6 @@ public class RequirementCheck : MonoBehaviour
     public void CanReload()
     {
         releaseMag.TutorialCanReload(true);
-        tutorialManager.SetAmmoBag(true);
     }
 
     //Inputs

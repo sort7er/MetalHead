@@ -163,7 +163,6 @@ public class Mag : MonoBehaviour
         {
             rb.useGravity= state;
             rb.isKinematic= !state;
-
         }
     }
 }

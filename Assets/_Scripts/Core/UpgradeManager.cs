@@ -18,6 +18,9 @@ public class UpgradeManager : MonoBehaviour
     public Recoil cz50Recoil;
     public CZ50 cz50;
 
+    [Header("Tac14")]
+    public int tac14StartRecoil;
+
     public CZ50Upgrades cZ50Upgrades;
 
     [HideInInspector] public int magSize;
@@ -49,6 +52,7 @@ public class UpgradeManager : MonoBehaviour
         }
         
         UpgradeCZ50(startBulletLevel, startRecoilLevel, startMagSizeLevel, startProjectileLevel, startLaserLevel);
+
     }
 
     public void SetMagSize(int size)
@@ -82,4 +86,26 @@ public class UpgradeManager : MonoBehaviour
             cz50.Laser(false);
         }        
     }
+    //public void UpgradeTac14(int pelletLevel, int recoilLevel, int magSizeLevel, int projectileLevel, int auto)
+    //{
+    //    cz50.SetDamage(10 + pelletLevel * 5);
+    //    SetMagSize(7 + magSizeLevel * 3);
+    //    cz50Recoil.UpgradeRecoil(recoilLevel);
+    //    if (projectileLevel == 2)
+    //    {
+    //        cz50.ProjectilePenetration(true);
+    //    }
+    //    else
+    //    {
+    //        cz50.ProjectilePenetration(false);
+    //    }
+    //    if (laserLevel == 2)
+    //    {
+    //        cz50.Laser(true);
+    //    }
+    //    else
+    //    {
+    //        cz50.Laser(false);
+    //    }
+    //}
 }

@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
 public class Tac14 : MonoBehaviour
 {
@@ -11,8 +12,8 @@ public class Tac14 : MonoBehaviour
     public int numberOfPellets;
     public int bulletForce;
     public int penetrationAmount;
-    public float offsetX;
     public float offsetY;
+    public float offsetZ;
 
     [Header("References")]
     public Transform muzzle;
@@ -34,6 +35,7 @@ public class Tac14 : MonoBehaviour
     private Animator gunAnim;
     private ShotgunSlide shotgunSlide;
     private Transform currentTransform;
+    private ShotgunRecoil shotgunRecoil;
 
     private Vector3[] directionsToFire;
     private int currentAmmo;
@@ -41,6 +43,7 @@ public class Tac14 : MonoBehaviour
 
     private void Start()
     {
+        shotgunRecoil = GetComponent<ShotgunRecoil>();
         shotgunSlide = GetComponentInChildren<ShotgunSlide>();
         twoHandGrab = GetComponent<TwoHandGrab>();
         gunAnim = GetComponent<Animator>();
@@ -105,6 +108,7 @@ public class Tac14 : MonoBehaviour
             GameManager.instance.rightHand.GrabShotgun(true);
             GameManager.instance.rightHand.NewParent(rightAttach, rightAttach);
         }
+        GameManager.instance.CheckCurrentAmmoBag(2);
     }
     public void Release()
     {
@@ -118,7 +122,7 @@ public class Tac14 : MonoBehaviour
             GameManager.instance.rightHand.OriginalParent();
             GameManager.instance.rightHand.GrabShotgun(false);
         }
-
+        GameManager.instance.ReleaseWeapon(2);
     }
 
     public void Fire()
@@ -130,7 +134,7 @@ public class Tac14 : MonoBehaviour
 
             for(int i = 1; i < directionsToFire.Length; i++)
             {
-                directionsToFire[i] = new Vector3(muzzle.transform.forward.x + Random.Range(-offsetX, offsetX), muzzle.transform.forward.y + Random.Range(-offsetY, offsetY), muzzle.transform.forward.z);
+                directionsToFire[i] = new Vector3(muzzle.transform.forward.x, muzzle.transform.forward.y + Random.Range(-offsetY, offsetY), muzzle.transform.forward.z + Random.Range(-offsetZ, offsetZ));
 
 
                 Ray ray = new Ray(muzzle.position, directionsToFire[i]);
@@ -226,6 +230,7 @@ public class Tac14 : MonoBehaviour
             {
                 gunAnim.Play("Fire");
             }
+            shotgunRecoil.StartRecoil();
             shotgunSlide.HasFired();
             soundForGun.Fire();
             currentAmmo--;

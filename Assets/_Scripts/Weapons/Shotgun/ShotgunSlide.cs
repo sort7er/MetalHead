@@ -9,6 +9,7 @@ public class ShotgunSlide : MonoBehaviour
 
     [HideInInspector] public bool slideStarted;
 
+    private ShotgunRecoil shotgunRecoil;
     private Transform casingPoint;
     private GameObject casingPrefab;
     private Tac14 tac14;
@@ -18,6 +19,7 @@ public class ShotgunSlide : MonoBehaviour
     public float initialDistance, closeUpDistance;
     private void Start()
     {
+        shotgunRecoil = GetComponentInParent<ShotgunRecoil>();
         tac14 = GetComponentInParent<Tac14>();
         slideAnim = GetComponent<Animator>();
         casingPoint = tac14.casingPoint;
@@ -89,6 +91,7 @@ public class ShotgunSlide : MonoBehaviour
             GameManager.instance.rightHand.GrabShotgunSlide(true);
             GameManager.instance.rightHand.NewParent(attachPoint, attachPoint);
         }
+        shotgunRecoil.SetRecoil(false);
         isGrabbed = true;
         rightHand = GameManager.instance.rHand.transform;
         leftHand = GameManager.instance.lHand.transform;
@@ -106,6 +109,7 @@ public class ShotgunSlide : MonoBehaviour
             GameManager.instance.rightHand.OriginalParent();
             GameManager.instance.rightHand.GrabShotgunSlide(false);
         }
+        shotgunRecoil.SetRecoil(true);
         isGrabbed = false;
         SlideDone();
     }
