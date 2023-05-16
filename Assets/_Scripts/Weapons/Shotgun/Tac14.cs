@@ -21,7 +21,6 @@ public class Tac14 : MonoBehaviour
     public TextMeshProUGUI currentAmmoText;
     public ParticleSystem muzzleFlash;
     public GameObject casingPrefab;
-    public GameObject linePrefab;
     public DynamicTrigger dynamicTrigger;
     public GameObject slugInside;
     public bool auto;
