@@ -90,7 +90,7 @@ public class RunningEnemy : MonoBehaviour
     public Transform testCube;
     public GameObject parryCanvas;
 
-
+    [HideInInspector] public EnemyBaseState currentState;
     [HideInInspector] public Vector3 directionToPlayer;
     [HideInInspector] public Vector3 directionToCamera;
     [HideInInspector] public Vector3 pointOfInterest;
@@ -124,13 +124,14 @@ public class RunningEnemy : MonoBehaviour
     public EnemySearchingState searchingState = new EnemySearchingState();
     public EnemyKickState kickState = new EnemyKickState();
 
-    private EnemyBaseState currentState;
+    
     private Vector3 thisFrame, lastFrame, currentDestination;
     private Vector3 knockbackPos;
     private float timeBetweenDistanceCheck;
     private float newMovementValue, currentValue;
     private bool setNewValue;
     private bool knockBack;
+    private bool isAvoiding;
 
 
 
@@ -201,6 +202,7 @@ public class RunningEnemy : MonoBehaviour
         StopAllCoroutines();
         if(!isDead)
         {
+            AvoidanceDone();
             DistanceCheckOff();
             agent.avoidancePriority = 50;
             currentState = state;
@@ -484,5 +486,26 @@ public class RunningEnemy : MonoBehaviour
             knockbackPos = myNavHit.position;
         }
         agent.Stop();
+    }
+    public void HittingAvoidance()
+    {
+        if (!isAvoiding)
+        {
+            agent.avoidancePriority = 52;
+            isAvoiding = true;
+        }
+    }
+    public void RecivingAvoidance()
+    {
+        if (!isAvoiding)
+        {
+            agent.avoidancePriority = 53;
+            isAvoiding = true;
+        }
+    }
+    public void AvoidanceDone()
+    {
+        agent.avoidancePriority = 52;
+        isAvoiding = false;
     }
 }

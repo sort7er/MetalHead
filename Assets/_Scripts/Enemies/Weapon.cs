@@ -45,7 +45,7 @@ public class Weapon : MonoBehaviour
             EffectManager.instance.SpawnParrySoundEffect(transform.position, 1);
         }
 
-        if ((leftParry || rightParry) && canParry && !isParrying && !parryFailed)
+        if ((leftParry || rightParry) && canParry && !isParrying && !parryFailed && Vector3.Distance(GameManager.instance.XROrigin.transform.position, transform.position) < 2)
         {
             Vector3 positionToSpawn;
             if (leftParry)

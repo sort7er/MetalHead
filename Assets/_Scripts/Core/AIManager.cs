@@ -1,3 +1,4 @@
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 public class AIManager : MonoBehaviour
@@ -40,6 +41,21 @@ public class AIManager : MonoBehaviour
     {
         canPlayAttack = true;
         canPlayIdle = true;
+    }
+
+    public void Avoidance(RunningEnemy hitting, RunningEnemy colliding)
+    {
+        if (hitting.currentState == hitting.idleState && colliding.currentState == colliding.idleState)
+        {
+            hitting.HittingAvoidance();
+            colliding.RecivingAvoidance();
+        }
+    }
+
+    public void AvoidanceDone(RunningEnemy hitting, RunningEnemy colliding)
+    {
+        hitting.AvoidanceDone();
+        colliding.AvoidanceDone();
     }
 
     public bool CheckForAttack()
