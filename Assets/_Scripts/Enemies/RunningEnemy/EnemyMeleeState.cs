@@ -1,7 +1,6 @@
-
 using UnityEngine;
 
-public class EnemyAttackState : EnemyBaseState
+public class EnemyMeleeState : EnemyBaseAttack
 {
     private RunningEnemy runningEnemy;
     private Animator enemyAnim;
@@ -122,7 +121,7 @@ public class EnemyAttackState : EnemyBaseState
         runningEnemy.CanAttack();
         attackStarted = false;
     }
-    public void AttackCoolDown()
+    public override void AttackCoolDown()
     {
         cannotAttack = false;
     }

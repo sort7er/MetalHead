@@ -98,14 +98,12 @@ public class TwoHandGrab : XRGrabInteractable
     }
     protected override void OnSelectEntered(XRBaseInteractor interactor)
     {
-        Debug.Log("First grab enter");
         base.OnSelectEntered(interactor);
         interactorInitialRotation = interactor.transform.localRotation;
         attachInitialRotation = interactor.attachTransform.localRotation;
     }
     protected override void OnSelectExited(XRBaseInteractor interactor)
     {
-        Debug.Log("First grab exit");
         base.OnSelectExited(interactor);
         secondInteractor = null;
         interactor.transform.localRotation = interactorInitialRotation;

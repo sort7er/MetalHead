@@ -1,17 +1,18 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class RunningEnemy : MonoBehaviour
 {
+
+
     [Header("Overall stats")]
     public float defaultTurnSmoothTime;
     public float defaultTimeBetweenDistanceCheck;
     public float defaultFOV;
     public float distanceBeforeImmediateDetection;
     public LayerMask layersToCheck;
+    public TypeOfEnemy enemyType;
 
     [Header("Knockback")]
     public float knockBackAmount;
@@ -90,6 +91,9 @@ public class RunningEnemy : MonoBehaviour
     public Transform testCube;
     public GameObject parryCanvas;
 
+
+    public enum TypeOfEnemy { Melee, Shooting}
+
     [HideInInspector] public EnemyBaseState currentState;
     [HideInInspector] public Vector3 directionToPlayer;
     [HideInInspector] public Vector3 directionToCamera;
@@ -117,7 +121,7 @@ public class RunningEnemy : MonoBehaviour
     public EnemyRunState runState = new EnemyRunState();
     public EnemyStunnedState stunnedState = new EnemyStunnedState();
     public EnemyDieState dieState = new EnemyDieState();
-    public EnemyAttackState attackState = new EnemyAttackState();
+    public EnemyBaseAttack attackState;
     public EnemyIdleState idleState = new EnemyIdleState();
     public EnemySusState susState = new EnemySusState();
     public EnemyCoverState coverState = new EnemyCoverState();
@@ -137,6 +141,16 @@ public class RunningEnemy : MonoBehaviour
 
     private void Start()
     {
+        switch (enemyType)
+        {
+            case TypeOfEnemy.Melee:
+                attackState = new EnemyMeleeState();
+                break;
+            case TypeOfEnemy.Shooting:
+                attackState = new EnemyShootingState();
+                break;
+        }
+
         SetDistanceCheck(defaultTimeBetweenDistanceCheck);
         SetTurnSpeed(defaultTurnSmoothTime);
         enemyAnim = enemyModel.GetComponent<Animator>();
@@ -491,6 +505,7 @@ public class RunningEnemy : MonoBehaviour
     {
         if (!isAvoiding)
         {
+            Debug.Log(transform.name + " is  hitting");
             agent.avoidancePriority = 52;
             isAvoiding = true;
         }
@@ -499,6 +514,7 @@ public class RunningEnemy : MonoBehaviour
     {
         if (!isAvoiding)
         {
+            Debug.Log(transform.name + " is  reciving");
             agent.avoidancePriority = 53;
             isAvoiding = true;
         }

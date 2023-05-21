@@ -21,18 +21,16 @@ public class CloseToEnemyCheck : MonoBehaviour
                 currentCollidingEnemy = other.GetComponentInParent<RunningEnemy>();
                 AIManager.instance.Avoidance(runningEnemy, currentCollidingEnemy);
                 cannotCollide = true;
-                Debug.Log("1");
             }
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if(other.GetComponentInParent<RunningEnemy>() == currentCollidingEnemy && cannotCollide)
+        if(currentCollidingEnemy != null && other.GetComponentInParent<RunningEnemy>() == currentCollidingEnemy && cannotCollide)
         {
             AIManager.instance.AvoidanceDone(runningEnemy, currentCollidingEnemy);
             currentCollidingEnemy = null;
             cannotCollide = false;
-            Debug.Log("2");
         }
     }
 
