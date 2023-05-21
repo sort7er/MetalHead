@@ -16537,7 +16537,13 @@ MonoBehaviour:
   magPos: {fileID: 768278392}
   cz50Recoil: {fileID: 8480215060685690224}
   cz50: {fileID: 8480215060685690229}
-  tac14StartRecoil: 0
+  tac14: {fileID: 2571467258686019685}
+  tac14StartReload: 1
+  tac14StartAuto: 1
+  tac14StartDamage: 1
+  tac14StartMagSize: 1
+  tac14StartPellets: 1
+  tac14StartPenetration: 1
   cZ50Upgrades: {fileID: 1006257395}
   magSize: 10
 --- !u!114 &590820405
@@ -17149,7 +17155,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2571467258686019685}
         m_TargetAssemblyTypeName: Tac14, Assembly-CSharp
-        m_MethodName: Insert
+        m_MethodName: UpgradeAuto
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -17164,7 +17170,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2571467258686019685}
         m_TargetAssemblyTypeName: Tac14, Assembly-CSharp
-        m_MethodName: CockingGun
+        m_MethodName: UpgradePenetration
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -34996,6 +35002,7 @@ MonoBehaviour:
   slugPrefab: {fileID: 1154020825339679935, guid: b88d851069138714d8ffe965b6fc153c,
     type: 3}
   ammoText: {fileID: 2021284153}
+  tac14: {fileID: 2571467258686019685}
 --- !u!4 &1182990680
 Transform:
   m_ObjectHideFlags: 0
@@ -72712,12 +72719,12 @@ PrefabInstance:
     - target: {fileID: 2571467258054364099, guid: 469fb21243f4e944a97d79d7a6d77014,
         type: 3}
       propertyPath: auto
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2571467258054364099, guid: 469fb21243f4e944a97d79d7a6d77014,
         type: 3}
       propertyPath: magSize
-      value: 9
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2571467258054364099, guid: 469fb21243f4e944a97d79d7a6d77014,
         type: 3}

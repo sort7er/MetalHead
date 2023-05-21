@@ -27,6 +27,7 @@ public class Slug : MonoBehaviour
             GameManager.instance.rightHand.GrabSlug(true);
             slugInteractable.attachTransform = rightAttach;
         }
+        GameManager.instance.ammoBagShotgun.GrabbingSlug(gameObject);
     }
     public void ReleaseSlug()
     {

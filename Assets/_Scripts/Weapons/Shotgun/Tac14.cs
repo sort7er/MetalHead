@@ -23,7 +23,10 @@ public class Tac14 : MonoBehaviour
     public GameObject casingPrefab;
     public DynamicTrigger dynamicTrigger;
     public GameObject slugInside;
-    public bool auto;
+
+    [HideInInspector] public bool auto;
+    [HideInInspector] public int insertAmmo;
+    [HideInInspector] public int currentAmmo;
 
 
     private TwoHandGrab twoHandGrab;
@@ -37,7 +40,6 @@ public class Tac14 : MonoBehaviour
     private ShotgunRecoil shotgunRecoil;
 
     private Vector3[] directionsToFire;
-    private int currentAmmo;
     private bool cockingNeeded, projectilePenetration, left;
 
     private void Start()
@@ -327,33 +329,87 @@ public class Tac14 : MonoBehaviour
     }
     private void AddSlugRelay()
     {
-        AddSlug(1);
+        if(GameManager.instance.ammoBagShotgun.GetAmmoStatus() >= insertAmmo)
+        {
+            AddSlug(insertAmmo);
+        }
+        else
+        {
+            AddSlug(GameManager.instance.ammoBagShotgun.GetAmmoToAdd());
+        }
     }
     public void Casing()
     {
         GameObject casing = Instantiate(casingPrefab, casingPoint.position, casingPoint.rotation);
         casing.transform.parent = ParentManager.instance.bullets;
     }
+
+
     //Upgrades
-    public void ProjectilePenetration(bool state)
+    public void UpgradeReload(int level)
     {
-        projectilePenetration = state;
+        if(level < 6)
+        {
+            insertAmmo = level;
+        }
+        else
+        {
+            insertAmmo = 5;
+        }
     }
-    public void UpgradeAuto()
+    public void UpgradeAuto(int level)
     {
-        auto = true;
+        if (level == 1)
+        {
+            auto = false;
+        }
+        else
+        {
+            auto = true;
+        }
     }
-    public void UpgradePenetration()
+    public void UpgradeDamage(int level)
     {
-        projectilePenetration = true;
+        if (level < 7)
+        {
+            damagePerPellet = 7 + level * 3;
+        }
+        else
+        {
+            damagePerPellet = 7 + 6 * 3;
+        }
     }
-    public void UpgradePellets()
+    public void UpgradeMagSize(int level)
     {
-
+        if(level < 9)
+        {
+            magSize = 4 + level * 2;
+        }
+        else
+        {
+            magSize = 4 + 8 * 2;
+        }
     }
-    public void UpgradeDamage()
+    public void UpgradePellets(int level)
     {
-
+        if(level < 4)
+        {
+            numberOfPellets = 6 + level * 3;
+        }
+        else
+        {
+            numberOfPellets = 6 + 3 * 3;
+        }
     }
-
+    public void UpgradePenetration(int level)
+    {
+        if(level == 1)
+        {
+            projectilePenetration = false;
+        }
+        else
+        {
+            projectilePenetration = true;
+        }
+    }
 }
