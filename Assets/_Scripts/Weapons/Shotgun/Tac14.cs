@@ -339,6 +339,21 @@ public class Tac14 : MonoBehaviour
     {
         projectilePenetration = state;
     }
+    public void UpgradeAuto()
+    {
+        auto = true;
+    }
+    public void UpgradePenetration()
+    {
+        projectilePenetration = true;
+    }
+    public void UpgradePellets()
+    {
 
+    }
+    public void UpgradeDamage()
+    {
+
+    }
 
 }
