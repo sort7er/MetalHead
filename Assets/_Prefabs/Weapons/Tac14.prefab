@@ -710,7 +710,7 @@ GameObject:
   - component: {fileID: 4157183700668536439}
   m_Layer: 8
   m_Name: Tac14
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -743,7 +743,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6af23036f5b9a0044b23542d2ee95221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  magSize: 9
+  magSize: 4
   damagePerPellet: 10
   stunPerPellet: 10
   numberOfPellets: 8
@@ -759,11 +759,11 @@ MonoBehaviour:
   muzzleFlash: {fileID: 2382615509962396735}
   casingPrefab: {fileID: 2984417498561743332, guid: 20f5d00bc31658c4da19e930e16b3fd0,
     type: 3}
-  linePrefab: {fileID: 1541885436982081448, guid: 5fd138b876b747544a955f50d2331b77,
-    type: 3}
   dynamicTrigger: {fileID: 369699561148395926}
   slugInside: {fileID: 5464543288960027274}
   auto: 0
+  insertAmmo: 0
+  currentAmmo: 0
 --- !u!114 &7799122300475122259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1239,7 +1239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultSmoothTimeUp: 1.5
-  defaultSmoothTimeDown: 20
+  defaultSmoothTimeDown: 10
   leftHandAttach: {fileID: 0}
   rightHandAttach: {fileID: 0}
   leftWeaponAttach: {fileID: 235376477777034950}

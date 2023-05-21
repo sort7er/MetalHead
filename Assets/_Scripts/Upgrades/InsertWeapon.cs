@@ -19,13 +19,22 @@ public class InsertWeapon : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<CZ50>() != null && other.CompareTag("Gun"))
+        if(!inserted)
         {
-            weaponInserted = 1;
-            returnToHolster = other.GetComponent<ReturnToHolster>();
-            weaponsRigidbody = other.GetComponent<Rigidbody>();
-            
+            if (other.GetComponent<CZ50>() != null && other.CompareTag("Gun"))
+            {
+                weaponInserted = 1;
+                returnToHolster = other.GetComponent<ReturnToHolster>();
+                weaponsRigidbody = other.GetComponent<Rigidbody>();
+            }
+            else if (other.GetComponentInParent<Tac14>() != null && other.CompareTag("Gun"))
+            {
+                weaponInserted = 2;
+                returnToHolster = other.GetComponent<ReturnToHolster>();
+                weaponsRigidbody = other.GetComponent<Rigidbody>();
+            }
         }
+        
     }
     private void OnTriggerExit(Collider other)
     {
@@ -39,7 +48,7 @@ public class InsertWeapon : MonoBehaviour
 
     private void Update()
     {
-        if(weaponInserted == 1)
+        if(weaponInserted != 0)
         {
             if (!returnToHolster.isHolding && !returnToHolster.isHolstered && !inserted)
             {
@@ -54,11 +63,11 @@ public class InsertWeapon : MonoBehaviour
                 weaponsRigidbody.transform.rotation = upgradePosition.rotation;
                 InsertWeaponAnim(false);
             }
-            if(returnToHolster.isHolding && inserted)
+            if (returnToHolster.isHolding && inserted)
             {
                 EjectWeapon();
             }
-        }
+        }    
     }
 
     public void EjectWeapon()

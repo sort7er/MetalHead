@@ -163,6 +163,10 @@ public class UpgradeStation : MonoBehaviour
             {
                 titleText.text = "CZ50";
             }
+            if (activeUpgrade == 1)
+            {
+                titleText.text = "Tac14";
+            }
             titleType.StartTyping();
             GameManager.instance.IsUpgrading(true);
         }
