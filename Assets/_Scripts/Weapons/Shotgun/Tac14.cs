@@ -40,7 +40,7 @@ public class Tac14 : MonoBehaviour
     private ShotgunRecoil shotgunRecoil;
 
     private Vector3[] directionsToFire;
-    private bool cockingNeeded, projectilePenetration, left;
+    private bool cockingNeeded, projectilePenetration;
 
     private void Start()
     {
@@ -69,7 +69,6 @@ public class Tac14 : MonoBehaviour
         {
             if (GameManager.instance.CheckGameObject(gameObject) == 1)
             {
-                left = true;
                 if (rHand.GetOldestInteractableSelected() != null)
                 {
                     currentTransform = rHand.GetOldestInteractableSelected().transform;
@@ -81,7 +80,6 @@ public class Tac14 : MonoBehaviour
             }
             else if (GameManager.instance.CheckGameObject(gameObject) == 2)
             {
-                left = false;
                 if (lHand.GetOldestInteractableSelected() != null)
                 {
                     currentTransform = lHand.GetOldestInteractableSelected().transform;
@@ -348,13 +346,13 @@ public class Tac14 : MonoBehaviour
     //Upgrades
     public void UpgradeReload(int level)
     {
-        if(level < 6)
+        if(level <= UpgradeManager.instance.reloadEfficiencyCap)
         {
             insertAmmo = level;
         }
         else
         {
-            insertAmmo = 5;
+            insertAmmo = UpgradeManager.instance.reloadEfficiencyCap;
         }
     }
     public void UpgradeAuto(int level)
@@ -370,35 +368,35 @@ public class Tac14 : MonoBehaviour
     }
     public void UpgradeDamage(int level)
     {
-        if (level < 7)
+        if (level <= UpgradeManager.instance.damageCap)
         {
             damagePerPellet = 7 + level * 3;
         }
         else
         {
-            damagePerPellet = 7 + 6 * 3;
+            damagePerPellet = 7 + UpgradeManager.instance.damageCap * 3;
         }
     }
     public void UpgradeMagSize(int level)
     {
-        if(level < 9)
+        if(level <= UpgradeManager.instance.magSizeCap)
         {
             magSize = 4 + level * 2;
         }
         else
         {
-            magSize = 4 + 8 * 2;
+            magSize = 4 + UpgradeManager.instance.magSizeCap * 2;
         }
     }
     public void UpgradePellets(int level)
     {
-        if(level < 4)
+        if(level <= UpgradeManager.instance.pelletCap)
         {
             numberOfPellets = 6 + level * 3;
         }
         else
         {
-            numberOfPellets = 6 + 3 * 3;
+            numberOfPellets = 6 + UpgradeManager.instance.pelletCap * 3;
         }
     }
     public void UpgradePenetration(int level)

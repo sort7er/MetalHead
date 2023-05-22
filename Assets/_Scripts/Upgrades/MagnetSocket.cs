@@ -7,7 +7,7 @@ public class MagnetSocket : MonoBehaviour
 
     private Rigidbody rb;
     private ReturnToHolster returnToHolster;
-    public bool canDrop, inserted, returnToPlayer;
+    private bool canDrop, inserted, returnToPlayer;
 
     private void Start()
     {
@@ -32,6 +32,7 @@ public class MagnetSocket : MonoBehaviour
         {
             EjectMagnet();
             returnToPlayer = true;
+            GameManager.instance.IsUpgrading(false);
         }
         else if(returnToPlayer && returnToHolster.isHolding)
         {

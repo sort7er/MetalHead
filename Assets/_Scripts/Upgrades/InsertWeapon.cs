@@ -19,26 +19,25 @@ public class InsertWeapon : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(!inserted)
+        if (other.GetComponent<CZ50>() != null)
         {
-            if (other.GetComponent<CZ50>() != null && other.CompareTag("Gun"))
-            {
-                weaponInserted = 1;
-                returnToHolster = other.GetComponent<ReturnToHolster>();
-                weaponsRigidbody = other.GetComponent<Rigidbody>();
-            }
-            else if (other.GetComponentInParent<Tac14>() != null && other.CompareTag("Gun"))
-            {
-                weaponInserted = 2;
-                returnToHolster = other.GetComponent<ReturnToHolster>();
-                weaponsRigidbody = other.GetComponent<Rigidbody>();
-            }
+            Debug.Log("1");
+            weaponInserted = 1;
+            returnToHolster = other.GetComponent<ReturnToHolster>();
+            weaponsRigidbody = other.GetComponent<Rigidbody>();
         }
-        
+        else if (other.GetComponentInParent<Tac14>() != null)
+        {
+            Debug.Log("2");
+            weaponInserted = 2;
+            returnToHolster = other.GetComponentInParent<ReturnToHolster>();
+            weaponsRigidbody = returnToHolster.GetComponent<Rigidbody>();
+        }
+
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Gun"))
+        if (other.GetComponentInParent<Tac14>() != null || other.GetComponent<CZ50>() != null)
         {
             weaponInserted = 0;
             returnToHolster = null;

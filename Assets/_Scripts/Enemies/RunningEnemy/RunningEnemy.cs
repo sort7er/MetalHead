@@ -505,7 +505,6 @@ public class RunningEnemy : MonoBehaviour
     {
         if (!isAvoiding)
         {
-            Debug.Log(transform.name + " is  hitting");
             agent.avoidancePriority = 52;
             isAvoiding = true;
         }
@@ -514,7 +513,6 @@ public class RunningEnemy : MonoBehaviour
     {
         if (!isAvoiding)
         {
-            Debug.Log(transform.name + " is  reciving");
             agent.avoidancePriority = 53;
             isAvoiding = true;
         }

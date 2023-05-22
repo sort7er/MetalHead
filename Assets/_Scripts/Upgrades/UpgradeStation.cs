@@ -163,7 +163,7 @@ public class UpgradeStation : MonoBehaviour
             {
                 titleText.text = "CZ50";
             }
-            if (activeUpgrade == 1)
+            if (activeUpgrade == 2)
             {
                 titleText.text = "Tac14";
             }
