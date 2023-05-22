@@ -82,14 +82,12 @@ public class TwoHandGrab : XRGrabInteractable
 
     public void OnSecondHandGrab(XRBaseInteractor interactor)
     {
-        Debug.Log("Second hand grab");
         secondInteractor = interactor;
         interactorInitialRotation2 = interactor.transform.localRotation;
         attachInitialRotation2 = interactor.attachTransform.localRotation;
     }
     public void OnSecondHandRelease(XRBaseInteractor interactor)
     {
-        Debug.Log("Second hand release");
         secondInteractor = null;
         selectingInteractor.attachTransform.localRotation = attachInitialRotation;
         //initialRotationOffset = Quaternion.Inverse(GetTwoHandRotationType()) * selectingInteractor.attachTransform.rotation;

@@ -119,7 +119,14 @@ public class Tac14Upgrades : MonoBehaviour
         for (int i = 0; i < levels.Length; i++)
         {
             startLevels[i] = levels[i];
-            levelText[i].text = levels[i].ToString();
+            if (levels[i] >= UpgradeManager.instance.tac14Caps[i])
+            {
+                levelText[i].text = "Max";
+            }
+            else
+            {
+                levelText[i].text = levels[i].ToString();
+            }
         }
     }
     private void SetCost()

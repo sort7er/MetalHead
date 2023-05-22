@@ -17014,12 +17014,12 @@ MonoBehaviour:
   startMagSizeLevel: 1
   startProjectileLevel: 1
   startLaserLevel: 1
-  tac14StartReload: 10
-  tac14StartAuto: 10
-  tac14StartDamage: 10
-  tac14StartMagSize: 10
-  tac14StartPellets: 10
-  tac14StartPenetration: 10
+  tac14StartReload: 1
+  tac14StartAuto: 1
+  tac14StartDamage: 1
+  tac14StartMagSize: 1
+  tac14StartPellets: 1
+  tac14StartPenetration: 1
   tac14StartLevels: 
   tac14Caps: 
   reloadEfficiencyCap: 5
@@ -48186,7 +48186,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1600273068}
   m_LocalRotation: {x: -0, y: 0.1393093, z: -0, w: -0.9902489}
-  m_LocalPosition: {x: -3.71, y: 0.0000019073486, z: -11.44}
+  m_LocalPosition: {x: 15.42, y: 0.0000019073486, z: -45.83}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -69866,141 +69866,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1803142145}
     m_Modifications:
-    - target: {fileID: 57771559, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 57771559, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1087026736}
-    - target: {fileID: 57771559, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Minus
-      objectReference: {fileID: 0}
-    - target: {fileID: 57771559, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Tac14Upgrades, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 57771559, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 110555212, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 110555212, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1087026736}
-    - target: {fileID: 110555212, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Plus
-      objectReference: {fileID: 0}
-    - target: {fileID: 110555212, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Tac14Upgrades, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 110555212, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 448229676, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 448229676, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1087026736}
-    - target: {fileID: 448229676, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Plus
-      objectReference: {fileID: 0}
-    - target: {fileID: 448229676, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Tac14Upgrades, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 448229676, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+    - target: {fileID: 1087026734, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
+      propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 701095395, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 701095395, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1087026736}
-    - target: {fileID: 701095395, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Plus
-      objectReference: {fileID: 0}
-    - target: {fileID: 701095395, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Tac14Upgrades, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 701095395, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 737490912, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 737490912, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1087026736}
-    - target: {fileID: 737490912, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Minus
-      objectReference: {fileID: 0}
-    - target: {fileID: 737490912, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Tac14Upgrades, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 823680167, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 823680167, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1087026736}
-    - target: {fileID: 823680167, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Minus
-      objectReference: {fileID: 0}
-    - target: {fileID: 823680167, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Tac14Upgrades, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 823680167, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 928524721, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 928524721, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1087026736}
-    - target: {fileID: 928524721, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Plus
-      objectReference: {fileID: 0}
-    - target: {fileID: 928524721, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Tac14Upgrades, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 928524721, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1249490260, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
       propertyPath: m_Mesh
@@ -70008,7 +69876,7 @@ PrefabInstance:
       objectReference: {fileID: 676834580}
     - target: {fileID: 1249490260, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
       propertyPath: m_VersionIndex
-      value: 1771
+      value: 1774
       objectReference: {fileID: 0}
     - target: {fileID: 1249490260, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
       propertyPath: m_Tangents.Array.data[8].x
@@ -70056,108 +69924,12 @@ PrefabInstance:
       objectReference: {fileID: 1335301133}
     - target: {fileID: 1273719754, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
       propertyPath: m_VersionIndex
-      value: 1017
+      value: 1020
       objectReference: {fileID: 0}
     - target: {fileID: 1273719757, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1335301133}
-    - target: {fileID: 1303996167, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1303996167, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1087026736}
-    - target: {fileID: 1303996167, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Minus
-      objectReference: {fileID: 0}
-    - target: {fileID: 1303996167, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Tac14Upgrades, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1303996167, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1318864658, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1318864658, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1087026736}
-    - target: {fileID: 1318864658, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Minus
-      objectReference: {fileID: 0}
-    - target: {fileID: 1318864658, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Tac14Upgrades, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1318864658, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1522203580, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1522203580, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1087026736}
-    - target: {fileID: 1522203580, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Minus
-      objectReference: {fileID: 0}
-    - target: {fileID: 1522203580, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Tac14Upgrades, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1522203580, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2091187347, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2091187347, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1087026736}
-    - target: {fileID: 2091187347, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Plus
-      objectReference: {fileID: 0}
-    - target: {fileID: 2091187347, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Tac14Upgrades, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 2141945219, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2141945219, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1087026736}
-    - target: {fileID: 2141945219, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Plus
-      objectReference: {fileID: 0}
-    - target: {fileID: 2141945219, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Tac14Upgrades, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 2141945219, guid: 6a7f9a4c9e249924abf549628bb3f80b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 3619691199255732905, guid: 6a7f9a4c9e249924abf549628bb3f80b,
         type: 3}
       propertyPath: onPressed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -70176,7 +69948,7 @@ PrefabInstance:
     - target: {fileID: 5859509874283265943, guid: 6a7f9a4c9e249924abf549628bb3f80b,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 9946
+      value: 9949
       objectReference: {fileID: 0}
     - target: {fileID: 5859509874283265946, guid: 6a7f9a4c9e249924abf549628bb3f80b,
         type: 3}
@@ -70266,7 +70038,12 @@ PrefabInstance:
     - target: {fileID: 5859509874705622477, guid: 6a7f9a4c9e249924abf549628bb3f80b,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 8047
+      value: 8050
+      objectReference: {fileID: 0}
+    - target: {fileID: 5859509874749820703, guid: 6a7f9a4c9e249924abf549628bb3f80b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5859509875545189098, guid: 6a7f9a4c9e249924abf549628bb3f80b,
         type: 3}
@@ -70276,7 +70053,7 @@ PrefabInstance:
     - target: {fileID: 5859509875545189098, guid: 6a7f9a4c9e249924abf549628bb3f80b,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 252
+      value: 255
       objectReference: {fileID: 0}
     - target: {fileID: 5859509875589540899, guid: 6a7f9a4c9e249924abf549628bb3f80b,
         type: 3}
@@ -70291,7 +70068,7 @@ PrefabInstance:
     - target: {fileID: 5859509875589540902, guid: 6a7f9a4c9e249924abf549628bb3f80b,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 2811
+      value: 2814
       objectReference: {fileID: 0}
     - target: {fileID: 5859509875589540925, guid: 6a7f9a4c9e249924abf549628bb3f80b,
         type: 3}
@@ -70331,7 +70108,7 @@ PrefabInstance:
     - target: {fileID: 5859509876154047890, guid: 6a7f9a4c9e249924abf549628bb3f80b,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 8614
+      value: 8617
       objectReference: {fileID: 0}
     - target: {fileID: 5859509876154047894, guid: 6a7f9a4c9e249924abf549628bb3f80b,
         type: 3}
