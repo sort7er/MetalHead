@@ -21,6 +21,7 @@ public class UpgradeManager : MonoBehaviour
     public int tac14StartPenetration;
 
     [HideInInspector] public int[] tac14StartLevels;
+    [HideInInspector] public int[] tac14Caps;
 
 
     [Header("Tac14 caps")]
@@ -100,6 +101,14 @@ public class UpgradeManager : MonoBehaviour
         tac14StartLevels[3] = tac14StartMagSize;
         tac14StartLevels[4] = tac14StartPellets;
         tac14StartLevels[5] = tac14StartPenetration;
+
+        tac14Caps= new int[6];
+        tac14Caps[0] = reloadEfficiencyCap;
+        tac14Caps[1] = autoCap;
+        tac14Caps[2] = damageCap;
+        tac14Caps[3] = magSizeCap;
+        tac14Caps[4] = pelletCap;
+        tac14Caps[5] = penetrationCap;
 
     }
 

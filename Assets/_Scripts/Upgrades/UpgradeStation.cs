@@ -12,6 +12,7 @@ public class UpgradeStation : MonoBehaviour
     public GameObject nut, backButton, executeButton, loadingBar;
     public GameObject[] gun;
     public CZ50Upgrades cz50Upgrades;
+    public Tac14Upgrades tac14Upgrades;
 
     [HideInInspector] public int currencyOnScreen, minusOnScreen;
     [HideInInspector] public bool isOn;
@@ -220,14 +221,22 @@ public class UpgradeStation : MonoBehaviour
             if (activeUpgrade == 1)
             {
                 cz50Upgrades.Execute();
-                Upgrading();
             }
+            else if(activeUpgrade == 2)
+            {
+                tac14Upgrades.Execute();
+            }
+            Upgrading();
         }
         else
         {
             if (activeUpgrade == 1)
             {
                 cz50Upgrades.Abort();
+            }
+            else if(activeUpgrade == 2)
+            {
+                tac14Upgrades.Abort();
             }
             UpgradeDone();
         }
