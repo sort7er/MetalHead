@@ -16,7 +16,7 @@ public class CloseToEnemyCheck : MonoBehaviour
     {
         if(other.tag == "Enemy" && other.GetComponent<SoundForEnemy>() != null)
         {
-            if (other.transform.parent != transform.parent && !cannotCollide)
+            if (other.transform.parent != transform.parent && !cannotCollide && other.GetComponentInParent<RunningEnemy>() != null)
             {
                 currentCollidingEnemy = other.GetComponentInParent<RunningEnemy>();
                 AIManager.instance.Avoidance(runningEnemy, currentCollidingEnemy);
