@@ -63349,11 +63349,26 @@ MonoBehaviour:
   startMagSizeLevel: 1
   startProjectileLevel: 1
   startLaserLevel: 1
+  tac14StartReload: 0
+  tac14StartAuto: 0
+  tac14StartDamage: 0
+  tac14StartMagSize: 0
+  tac14StartPellets: 0
+  tac14StartPenetration: 0
+  tac14StartLevels: 
+  tac14Caps: 
+  reloadEfficiencyCap: 0
+  autoCap: 0
+  damageCap: 0
+  magSizeCap: 0
+  pelletCap: 0
+  penetrationCap: 0
   magPos: {fileID: 1548305489}
   cz50Recoil: {fileID: 4417837202390009998}
   cz50: {fileID: 8480215061100208537}
-  tac14StartRecoil: 0
+  tac14: {fileID: 0}
   cZ50Upgrades: {fileID: 0}
+  tac14Upgrades: {fileID: 0}
   magSize: 10
 --- !u!114 &1678176671
 MonoBehaviour:
@@ -74098,6 +74113,7 @@ MonoBehaviour:
   slugPrefab: {fileID: 1154020825339679935, guid: b88d851069138714d8ffe965b6fc153c,
     type: 3}
   ammoText: {fileID: 678098567}
+  tac14: {fileID: 0}
 --- !u!54 &2006005639
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -79828,7 +79844,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smoothTimeUp: 1.5
-  smoothTimeDown: 10
+  smoothTimeDown: 5
   leftHandAttach: {fileID: 1330933275}
   rightHandAttach: {fileID: 1926809990}
 --- !u!33 &4521037439766662027

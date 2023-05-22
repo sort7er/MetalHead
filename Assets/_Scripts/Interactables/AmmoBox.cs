@@ -1,13 +1,15 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using static RunningEnemy;
 
 public class AmmoBox : MonoBehaviour
 {
+    public TypeOfAmmo ammoType;
     public float startSmoothTime;
-    public GameObject box;
-    public int numberOfBulletsToAdd = 10;
+    public int numberOfAmmoToAdd = 10;
 
     private float smoothTime;
+    private GameObject box;
     private Vector3 targetPos;
     private AudioSource ammoBoxSource;
     private BoxCollider boxCollider;
@@ -15,8 +17,11 @@ public class AmmoBox : MonoBehaviour
     private XRGrabInteractable interactable;
     private bool left, pickedUp, grabbed;
 
+    public enum TypeOfAmmo { Pistol, Shotgun}
+
     private void Start()
     {
+        box = transform.GetChild(0).gameObject;
         smoothTime = startSmoothTime;
         rb = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
@@ -59,10 +64,23 @@ public class AmmoBox : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, targetPos, smoothTime * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetPos) <= 0.05f && !pickedUp)
             {
-                EffectManager.instance.SpawnMessage("+ " + numberOfBulletsToAdd.ToString() + " bullets", 1);
+                
                 ammoBoxSource.Play();
                 interactable.enabled = false;
-                GameManager.instance.ammoBag.AddAmmo(numberOfBulletsToAdd);
+                
+
+                switch (ammoType)
+                {
+                    case TypeOfAmmo.Pistol:
+                        EffectManager.instance.SpawnMessage("+ " + numberOfAmmoToAdd.ToString() + " bullets", 1);
+                        GameManager.instance.ammoBag.AddAmmo(numberOfAmmoToAdd);
+                        break;
+                    case TypeOfAmmo.Shotgun:
+                        EffectManager.instance.SpawnMessage("+ " + numberOfAmmoToAdd.ToString() + " slugs", 1);
+                        GameManager.instance.ammoBagShotgun.AddAmmo(numberOfAmmoToAdd);
+                        break;
+                }
+
                 box.SetActive(false);
                 boxCollider.enabled = false;
                 pickedUp = true;

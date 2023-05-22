@@ -81,7 +81,7 @@ public class Tac14Upgrades : MonoBehaviour
         {
             upgradeStation.RemovePurchase(upgradeCost[number]);
             levels[number]--;
-            levelText[number].text += levels[number].ToString();
+            levelText[number].text = levels[number].ToString();
             if (levels[number] == startLevels[number])
             {
                 outlines[number].SetActive(false);

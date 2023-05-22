@@ -45,9 +45,12 @@ public class AIManager : MonoBehaviour
 
     public void Avoidance(RunningEnemy hitting, RunningEnemy colliding)
     {
-        if (hitting.currentState == hitting.idleState && colliding.currentState == colliding.idleState)
+        if (colliding.currentState == colliding.idleState)
         {
-            hitting.HittingAvoidance();
+            if(hitting.currentState == hitting.idleState)
+            {
+                hitting.HittingAvoidance();
+            }
             colliding.RecivingAvoidance();
         }
     }
