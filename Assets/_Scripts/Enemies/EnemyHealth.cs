@@ -73,7 +73,7 @@ public class EnemyHealth : MonoBehaviour
 
             TakeStun(stun, bodyPart);
             health -= damage;
-            if (health < 0)
+            if (health <= 0)
             {
                 Die();
             }

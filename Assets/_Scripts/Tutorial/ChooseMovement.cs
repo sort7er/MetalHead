@@ -1,9 +1,11 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ChooseMovement : MonoBehaviour
 {
-    public TextMeshProUGUI movementText;
+    public TextMeshProUGUI teleportText, continuousText;
+    public Image teleportImage, continuousImage;
     public Animator leftControllerSide;
     public Transform character, targetPos;
     public GameObject arm;
@@ -72,22 +74,45 @@ public class ChooseMovement : MonoBehaviour
         }
         LocomotionManager.instance.SwitchLocomotion();
     }
-    private void Display(bool isSnap)
+    public void Teleport()
     {
-        if (isSnap)
+        if (!teleport)
         {
-            if (movementText != null)
+            Display(true);
+            LocomotionManager.instance.SetLocomotion(1);
+        }
+    }
+    public void Continuous()
+    {
+        if (teleport)
+        {
+            Display(false);
+            LocomotionManager.instance.SetLocomotion(0);
+        }
+    }
+
+    private void Display(bool isTeleport)
+    {
+        if (isTeleport)
+        {
+            if (teleportText != null)
             {
-                movementText.text = "Teleport";
+                teleportText.alpha = 1f;
+                continuousText.alpha = 0.2f;
+                continuousImage.color = Color.gray;
+                teleportImage.color = Color.white;
             }
             teleport = true;
             changed = true;
         }
         else
         {
-            if (movementText != null)
+            if (teleportText != null)
             {
-                movementText.text = "Continuous movement";
+                teleportText.alpha = 0.2f;
+                continuousText.alpha = 1;
+                continuousImage.color = Color.white;
+                teleportImage.color = Color.gray;
             }
             teleport = false;
             changed = true;

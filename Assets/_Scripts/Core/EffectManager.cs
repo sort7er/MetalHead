@@ -21,6 +21,7 @@ public class EffectManager : MonoBehaviour
     public GameObject[] pickUpEffect;
     public GameObject pickUpRingEffect;
     public GameObject shotgunLines;
+    public GameObject bombExplotion;
 
     [Header("SoundEffects")]
     public GameObject keyPickup;
@@ -220,5 +221,11 @@ public class EffectManager : MonoBehaviour
         line.transform.LookAt(position + direction);
         line.transform.parent = ParentManager.instance.effects;
         Destroy(line, 1f);
+    }
+    public void BombExplotion(Vector3 position)
+    {
+        GameObject effect = Instantiate(bombExplotion, position, Quaternion.identity);
+        effect.transform.parent = ParentManager.instance.effects;
+        Destroy(effect, 2);
     }
 }
