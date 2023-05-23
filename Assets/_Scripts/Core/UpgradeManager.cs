@@ -151,11 +151,15 @@ public class UpgradeManager : MonoBehaviour
     }
     public void UpgradeTac14(int reloadLevel, int autoLevel, int damage, int magSize, int pellets, int projectileLevel)
     {
-        tac14.UpgradeReload(reloadLevel);
-        tac14.UpgradeAuto(autoLevel);
-        tac14.UpgradeDamage(damage);
-        tac14.UpgradeMagSize(magSize);
-        tac14.UpgradePellets(pellets);
-        tac14.UpgradePenetration(projectileLevel);
+        if(tac14 != null)
+        {
+            tac14.UpgradeReload(reloadLevel);
+            tac14.UpgradeAuto(autoLevel);
+            tac14.UpgradeDamage(damage);
+            tac14.UpgradeMagSize(magSize);
+            tac14.UpgradePellets(pellets);
+            tac14.UpgradePenetration(projectileLevel);
+        }
+
     }
 }

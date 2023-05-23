@@ -1,9 +1,11 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ChooseTurning : MonoBehaviour
 {
-    public TextMeshProUGUI turnText;
+    public TextMeshProUGUI snapText, continousText;
+    public Image snapImage, continousImage;
     public Transform characterPivot;
     public Animator rightControllerFront;
 
@@ -49,34 +51,46 @@ public class ChooseTurning : MonoBehaviour
 
     }
 
-    public void SwitchTurning()
+    public void Snap()
     {
-        if (LocomotionManager.instance.currentTurnType == 0)
-        {
-            Display(false);
-        }
-        else
+        if (!snap)
         {
             Display(true);
+            LocomotionManager.instance.SetTurning(1);
         }
-        LocomotionManager.instance.SwitchTurning();
+        
+    }
+    public void Continous()
+    {
+        if (snap)
+        {
+            Display(false);
+            LocomotionManager.instance.SetTurning(0);
+        }
+        
     }
     private void Display(bool isSnap)
     {
         if (isSnap)
         {
-            if(turnText!= null)
+            if(continousText != null)
             {
-                turnText.text = "Snap turning";
+                continousText.alpha = 0.2f;
+                snapText.alpha = 1;
+                snapImage.color = Color.white;
+                continousImage.color = Color.gray;
             }
             snap = true;
             changed = true;
         }
         else
         {
-            if (turnText != null)
+            if (continousText != null)
             {
-                turnText.text = "Continuous turning";
+                continousText.alpha = 1;
+                snapText.alpha = 0.2f;
+                snapImage.color = Color.gray;
+                continousImage.color = Color.white;
             }
             snap = false;
             changed = true;

@@ -1,9 +1,11 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ChooseQuickTurn : MonoBehaviour
 {
-    public TextMeshProUGUI turnText;
+    public TextMeshProUGUI enabledText, disabledText;
+    public Image enabledImage, disabledImage;
     public Transform characterPivot;
     public Animator rightControllerFront;
 
@@ -22,34 +24,45 @@ public class ChooseQuickTurn : MonoBehaviour
             Display(true);
         }
     }
-
-    public void SwitchQuickturn()
+    public void TurnEnabled()
     {
-        if (LocomotionManager.instance.currentQuickTurnType == 0)
-        {
-            Display(false);
-        }
-        else
+        if (!quickTurn)
         {
             Display(true);
+            LocomotionManager.instance.SetQuickTurnType(1);
         }
-        LocomotionManager.instance.SetQuickTurn();
+
     }
+    public void TurnDisabled()
+    {
+        if (quickTurn)
+        {
+            Display(false);
+            LocomotionManager.instance.SetQuickTurnType(0);
+        }
+    }
+
     private void Display(bool enabled)
     {
         if (enabled)
         {
-            if(turnText!= null)
+            if (enabledText != null)
             {
-                turnText.text = "Enabled";
+                enabledText.alpha = 1f;
+                disabledText.alpha = 0.2f;
+                disabledImage.color = Color.gray;
+                enabledImage.color = Color.white;
             }
             quickTurn = true;
         }
         else
         {
-            if (turnText != null)
+            if (enabledText != null)
             {
-                turnText.text = "Disabled";
+                enabledText.alpha = 0.2f;
+                disabledText.alpha = 1;
+                disabledImage.color = Color.white;
+                enabledImage.color = Color.gray;
             }
             quickTurn = false;
         }
@@ -63,10 +76,10 @@ public class ChooseQuickTurn : MonoBehaviour
         {
             rightControllerFront.Play("JoystickBack");
         }
-        Invoke(nameof(StartSnapAnim), 1.75f);
+        Invoke(nameof(StartSnapAnim), 1.75f * 0.5f);
         if(quickTurn)
         {
-            Invoke(nameof(ActualSnap), 0.25f);
+            Invoke(nameof(ActualSnap), 0.125f);
         }
     }
     private void ActualSnap()

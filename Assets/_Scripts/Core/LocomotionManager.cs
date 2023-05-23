@@ -136,6 +136,12 @@ public class LocomotionManager : MonoBehaviour
         PlayerPrefs.SetInt("MoveType", currentMoveType);
     }
 
+    public void SetLocomotion(int movetype)
+    {
+        currentMoveType = movetype;
+        SwitchLocomotion();
+    }
+
     private void SetCountinuous(bool value)
     {
         SetContinuousMoveInputReference();
@@ -194,6 +200,13 @@ public class LocomotionManager : MonoBehaviour
         }
         PlayerPrefs.SetInt("TurnType", currentTurnType);
     }
+
+    public void SetTurning(int currentType)
+    {
+        currentTurnType = currentType;
+        SwitchTurning();
+    }
+
     private void SetCountinuousTurn(bool value)
     {
         SetContinousTurnInputReference();
@@ -251,6 +264,11 @@ public class LocomotionManager : MonoBehaviour
             snapTurnProvider.enableTurnAround = false;
         }
         PlayerPrefs.SetInt("QuickTurnType", currentQuickTurnType);
+    }
+    public void SetQuickTurnType(int type)
+    {
+        currentQuickTurnType = type;
+        SetQuickTurn();
     }
     private void OnSnapTurn(InputAction.CallbackContext context)
     {
