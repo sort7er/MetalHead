@@ -27,7 +27,37 @@ public class EnemyShootingState : EnemyBaseAttack
         {
             if (hit.transform.tag == "Player")
             {
-                lineOfSightToPlayer = true;
+                RaycastHit hit2;
+                if (Physics.Raycast(enemy.leftMuzzle.position, (GameManager.instance.XROrigin.transform.position - enemy.leftMuzzle.position), out hit2, enemy.rangeBeforeAttack + 2f, runningEnemy.layersLookForPlayer))
+                {
+                    if (hit2.transform.tag == "Player")
+                    {
+                        RaycastHit hit3;
+                        if (Physics.Raycast(enemy.rightMuzzle.position, (GameManager.instance.XROrigin.transform.position - enemy.rightMuzzle.position), out hit3, enemy.rangeBeforeAttack + 2f, runningEnemy.layersLookForPlayer))
+                        {
+                            if (hit3.transform.tag == "Player")
+                            {
+                                lineOfSightToPlayer = true;
+                            }
+                            else
+                            {
+                                lineOfSightToPlayer = false;
+                            }
+                        }
+                        else
+                        {
+                            lineOfSightToPlayer = false;
+                        }
+                    }
+                    else
+                    {
+                        lineOfSightToPlayer = false;
+                    }
+                }
+                else
+                {
+                    lineOfSightToPlayer = false;
+                }
             }
             else
             {
@@ -44,10 +74,11 @@ public class EnemyShootingState : EnemyBaseAttack
         }
         else if (!attackStarted && !cannotAttack && fromRunTransition)
         {
-            if (AIManager.instance.CheckForAttack())
-            {
-                Attack();
-            }
+            //if (AIManager.instance.CheckForAttack())
+            //{
+                
+            //}
+            Attack();
         }
         enemy.rig.SetTarget(GameManager.instance.cam.transform.position);
 
@@ -112,8 +143,8 @@ public class EnemyShootingState : EnemyBaseAttack
         cannotAttack = true;
         waitOneFrame = false;
         waitTwoFrames = false;
-        int randomNumber = Random.Range(1, 3);
-        runningEnemy.ChangeAnimationState("Attack" + randomNumber.ToString());
+        //int randomNumber = Random.Range(1, 3);
+        runningEnemy.ChangeAnimationState("Shooting");
     }
     public void AttackDone()
     {

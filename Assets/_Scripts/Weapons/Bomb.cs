@@ -92,11 +92,11 @@ public class Bomb : MonoBehaviour
             {
                 int damage;
                 
-                if (Vector3.Distance(colliders[i].transform.position, transform.position) < explotionRadius * 0.33f)
+                if (Vector3.Distance(colliders[i].transform.position, transform.position) < explotionRadius * 0.17f)
                 {
                     damage = damageEnemy[0];
                 }
-                else if (Vector3.Distance(colliders[i].transform.position, transform.position) < explotionRadius * 0.66f)
+                else if (Vector3.Distance(colliders[i].transform.position, transform.position) < explotionRadius * 0.5f)
                 {
                     damage = damageEnemy[1];
                 }

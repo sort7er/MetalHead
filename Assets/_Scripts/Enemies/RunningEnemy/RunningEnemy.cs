@@ -85,6 +85,7 @@ public class RunningEnemy : MonoBehaviour
     public RigConstraints rig;
     public Transform enemyModel;
     public Transform headTrans;
+    public Transform leftMuzzle, rightMuzzle;
     public Rigidbody[] limbs;
     public Collider[] collidersToDisable;
     public MeshRenderer[] glowingParts;
@@ -118,7 +119,7 @@ public class RunningEnemy : MonoBehaviour
     [HideInInspector] public float turnSmoothTime;
     [HideInInspector] public float FOV;
 
-    public EnemyRunState runState = new EnemyRunState();
+    public EnemyBaseState runState;
     public EnemyStunnedState stunnedState = new EnemyStunnedState();
     public EnemyDieState dieState = new EnemyDieState();
     public EnemyBaseAttack attackState;
@@ -145,9 +146,11 @@ public class RunningEnemy : MonoBehaviour
         {
             case TypeOfEnemy.Melee:
                 attackState = new EnemyMeleeState();
+                runState = new EnemyRunState();
                 break;
             case TypeOfEnemy.Shooting:
                 attackState = new EnemyShootingState();
+                runState = new EnemyRunShootingState();
                 break;
         }
 
