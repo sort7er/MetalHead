@@ -1,20 +1,37 @@
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class Bomb : MonoBehaviour
 {
+    [Header("Values")]
     public float fuseTime;
     public float explotionRadius;
-    public LayerMask thingsToHit;
     public int[] damageEnemy;
     public int[] damagePlayer;
 
+    [Header("References")]
+    public LayerMask thingsToHit;
+    public Transform leftAttach;
+    public Transform rightAttach;
+    public AudioClip[] bombTicks;
+    public MeshRenderer bombGlow;
+
+    private AudioSource bombSource;
+    private XRGrabInteractable xrGrabInteractable;
     private Collider[] colliders = new Collider[100];
-    private float timer;
-    private bool damageToPlayerGiven;
+    private float timer, currentInterval;
+    private bool damageToPlayerGiven, tick;
+    private float startInterval;
 
     private void Start()
     {
+        startInterval = 0.8f;
+
+        bombSource = GetComponent<AudioSource>();
+        xrGrabInteractable = GetComponent<XRGrabInteractable>();
         timer = fuseTime;
+        currentInterval = startInterval;
+        PlaySound();
     }
 
     private void Update()
@@ -22,10 +39,46 @@ public class Bomb : MonoBehaviour
         if(timer > 0)
         {
             timer -= Time.deltaTime;
+            currentInterval -= Time.deltaTime / (fuseTime * 1.3f);
         }
         else
         {
             Explode();
+        }
+    }
+
+    private void PlaySound()
+    {
+        if (!tick)
+        {
+            bombSource.clip = bombTicks[1];
+            tick = true;
+        }
+        else
+        {
+            bombSource.clip = bombTicks[0];
+            tick = false;
+        }
+
+        bombGlow.material.EnableKeyword("_EMISSION");
+        bombSource.Play();
+        Invoke(nameof(TurnOffGlow), currentInterval * 0.2f);
+        Invoke(nameof(PlaySound), currentInterval);
+    }
+    private void TurnOffGlow()
+    {
+        bombGlow.material.DisableKeyword("_EMISSION");
+    }
+
+    public void GrabBomb()
+    {
+        if (GameManager.instance.CheckGameObject(gameObject) == 1)
+        {
+            xrGrabInteractable.attachTransform = leftAttach;
+        }
+        if (GameManager.instance.CheckGameObject(gameObject) == 2)
+        {
+            xrGrabInteractable.attachTransform = rightAttach;
         }
     }
 
@@ -52,7 +105,6 @@ public class Bomb : MonoBehaviour
                     damage = damageEnemy[2];
                 }
                 colliders[i].transform.parent.GetComponent<EnemyHealth>().TakeDamage(damage, damage, colliders[i].GetComponent<Rigidbody>(), (colliders[i].transform.position - transform.position) * damage * 35, 6);
-                Debug.Log(damage + " given to " + colliders[i].transform.parent.name);
             }
             else if( colliders[i].GetComponent<PlayerHealth>() != null && !damageToPlayerGiven)
             {
@@ -69,14 +121,7 @@ public class Bomb : MonoBehaviour
                     damage = damagePlayer[1];
                     colliders[i].GetComponent<PlayerHealth>().TakeDamage(damage);
                     damageToPlayerGiven = true;
-                }
-                else
-                {
-                    damage = damagePlayer[2];
-                }
-
-                
-                
+                }           
             }
         }
         EffectManager.instance.BombExplotion(transform.position);
