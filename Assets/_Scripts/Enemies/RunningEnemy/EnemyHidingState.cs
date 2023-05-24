@@ -30,7 +30,7 @@ public class EnemyHidingState : EnemyBaseState
         inCover = false;
         NavMeshHit myNavHit;
         Hide(GameManager.instance.XROrigin.transform);
-        if (NavMesh.SamplePosition(runningEnemy.transform.position, out myNavHit, 1, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(runningEnemy.transform.position, out myNavHit, 1, agent.areaMask))
         {
             runningEnemy.transform.position = myNavHit.position;
         }
@@ -44,8 +44,17 @@ public class EnemyHidingState : EnemyBaseState
         {
             if ((destination - enemy.transform.position).magnitude < 0.2f)
             {
-                InCover();
-                enemy.DelayedCallback(enemy.coverState, "OutOfCover", Random.Range(enemy.minCoverDuration, enemy.maxCoverDuration));
+
+                if(runningEnemy.hiding)
+                {
+                    InCover();
+                    enemy.DelayedCallback(enemy.coverState, "OutOfCover", Random.Range(enemy.minCoverDuration, enemy.maxCoverDuration));
+                }
+                else
+                {
+                    runningEnemy.SwitchState(runningEnemy.runState);
+                }
+                
             }
             else
             {

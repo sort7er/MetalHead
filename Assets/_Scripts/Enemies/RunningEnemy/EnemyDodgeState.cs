@@ -6,7 +6,7 @@ public class EnemyDodgeState : EnemyBaseState
     private RunningEnemy runningEnemy;
     private NavMeshAgent agent;
     private Animator enemyAnim;
-    private Vector3 dodgeDestination;
+    private Vector3 dodgeDestination, leftPos, rightPos;
     private float dodgeSpeed;
     private bool canLeft, canRight;
     private int direction;
@@ -23,6 +23,7 @@ public class EnemyDodgeState : EnemyBaseState
         canLeft = false;
         canRight = false;
         direction = 0;
+
         NavMeshHit myNavHit;
         if (NavMesh.SamplePosition(runningEnemy.transform.position, out myNavHit, 1, NavMesh.AllAreas))
         {
@@ -44,14 +45,17 @@ public class EnemyDodgeState : EnemyBaseState
     private void Dodge()
     {
         NavMeshHit navHitRight;
-        if (NavMesh.SamplePosition(runningEnemy.transform.position + runningEnemy.transform.right, out navHitRight, 0.5f, NavMesh.AllAreas) && !Physics.Raycast(runningEnemy.transform.position + new Vector3(0, 0.5f, 0), runningEnemy.transform.right, 1, runningEnemy.hidebleLayer))
+        if (NavMesh.SamplePosition(runningEnemy.transform.position + runningEnemy.transform.right, out navHitRight, 0.5f, agent.areaMask) && !Physics.Raycast(runningEnemy.transform.position + new Vector3(0, 0.5f, 0), runningEnemy.transform.right, 1, runningEnemy.hidebleLayer))
         {
             canRight = true;
+            rightPos = navHitRight.position;
         }
         NavMeshHit navHitLeft;
-        if (NavMesh.SamplePosition(runningEnemy.transform.position - runningEnemy.transform.right, out navHitLeft, 0.5f, NavMesh.AllAreas) && !Physics.Raycast(runningEnemy.transform.position + new Vector3(0, 0.5f, 0), -runningEnemy.transform.right, 1, runningEnemy.hidebleLayer))
+        if (NavMesh.SamplePosition(runningEnemy.transform.position - runningEnemy.transform.right, out navHitLeft, 0.5f, agent.areaMask) && !Physics.Raycast(runningEnemy.transform.position + new Vector3(0, 0.5f, 0), -runningEnemy.transform.right, 1, runningEnemy.hidebleLayer))
         {
+
             canLeft = true;
+            leftPos = navHitLeft.position;
         }
         if (!canLeft && !canRight)
         {
@@ -75,30 +79,27 @@ public class EnemyDodgeState : EnemyBaseState
             if (direction == 0)
             {
                 runningEnemy.ChangeAnimationState("DodgeRight");
-                dodgeDestination = runningEnemy.transform.position + runningEnemy.transform.right;
+                dodgeDestination = leftPos;
 
             }
             else if (direction == 1)
             {
                 runningEnemy.ChangeAnimationState("DodgeLeft");
-                dodgeDestination = runningEnemy.transform.position - runningEnemy.transform.right;
+                dodgeDestination = rightPos;
             }
             agent.speed = dodgeSpeed;
             runningEnemy.agent.SetDestination(dodgeDestination);
-            Debug.Log("1");
             runningEnemy.DelayedCallback(runningEnemy.dodgeState, "StartDodge", 0.5f);
         }
     }
     public void StartDodge()
     {
-        Debug.Log("2");
         agent.ResetPath();
         runningEnemy.DelayedCallback(runningEnemy.dodgeState, "HidingDone", 0.5f);
         enemyAnim.SetBool("IsMoving", false);
     }
     public void HidingDone()
     {
-        Debug.Log("3");
         runningEnemy.IsHiding(false);
         if (runningEnemy.playerInSight)
         {

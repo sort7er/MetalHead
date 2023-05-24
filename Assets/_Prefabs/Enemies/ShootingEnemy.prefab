@@ -555,7 +555,7 @@ GameObject:
   - component: {fileID: 1371893396}
   - component: {fileID: 1371893395}
   m_Layer: 11
-  m_Name: MuzzleGlow
+  m_Name: HandMuzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1009,7 +1009,7 @@ GameObject:
   - component: {fileID: 1612250359}
   - component: {fileID: 1612250358}
   m_Layer: 11
-  m_Name: MuzzleGlow
+  m_Name: HandMuzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1080,6 +1080,68 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &2011672607
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2011672608}
+  m_Layer: 11
+  m_Name: RaycastPointRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2011672608
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011672607}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.1253, y: 0.1526, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3991310801479477271}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2026729278
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2026729279}
+  m_Layer: 11
+  m_Name: RaycastPointLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2026729279
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026729278}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.1253, y: 0.1526, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3991310801479477271}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &243418658053445760
 GameObject:
   m_ObjectHideFlags: 0
@@ -1464,6 +1526,7 @@ MonoBehaviour:
   runSpeed: 1.5
   runSightRange: 30
   rangeBeforeAttack: 20
+  tooCloseDistance: 3
   timeBeforeLost: 3
   timeBetweenScan: 0.25
   scanRadius: 3
@@ -1482,15 +1545,15 @@ MonoBehaviour:
   kickForce: 200
   timeBetweenKicks: 2
   barrelDistance: 0.5
-  minCoverDuration: 3
-  maxCoverDuration: 6
-  coverSpeed: 5
+  minCoverDuration: 1
+  maxCoverDuration: 2
+  coverSpeed: 4
   dodgeSpeed: 30
-  sightRangeForCover: 2
-  checkCoverRadius: 1.96
-  minPlayerDistance: 1
+  sightRangeForCover: 3
+  checkCoverRadius: 20
+  minPlayerDistance: 5
   defaultTimeCoverCheck: 0.25
-  hideSensitivity: -0.6
+  hideSensitivity: -0.491
   hidebleLayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -1498,8 +1561,8 @@ MonoBehaviour:
   rig: {fileID: 7362675144006301117}
   enemyModel: {fileID: 197290721420227443}
   headTrans: {fileID: 5343471531070197036}
-  leftMuzzle: {fileID: 1539768065}
-  rightMuzzle: {fileID: 997975480}
+  leftSholder: {fileID: 2026729279}
+  rightSholder: {fileID: 2011672608}
   limbs:
   - {fileID: 375579568101244123}
   - {fileID: 375579568328591188}
@@ -6450,6 +6513,8 @@ Transform:
   - {fileID: 1195910454129803149}
   - {fileID: 450095265731379897}
   - {fileID: 4048397810615320528}
+  - {fileID: 2026729279}
+  - {fileID: 2011672608}
   m_Father: {fileID: 2465636154649286322}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

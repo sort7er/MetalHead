@@ -496,7 +496,7 @@ public class RunningEnemy : MonoBehaviour
             tempPos = transform.position;
         }
         NavMeshHit myNavHit;
-        if (NavMesh.SamplePosition(new Vector3(tempPos.x, tempPos.y, tempPos.z), out myNavHit, 1, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(new Vector3(tempPos.x, tempPos.y, tempPos.z), out myNavHit, 1, agent.areaMask))
         {
             knockbackPos = myNavHit.position;
         }

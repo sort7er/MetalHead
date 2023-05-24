@@ -1266,7 +1266,7 @@ MonoBehaviour:
   startHealth: 100
   startPosture: 50
   postureRegenerationSpeed: 2.5
-  timeBeforeHide: 4
+  timeBeforeHide: 3
   hitConstraints: {fileID: 823870823}
 --- !u!114 &7141347437139885933
 MonoBehaviour:
@@ -1287,6 +1287,7 @@ MonoBehaviour:
   layersToCheck:
     serializedVersion: 2
     m_Bits: 5623
+  enemyType: 0
   knockBackAmount: 0.7
   knockBackSpeed: 8
   idleSpeed: 1
@@ -1312,6 +1313,7 @@ MonoBehaviour:
   runSpeed: 1.5
   runSightRange: 12
   rangeBeforeAttack: 1.2
+  tooCloseDistance: 0
   timeBeforeLost: 3
   timeBetweenScan: 0.25
   scanRadius: 3
@@ -1335,10 +1337,10 @@ MonoBehaviour:
   coverSpeed: 5
   dodgeSpeed: 30
   sightRangeForCover: 2
-  checkCoverRadius: 1.96
+  checkCoverRadius: 3
   minPlayerDistance: 1
   defaultTimeCoverCheck: 0.25
-  hideSensitivity: -0.6
+  hideSensitivity: -0.4
   hidebleLayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -1346,6 +1348,8 @@ MonoBehaviour:
   rig: {fileID: 1186588956}
   enemyModel: {fileID: 7246732520624336850}
   headTrans: {fileID: 3173534719420928397}
+  leftSholder: {fileID: 0}
+  rightSholder: {fileID: 0}
   limbs:
   - {fileID: 7141347436064120954}
   - {fileID: 7141347436440640501}
