@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 1023870795637526696}
   - component: {fileID: 1023870795637526697}
   - component: {fileID: 1023870795637526743}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ Transform:
   - {fileID: 1023870795799235143}
   - {fileID: 1023870795014470004}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1023870795637526702
 MeshFilter:
@@ -184,7 +184,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1023870795637526690}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ea9c0a51d62719148b2ee334e1548324, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -210,13 +210,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57129d1f72763ee42b4c44703c56d478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fuseTime: 8
+  fuseTime: 4
   explotionRadius: 10
   damageEnemy: 64000000320000000a000000
   damagePlayer: 280000001400000000000000
   thingsToHit:
     serializedVersion: 2
-    m_Bits: 2176
+    m_Bits: 2432
   leftAttach: {fileID: 1023870796082735691}
   rightAttach: {fileID: 1023870795799235143}
   bombTicks:
@@ -344,7 +344,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1023870795637526690}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 100
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -362,7 +362,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &1023870795637526700
 MonoBehaviour:
   m_ObjectHideFlags: 0

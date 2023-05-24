@@ -4,13 +4,12 @@ using UnityEngine.AI;
 public class EnemyRunShootingState : EnemyBaseState
 {
     private float timer;
-    private bool scanning, distanceSet, lineOfSightToPlayer;
+    private bool scanning, lineOfSightToPlayer;
     private NavMeshAgent agent;
     private Animator enemyAnim;
     private Kickable currentKickable;
     private Collider[] colliders = new Collider[3];
     private RunningEnemy runningEnemy;
-    private float randomDistance;
 
     public override void EnterState(RunningEnemy enemy)
     {
@@ -29,24 +28,22 @@ public class EnemyRunShootingState : EnemyBaseState
         scanning = false;
         currentKickable = null;
         enemy.rig.SetRig(true);
-        distanceSet = false;
-        randomDistance = Random.Range(enemy.rangeBeforeAttack + 1, enemy.rangeBeforeAttack + 5);
     }
 
     public override void UpdateState(RunningEnemy enemy)
     {
         RaycastHit hit;
-        if (Physics.Raycast(enemy.transform.position, (GameManager.instance.XROrigin.transform.position - enemy.transform.position), out hit, enemy.rangeBeforeAttack + 0.5f, runningEnemy.layersLookForPlayer))
+        if (Physics.Raycast(enemy.headTrans.position, enemy.directionToPlayer, out hit, enemy.rangeBeforeAttack + 0.5f, runningEnemy.layersLookForPlayer))
         {
             if (hit.transform.tag == "Player")
             {
                 RaycastHit hit2;
-                if (Physics.Raycast(enemy.leftMuzzle.position, (GameManager.instance.XROrigin.transform.position - enemy.leftMuzzle.position), out hit2, enemy.rangeBeforeAttack + 2f, runningEnemy.layersLookForPlayer))
+                if (Physics.Raycast(enemy.leftSholder.position, (GameManager.instance.XROrigin.transform.position - enemy.leftSholder.position), out hit2, enemy.rangeBeforeAttack + 2f, runningEnemy.layersLookForPlayer))
                 {
                     if(hit2.transform.tag == "Player")
                     {
                         RaycastHit hit3;
-                        if (Physics.Raycast(enemy.rightMuzzle.position, (GameManager.instance.XROrigin.transform.position - enemy.rightMuzzle.position), out hit3, enemy.rangeBeforeAttack + 2f, runningEnemy.layersLookForPlayer))
+                        if (Physics.Raycast(enemy.rightSholder.position, (GameManager.instance.XROrigin.transform.position - enemy.rightSholder.position), out hit3, enemy.rangeBeforeAttack + 2f, runningEnemy.layersLookForPlayer))
                         {
                             if (hit3.transform.tag == "Player")
                             {
@@ -81,7 +78,11 @@ public class EnemyRunShootingState : EnemyBaseState
         {
             lineOfSightToPlayer = false;
         }
-        if ((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= enemy.rangeBeforeAttack && lineOfSightToPlayer)
+        if ((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude < enemy.tooCloseDistance && lineOfSightToPlayer)
+        {
+            enemy.SwitchState(enemy.coverState);
+        }
+        else if ((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= enemy.rangeBeforeAttack && lineOfSightToPlayer)
         {
             enemy.SwitchState(enemy.attackState);
             enemy.agent.ResetPath();
@@ -89,6 +90,7 @@ public class EnemyRunShootingState : EnemyBaseState
         else
         {
             enemy.rig.SetTarget(GameManager.instance.cam.transform.position);
+            
 
             if (CheckForEnemies() && (GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude < enemy.rangeBeforeAttack + 5)
             {
@@ -97,28 +99,10 @@ public class EnemyRunShootingState : EnemyBaseState
             }
             else
             {
+                enemy.SetAnimSpeed(0.25f);
+                enemy.SetSpeed(enemy.idleSpeed);
                 enemyAnim.SetBool("IsMoving", true);
                 enemy.agent.SetDestination(GameManager.instance.cam.transform.position);
-            }
-
-            if ((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude <= randomDistance)
-            {
-                if (!distanceSet)
-                {
-                    enemy.SetAnimSpeed(0.25f);
-                    enemy.SetSpeed(enemy.idleSpeed);
-                    distanceSet = true;
-                }
-            }
-            else if ((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude > enemy.rangeBeforeAttack + 5)
-            {
-                if (distanceSet)
-                {
-                    enemy.SetAnimSpeed(0.25f);
-                    enemy.SetSpeed(enemy.runSpeed);
-                    randomDistance = Random.Range(enemy.rangeBeforeAttack + 1, enemy.rangeBeforeAttack + 5);
-                    distanceSet = false;
-                }
             }
 
             if (Mathf.Abs(enemy.movementDircetion.magnitude) > 0.01f)

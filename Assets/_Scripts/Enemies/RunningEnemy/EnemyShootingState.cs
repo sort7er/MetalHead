@@ -23,17 +23,17 @@ public class EnemyShootingState : EnemyBaseAttack
     public override void UpdateState(RunningEnemy enemy)
     {
         RaycastHit hit;
-        if (Physics.Raycast(enemy.transform.position, (GameManager.instance.XROrigin.transform.position - enemy.transform.position), out hit, enemy.rangeBeforeAttack + 0.5f, runningEnemy.layersLookForPlayer))
+        if (Physics.Raycast(enemy.headTrans.position, enemy.directionToPlayer, out hit, enemy.rangeBeforeAttack + 0.5f, runningEnemy.layersLookForPlayer))
         {
             if (hit.transform.tag == "Player")
             {
                 RaycastHit hit2;
-                if (Physics.Raycast(enemy.leftMuzzle.position, (GameManager.instance.XROrigin.transform.position - enemy.leftMuzzle.position), out hit2, enemy.rangeBeforeAttack + 2f, runningEnemy.layersLookForPlayer))
+                if (Physics.Raycast(enemy.leftSholder.position, (GameManager.instance.XROrigin.transform.position - enemy.leftSholder.position), out hit2, enemy.rangeBeforeAttack + 2f, runningEnemy.layersLookForPlayer))
                 {
                     if (hit2.transform.tag == "Player")
                     {
                         RaycastHit hit3;
-                        if (Physics.Raycast(enemy.rightMuzzle.position, (GameManager.instance.XROrigin.transform.position - enemy.rightMuzzle.position), out hit3, enemy.rangeBeforeAttack + 2f, runningEnemy.layersLookForPlayer))
+                        if (Physics.Raycast(enemy.rightSholder.position, (GameManager.instance.XROrigin.transform.position - enemy.rightSholder.position), out hit3, enemy.rangeBeforeAttack + 2f, runningEnemy.layersLookForPlayer))
                         {
                             if (hit3.transform.tag == "Player")
                             {
@@ -68,15 +68,19 @@ public class EnemyShootingState : EnemyBaseAttack
         {
             lineOfSightToPlayer = false;
         }
-        if (((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude > enemy.rangeBeforeAttack || !lineOfSightToPlayer) && !attackStarted)
+        if ((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude < enemy.tooCloseDistance && !attackStarted)
         {
+            enemy.SwitchState(enemy.coverState);
+        }
+        else if (((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude > enemy.rangeBeforeAttack || !lineOfSightToPlayer) && !attackStarted)
+        {;
             enemy.SwitchState(enemy.runState);
         }
         else if (!attackStarted && !cannotAttack && fromRunTransition)
         {
             //if (AIManager.instance.CheckForAttack())
             //{
-                
+
             //}
             Attack();
         }

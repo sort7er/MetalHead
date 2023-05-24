@@ -48,6 +48,7 @@ public class RunningEnemy : MonoBehaviour
     public float runSpeed;
     public float runSightRange;
     public float rangeBeforeAttack;
+    public float tooCloseDistance;
     public float timeBeforeLost;
     public float timeBetweenScan;
     public float scanRadius;
@@ -85,7 +86,7 @@ public class RunningEnemy : MonoBehaviour
     public RigConstraints rig;
     public Transform enemyModel;
     public Transform headTrans;
-    public Transform leftMuzzle, rightMuzzle;
+    public Transform leftSholder, rightSholder;
     public Rigidbody[] limbs;
     public Collider[] collidersToDisable;
     public MeshRenderer[] glowingParts;
@@ -125,11 +126,11 @@ public class RunningEnemy : MonoBehaviour
     public EnemyBaseAttack attackState;
     public EnemyIdleState idleState = new EnemyIdleState();
     public EnemySusState susState = new EnemySusState();
-    public EnemyCoverState coverState = new EnemyCoverState();
+    public EnemyHidingState coverState = new EnemyHidingState();
+    public EnemyDodgeState dodgeState = new EnemyDodgeState();
     public EnemySearchingState searchingState = new EnemySearchingState();
     public EnemyKickState kickState = new EnemyKickState();
 
-    
     private Vector3 thisFrame, lastFrame, currentDestination;
     private Vector3 knockbackPos;
     private float timeBetweenDistanceCheck;
@@ -330,7 +331,7 @@ public class RunningEnemy : MonoBehaviour
     public void SetPointOfInterest(Vector3 newInterest)
     {
         NavMeshHit myNavHit;
-        if (NavMesh.SamplePosition(newInterest, out myNavHit, 10, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(newInterest, out myNavHit, 2, agent.areaMask))
         {
             pointOfInterest = myNavHit.position;
         }
@@ -339,22 +340,19 @@ public class RunningEnemy : MonoBehaviour
     public void SetNavMeshDestination(Vector3 position)
     {
         NavMeshHit myNavHit;
-        if (NavMesh.SamplePosition(position, out myNavHit, 10, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(position, out myNavHit, 2, agent.areaMask))
         {
             agent.SetDestination(myNavHit.position);
         }
-        else
-        {
-            Debug.Log("Nothing");
-        }
     }
+
     public bool RandomPointOnNavMesh(Vector3 agentPos, float range, out Vector3 result)
     {
         for (int i = 0; i < 60; i++)
         {
             Vector3 randomPoint = agentPos + Random.insideUnitSphere * range;
             NavMeshHit hit;
-            if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, agent.areaMask))
             {
                 
                 if(!CheckLineOfSight(true, hit.position - headTrans.position, headTrans.position))

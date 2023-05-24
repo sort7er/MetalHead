@@ -1,0 +1,202 @@
+using UnityEngine;
+using UnityEngine.AI;
+
+public class EnemyHidingState : EnemyBaseState
+{
+    private RunningEnemy runningEnemy;
+    private NavMeshAgent agent;
+    private Collider[] colliders = new Collider[100];
+    private Animator enemyAnim;
+    private Vector3 destination;
+    private float checkCoverRadius, minPlayerDistance;
+    private bool hideLocked, inCover;
+    private int healthWhenInCover;
+
+    public override void EnterState(RunningEnemy enemy)
+    {
+        //Debug.Log("Entered state cover");
+        runningEnemy = enemy;
+        agent = enemy.agent;
+        agent.avoidancePriority = 49;
+        enemyAnim = enemy.enemyAnim;
+        enemyAnim.SetBool("IsMoving", true);
+        enemyAnim.SetBool("LookingAround", false);
+        enemy.SetAnimSpeed(1f);
+        agent.speed = enemy.coverSpeed;
+        checkCoverRadius = enemy.checkCoverRadius;
+        minPlayerDistance = enemy.minPlayerDistance;
+        agent.ResetPath();
+        hideLocked = false;
+        inCover = false;
+        NavMeshHit myNavHit;
+        Hide(GameManager.instance.XROrigin.transform);
+        if (NavMesh.SamplePosition(runningEnemy.transform.position, out myNavHit, 1, NavMesh.AllAreas))
+        {
+            runningEnemy.transform.position = myNavHit.position;
+        }
+        
+    }
+
+    public override void UpdateState(RunningEnemy enemy)
+    {
+
+        if (!inCover)
+        {
+            if ((destination - enemy.transform.position).magnitude < 0.2f)
+            {
+                InCover();
+                enemy.DelayedCallback(enemy.coverState, "OutOfCover", Random.Range(enemy.minCoverDuration, enemy.maxCoverDuration));
+            }
+            else
+            {
+                if (Mathf.Abs(enemy.movementDircetion.magnitude) > 0.1f)
+                {
+                    enemy.RotateToPosition(enemy.transform.position + enemy.movementDircetion);
+                }
+            }
+        }
+        else
+        {
+            enemy.LookingForPlayer(enemy.sightRangeForCover);
+            if (enemy.inView || healthWhenInCover != runningEnemy.health.GetCurrentHealth())
+            {
+                OutOfCover();
+            }
+        }
+
+
+        
+    }
+
+    public void Hide(Transform target)
+    {
+        if (!hideLocked)
+        {
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                colliders[i] = null;
+            }
+
+            int hits = Physics.OverlapSphereNonAlloc(agent.transform.position, checkCoverRadius, colliders, runningEnemy.hidebleLayer);
+
+            int hitReduction = 0;
+            for (int i = 0; i < hits; i++)
+            {
+                if ((target.position - colliders[i].transform.position).magnitude < minPlayerDistance)
+                {
+                    colliders[i] = null;
+                    hitReduction++;
+                }
+            }
+            hits -= hitReduction;
+
+            if(hits <= 0)
+            {
+                runningEnemy.SwitchState(runningEnemy.dodgeState);
+            }
+
+            System.Array.Sort(colliders, ColliderArraySortComparer);
+
+            for (int i = 0; i < hits; i++)
+            {
+                if (NavMesh.SamplePosition(colliders[i].transform.position, out NavMeshHit hit, 2f, agent.areaMask))
+                {
+                    if (!NavMesh.FindClosestEdge(hit.position, out hit, agent.areaMask))
+                    {
+                        Debug.Log("No nav mesh at " + hit.position);
+                    }
+                    if (Vector3.Dot(hit.normal, (target.position - hit.position).normalized) < runningEnemy.hideSensitivity)
+                    {
+                        if (runningEnemy.hiding)
+                        {
+                            runningEnemy.voiceLines.Hiding();
+                        }
+
+                        destination = hit.position;
+                        agent.SetDestination(destination);
+                        break;
+                    }
+                    else
+                    {
+                        if (NavMesh.SamplePosition(colliders[i].transform.position - (target.position - hit.position).normalized * 2, out NavMeshHit hit2, 2f, agent.areaMask))
+                        {
+                            if (!NavMesh.FindClosestEdge(hit2.position, out hit2, agent.areaMask))
+                            {
+                                Debug.Log("No nav mesh at " + hit2.position + "(second attept)");
+                            }
+                            if (Vector3.Dot(hit2.normal, (target.position - hit2.position).normalized) < runningEnemy.hideSensitivity)
+                            {
+                                if (runningEnemy.hiding)
+                                {
+                                    runningEnemy.voiceLines.Hiding();
+                                }
+                                destination = hit2.position;
+                                agent.SetDestination(destination);
+                                break;
+                            }
+
+                        }
+                    }
+                }
+                else
+                {
+                    Debug.Log("This sucks");
+                    runningEnemy.SwitchState(runningEnemy.dodgeState);
+                }
+            }
+
+            hideLocked = true;
+            runningEnemy.DelayedCallback(runningEnemy.coverState, "HideUnlocked", runningEnemy.defaultTimeCoverCheck);
+        }
+    }
+    private int ColliderArraySortComparer(Collider A, Collider B)
+    {
+        if (A == null && B != null)
+        {
+            return 1;
+        }
+        else if (A != null && B == null)
+        {
+            return -1;
+        }
+        else if (A == null && B == null)
+        {
+            return 0;
+        }
+        else
+        {
+            return Vector3.Distance(agent.transform.position, A.transform.position).CompareTo(Vector3.Distance(agent.transform.position, B.transform.position));
+        }
+    }
+
+    public void HideUnlocked()
+    {
+        hideLocked = false;
+    }
+    private void InCover()
+    {
+        inCover = true;
+        healthWhenInCover = runningEnemy.health.GetCurrentHealth();
+        enemyAnim.SetBool("InCover", true);
+        agent.avoidancePriority = 48;
+    }
+    public void OutOfCover()
+    {
+        enemyAnim.SetBool("InCover", false);
+        runningEnemy.DelayedCallback(runningEnemy.coverState, "HidingDone", 0.3f);
+    }
+
+    public void HidingDone()
+    {
+        runningEnemy.IsHiding(false);
+        if (runningEnemy.playerInSight)
+        {
+            runningEnemy.SwitchState(runningEnemy.runState);
+
+        }
+        else
+        {
+            runningEnemy.SwitchState(runningEnemy.searchingState);
+        }
+    }
+}

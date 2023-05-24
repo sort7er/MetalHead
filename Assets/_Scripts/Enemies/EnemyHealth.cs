@@ -111,4 +111,9 @@ public class EnemyHealth : MonoBehaviour
     {
         return health;
     }
+
+    public bool IsDead()
+    {
+        return isDead;
+    }
 }

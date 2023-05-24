@@ -17,16 +17,17 @@ public class Bomb : MonoBehaviour
     public MeshRenderer bombGlow;
 
     private AudioSource bombSource;
+    private Rigidbody rb;
     private XRGrabInteractable xrGrabInteractable;
-    private Collider[] colliders = new Collider[100];
+    private Collider[] colliders = new Collider[50];
     private float timer, currentInterval;
-    private bool damageToPlayerGiven, tick;
+    private bool damageToPlayerGiven, tick, hitFloor;
     private float startInterval;
 
     private void Start()
     {
         startInterval = 0.8f;
-
+        rb = GetComponent<Rigidbody>();
         bombSource = GetComponent<AudioSource>();
         xrGrabInteractable = GetComponent<XRGrabInteractable>();
         timer = fuseTime;
@@ -81,6 +82,14 @@ public class Bomb : MonoBehaviour
             xrGrabInteractable.attachTransform = rightAttach;
         }
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == 6 && !hitFloor)
+        {
+            rb.velocity = rb.velocity * 0.2f; rb.angularVelocity = rb.angularVelocity * 0.2f;
+            hitFloor = true;
+        }
+    }
 
     public void Explode()
     {
@@ -104,7 +113,10 @@ public class Bomb : MonoBehaviour
                 {
                     damage = damageEnemy[2];
                 }
-                colliders[i].transform.parent.GetComponent<EnemyHealth>().TakeDamage(damage, damage, colliders[i].GetComponent<Rigidbody>(), (colliders[i].transform.position - transform.position) * damage * 35, 6);
+                if (colliders[i].transform.parent.GetComponent<EnemyHealth>() != null)
+                {
+                    colliders[i].transform.parent.GetComponent<EnemyHealth>().TakeDamage(damage, damage * 2, colliders[i].GetComponent<Rigidbody>(), (colliders[i].transform.position - transform.position) * damage * 10, 6);
+                }
             }
             else if( colliders[i].GetComponent<PlayerHealth>() != null && !damageToPlayerGiven)
             {
@@ -122,6 +134,10 @@ public class Bomb : MonoBehaviour
                     colliders[i].GetComponent<PlayerHealth>().TakeDamage(damage);
                     damageToPlayerGiven = true;
                 }           
+            }
+            else if(colliders[i].GetComponent<Rigidbody>() != null && !colliders[i].GetComponent<Rigidbody>().isKinematic && colliders[i].GetComponent<XRGrabInteractable>() != null && colliders[i].transform != transform)
+            {
+                colliders[i].GetComponent<Rigidbody>().AddExplosionForce(100000 / Vector3.Distance(colliders[i].transform.position, transform.position), transform.position, explotionRadius);
             }
         }
         EffectManager.instance.BombExplotion(transform.position);
