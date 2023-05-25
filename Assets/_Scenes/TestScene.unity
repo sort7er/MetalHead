@@ -16965,6 +16965,8 @@ MonoBehaviour:
     type: 3}
   bulletHolePrefab: {fileID: 3550857489680246223, guid: 185a2b0c09ac7ab4082870c6eaf04c88,
     type: 3}
+  bulletHolePrefabWithSound: {fileID: 3550857489680246223, guid: a7b19bf1321451247bc2febf9f108a99,
+    type: 3}
   hitPlayer: {fileID: 4824387240131724937, guid: 161b9cd861e14c145a3b180dd67b39dc,
     type: 3}
   hitEnemy: {fileID: 2869318214092889750, guid: 618782a7cf12fe541a3018c46330a41d,
@@ -17091,7 +17093,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48c244344a633694893d462eab24a770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningEnemiesInScene: []
   idleDelay: 7
   attackingDelay: 5
   playerIsBeeingAttacked: 0
@@ -62241,6 +62242,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 698599808}
     m_Modifications:
+    - target: {fileID: 2010876, guid: f5228488ffa38ca4cb265b7f9e00bae1, type: 3}
+      propertyPath: bulletSpeed
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 375579569181189060, guid: f5228488ffa38ca4cb265b7f9e00bae1,
         type: 3}
       propertyPath: m_Name
@@ -62301,6 +62306,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5416141420860985725, guid: f5228488ffa38ca4cb265b7f9e00bae1,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: f8167dd08377f7e44b0213fcea703620, type: 3}
+    - target: {fileID: 8508458246001662486, guid: f5228488ffa38ca4cb265b7f9e00bae1,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: f8167dd08377f7e44b0213fcea703620, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

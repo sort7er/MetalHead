@@ -58,6 +58,8 @@ public class RunningEnemy : MonoBehaviour
     public LayerMask layersLookForPlayer;
 
     [Header("AttackState")]
+    public float minShootingLength;
+    public float maxShootingLength;
     public float minAttackCooldown;
     public float maxAttackCooldown;
 
@@ -313,7 +315,6 @@ public class RunningEnemy : MonoBehaviour
         EffectManager.instance.SpawnDeadEnemyEffect(enemyModel);
         Destroy(gameObject);
         Destroy(enemyModel.gameObject);
-        AIManager.instance.UpdateArray();
     }
     public void ChangeAnimationState(string newState)
     {

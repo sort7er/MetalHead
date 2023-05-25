@@ -64,25 +64,25 @@ public class CZ50 : MonoBehaviour
                             hit.transform.GetComponent<BodyPart>().TakeDamage(damage, damage, hit.transform.forward - hit.normal * bulletForce);
                             if (hit.transform.GetComponent<BodyPart>() != null && hit.transform.GetComponent<BodyPart>().crit)
                             {
-                                EffectManager.instance.SpawnBulletHole(hit, 2);
+                                EffectManager.instance.SpawnBulletHole(hit.transform, hit.point, hit.normal, 2);
                             }
                             else if (hit.transform.GetComponent<BodyPart>() != null && hit.transform.GetComponent<BodyPart>().bodyPart == 1)
                             {
-                                EffectManager.instance.SpawnBulletHole(hit, 3);
+                                EffectManager.instance.SpawnBulletHole(hit.transform, hit.point, hit.normal, 3);
                             }
                             else if(hit.transform.GetComponent<BodyPart>() != null)
                             {
-                                EffectManager.instance.SpawnBulletHole(hit, 1);
+                                EffectManager.instance.SpawnBulletHole(hit.transform, hit.point, hit.normal, 1);
                             }
                         }
                         else if(hit.transform.GetComponent<Target>() != null)
                         {
                             hit.transform.GetComponent<Target>().Hit(hit.point);
-                            EffectManager.instance.SpawnBulletHole(hit, 4);
+                            EffectManager.instance.SpawnBulletHole(hit.transform, hit.point, hit.normal, 4);
                         }
                         else
                         {
-                            EffectManager.instance.SpawnBulletHole(hit, 0);
+                            EffectManager.instance.SpawnBulletHole(hit.transform, hit.point, hit.normal, 0);
                         }
                         if (projectilePenetration)
                         {
@@ -106,20 +106,20 @@ public class CZ50 : MonoBehaviour
                                             
                                             if (secondHit.transform.GetComponent<BodyPart>() != null && secondHit.transform.GetComponent<BodyPart>().crit)
                                             {
-                                                EffectManager.instance.SpawnBulletHole(hit, 2);
+                                                EffectManager.instance.SpawnBulletHole(secondHit.transform, secondHit.point, secondHit.normal, 2);
                                             }
                                             else if (hit.transform.GetComponent<BodyPart>() != null && hit.transform.GetComponent<BodyPart>().bodyPart == 1)
                                             {
-                                                EffectManager.instance.SpawnBulletHole(hit, 3);
+                                                EffectManager.instance.SpawnBulletHole(secondHit.transform, secondHit.point, secondHit.normal, 3);
                                             }
                                             else if(secondHit.transform.GetComponent<BodyPart>() != null)
                                             {
-                                                EffectManager.instance.SpawnBulletHole(hit, 1);
+                                                EffectManager.instance.SpawnBulletHole(secondHit.transform, secondHit.point, secondHit.normal, 1);
                                             }
                                         }
                                         else
                                         {
-                                            EffectManager.instance.SpawnBulletHole(secondHit, 0);
+                                            EffectManager.instance.SpawnBulletHole(secondHit.transform, secondHit.point, secondHit.normal, 0);
                                         }
                                     }
                                 }

@@ -2,10 +2,19 @@ using UnityEngine;
 
 public class EnemyShooting : MonoBehaviour
 {
+    [Header("Gun")]
+    public int bulletDamage;
+    public float bulletSpeed;
+
+    [Header("References")]
+    public Transform gunMuzzle;
     public Transform bombMuzzle;
     public GameObject bombPrefab;
+    public AudioSource gunSource, gunSource2;
+    public ParticleSystem muzzleFlash;
 
     private float multiplier;
+    private bool swap;
 
     public void FireBomb()
     {
@@ -29,5 +38,23 @@ public class EnemyShooting : MonoBehaviour
 
         bomb.GetComponent<Rigidbody>().AddForce(bombMuzzle.forward * distance * 100 * multiplier, ForceMode.Impulse);
 
+    }
+
+    public void FireBullet()
+    {
+        if (!swap)
+        {
+            gunSource2.Play();
+            swap = true;
+        }
+        else
+        {
+            gunSource.Play();
+            swap = false;
+        }
+        
+        muzzleFlash.Play();
+        EffectManager.instance.Fire(gunMuzzle, bulletDamage, bulletSpeed);
+        Debug.Log("Fire bullet");
     }
 }

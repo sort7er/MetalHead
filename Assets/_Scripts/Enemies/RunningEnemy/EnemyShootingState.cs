@@ -73,7 +73,7 @@ public class EnemyShootingState : EnemyBaseAttack
             enemy.SwitchState(enemy.coverState);
         }
         else if (((GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude > enemy.rangeBeforeAttack || !lineOfSightToPlayer) && !attackStarted)
-        {;
+        {
             enemy.SwitchState(enemy.runState);
         }
         else if (!attackStarted && !cannotAttack && fromRunTransition)
@@ -106,23 +106,6 @@ public class EnemyShootingState : EnemyBaseAttack
             }
         }
 
-        //Parryed
-        if (enemy.weapon.isParrying)
-        {
-            if (runningEnemy.weapon.numberToCheck == 0)
-            {
-                runningEnemy.ChangeAnimationState("ParryLeftHand");
-            }
-            else if (runningEnemy.weapon.numberToCheck == 1)
-            {
-                runningEnemy.ChangeAnimationState("ParryRightFoot");
-            }
-            freezeRotation = true;
-            runningEnemy.DelayedCallback(runningEnemy.attackState, "FreezeDone", 1);
-            enemy.weapon.ParryingDone();
-        }
-
-
         //Switch to other states
         if (enemy.stunned)
         {
@@ -148,11 +131,15 @@ public class EnemyShootingState : EnemyBaseAttack
         waitOneFrame = false;
         waitTwoFrames = false;
         //int randomNumber = Random.Range(1, 3);
-        runningEnemy.ChangeAnimationState("Shooting");
+        runningEnemy.ChangeAnimationState("Shoot");
+    }
+    private void ShootingDone()
+    {
+        enemyAnim.SetBool("Shooting", true);
     }
     public void AttackDone()
     {
-        AIManager.instance.DoneAttacking();
+        //AIManager.instance.DoneAttacking();
         runningEnemy.CanAttack();
         attackStarted = false;
     }
@@ -163,9 +150,5 @@ public class EnemyShootingState : EnemyBaseAttack
     public void FromRunTransition()
     {
         fromRunTransition = true;
-    }
-    public void FreezeDone()
-    {
-        freezeRotation = false;
     }
 }

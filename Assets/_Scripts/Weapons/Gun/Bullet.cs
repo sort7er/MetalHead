@@ -3,7 +3,8 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     private Rigidbody rb;
-    private int damage, bulletSpeed;
+    private int damage;
+    private float bulletSpeed;
 
     void Start()
     {
@@ -14,26 +15,45 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(!collision.transform.CompareTag("Player") && !collision.transform.CompareTag("Gun"))
+
+        if (collision.rigidbody != null)
         {
-            if (collision.rigidbody != null)
-            {
-                collision.rigidbody.AddForce(collision.transform.forward + transform.forward * rb.velocity.magnitude * 0.1f, ForceMode.Impulse);
-            }
-            if (collision.transform.CompareTag("Enemy"))
-            {
-                //collision.transform.GetComponent<BodyPart>().TakeDamage(damage, damage);
-            }
-//            EffectManager.instance.SpawnBulletHole(collision);
-            Destroy(gameObject);
+            collision.rigidbody.AddForce(collision.transform.forward + transform.forward * rb.velocity.magnitude * 0.1f, ForceMode.Impulse);
         }
+        if (collision.transform.GetComponent<BodyPart>() != null)
+        {
+            collision.transform.GetComponent<BodyPart>().TakeDamage(damage, damage, (collision.transform.position - transform.position) * 20);
+
+            if (collision.transform.GetComponent<BodyPart>().crit)
+            {
+                EffectManager.instance.SpawnBulletHole(collision.transform, collision.contacts[0].point, collision.contacts[0].normal, 2);
+            }
+            else if (collision.transform.GetComponent<BodyPart>() != null && collision.transform.GetComponent<BodyPart>().bodyPart == 1)
+            {
+                EffectManager.instance.SpawnBulletHole(collision.transform, collision.contacts[0].point, collision.contacts[0].normal, 3);
+            }
+            else if (collision.transform.GetComponent<BodyPart>() != null)
+            {
+                EffectManager.instance.SpawnBulletHole(collision.transform, collision.contacts[0].point, collision.contacts[0].normal, 1);
+            }
+        }
+        else if(collision.transform.GetComponent<PlayerHealth>() != null)
+        {
+            collision.transform.GetComponent<PlayerHealth>().TakeDamage(damage);
+        }
+        else
+        {
+            EffectManager.instance.SpawnBulletHole(collision.transform, collision.contacts[0].point, collision.contacts[0].normal, 5);
+        }
+        //EffectManager.instance.SpawnBulletHole(collision);
+        Destroy(gameObject);
     }
     
     public void SetDamage(int dmg)
     {
         damage= dmg;
     }
-    public void SetSpeed(int speed)
+    public void SetSpeed(float speed)
     {
         bulletSpeed = speed;
     }

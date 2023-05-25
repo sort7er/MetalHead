@@ -6,6 +6,7 @@ public class EffectManager : MonoBehaviour
     public static EffectManager instance;
     public GameObject bulletPrefab;
     public GameObject bulletHolePrefab;
+    public GameObject bulletHolePrefabWithSound;
     public GameObject hitPlayer;
     public GameObject hitEnemy;
     public GameObject hitEnemyBarrel;
@@ -36,14 +37,14 @@ public class EffectManager : MonoBehaviour
         instance = this;
     }
 
-    public void Fire(Transform muzzle, int damage, int speed)
+    public void Fire(Transform muzzle, int damage, float speed)
     {
         GameObject bullet = Instantiate(bulletPrefab, muzzle.position, muzzle.rotation);
         bullet.GetComponent<Bullet>().SetDamage(damage);
         bullet.GetComponent<Bullet>().SetSpeed(speed);
         bullet.transform.parent = ParentManager.instance.bullets;
     }
-    public void SpawnBulletHole(RaycastHit hit, int type)
+    public void SpawnBulletHole(Transform hit, Vector3 point, Vector3 normal, int type)
     {
         GameObject hitEffectToInstantiate;
         float pitch;
@@ -67,19 +68,24 @@ public class EffectManager : MonoBehaviour
             hitEffectToInstantiate = hitWood;
             pitch = 1;
         }
+        else if(type == 5)
+        {
+            hitEffectToInstantiate = bulletHolePrefabWithSound;
+            pitch = 1;
+        }
         else
         {
             hitEffectToInstantiate = bulletHolePrefab;
             pitch = 1;
         }
 
-        GameObject bulletHole = Instantiate(hitEffectToInstantiate, hit.point + hit.normal * 0.001f, Quaternion.LookRotation(hit.normal));
+        GameObject bulletHole = Instantiate(hitEffectToInstantiate, point + normal * 0.001f, Quaternion.LookRotation(normal));
         bulletHole.transform.Rotate(Vector3.forward * Random.Range(-180, 180));
         if(bulletHole.GetComponent<AudioSource>() != null)
         {
             bulletHole.GetComponent<AudioSource>().pitch = pitch;
         }
-        if (hit.rigidbody != null)
+        if (hit.GetComponent<Rigidbody>() != null)
         {
             bulletHole.transform.parent = hit.transform;
         }
