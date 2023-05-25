@@ -117,6 +117,7 @@ public class RunningEnemy : MonoBehaviour
     [HideInInspector] public bool inView;
     [HideInInspector] public bool stunned;
     [HideInInspector] public bool hiding;
+    [HideInInspector] public bool knockBack;
     [HideInInspector] public float turnSmoothTime;
     [HideInInspector] public float FOV;
 
@@ -136,7 +137,7 @@ public class RunningEnemy : MonoBehaviour
     private float timeBetweenDistanceCheck;
     private float newMovementValue, currentValue;
     private bool setNewValue;
-    private bool knockBack;
+
     private bool isAvoiding;
 
 
@@ -206,9 +207,20 @@ public class RunningEnemy : MonoBehaviour
         if (knockBack)
         {
             transform.position = Vector3.Lerp(transform.position, knockbackPos, knockBackSpeed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, knockbackPos) <= 0.4f)
+            if (Vector3.Distance(transform.position, knockbackPos) <= 0.6f)
             {
                 agent.Resume();
+                NavMeshHit hit;
+                if(NavMesh.SamplePosition(knockbackPos, out hit, 0.5f, agent.areaMask))
+                {
+                    agent.Warp(hit.position);
+                }
+                else
+                {
+                    Debug.Log("lol");
+                }
+
+
                 knockBack = false;
             }
         }
@@ -496,7 +508,7 @@ public class RunningEnemy : MonoBehaviour
             tempPos = transform.position;
         }
         NavMeshHit myNavHit;
-        if (NavMesh.SamplePosition(new Vector3(tempPos.x, tempPos.y, tempPos.z), out myNavHit, 1, agent.areaMask))
+        if (NavMesh.SamplePosition(tempPos, out myNavHit, 2, agent.areaMask))
         {
             knockbackPos = myNavHit.position;
         }

@@ -8,7 +8,7 @@ public class EnemyDodgeState : EnemyBaseState
     private Animator enemyAnim;
     private Vector3 dodgeDestination, leftPos, rightPos;
     private float dodgeSpeed;
-    private bool canLeft, canRight;
+    private bool canLeft, canRight, knockbackDone;
     private int direction;
 
     public override void EnterState(RunningEnemy enemy)
@@ -22,18 +22,25 @@ public class EnemyDodgeState : EnemyBaseState
         dodgeSpeed = enemy.dodgeSpeed;
         canLeft = false;
         canRight = false;
+        knockbackDone = false;
         direction = 0;
 
         NavMeshHit myNavHit;
-        if (NavMesh.SamplePosition(runningEnemy.transform.position, out myNavHit, 1, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(runningEnemy.transform.position, out myNavHit, 0.5f, agent.areaMask))
         {
-            runningEnemy.transform.position = myNavHit.position;
+            agent.Warp(myNavHit.position);
         }
-        Dodge();
+        
     }
 
     public override void UpdateState(RunningEnemy enemy)
     {
+        if (!runningEnemy.knockBack && !knockbackDone)
+        {
+            Dodge();
+            knockbackDone = true;
+        }
+
         //Switch to other states
         if (enemy.stunned)
         {
@@ -79,13 +86,13 @@ public class EnemyDodgeState : EnemyBaseState
             if (direction == 0)
             {
                 runningEnemy.ChangeAnimationState("DodgeRight");
-                dodgeDestination = leftPos;
+                dodgeDestination = rightPos;
 
             }
             else if (direction == 1)
             {
                 runningEnemy.ChangeAnimationState("DodgeLeft");
-                dodgeDestination = rightPos;
+                dodgeDestination = leftPos;
             }
             agent.speed = dodgeSpeed;
             runningEnemy.agent.SetDestination(dodgeDestination);
