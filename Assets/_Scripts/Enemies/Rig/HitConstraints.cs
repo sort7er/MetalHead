@@ -21,6 +21,7 @@ public class HitConstraints : MonoBehaviour
     private bool leftShoulder, leftShoulderDone;
     private bool rightShoulder, rightShoulderDone;
 
+
     public void Hit(bool forward, int bodyPart)
     {
         if(forward)
