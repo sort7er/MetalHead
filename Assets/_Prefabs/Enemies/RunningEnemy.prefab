@@ -1327,9 +1327,11 @@ MonoBehaviour:
   layersLookForPlayer:
     serializedVersion: 2
     m_Bits: 1216
+  minShootingLength: 0
+  maxShootingLength: 0
   minAttackCooldown: 0.2
   maxAttackCooldown: 1
-  kickForce: 200
+  kickForce: 600
   timeBetweenKicks: 2
   barrelDistance: 0.5
   minCoverDuration: 3
@@ -1346,6 +1348,7 @@ MonoBehaviour:
     m_Bits: 1024
   timeDead: 4
   rig: {fileID: 1186588956}
+  armRig: {fileID: 0}
   enemyModel: {fileID: 7246732520624336850}
   headTrans: {fileID: 3173534719420928397}
   leftSholder: {fileID: 0}

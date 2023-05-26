@@ -5,6 +5,7 @@ public class HitConstraints : MonoBehaviour
 {
     public float hitSpeed, retractSpeed;
 
+
     public MultiRotationConstraint neckConstraint;
     public MultiRotationConstraint stomachConstraint;
     public MultiRotationConstraint leftShoulderConstraint;

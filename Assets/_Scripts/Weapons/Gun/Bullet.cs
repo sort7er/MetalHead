@@ -37,15 +37,15 @@ public class Bullet : MonoBehaviour
                 EffectManager.instance.SpawnBulletHole(collision.transform, collision.contacts[0].point, collision.contacts[0].normal, 1);
             }
         }
-        else if(collision.transform.GetComponent<PlayerHealth>() != null)
+        else if(collision.transform.GetComponent<PlayerHealth>() != null || collision.transform.GetComponent<Camera>() != null)
         {
-            collision.transform.GetComponent<PlayerHealth>().TakeDamage(damage);
+            GameManager.instance.XROrigin.GetComponent<PlayerHealth>().TakeDamage(damage);
         }
         else
         {
             EffectManager.instance.SpawnBulletHole(collision.transform, collision.contacts[0].point, collision.contacts[0].normal, 5);
         }
-        //EffectManager.instance.SpawnBulletHole(collision);
+
         Destroy(gameObject);
     }
     

@@ -6,6 +6,7 @@ public class Bomb : MonoBehaviour
     [Header("Values")]
     public float fuseTime;
     public float explotionRadius;
+    public float bombCoolDown;
     public int[] damageEnemy;
     public int[] damagePlayer;
 
@@ -81,12 +82,23 @@ public class Bomb : MonoBehaviour
         {
             xrGrabInteractable.attachTransform = rightAttach;
         }
+        hitFloor = false;
+        gameObject.layer = 8;
     }
+    public void ReleaseBomb()
+    {
+        Invoke(nameof(ChangeLayer), 0.2f);
+    }
+    private void ChangeLayer()
+    {
+        gameObject.layer = 12;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == 6 && !hitFloor)
         {
-            rb.velocity = rb.velocity * 0.2f; rb.angularVelocity = rb.angularVelocity * 0.2f;
+            rb.velocity = rb.velocity * 0.1f; rb.angularVelocity = rb.angularVelocity * 0.1f;
             hitFloor = true;
         }
     }
@@ -141,8 +153,7 @@ public class Bomb : MonoBehaviour
             }
         }
         EffectManager.instance.BombExplotion(transform.position);
+        AIManager.instance.BombDone();
         Destroy(gameObject);
     }
-
-
 }

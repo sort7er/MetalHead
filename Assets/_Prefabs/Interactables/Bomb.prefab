@@ -102,7 +102,8 @@ GameObject:
   - component: {fileID: 1023870795637526696}
   - component: {fileID: 1023870795637526697}
   - component: {fileID: 1023870795637526743}
-  m_Layer: 8
+  - component: {fileID: 1405021621313393754}
+  m_Layer: 12
   m_Name: Bomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -210,8 +211,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57129d1f72763ee42b4c44703c56d478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fuseTime: 4
+  fuseTime: 6
   explotionRadius: 5
+  bombCoolDown: 2
   damageEnemy: 64000000320000000a000000
   damagePlayer: 280000001400000000000000
   thingsToHit:
@@ -420,7 +422,19 @@ MonoBehaviour:
         m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1023870795637526689}
+        m_TargetAssemblyTypeName: Bomb, Assembly-CSharp
+        m_MethodName: ReleaseBomb
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_Activated:
     m_PersistentCalls:
       m_Calls: []
@@ -622,6 +636,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1405021621313393754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1023870795637526690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3188434da77a3f74083fd86ecc9813ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isBeeingKicked: 0
+  canDamage: 0
 --- !u!1 &1023870795799235160
 GameObject:
   m_ObjectHideFlags: 0

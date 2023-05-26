@@ -30,14 +30,13 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public bool isPaused;
     [HideInInspector] public bool isDead;
 
-    public int tempNumber, waitingID, currentID;
+    private int tempNumber, waitingID, currentID;
     private bool tempDone;
     private PauseMenu pauseMenu;
     private XRInteractorLineVisual leftLineVisual, rightLineVisual;
     private InputAction gripLeft, gripRight;
     private float leftGripValue, rightGripValue;
-    private bool cannotUseLeft, cannotUseRight;
-    public bool ammoBagTaken;
+    private bool ammoBagTaken;
 
     private void Start()
     {
@@ -296,7 +295,7 @@ public class GameManager : MonoBehaviour
         if (!tempDone)
         {
             tempNumber++;
-            if (tempNumber >= 5)
+            if (tempNumber >= 8)
             {
                 for (int i = 0; i < enemies.Length; i++)
                 {

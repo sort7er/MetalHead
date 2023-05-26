@@ -12,6 +12,7 @@ public class EnemyKickState : EnemyBaseState
     public override void EnterState(RunningEnemy enemy)
     {
         //Debug.Log("Entered state kick");
+        enemy.enemyAnim.SetBool("IsMoving", true);
         enemy.rig.SetRig(true);
         runningEnemy = enemy;
         enemy.agent.ResetPath();
@@ -24,52 +25,60 @@ public class EnemyKickState : EnemyBaseState
 
     public override void UpdateState(RunningEnemy enemy)
     {
-        directionFromPlayer = GameManager.instance.XROrigin.transform.position - kickableToKick.transform.position;
-        kickPosition = kickableToKick.transform.position - new Vector3(directionFromPlayer.normalized.x, 0, directionFromPlayer.normalized.z);
-        kickDirection = new Vector3(directionFromPlayer.normalized.x, directionFromPlayer.normalized.y + 0.7f, directionFromPlayer.normalized.z);
-        enemy.rig.SetTarget(GameManager.instance.cam.transform.position);
-        if (!arrivedToKickable)
+        if(kickableToKick != null)
         {
-            enemy.SetNavMeshDestination(kickPosition);
-            
-            enemy.RotateToPosition(kickPosition);
-            if((kickPosition - enemy.transform.position).magnitude < 0.5f)
+            directionFromPlayer = GameManager.instance.XROrigin.transform.position - kickableToKick.transform.position;
+            kickPosition = kickableToKick.transform.position - new Vector3(directionFromPlayer.normalized.x, 0, directionFromPlayer.normalized.z);
+            kickDirection = new Vector3(directionFromPlayer.normalized.x, directionFromPlayer.normalized.y + 0.7f, directionFromPlayer.normalized.z);
+            enemy.rig.SetTarget(GameManager.instance.cam.transform.position);
+            if (!arrivedToKickable)
             {
-                arrivedToKickable = true;
-                enemy.SetTurnSpeed(10);
-                enemy.DelayedCallback(enemy.kickState, "KickStartUp", 0.1f);
-                enemy.DelayedCallback(enemy.kickState, "Kick", 0.2f);
-                enemy.DelayedCallback(enemy.kickState, "KickCanDamage", 0.3f);
-                enemy.DelayedCallback(enemy.kickState, "KickDone", 0.4f);
+                enemy.SetNavMeshDestination(kickPosition);
+
+                enemy.RotateToPosition(kickPosition);
+                if ((kickPosition - enemy.transform.position).magnitude < 0.5f)
+                {
+                    arrivedToKickable = true;
+                    enemy.SetTurnSpeed(10);
+                    enemy.DelayedCallback(enemy.kickState, "KickStartUp", 0.1f);
+                    enemy.DelayedCallback(enemy.kickState, "Kick", 0.2f);
+                    enemy.DelayedCallback(enemy.kickState, "KickCanDamage", 0.3f);
+                    enemy.DelayedCallback(enemy.kickState, "KickDone", 0.4f);
+                }
+                if ((kickPosition - enemy.transform.position).magnitude > 3f || (GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude > 10f || CheckIfTooCloseTooWall() && !abort)
+                {
+                    abort = true;
+                    kickableToKick.IsBeeingKicked(false);
+                    KickDone();
+                    runningEnemy.JustKicked();
+                }
             }
-            if ((kickPosition - enemy.transform.position).magnitude > 3f || (GameManager.instance.XROrigin.transform.position - enemy.transform.position).magnitude > 10f || CheckIfTooCloseTooWall() && !abort)
+            else
             {
-                abort = true;
+                enemy.RotateToPosition(kickableToKick.transform.position);
+            }
+
+            //Switch to other states
+            if (enemy.stunned)
+            {
                 kickableToKick.IsBeeingKicked(false);
-                KickDone();
-                runningEnemy.JustKicked();
+                enemy.SwitchState(enemy.stunnedState);
+            }
+            if (enemy.hiding)
+            {
+                kickableToKick.IsBeeingKicked(false);
+                enemy.SwitchState(enemy.coverState);
             }
         }
         else
         {
-            enemy.RotateToPosition(kickableToKick.transform.position);
+            runningEnemy.SwitchState(runningEnemy.runState);
         }
         
-        //Switch to other states
-        if (enemy.stunned)
-        {
-            kickableToKick.IsBeeingKicked(false);
-            enemy.SwitchState(enemy.stunnedState);
-        }
-        if (enemy.hiding)
-        {
-            kickableToKick.IsBeeingKicked(false);
-            enemy.SwitchState(enemy.coverState);
-        }
     }
     public void KickStartUp()
     {
-        runningEnemy.enemyAnim.SetTrigger("Kick");
+        runningEnemy.ChangeAnimationState("Kick");
         runningEnemy.JustKicked();
     }
     public void Kick()
@@ -102,19 +111,16 @@ public class EnemyKickState : EnemyBaseState
                 }
                 else
                 {
-                    Debug.Log("Too close1");
                     return true;
                 }
             }
             else
             {
-                Debug.Log("Too close2");
                 return true;
             }
         }
         else
         {
-            Debug.Log("Too close3");
             return true;
         }
     }

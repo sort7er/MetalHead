@@ -86,6 +86,7 @@ public class RunningEnemy : MonoBehaviour
 
     [Header("References")]
     public RigConstraints rig;
+    public ArmConstraints armRig;
     public Transform enemyModel;
     public Transform headTrans;
     public Transform leftSholder, rightSholder;

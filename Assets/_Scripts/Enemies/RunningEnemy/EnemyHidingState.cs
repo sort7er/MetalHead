@@ -66,7 +66,7 @@ public class EnemyHidingState : EnemyBaseState
             }
             else if((destination - enemy.transform.position).magnitude < 1.2f && !invokeStarted && runningEnemy.hiding)
             {
-                enemy.DelayedCallback(enemy.coverState, "InCover", enemy.minCoverDuration * 0.1f);
+                enemy.DelayedCallback(enemy.coverState, "CheckIfInCover", enemy.minCoverDuration * 0.1f);
                 invokeStarted = true;
             }
             else
@@ -154,7 +154,6 @@ public class EnemyHidingState : EnemyBaseState
                 }
             }
         }
-        Debug.Log(noDodge);
         if(!noDodge)
         {
             runningEnemy.SwitchState(runningEnemy.dodgeState);
@@ -179,6 +178,15 @@ public class EnemyHidingState : EnemyBaseState
             return Vector3.Distance(agent.transform.position, A.transform.position).CompareTo(Vector3.Distance(agent.transform.position, B.transform.position));
         }
     }
+
+    public void CheckIfInCover()
+    {
+        if (!inCover)
+        {
+            InCover();
+        }
+    }
+
     public void InCover()
     {
         inCover = true;

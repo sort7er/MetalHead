@@ -16,6 +16,7 @@ public class AIManager : MonoBehaviour
     [HideInInspector] public bool playerIsBeeingAttacked;
     [HideInInspector] public bool talkingOccupied;
     [HideInInspector] public bool idleTalkingOccupied;
+    [HideInInspector] public bool bombOccupied;
 
     [HideInInspector] public bool canPlayAttack;
     [HideInInspector] public bool canPlayIdle;
@@ -74,6 +75,22 @@ public class AIManager : MonoBehaviour
     public void DoneAttacking()
     {
         playerIsBeeingAttacked = false;
+    }
+    public bool CheckForBomb()
+    {
+        if (!bombOccupied)
+        {
+            bombOccupied = true;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public void BombDone()
+    {
+        bombOccupied = false;
     }
     public void Talking()
     {

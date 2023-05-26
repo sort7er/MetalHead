@@ -75,7 +75,7 @@ MonoBehaviour:
         weight: 0
     m_Offset: {x: 0, y: 0, z: 0}
     m_MinLimit: -180
-    m_MaxLimit: 180
+    m_MaxLimit: 30
     m_AimAxis: 3
     m_UpAxis: 1
     m_WorldUpType: 0
@@ -161,7 +161,7 @@ MonoBehaviour:
         weight: 0
     m_Offset: {x: 0, y: 0, z: 0}
     m_MinLimit: -180
-    m_MaxLimit: 180
+    m_MaxLimit: 30
     m_AimAxis: 3
     m_UpAxis: 4
     m_WorldUpType: 0
@@ -472,6 +472,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1216159564}
   - component: {fileID: 1216159565}
+  - component: {fileID: 1535119573}
   m_Layer: 0
   m_Name: RightArmRig
   m_TagString: Untagged
@@ -544,6 +545,22 @@ MonoBehaviour:
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 90}
     m_Visible: 1
+--- !u!114 &1535119573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216159563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 727b2e267713363448629cf12da7e1ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 7362675143327564803}
+  shoulder: {fileID: 1487057656}
+  tricep: {fileID: 1382255215}
+  arm: {fileID: 1057352002}
 --- !u!1 &1371893392
 GameObject:
   m_ObjectHideFlags: 0
@@ -1085,7 +1102,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 243418658053445760}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.1671554e-15, y: -0.065010756, z: 2.2129838e-16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1458,11 +1475,11 @@ MonoBehaviour:
   layersLookForPlayer:
     serializedVersion: 2
     m_Bits: 1216
-  minShootingLength: 0
-  maxShootingLength: 0
-  minAttackCooldown: 0.2
-  maxAttackCooldown: 1
-  kickForce: 200
+  minShootingLength: 1
+  maxShootingLength: 6
+  minAttackCooldown: 1.2
+  maxAttackCooldown: 3
+  kickForce: 600
   timeBetweenKicks: 2
   barrelDistance: 0.5
   minCoverDuration: 1
@@ -1479,6 +1496,7 @@ MonoBehaviour:
     m_Bits: 1024
   timeDead: 4
   rig: {fileID: 7362675144006301117}
+  armRig: {fileID: 1535119573}
   enemyModel: {fileID: 197290721420227443}
   headTrans: {fileID: 5343471531070197036}
   leftSholder: {fileID: 2026729279}
@@ -2331,11 +2349,11 @@ MonoBehaviour:
   m_RigLayers:
   - m_Rig: {fileID: 7362675144006301114}
     m_Active: 1
-  - m_Rig: {fileID: 7362675143764957639}
-    m_Active: 1
   - m_Rig: {fileID: 1413356271}
     m_Active: 1
   - m_Rig: {fileID: 1216159565}
+    m_Active: 1
+  - m_Rig: {fileID: 7362675143764957639}
     m_Active: 1
   m_Effectors: []
 --- !u!82 &7362675144230920260
@@ -2569,7 +2587,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletDamage: 5
-  bulletSpeed: 20
+  bulletSpeed: 50
   gunMuzzle: {fileID: 1041891897}
   bombMuzzle: {fileID: 1539768065}
   bombPrefab: {fileID: 1023870795637526690, guid: 5550a41f716781c40a411219f9832314,
@@ -3662,7 +3680,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2866104874145423185}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0.30948922, z: -0.0012359028}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5016,7 +5034,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: a6874e4c02b989c4bbed11d097040987, type: 3}
+  m_audioClip: {fileID: 8300000, guid: f8167dd08377f7e44b0213fcea703620, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -5112,7 +5130,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: a6874e4c02b989c4bbed11d097040987, type: 3}
+  m_audioClip: {fileID: 8300000, guid: f8167dd08377f7e44b0213fcea703620, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -5468,7 +5486,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5399034975779282295}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.000000006064777, y: 0.0929049, z: -0.0012063442}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6339,7 +6357,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6511829880010816001}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.000000006418033, y: 0.04092451, z: -0.0000438752}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6543,7 +6561,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7161155192507321001}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.532555e-10, y: 0.06184783, z: 0.002486966}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7202,7 +7220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdb90b913935e644baaa86c076d788e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Weight: 1
+  m_Weight: 0
   m_Data:
     m_ConstrainedObject: {fileID: 2465636154649286322}
     m_SourceObjects:
@@ -7573,7 +7591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdb90b913935e644baaa86c076d788e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Weight: 1
+  m_Weight: 0
   m_Data:
     m_ConstrainedObject: {fileID: 1195910454129803149}
     m_SourceObjects:
@@ -7693,7 +7711,7 @@ MonoBehaviour:
     m_ConstrainedAxes:
       x: 1
       y: 1
-      z: 1
+      z: 0
 --- !u!1 &7362675144653355424
 GameObject:
   m_ObjectHideFlags: 0

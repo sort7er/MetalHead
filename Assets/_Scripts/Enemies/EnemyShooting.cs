@@ -18,25 +18,25 @@ public class EnemyShooting : MonoBehaviour
 
     public void FireBomb()
     {
-        Debug.Log("Fire");
         GameObject bomb = Instantiate(bombPrefab, bombMuzzle.position, bombMuzzle.rotation);
         bomb.transform.parent = ParentManager.instance.bullets;
 
         float distance = Vector3.Distance(transform.position, GameManager.instance.XROrigin.transform.position);
-        float heightDifference = GameManager.instance.XROrigin.transform.position.y - transform.position.y;
 
-        Debug.Log(heightDifference);
-
-        if (heightDifference < 0.1f)
+        if(distance > 20)
         {
-            multiplier = 1;
+            multiplier = distance * 0.5f;
+        }
+        else if(distance > 10)
+        {
+            multiplier = distance * 0.75f;
         }
         else
         {
-            multiplier = 1 + (heightDifference * 0.005f);
+            multiplier = distance;
         }
 
-        bomb.GetComponent<Rigidbody>().AddForce(bombMuzzle.forward * distance * 100 * multiplier, ForceMode.Impulse);
+        bomb.GetComponent<Rigidbody>().AddForce(bombMuzzle.forward * multiplier * 100, ForceMode.Impulse);
 
     }
 
@@ -55,6 +55,5 @@ public class EnemyShooting : MonoBehaviour
         
         muzzleFlash.Play();
         EffectManager.instance.Fire(gunMuzzle, bulletDamage, bulletSpeed);
-        Debug.Log("Fire bullet");
     }
 }
