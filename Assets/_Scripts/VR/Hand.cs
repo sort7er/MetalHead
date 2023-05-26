@@ -306,4 +306,11 @@ public class Hand : MonoBehaviour
             return false;
         }
     }
+
+    public void SendPulse(float intesity, float duration)
+    {
+        interactor.SendHapticImpulse(intesity, duration);
+        Debug.Log("Beep");
+    }
+
 }
