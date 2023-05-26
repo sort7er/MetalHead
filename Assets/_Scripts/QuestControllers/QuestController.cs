@@ -55,11 +55,7 @@ public class QuestController : MonoBehaviour
         }
         else if (direction == 2)
         {
-            controllerAnim.Play("JoystickLeft");
-        }
-        else if (direction == 3)
-        {
-            controllerAnim.Play("JoystickRight");
+            controllerAnim.Play("JoystickSide");
         }
         else
         {

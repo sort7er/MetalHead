@@ -29,6 +29,8 @@ public class RelayToTv : MonoBehaviour
     //Enable
     public void TvTurning()
     {
+        tutorialManager.RightQuestActive(true);
+        tutorialManager.rightQuest.Joystick(2);
         requirementCheck.CanTurn();
         AddRequirement(2);
         delay = 2;

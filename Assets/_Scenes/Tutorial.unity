@@ -16095,7 +16095,7 @@ Transform:
   m_GameObject: {fileID: 224519886}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.415, z: 0}
-  m_LocalScale: {x: 0.7294135, y: 0.7294135, z: 0.7294135}
+  m_LocalScale: {x: 0.61165696, y: 0.7294135, z: 0.5229895}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 34419113}
@@ -76272,6 +76272,8 @@ MonoBehaviour:
     type: 3}
   pauseVignette: {fileID: 1610369946}
   exitTutorialMenu: {fileID: 40597790}
+  leftQuest: {fileID: 4153204450833236526}
+  rightQuest: {fileID: 8478251510886946009}
   magnet: {fileID: 1966746279}
 --- !u!114 &2056867957
 MonoBehaviour:
@@ -81884,6 +81886,18 @@ Transform:
   m_Father: {fileID: 5464937457502140031}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &8478251510886946009 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6843109950300098901, guid: 6be3475996e656b4b9a4740a2a27b8dc,
+    type: 3}
+  m_PrefabInstance: {fileID: 7354313931348323182}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 842efee46611a5c478adc76679a47cd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8479234850182196887
 GameObject:
   m_ObjectHideFlags: 0

@@ -295,6 +295,12 @@ public class Hand : MonoBehaviour
         spawnedHand.transform.localPosition = originalPostion;
         spawnedHand.transform.localRotation = originalRotation;
     }
+
+    public void SetHandActive(bool state)
+    {
+        spawnedHand.SetActive(state);
+    }
+
     public bool IsHoldingSomething()
     {
         if (interactor.selectTarget != null)

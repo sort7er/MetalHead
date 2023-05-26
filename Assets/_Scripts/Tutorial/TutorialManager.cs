@@ -9,6 +9,7 @@ public class TutorialManager : MonoBehaviour
     public InputActionAsset menuInputAction;
     public GameObject pauseVignette;
     public GameObject exitTutorialMenu;
+    public QuestController leftQuest, rightQuest;
 
 
     [Header("Things to enable")]
@@ -38,6 +39,8 @@ public class TutorialManager : MonoBehaviour
         PauseVignette(0);
         Invoke(nameof(StartTutorial), 0.1f);
         CanExitTutorial(true);
+        LeftQuestActive(false);
+        RightQuestActive(false);
     }
 
     private void OnEnable()
@@ -213,4 +216,13 @@ public class TutorialManager : MonoBehaviour
             LocomotionManager.instance.EnableTurning(true);
         }
     }
+    public void LeftQuestActive(bool state)
+    {
+        leftQuest.gameObject.SetActive(state);
+    }
+    public void RightQuestActive(bool state)
+    {
+        rightQuest.gameObject.SetActive(state);
+    }
+
 }
