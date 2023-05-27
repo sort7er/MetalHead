@@ -50,6 +50,8 @@ public class RelayToTv : MonoBehaviour
     public void TvMovement()
     {
         AddRequirement(2);
+        tutorialManager.LeftQuestActive(true);
+        tutorialManager.leftQuest.Joystick(0);
         OpeningInFloor.SetBool("Lift", true);
         for (int i = 0; i < tvsInScene.Length; i++)
         {
@@ -59,6 +61,10 @@ public class RelayToTv : MonoBehaviour
     public void TvMenu()
     {
         delay = 0f;
+        requirementCheck.CanPressMenu(true);
+        tutorialManager.LeftQuestActive(true);
+        tutorialManager.leftQuest.Menu();
+        GameManager.instance.leftHand.SetHandActive(false);
         for (int i = 0; i < tvsInScene.Length; i++)
         {
             tvsInScene[i].Menu();
@@ -67,6 +73,10 @@ public class RelayToTv : MonoBehaviour
     }
     public void TvArrow()
     {
+        requirementCheck.CanPressMenu(false);
+        tutorialManager.leftQuest.Nothing();
+        tutorialManager.LeftQuestActive(false);
+        GameManager.instance.leftHand.SetHandActive(true);
         AddRequirement(1);
         for (int i = 0; i < tvsInScene.Length; i++)
         {
@@ -171,6 +181,7 @@ public class RelayToTv : MonoBehaviour
     {
         CheckASpot(2);
         quickturn = false;
+        tutorialManager.rightQuest.Nothing();
     }
 
     private void CheckOff()
@@ -187,6 +198,7 @@ public class RelayToTv : MonoBehaviour
 
             if (currentObjective == 1)
             {
+                tutorialManager.rightQuest.Nothing();
                 Invoke(nameof(NextMenu), delay);
             }
             else if(currentObjective == 2)
@@ -226,6 +238,7 @@ public class RelayToTv : MonoBehaviour
             for (int i = 0; i < tvsInScene.Length; i++)
             {
                 tvsInScene[i].SetQuickTurnDisplay();
+                tutorialManager.rightQuest.Joystick(1);
             }
         }
         

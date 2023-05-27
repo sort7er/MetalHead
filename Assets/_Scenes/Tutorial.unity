@@ -16133,7 +16133,19 @@ MonoBehaviour:
         m_CallState: 2
   exit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2056867955}
+        m_TargetAssemblyTypeName: RequirementCheck, Assembly-CSharp
+        m_MethodName: LiftTriggerExited
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!65 &224519889
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -80688,11 +80700,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2079589384}
     m_Modifications:
-    - target: {fileID: 4153204450833236527, guid: 8d885c055cc30514ab32e7c988c34eac,
-        type: 3}
-      propertyPath: MinDistance
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4696950459165164433, guid: 8d885c055cc30514ab32e7c988c34eac,
         type: 3}
       propertyPath: m_Name
@@ -80702,21 +80709,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5360755948746283307, guid: 8d885c055cc30514ab32e7c988c34eac,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.06
-      objectReference: {fileID: 0}
-    - target: {fileID: 5360755948746283307, guid: 8d885c055cc30514ab32e7c988c34eac,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.06
-      objectReference: {fileID: 0}
-    - target: {fileID: 5360755948746283307, guid: 8d885c055cc30514ab32e7c988c34eac,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.06
       objectReference: {fileID: 0}
     - target: {fileID: 5360755948746283307, guid: 8d885c055cc30514ab32e7c988c34eac,
         type: 3}
@@ -80767,11 +80759,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5360755948746283307, guid: 8d885c055cc30514ab32e7c988c34eac,
-        type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -81501,11 +81488,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RightQuestController
-      objectReference: {fileID: 0}
-    - target: {fileID: 1676038048798394360, guid: 6be3475996e656b4b9a4740a2a27b8dc,
-        type: 3}
-      propertyPath: MinDistance
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

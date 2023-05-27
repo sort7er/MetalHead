@@ -21,6 +21,7 @@ public class RequirementCheck : MonoBehaviour
 
     private bool canTurnLeft, canTurnRight;
     private bool canQuickturn;
+    private bool canPressMenu;
     private bool liftTriggerEntererd;
     private bool firingRangeEntererd;
     private bool buttonPressed;
@@ -68,6 +69,12 @@ public class RequirementCheck : MonoBehaviour
 
     private void Update()
     {
+        if(canPressMenu && GameManager.instance.isPaused)
+        {
+            MenuPressed();
+        }
+
+
         if(gunEmptied && !slidePulled)
         {
             if (releaseMag.release && !magDropped)
@@ -114,6 +121,10 @@ public class RequirementCheck : MonoBehaviour
     {
         canQuickturn = true;
     }
+    public void CanPressMenu(bool state)
+    {
+        canPressMenu = state;
+    }
     public void CanGrabGun()
     {
         canGrabGun = true;
@@ -152,8 +163,28 @@ public class RequirementCheck : MonoBehaviour
     {
         if (!liftTriggerEntererd)
         {
+
             relay.CheckASpot(0);
             liftTriggerEntererd = true;
+        }
+        if(!buttonPressed)
+        {
+            GameManager.instance.leftHand.SetHandActive(true);
+            GameManager.instance.rightHand.SetHandActive(true);
+            tutorialManager.leftQuest.Nothing();
+            tutorialManager.LeftQuestActive(false);
+            tutorialManager.RightQuestActive(false);
+        }
+    }
+    public void LiftTriggerExited()
+    {
+        if (!buttonPressed)
+        {
+            GameManager.instance.leftHand.SetHandActive(false);
+            GameManager.instance.rightHand.SetHandActive(false);
+            tutorialManager.LeftQuestActive(true);
+            tutorialManager.RightQuestActive(true);
+            tutorialManager.leftQuest.Joystick(0);
         }
     }
     public void ButtonPressed()
@@ -164,6 +195,14 @@ public class RequirementCheck : MonoBehaviour
             buttonPressed = true;
         }
     }
+    public void MenuPressed()
+    {
+        tutorialManager.leftQuest.Nothing();
+        tutorialManager.LeftQuestActive(false);
+        GameManager.instance.leftHand.SetHandActive(true);
+        CanPressMenu(false);
+    }
+
     public void FiringRangeEntered()
     {
         if (!firingRangeEntererd)

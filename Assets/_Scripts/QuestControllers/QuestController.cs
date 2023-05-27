@@ -86,14 +86,13 @@ public class QuestController : MonoBehaviour
 
     public void Nothing()
     {
-        //controllerAnim.Play("Nothing");
+        controllerAnim.Play("Nothing");
         controllerSource.Stop();
+        CancelInvoke(nameof(SendPulse));
 
         for (int i = 0; i < inputs.Length; i++)
         {
             inputs[i].material = defaultMaterial;
         }
     }
-
-
 }
