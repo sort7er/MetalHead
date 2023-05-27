@@ -6,6 +6,7 @@ public class RelayToTv : MonoBehaviour
     public Animator[] doorToOpen;
     public GameObject[] groundToEnable;
     public TV[] tvsInScene;
+    public Transform objectToGrab;
 
     private TutorialManager tutorialManager;
     private RequirementCheck requirementCheck;
@@ -88,6 +89,7 @@ public class RelayToTv : MonoBehaviour
     }
     public void TvGrabRight()
     {
+        Guide.instance.SetGuide(2, 3, objectToGrab, "Grab the cube");
         delay = 0;
         AddRequirement(2);
 

@@ -7,6 +7,8 @@ public class RequirementCheck : MonoBehaviour
     public AmmoBag ammoBag;
     public CZ50 cz50;
     public Magnet magnet;
+    public Transform magPos;
+    public Transform slide;
 
     private InputAction turnLeft;
     private InputAction turnRight;
@@ -316,6 +318,7 @@ public class RequirementCheck : MonoBehaviour
     {
         if(!grabObjectRight)
         {
+            Guide.instance.GuideDone();
             relay.CheckASpot(0);
             grabObjectRight = true;
         }
@@ -360,6 +363,7 @@ public class RequirementCheck : MonoBehaviour
     {
         if (!firingRangeEntererd)
         {
+            Guide.instance.SetGuide(2, 3, cz50ReturnToHolser.transform, "Grab the gun");
             relay.CheckASpot(0);
             firingRangeEntererd = true;
         }
@@ -368,6 +372,7 @@ public class RequirementCheck : MonoBehaviour
     {
         if (!gunGrabbed && canGrabGun)
         {
+            Guide.instance.GuideDone();
             cz50ReturnToHolser.enabled = true;
             relay.CheckASpot(0);
             gunGrabbed = true;
@@ -440,6 +445,7 @@ public class RequirementCheck : MonoBehaviour
             relay.NextReload();
             relay.CheckASpot(0);
             magDropped = true;
+            Guide.instance.SetGuide(1, 2, GameManager.instance.ammoBag.transform, "Grab ammo");
         }
     }
     public void GrabMag()
@@ -449,6 +455,7 @@ public class RequirementCheck : MonoBehaviour
             relay.NextReload();
             relay.CheckASpot(1);
             magGrabbed = true;
+            Guide.instance.SetGuide(1, 2, magPos, "Insert");
         }
     }
     public void MagInserted()
@@ -469,6 +476,7 @@ public class RequirementCheck : MonoBehaviour
                 tutorialManager.LeftQuestActive(true);
                 tutorialManager.leftQuest.Grip();
             }
+            Guide.instance.SetGuide(2, 2, slide, "Pull slide");
         }
     }
     public void SlidePulled()
@@ -482,6 +490,7 @@ public class RequirementCheck : MonoBehaviour
             tutorialManager.LeftQuestActive(false);
             tutorialManager.rightQuest.Nothing();
             tutorialManager.RightQuestActive(false);
+            Guide.instance.GuideDone();
         }
     }
     public void MagnetRoomEntered()
