@@ -10,7 +10,7 @@ public class QuestController : MonoBehaviour
     private Animator controllerAnim;
     private AudioSource controllerSource;
 
-    private void Start()
+    private void Awake()
     {
         controllerAnim = GetComponent<Animator>();
         controllerSource = GetComponent<AudioSource>();
@@ -86,7 +86,7 @@ public class QuestController : MonoBehaviour
 
     public void Nothing()
     {
-        controllerAnim.Play("Nothing");
+        //controllerAnim.Play("Nothing");
         controllerSource.Stop();
 
         for (int i = 0; i < inputs.Length; i++)

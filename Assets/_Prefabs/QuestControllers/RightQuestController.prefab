@@ -30,8 +30,8 @@ Transform:
   m_GameObject: {fileID: 623736634768318060}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.0656505, y: 0.371, z: 0.3832536}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.06, y: 1.06, z: 1.06}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4585413280744964965}
   - {fileID: 8976960996544760130}
@@ -40,7 +40,7 @@ Transform:
   - {fileID: 5005948808420816986}
   - {fileID: 1975254292183337411}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3766133075138579315
 MeshFilter:
@@ -70,7 +70,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 078758c10bd71d54f98adb9c0ee8e553, type: 2}
+  - {fileID: 2100000, guid: 0ac050bd33d0309489468d18089a0ba8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -132,7 +132,7 @@ MonoBehaviour:
   - {fileID: 513877888201539624}
   - {fileID: 3044587986571639994}
   - {fileID: 7183765727696844936}
-  defaultMaterial: {fileID: 2100000, guid: 078758c10bd71d54f98adb9c0ee8e553, type: 2}
+  defaultMaterial: {fileID: 2100000, guid: 0ac050bd33d0309489468d18089a0ba8, type: 2}
   highlightMaterial: {fileID: 2100000, guid: c62ef3abc6980c048ab17d368f0db0ac, type: 2}
 --- !u!82 &1676038048798394360
 AudioSource:
@@ -154,7 +154,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 3
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0

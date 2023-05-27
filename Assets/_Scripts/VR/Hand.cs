@@ -296,10 +296,7 @@ public class Hand : MonoBehaviour
         spawnedHand.transform.localRotation = originalRotation;
     }
 
-    public void SetHandActive(bool state)
-    {
-        spawnedHand.SetActive(state);
-    }
+
 
     public bool IsHoldingSomething()
     {
@@ -312,11 +309,26 @@ public class Hand : MonoBehaviour
             return false;
         }
     }
+    public void SetHandActive(bool state)
+    {
+        spawnedHand.SetActive(state);
+    }
 
     public void SendPulse(float intesity, float duration)
     {
         interactor.SendHapticImpulse(intesity, duration);
-        Debug.Log("Beep");
+    }
+
+    public bool IsSpawnedHandThere()
+    {
+        if(spawnedHand != null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
 }

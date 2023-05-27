@@ -20,7 +20,7 @@ public class TutorialManager : MonoBehaviour
     private Renderer pauseVignetteRenderer;
     private InputAction menuPressed;
     private bool followCam, canPause;
-    private bool watchFound;
+    private bool watchFound, lHandDisabled, rHandDisabled;
     private bool enableTurning, enableMovement;
     private bool canExitTutorial;
     private int currentMenu;
@@ -75,6 +75,17 @@ public class TutorialManager : MonoBehaviour
                 watchFound = true;
                 SetWatch(false);
             }
+        }
+
+        if (GameManager.instance.leftHand.IsSpawnedHandThere() && !lHandDisabled)
+        {
+            GameManager.instance.leftHand.SetHandActive(false);
+            lHandDisabled= true;
+        }
+        if (GameManager.instance.rightHand.IsSpawnedHandThere() && !rHandDisabled)
+        {
+            GameManager.instance.rightHand.SetHandActive(false);
+            rHandDisabled = true;
         }
     }
 
