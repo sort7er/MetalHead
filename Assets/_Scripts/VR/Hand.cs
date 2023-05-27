@@ -331,4 +331,16 @@ public class Hand : MonoBehaviour
         }
     }
 
+    public bool IsHovering()
+    {
+        if(lineRenderer.enabled)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 }

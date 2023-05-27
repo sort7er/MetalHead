@@ -26,12 +26,13 @@ public class RequirementCheck : MonoBehaviour
     private bool objectRoomEntererd;
     private bool grabObjectRight, releasedObjectRight;
     private bool grabObjectLeft, releasedObjectLeft;
+    private bool gripLeft, gripRight, holdingLeft, holdingRight;
     private bool firingRangeEntererd;
     private bool buttonPressed;
     private bool gunGrabbed;
     private bool canGrabGun;
     private bool magnetRoomEntered;
-    
+
     //Shooting
     private bool gunEmptied;
     private int bulletsShoot;
@@ -78,7 +79,103 @@ public class RequirementCheck : MonoBehaviour
         }
 
 
-        if(gunEmptied && !slidePulled)
+        if (canGrabGun && !slidePulled)
+        {
+
+            if (GameManager.instance.leftHand.IsHovering())
+            {
+                if (!gripLeft)
+                {
+                    tutorialManager.LeftQuestActive(true);
+                    tutorialManager.leftQuest.Grip();
+                    gripLeft = true;
+                    holdingLeft = false;
+                }
+
+            }
+            else if (!GameManager.instance.leftHand.IsHovering() && GameManager.instance.CheckGameObject(cz50.gameObject) == 1)
+            {
+                if (!holdingLeft)
+                {
+                    if (gunEmptied && !magDropped)
+                    {
+                        tutorialManager.leftQuest.Secondary();
+                    }
+                    else if (magDropped)
+                    {
+                        tutorialManager.leftQuest.Nothing();
+                        tutorialManager.LeftQuestActive(false);
+                    }
+
+                    if (magInserted)
+                    {
+                        tutorialManager.RightQuestActive(true);
+                        tutorialManager.rightQuest.Grip();
+                    }
+
+                    holdingLeft = true;
+                }
+
+            }
+            else if (!GameManager.instance.leftHand.IsHovering() && GameManager.instance.CheckGameObject(cz50.gameObject) != 1)
+            {
+                if (gripLeft!)
+                {
+                    tutorialManager.LeftQuestActive(false);
+                    tutorialManager.leftQuest.Nothing();
+                    gripLeft = false;
+                }
+
+            }
+
+
+            if (GameManager.instance.rightHand.IsHovering())
+            {
+                if (!gripRight)
+                {
+                    tutorialManager.RightQuestActive(true);
+                    tutorialManager.rightQuest.Grip();
+                    gripRight = true;
+                    holdingRight = false;
+                }
+            }
+            else if (!GameManager.instance.rightHand.IsHovering() && GameManager.instance.CheckGameObject(cz50.gameObject) == 2)
+            {
+                if (!holdingRight)
+                {
+                    if (gunEmptied && !magDropped)
+                    {
+                        tutorialManager.rightQuest.Secondary();
+                    }
+                    else if (magDropped)
+                    {
+                        tutorialManager.rightQuest.Nothing();
+                        tutorialManager.RightQuestActive(false);
+                    }
+
+                    if (magInserted)
+                    {
+                        tutorialManager.LeftQuestActive(true);
+                        tutorialManager.leftQuest.Grip();
+                    }
+
+                    holdingRight = true;
+                }
+            }
+            else if (!GameManager.instance.rightHand.IsHovering() && GameManager.instance.CheckGameObject(cz50.gameObject) != 2)
+            {
+                if (gripRight)
+                {
+                    tutorialManager.RightQuestActive(false);
+                    tutorialManager.rightQuest.Nothing();
+                    gripRight = false;
+                }
+            }
+        }
+
+
+
+        if (gunEmptied && !slidePulled)
         {
             if (releaseMag.release && !magDropped)
             {
@@ -132,6 +229,7 @@ public class RequirementCheck : MonoBehaviour
     {
         canGrabGun = true;
     }
+
     public void CanReload()
     {
         releaseMag.TutorialCanReload(true);
@@ -274,16 +372,53 @@ public class RequirementCheck : MonoBehaviour
             relay.CheckASpot(0);
             gunGrabbed = true;
         }
+
+        if (!gunEmptied)
+        {
+            if(GameManager.instance.CheckGameObject(cz50.gameObject) == 1)
+            {
+                tutorialManager.LeftQuestActive(true);
+                tutorialManager.leftQuest.Trigger();
+            }
+            if (GameManager.instance.CheckGameObject(cz50.gameObject) == 2)
+            {
+                tutorialManager.RightQuestActive(true);
+                tutorialManager.rightQuest.Trigger();
+            }
+        }
     }
     public void ShootGun()
     {
         if (!gunEmptied)
         {
+
+            if (GameManager.instance.CheckGameObject(cz50.gameObject) == 1)
+            {
+                tutorialManager.leftQuest.Nothing();
+                tutorialManager.LeftQuestActive(false);
+            }
+            if (GameManager.instance.CheckGameObject(cz50.gameObject) == 2)
+            {
+                tutorialManager.rightQuest.Nothing();
+                tutorialManager.RightQuestActive(false);
+            }
+
+
             bulletsShoot++;
             if(bulletsShoot >= 10)
             {
                 relay.CheckASpot(0);
                 gunEmptied = true;
+                if (GameManager.instance.CheckGameObject(cz50.gameObject) == 1)
+                {
+                    tutorialManager.LeftQuestActive(true);
+                    tutorialManager.leftQuest.Secondary();
+                }
+                if (GameManager.instance.CheckGameObject(cz50.gameObject) == 2)
+                {
+                    tutorialManager.RightQuestActive(true);
+                    tutorialManager.rightQuest.Secondary();
+                }
             }
         }
     }
@@ -291,6 +426,17 @@ public class RequirementCheck : MonoBehaviour
     {
         if (!magDropped)
         {
+            if (GameManager.instance.CheckGameObject(cz50.gameObject) == 1)
+            {
+                tutorialManager.leftQuest.Nothing();
+                tutorialManager.LeftQuestActive(false);
+            }
+            if (GameManager.instance.CheckGameObject(cz50.gameObject) == 2)
+            {
+                tutorialManager.rightQuest.Nothing();
+                tutorialManager.RightQuestActive(false);
+            }
+
             relay.NextReload();
             relay.CheckASpot(0);
             magDropped = true;
@@ -312,6 +458,17 @@ public class RequirementCheck : MonoBehaviour
             relay.NextReload();
             relay.CheckASpot(2);
             magInserted = true;
+
+            if (GameManager.instance.CheckGameObject(cz50.gameObject) == 1)
+            {
+                tutorialManager.RightQuestActive(true);
+                tutorialManager.rightQuest.Grip();
+            }
+            if (GameManager.instance.CheckGameObject(cz50.gameObject) == 2)
+            {
+                tutorialManager.LeftQuestActive(true);
+                tutorialManager.leftQuest.Grip();
+            }
         }
     }
     public void SlidePulled()
@@ -320,6 +477,11 @@ public class RequirementCheck : MonoBehaviour
         {
             relay.CheckASpot(3);
             slidePulled = true;
+
+            tutorialManager.leftQuest.Nothing();
+            tutorialManager.LeftQuestActive(false);
+            tutorialManager.rightQuest.Nothing();
+            tutorialManager.RightQuestActive(false);
         }
     }
     public void MagnetRoomEntered()

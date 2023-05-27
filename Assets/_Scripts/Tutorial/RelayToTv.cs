@@ -51,6 +51,7 @@ public class RelayToTv : MonoBehaviour
     {
         AddRequirement(2);
         tutorialManager.LeftQuestActive(true);
+        tutorialManager.RightQuestActive(true);
         tutorialManager.leftQuest.Joystick(0);
         OpeningInFloor.SetBool("Lift", true);
         for (int i = 0; i < tvsInScene.Length; i++)
@@ -317,6 +318,7 @@ public class RelayToTv : MonoBehaviour
     private void NextMenu()
     {
         tutorialManager.NextMenu();
+        tutorialManager.RightQuestActive(false);
     }
 
 }

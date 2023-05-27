@@ -69,7 +69,7 @@ public class QuestController : MonoBehaviour
     private void Commons()
     {
         Nothing();
-        controllerSource.Play();
+        //controllerSource.Play();
         InvokeRepeating(nameof(SendPulse), 0, controllerSource.clip.length);
     }
     private void SendPulse()
@@ -87,7 +87,7 @@ public class QuestController : MonoBehaviour
     public void Nothing()
     {
         controllerAnim.Play("Nothing");
-        controllerSource.Stop();
+        //controllerSource.Stop();
         CancelInvoke(nameof(SendPulse));
 
         for (int i = 0; i < inputs.Length; i++)
