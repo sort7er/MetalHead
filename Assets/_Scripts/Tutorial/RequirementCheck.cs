@@ -23,6 +23,9 @@ public class RequirementCheck : MonoBehaviour
     private bool canQuickturn;
     private bool canPressMenu;
     private bool liftTriggerEntererd;
+    private bool objectRoomEntererd;
+    private bool grabObjectRight, releasedObjectRight;
+    private bool grabObjectLeft, releasedObjectLeft;
     private bool firingRangeEntererd;
     private bool buttonPressed;
     private bool gunGrabbed;
@@ -202,6 +205,48 @@ public class RequirementCheck : MonoBehaviour
         GameManager.instance.leftHand.SetHandActive(true);
         CanPressMenu(false);
     }
+    public void ObjectRoomEntered()
+    {
+        if (!objectRoomEntererd)
+        {
+            relay.CheckASpot(0);
+            objectRoomEntererd = true;
+        }
+    }
+
+    public void GrabObjectRight()
+    {
+        if(!grabObjectRight)
+        {
+            relay.CheckASpot(0);
+            grabObjectRight = true;
+        }
+    }
+    public void ReleasedObjectRight()
+    {
+        if (!releasedObjectRight)
+        {
+            relay.CheckASpot(1);
+            releasedObjectRight = true;
+        }
+    }
+    public void GrabObjectLeft()
+    {
+        if(!grabObjectLeft)
+        {
+            relay.CheckASpot(0);
+            grabObjectLeft = true;
+        }
+    }
+    public void ReleasedObjectLeft()
+    {
+        if(!releasedObjectLeft)
+        {
+            relay.CheckASpot(1);
+            releasedObjectLeft = true;
+        }
+    }
+
 
     public void FiringRangeEntered()
     {

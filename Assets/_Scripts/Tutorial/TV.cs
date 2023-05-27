@@ -50,6 +50,15 @@ public class TV : MonoBehaviour
         }
         ResetTutorial();
         ResetChecklist();
+
+        if (pathLeft)
+        {
+            arrowDisplay.transform.localScale = new Vector3(-arrowDisplay.transform.localScale.x, arrowDisplay.transform.localScale.y, arrowDisplay.transform.localScale.z);
+        }
+        else
+        {
+            arrowDisplay.transform.localScale = new Vector3(arrowDisplay.transform.localScale.x, arrowDisplay.transform.localScale.y, arrowDisplay.transform.localScale.z);
+        }
     }
 
     private void Update()
@@ -93,11 +102,18 @@ public class TV : MonoBehaviour
     public void Arrow(string textToPrint)
     {
         SetCurrentDisplay(arrowDisplay, false);
-        if (pathLeft)
-        {
-            arrowDisplay.transform.localScale = new Vector3(-arrowDisplay.transform.localScale.x, arrowDisplay.transform.localScale.y, arrowDisplay.transform.localScale.z);
-        }
-        Objective(0,textToPrint);
+        Objective(0, textToPrint);
+    }
+
+    public void GrabObjectRight()
+    {
+        Objective(0, "Grab the cube with the right hand");
+        Objective(1, "Release cube with the right hand");
+    }
+    public void GrabObjectLeft()
+    {
+        Objective(0, "Grab the cube with the left hand");
+        Objective(1, "Release cube with the left hand");
     }
 
     public void GrabGun()

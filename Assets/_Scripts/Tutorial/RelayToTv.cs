@@ -85,6 +85,35 @@ public class RelayToTv : MonoBehaviour
         groundToEnable[0].SetActive(true);
         doorToOpen[0].SetTrigger("Open");
     }
+    public void TvGrabRight()
+    {
+        delay = 0;
+        AddRequirement(2);
+        for (int i = 0; i < tvsInScene.Length; i++)
+        {
+            tvsInScene[i].GrabObjectRight();
+        }
+    }
+    public void TvGrabLeft()
+    {
+        delay = 2;
+        AddRequirement(2);
+        for (int i = 0; i < tvsInScene.Length; i++)
+        {
+            tvsInScene[i].GrabObjectLeft();
+        }
+    }
+    public void TvArrow05()
+    {
+        delay = 0;
+        groundToEnable[1].SetActive(true);
+        doorToOpen[1].SetTrigger("Open");
+        AddRequirement(1);
+        for (int i = 0; i < tvsInScene.Length; i++)
+        {
+            tvsInScene[i].Arrow("Proceed out of the room");
+        }
+    }
     public void TvGrabGun()
     {
         AddRequirement(1);
@@ -122,8 +151,8 @@ public class RelayToTv : MonoBehaviour
     public void TvArrow2()
     {
         delay = 0;
-        groundToEnable[1].SetActive(true);
-        doorToOpen[1].SetTrigger("Open");
+        groundToEnable[2].SetActive(true);
+        doorToOpen[2].SetTrigger("Open");
         AddRequirement(1);
         for (int i = 0; i < tvsInScene.Length; i++)
         {
@@ -157,8 +186,8 @@ public class RelayToTv : MonoBehaviour
     }
     public void TvArrow3()
     {
-        groundToEnable[2].SetActive(true);
-        doorToOpen[2].SetTrigger("Open");
+        groundToEnable[3].SetActive(true);
+        doorToOpen[3].SetTrigger("Open");
         AddRequirement(1);
         for (int i = 0; i < tvsInScene.Length; i++)
         {
@@ -207,25 +236,37 @@ public class RelayToTv : MonoBehaviour
             }
             else if (currentObjective == 3)
             {
-                Invoke(nameof(TvGrabGun), delay);
+                Invoke(nameof(TvGrabRight), delay);
             }
             else if (currentObjective == 4)
             {
-                Invoke(nameof(TvShootGun), delay);
+                Invoke(nameof(TvGrabLeft), delay);
             }
             else if (currentObjective == 5)
             {
-                Invoke(nameof(TvReloadGun), delay);
+                Invoke(nameof(TvArrow05), delay);
             }
             else if (currentObjective == 6)
             {
-                Invoke(nameof(TvArrow2), delay);
+                Invoke(nameof(TvGrabGun), delay);
             }
             else if (currentObjective == 7)
             {
-                Invoke(nameof(TvMagnet), delay);
+                Invoke(nameof(TvShootGun), delay);
             }
             else if (currentObjective == 8)
+            {
+                Invoke(nameof(TvReloadGun), delay);
+            }
+            else if (currentObjective == 9)
+            {
+                Invoke(nameof(TvArrow2), delay);
+            }
+            else if (currentObjective == 10)
+            {
+                Invoke(nameof(TvMagnet), delay);
+            }
+            else if (currentObjective == 11)
             {
                 Invoke(nameof(TVMagnetMessage), delay);
             }
