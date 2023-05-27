@@ -226,6 +226,11 @@ public class RequirementCheck : MonoBehaviour
     {
         if (!releasedObjectRight)
         {
+            tutorialManager.RightQuestActive(false);
+            tutorialManager.rightQuest.Nothing();
+            GameManager.instance.rightHand.SetHandActive(false);
+            
+
             relay.CheckASpot(1);
             releasedObjectRight = true;
         }
@@ -240,8 +245,13 @@ public class RequirementCheck : MonoBehaviour
     }
     public void ReleasedObjectLeft()
     {
-        if(!releasedObjectLeft)
+
+        if(!releasedObjectLeft && releasedObjectRight)
         {
+            GameManager.instance.rightHand.SetHandActive(true);
+            GameManager.instance.EnableRightInteractor(true);
+            tutorialManager.leftQuest.Nothing();
+            tutorialManager.LeftQuestActive(false);
             relay.CheckASpot(1);
             releasedObjectLeft = true;
         }

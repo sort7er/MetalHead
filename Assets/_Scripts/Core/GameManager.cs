@@ -117,6 +117,30 @@ public class GameManager : MonoBehaviour
             rHand.enabled = state;
         }
     }
+
+    public void EnableLeftInteractor(bool state)
+    {
+        if (lHand != null)
+        {
+            if (!state)
+            {
+                leftHand.HoverDone();
+            }
+            lHand.enabled = state;
+        }
+    }
+    public void EnableRightInteractor(bool state)
+    {
+        if (rHand != null)
+        {
+            if (!state)
+            {
+                rightHand.HoverDone();
+            }
+
+            rHand.enabled = state;
+        }
+    }
     public void SetXROriginRotation(Transform newRotation)
     {
         XROrigin.transform.rotation = Quaternion.Euler(0, newRotation.eulerAngles.y - cam.transform.localEulerAngles.y, 0);

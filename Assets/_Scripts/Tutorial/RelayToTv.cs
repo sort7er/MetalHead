@@ -89,6 +89,17 @@ public class RelayToTv : MonoBehaviour
     {
         delay = 0;
         AddRequirement(2);
+
+        tutorialManager.LeftQuestActive(false);
+        GameManager.instance.leftHand.SetHandActive(false);
+        GameManager.instance.EnableLeftInteractor(false);
+
+        tutorialManager.RightQuestActive(true);
+        tutorialManager.rightQuest.Grip();
+        GameManager.instance.rightHand.SetHandActive(true);
+
+
+
         for (int i = 0; i < tvsInScene.Length; i++)
         {
             tvsInScene[i].GrabObjectRight();
@@ -98,6 +109,13 @@ public class RelayToTv : MonoBehaviour
     {
         delay = 2;
         AddRequirement(2);
+
+        GameManager.instance.EnableRightInteractor(false);
+        GameManager.instance.EnableLeftInteractor(true);
+        tutorialManager.LeftQuestActive(true);
+        tutorialManager.leftQuest.Grip();
+        GameManager.instance.leftHand.SetHandActive(true);
+
         for (int i = 0; i < tvsInScene.Length; i++)
         {
             tvsInScene[i].GrabObjectLeft();
