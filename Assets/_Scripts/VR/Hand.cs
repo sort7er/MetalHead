@@ -7,6 +7,8 @@ public class Hand : MonoBehaviour
 {
     public GameObject handPrefab;
     public InputDeviceCharacteristics controllerCharacteristics;
+    public QuestController questController;
+
     [Range(0, 1)]
     public float hoverHapticIntensity;
     public float hoverDuration;
@@ -342,5 +344,4 @@ public class Hand : MonoBehaviour
             return false;
         }
     }
-
 }

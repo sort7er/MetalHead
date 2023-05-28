@@ -9,13 +9,12 @@ public class TutorialManager : MonoBehaviour
     public InputActionAsset menuInputAction;
     public GameObject pauseVignette;
     public GameObject exitTutorialMenu;
-    public QuestController leftQuest, rightQuest;
 
 
     [Header("Things to enable")]
     public GameObject magnet;
 
-
+    private QuestController leftQuest, rightQuest;
     private Watch watch;
     private Renderer pauseVignetteRenderer;
     private InputAction menuPressed;
@@ -27,6 +26,8 @@ public class TutorialManager : MonoBehaviour
 
     private void Start()
     {
+        leftQuest = GameManager.instance.leftHand.questController;
+        rightQuest = GameManager.instance.rightHand.questController;
         pauseVignetteRenderer = pauseVignette.GetComponent<Renderer>();
         foreach (Transform t in menu)
         {
@@ -39,8 +40,8 @@ public class TutorialManager : MonoBehaviour
         PauseVignette(0);
         Invoke(nameof(StartTutorial), 0.1f);
         CanExitTutorial(true);
-        LeftQuestActive(false);
-        RightQuestActive(false);
+        rightQuest.QuestActive(false);
+        leftQuest.QuestActive(false);
     }
 
     private void OnEnable()
@@ -227,13 +228,6 @@ public class TutorialManager : MonoBehaviour
             LocomotionManager.instance.EnableTurning(true);
         }
     }
-    public void LeftQuestActive(bool state)
-    {
-        leftQuest.gameObject.SetActive(state);
-    }
-    public void RightQuestActive(bool state)
-    {
-        rightQuest.gameObject.SetActive(state);
-    }
+    
 
 }

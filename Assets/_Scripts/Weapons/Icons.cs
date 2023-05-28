@@ -7,7 +7,9 @@ public class Icons : MonoBehaviour
 
     private Color startColor;
     private Animator iconAnim;
-    //private Transform currentTarget;
+    private Transform currentTarget;
+
+    private bool change;
 
     private void Start()
     {
@@ -18,16 +20,16 @@ public class Icons : MonoBehaviour
     private void Update()
     {
         transform.rotation = GameManager.instance.cam.transform.rotation;
-        //if (currentTarget != null)
-        //{
-        //    transform.position = currentTarget.position;
-        //}
+        if (currentTarget != null)
+        {
+            transform.position = currentTarget.position;
+        }
     }
 
-    public void ShowIcon(int iconIndex, Vector3 targetPos)
+    public void ShowIcon(int iconIndex, Transform target)
     {
         CancelInvoke(nameof(HideIcon));
-        transform.position= targetPos;
+        currentTarget = target;
         iconAnim.SetBool("Show", true);
         if(iconIndex == 0)
         {
@@ -56,12 +58,25 @@ public class Icons : MonoBehaviour
     public void ChangeColor(Color newColor)
     {
         CancelInvoke(nameof(ChangeColorBack));
+        if (change)
+        {
+            iconAnim.Play("CircleError2");
+            change= false;
+        }
+        else
+        {
+            iconAnim.Play("CircleError");
+            change = true;
+        }
+
         noAmmo.color = newColor;
+        circle.color = newColor;
         Invoke(nameof(ChangeColorBack), 0.1f);
     }
 
     private void ChangeColorBack()
     {
+        circle.color = startColor;
         noAmmo.color = startColor;
     }
 }

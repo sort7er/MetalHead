@@ -3,16 +3,17 @@ using UnityEngine;
 public class QuestController : MonoBehaviour
 {
     public bool left;
+    public Animator controllerAnim;
     public MeshRenderer[] inputs;
 
     public Material defaultMaterial, highlightMaterial;
 
-    private Animator controllerAnim;
+    private Animator displayAnim;
     private AudioSource controllerSource;
 
     private void Awake()
     {
-        controllerAnim = GetComponent<Animator>();
+        displayAnim = GetComponent<Animator>();
         controllerSource = GetComponent<AudioSource>();
     }
 
@@ -94,5 +95,25 @@ public class QuestController : MonoBehaviour
         {
             inputs[i].material = defaultMaterial;
         }
+    }
+    public void QuestActive(bool state)
+    {
+        if(state)
+        {
+            CancelInvoke(nameof(Hide));
+            controllerAnim.gameObject.SetActive(true);
+        }
+        else
+        {
+            Nothing();
+            Invoke(nameof(Hide), 0.3f);
+        }
+
+        displayAnim.SetBool("Display", state);
+    }
+
+    private void Hide()
+    {
+        controllerAnim.gameObject.SetActive(false);
     }
 }

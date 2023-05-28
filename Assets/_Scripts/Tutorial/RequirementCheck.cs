@@ -17,7 +17,7 @@ public class RequirementCheck : MonoBehaviour
     private ReturnToHolster cz50ReturnToHolser;
     private ReleaseMag releaseMag;
 
-
+    private QuestController leftQuest, rightQuest;
     private TutorialManager tutorialManager;
     private RelayToTv relay;
 
@@ -58,6 +58,8 @@ public class RequirementCheck : MonoBehaviour
         relay = GetComponent<RelayToTv>();
         tutorialManager = GetComponent<TutorialManager>();
         cz50ReturnToHolser.enabled = false;
+        leftQuest = GameManager.instance.leftHand.questController;
+        rightQuest = GameManager.instance.rightHand.questController;
 
         turnLeft = inputAction.FindActionMap("XRI RightHand Locomotion").FindAction("TurnLeft");
         turnLeft.Enable();
@@ -88,8 +90,8 @@ public class RequirementCheck : MonoBehaviour
             {
                 if (!gripLeft)
                 {
-                    tutorialManager.LeftQuestActive(true);
-                    tutorialManager.leftQuest.Grip();
+                    leftQuest.QuestActive(true);
+                    leftQuest.Grip();
                     gripLeft = true;
                     holdingLeft = false;
                 }
@@ -101,18 +103,18 @@ public class RequirementCheck : MonoBehaviour
                 {
                     if (gunEmptied && !magDropped)
                     {
-                        tutorialManager.leftQuest.Secondary();
+                        leftQuest.Secondary();
                     }
                     else if (magDropped)
                     {
-                        tutorialManager.leftQuest.Nothing();
-                        tutorialManager.LeftQuestActive(false);
+                        leftQuest.Nothing();
+                        leftQuest.QuestActive(false);
                     }
 
                     if (magInserted)
                     {
-                        tutorialManager.RightQuestActive(true);
-                        tutorialManager.rightQuest.Grip();
+                        rightQuest.QuestActive(true);
+                        rightQuest.Grip();
                     }
 
                     holdingLeft = true;
@@ -123,8 +125,7 @@ public class RequirementCheck : MonoBehaviour
             {
                 if (gripLeft!)
                 {
-                    tutorialManager.LeftQuestActive(false);
-                    tutorialManager.leftQuest.Nothing();
+                    leftQuest.QuestActive(false);
                     gripLeft = false;
                 }
 
@@ -135,8 +136,8 @@ public class RequirementCheck : MonoBehaviour
             {
                 if (!gripRight)
                 {
-                    tutorialManager.RightQuestActive(true);
-                    tutorialManager.rightQuest.Grip();
+                    rightQuest.QuestActive(true);
+                    rightQuest.Grip();
                     gripRight = true;
                     holdingRight = false;
                 }
@@ -147,18 +148,17 @@ public class RequirementCheck : MonoBehaviour
                 {
                     if (gunEmptied && !magDropped)
                     {
-                        tutorialManager.rightQuest.Secondary();
+                        rightQuest.Secondary();
                     }
                     else if (magDropped)
                     {
-                        tutorialManager.rightQuest.Nothing();
-                        tutorialManager.RightQuestActive(false);
+                        rightQuest.QuestActive(false);
                     }
 
                     if (magInserted)
                     {
-                        tutorialManager.LeftQuestActive(true);
-                        tutorialManager.leftQuest.Grip();
+                        leftQuest.QuestActive(true);
+                        leftQuest.Grip();
                     }
 
                     holdingRight = true;
@@ -168,8 +168,7 @@ public class RequirementCheck : MonoBehaviour
             {
                 if (gripRight)
                 {
-                    tutorialManager.RightQuestActive(false);
-                    tutorialManager.rightQuest.Nothing();
+                    rightQuest.QuestActive(false);
                     gripRight = false;
                 }
             }
@@ -274,9 +273,8 @@ public class RequirementCheck : MonoBehaviour
         {
             GameManager.instance.leftHand.SetHandActive(true);
             GameManager.instance.rightHand.SetHandActive(true);
-            tutorialManager.leftQuest.Nothing();
-            tutorialManager.LeftQuestActive(false);
-            tutorialManager.RightQuestActive(false);
+            leftQuest.QuestActive(false);
+            rightQuest.QuestActive(false);
         }
     }
     public void LiftTriggerExited()
@@ -285,9 +283,9 @@ public class RequirementCheck : MonoBehaviour
         {
             GameManager.instance.leftHand.SetHandActive(false);
             GameManager.instance.rightHand.SetHandActive(false);
-            tutorialManager.LeftQuestActive(true);
-            tutorialManager.RightQuestActive(true);
-            tutorialManager.leftQuest.Joystick(0);
+            leftQuest.QuestActive(true);
+            rightQuest.QuestActive(true);
+            leftQuest.Joystick(0);
         }
     }
     public void ButtonPressed()
@@ -300,8 +298,7 @@ public class RequirementCheck : MonoBehaviour
     }
     public void MenuPressed()
     {
-        tutorialManager.leftQuest.Nothing();
-        tutorialManager.LeftQuestActive(false);
+        leftQuest.QuestActive(false);
         GameManager.instance.leftHand.SetHandActive(true);
         CanPressMenu(false);
     }
@@ -327,8 +324,7 @@ public class RequirementCheck : MonoBehaviour
     {
         if (!releasedObjectRight)
         {
-            tutorialManager.RightQuestActive(false);
-            tutorialManager.rightQuest.Nothing();
+            rightQuest.QuestActive(false);
             GameManager.instance.rightHand.SetHandActive(false);
             
 
@@ -351,8 +347,7 @@ public class RequirementCheck : MonoBehaviour
         {
             GameManager.instance.rightHand.SetHandActive(true);
             GameManager.instance.EnableRightInteractor(true);
-            tutorialManager.leftQuest.Nothing();
-            tutorialManager.LeftQuestActive(false);
+            leftQuest.QuestActive(false);
             relay.CheckASpot(1);
             releasedObjectLeft = true;
         }
@@ -382,13 +377,13 @@ public class RequirementCheck : MonoBehaviour
         {
             if(GameManager.instance.CheckGameObject(cz50.gameObject) == 1)
             {
-                tutorialManager.LeftQuestActive(true);
-                tutorialManager.leftQuest.Trigger();
+                leftQuest.QuestActive(true);
+                leftQuest.Trigger();
             }
             if (GameManager.instance.CheckGameObject(cz50.gameObject) == 2)
             {
-                tutorialManager.RightQuestActive(true);
-                tutorialManager.rightQuest.Trigger();
+                rightQuest.QuestActive(true);
+                rightQuest.Trigger();
             }
         }
     }
@@ -399,13 +394,11 @@ public class RequirementCheck : MonoBehaviour
 
             if (GameManager.instance.CheckGameObject(cz50.gameObject) == 1)
             {
-                tutorialManager.leftQuest.Nothing();
-                tutorialManager.LeftQuestActive(false);
+                leftQuest.QuestActive(false);
             }
             if (GameManager.instance.CheckGameObject(cz50.gameObject) == 2)
             {
-                tutorialManager.rightQuest.Nothing();
-                tutorialManager.RightQuestActive(false);
+                rightQuest.QuestActive(false);
             }
 
 
@@ -416,13 +409,13 @@ public class RequirementCheck : MonoBehaviour
                 gunEmptied = true;
                 if (GameManager.instance.CheckGameObject(cz50.gameObject) == 1)
                 {
-                    tutorialManager.LeftQuestActive(true);
-                    tutorialManager.leftQuest.Secondary();
+                    leftQuest.QuestActive(true);
+                    leftQuest.Secondary();
                 }
                 if (GameManager.instance.CheckGameObject(cz50.gameObject) == 2)
                 {
-                    tutorialManager.RightQuestActive(true);
-                    tutorialManager.rightQuest.Secondary();
+                    rightQuest.QuestActive(true);
+                    rightQuest.Secondary();
                 }
             }
         }
@@ -433,13 +426,11 @@ public class RequirementCheck : MonoBehaviour
         {
             if (GameManager.instance.CheckGameObject(cz50.gameObject) == 1)
             {
-                tutorialManager.leftQuest.Nothing();
-                tutorialManager.LeftQuestActive(false);
+                leftQuest.QuestActive(false);
             }
             if (GameManager.instance.CheckGameObject(cz50.gameObject) == 2)
             {
-                tutorialManager.rightQuest.Nothing();
-                tutorialManager.RightQuestActive(false);
+                rightQuest.QuestActive(false);
             }
 
             relay.NextReload();
@@ -468,13 +459,13 @@ public class RequirementCheck : MonoBehaviour
 
             if (GameManager.instance.CheckGameObject(cz50.gameObject) == 1)
             {
-                tutorialManager.RightQuestActive(true);
-                tutorialManager.rightQuest.Grip();
+                rightQuest.QuestActive(true);
+                rightQuest.Grip();
             }
             if (GameManager.instance.CheckGameObject(cz50.gameObject) == 2)
             {
-                tutorialManager.LeftQuestActive(true);
-                tutorialManager.leftQuest.Grip();
+                leftQuest.QuestActive(true);
+                leftQuest.Grip();
             }
             Guide.instance.SetGuide(2, slide, "Pull slide");
         }
@@ -486,10 +477,8 @@ public class RequirementCheck : MonoBehaviour
             relay.CheckASpot(3);
             slidePulled = true;
 
-            tutorialManager.leftQuest.Nothing();
-            tutorialManager.LeftQuestActive(false);
-            tutorialManager.rightQuest.Nothing();
-            tutorialManager.RightQuestActive(false);
+            leftQuest.QuestActive(false);
+            rightQuest.QuestActive(false);
             Guide.instance.GuideDone();
         }
     }

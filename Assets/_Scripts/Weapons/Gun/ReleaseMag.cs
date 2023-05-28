@@ -150,9 +150,9 @@ public class ReleaseMag : MonoBehaviour
     {
         if (mag != null && !insert)
         {
+            release = true;
             soundForGun.Magazine(2);
             cz50.MagOut();
-            release = true;
         }
     }
     private void MagOut()

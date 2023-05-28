@@ -25,7 +25,7 @@ public class CZ50 : MonoBehaviour
     private SoundForGun soundForGun;
     private int currentAmmo;
     private int damage;
-    private bool firstDialUpdate, projectilePenetration, slideBack, isHolding;
+    private bool firstDialUpdate, projectilePenetration, slideBack, left, isHolding, questAnimSet, showHelp;
 
     private void Start()
     {
@@ -44,11 +44,12 @@ public class CZ50 : MonoBehaviour
         {
             CheckForCurrentIcon();
         }
+        Debug.Log(showHelp);
     }
 
     public void Fire()
     {
-        if(currentAmmo > 0 && !reloadNeeded)
+        if (currentAmmo > 0 && !reloadNeeded)
         {
             if (!slideBack)
             {
@@ -150,6 +151,7 @@ public class CZ50 : MonoBehaviour
         }
         else
         {
+            showHelp = true;
             icons.ChangeColor(Color.red);
             reloadNeeded = true;
             soundForGun.Empty();
@@ -161,22 +163,25 @@ public class CZ50 : MonoBehaviour
 
     public void Grab()
     {
+        isHolding= true;
         soundForGun.Grab();
-        if(GameManager.instance.CheckHand("Gun") == 1)
+        if(GameManager.instance.CheckGameObject(gameObject) == 1)
         {
             twoHandGrab.attachTransform = leftAttach;
             GameManager.instance.leftHand.GrabPistol(true);
+            left = true;
         }
-        if (GameManager.instance.CheckHand("Gun") == 2)
+        if (GameManager.instance.CheckGameObject(gameObject) == 2)
         {
             twoHandGrab.attachTransform = rightAttach;
             GameManager.instance.rightHand.GrabPistol(true);
+            left = false;
         }
         GameManager.instance.CheckCurrentAmmoBag(1);
-        isHolding= true;
     }
     public void Release()
     {
+        isHolding= false;
         if (!GameManager.instance.leftHand.IsHoldingSomething())
         {
             GameManager.instance.leftHand.GrabPistol(false);
@@ -186,13 +191,15 @@ public class CZ50 : MonoBehaviour
             GameManager.instance.rightHand.GrabPistol(false);
         }
         GameManager.instance.ReleaseWeapon(1);
-        isHolding = false;
         icons.IconDone();
+        ReleaseControllers();
+        showHelp = false;
     }
 
     public void Reload()
     {
         reloadNeeded = false;
+        showHelp= false;
         UpdateDial();
     }
     public void MagOut()
@@ -254,19 +261,46 @@ public class CZ50 : MonoBehaviour
     {
         if(releaseMag.InsertMagNeeded())
         {
-            icons.ShowIcon(0, releaseMag.magLocation.position);
+            icons.ShowIcon(0, releaseMag.magLocation);
         }
         else if (releaseMag.reloadValid)
         {
-            icons.ShowIcon(0, slide.transform.position);
-        }
-        else if (currentAmmo <= 0)
-        {
-            icons.ShowIcon(1, new Vector3(transform.localPosition.x, transform.localPosition.y - 0.07f, transform.localPosition.z - 0.14f));
+            icons.ShowIcon(0, slide.transform);
         }
         else
         {
             icons.IconDone();
         }
+
+        if(currentAmmo <= 0 && !releaseMag.InsertMagNeeded() && !releaseMag.release && !releaseMag.reloadValid)
+        {
+            if (!questAnimSet && showHelp)
+            {
+                if (left)
+                {
+                    GameManager.instance.leftHand.questController.QuestActive(true);
+                    GameManager.instance.leftHand.questController.Secondary();
+                }
+                else
+                {
+                    GameManager.instance.rightHand.questController.QuestActive(true);
+                    GameManager.instance.rightHand.questController.Secondary();
+                }
+                questAnimSet = true;
+            }   
+        }
+        else if(questAnimSet)
+        {
+            ReleaseControllers();                    
+        }
+
+        
+    }
+
+    private void ReleaseControllers()
+    {
+        GameManager.instance.rightHand.questController.QuestActive(false);
+        GameManager.instance.leftHand.questController.QuestActive(false);
+        questAnimSet = false;
     }
 }
