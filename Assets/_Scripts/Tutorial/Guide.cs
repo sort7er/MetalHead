@@ -18,13 +18,12 @@ public class Guide : MonoBehaviour
     public float Xamount, Yamount;
     public TextMeshProUGUI message;
 
-    private Vector3 camPosition, offset;
+    private Vector3 camPosition, Xoffset, Yoffset;
     private Quaternion camRotation;
     private Transform cam, targetTransform;
     private LineRenderer lineRenderer;
-
     private Vector3 currentEdge, currentCorner;
-    private bool left;
+    private int currentY;
 
     private void Start()
     {
@@ -39,33 +38,53 @@ public class Guide : MonoBehaviour
         cam = GameManager.instance.cam.transform;
 
         //Position and rotation of message
-        camPosition = cam.position + cam.forward + offset;
+        camPosition = cam.position + cam.forward + Xoffset + Yoffset;
         camRotation = Quaternion.Euler(cam.eulerAngles.x, cam.eulerAngles.y, guideCanvas.eulerAngles.z);
-        guideCanvas.position = Vector3.Lerp(guideCanvas.position, camPosition, Time.deltaTime * 5);
-        guideCanvas.rotation = Quaternion.Slerp(guideCanvas.rotation, camRotation, Time.deltaTime * 5);
+        guideCanvas.position = Vector3.Lerp(guideCanvas.position, camPosition, Time.deltaTime * 10);
+        guideCanvas.rotation = Quaternion.Slerp(guideCanvas.rotation, camRotation, Time.deltaTime * 10);
+
 
 
         //Line
-        if(left)
+        if(targetTransform != null)
         {
-            currentEdge = leftEdge.position;
-            currentCorner = leftCorner.position;
-        }
-        else
-        {
-            currentEdge = rightEdge.position;
-            currentCorner = rightCorner.position;
-        }
-        lineRenderer.SetPosition(0, currentEdge);
-        lineRenderer.SetPosition(1, currentCorner);
-        if(targetTransform!= null)
-        {
+            Vector3 prep = Vector3.Cross(cam.forward, targetTransform.position - cam.position);
+
+            if (Vector3.Dot(prep, Vector3.up) < 0)
+            {
+                Xoffset = -cam.right * Xamount;
+                currentEdge = leftEdge.position;
+                currentCorner = leftCorner.position;
+            }
+            else
+            {
+                Xoffset = cam.right * Xamount;
+                currentEdge = rightEdge.position;
+                currentCorner = rightCorner.position;
+            }
+
+            if (currentY == 1)
+            {
+                Yoffset = cam.up * Yamount;
+            }
+            else if (currentY == 2)
+            {
+                Yoffset = Vector3.zero;
+            }
+            else
+            {
+                Yoffset = cam.up * Yamount;
+            }
+
+
+            lineRenderer.SetPosition(0, currentEdge);
+            lineRenderer.SetPosition(1, currentCorner);
             lineRenderer.SetPosition(2, targetTransform.position);
         }
 
     }
 
-    public void SetGuide(int x, int y, Transform target, string messageText)
+    public void SetGuide(int y, Transform target, string messageText)
     {
         CancelInvoke(nameof(Close));
         guideCanvas.gameObject.SetActive(true);
@@ -75,30 +94,8 @@ public class Guide : MonoBehaviour
             guideAnim.SetBool("Open", true);
         }
 
-        if(x == 1)
-        {
-            offset = -cam.right * Xamount;
-            left = true;
-        }
-        else
-        {
-            offset = cam.right * Xamount;
-            left = false;
-        }
 
-        if(y == 1)
-        {
-            offset -= cam.up * Yamount;
-        }
-        else if (y == 2)
-        {
-            offset += Vector3.zero;
-        }
-        else 
-        {
-            offset += cam.up * Yamount;
-        }
-
+        currentY = y;
         message.text = messageText;
         targetTransform = target;
     }

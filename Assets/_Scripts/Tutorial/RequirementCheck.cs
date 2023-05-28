@@ -363,7 +363,7 @@ public class RequirementCheck : MonoBehaviour
     {
         if (!firingRangeEntererd)
         {
-            Guide.instance.SetGuide(2, 3, cz50ReturnToHolser.transform, "Grab the gun");
+            Guide.instance.SetGuide(3, cz50ReturnToHolser.transform, "Grab the gun");
             relay.CheckASpot(0);
             firingRangeEntererd = true;
         }
@@ -445,7 +445,7 @@ public class RequirementCheck : MonoBehaviour
             relay.NextReload();
             relay.CheckASpot(0);
             magDropped = true;
-            Guide.instance.SetGuide(1, 2, GameManager.instance.ammoBag.transform, "Grab ammo");
+            Guide.instance.SetGuide(2, GameManager.instance.ammoBag.transform, "Grab ammo");
         }
     }
     public void GrabMag()
@@ -455,7 +455,7 @@ public class RequirementCheck : MonoBehaviour
             relay.NextReload();
             relay.CheckASpot(1);
             magGrabbed = true;
-            Guide.instance.SetGuide(1, 2, magPos, "Insert");
+            Guide.instance.SetGuide(2, magPos, "Insert");
         }
     }
     public void MagInserted()
@@ -476,7 +476,7 @@ public class RequirementCheck : MonoBehaviour
                 tutorialManager.LeftQuestActive(true);
                 tutorialManager.leftQuest.Grip();
             }
-            Guide.instance.SetGuide(2, 2, slide, "Pull slide");
+            Guide.instance.SetGuide(2, slide, "Pull slide");
         }
     }
     public void SlidePulled()

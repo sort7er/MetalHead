@@ -89,7 +89,7 @@ public class RelayToTv : MonoBehaviour
     }
     public void TvGrabRight()
     {
-        Guide.instance.SetGuide(2, 3, objectToGrab, "Grab the cube");
+        Guide.instance.SetGuide(3, objectToGrab, "Grab the cube");
         delay = 0;
         AddRequirement(2);
 

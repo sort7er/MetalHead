@@ -1,4 +1,3 @@
-using System.Net;
 using TMPro;
 using UnityEngine;
 
@@ -12,9 +11,12 @@ public class CZ50 : MonoBehaviour
     public Transform muzzle, casingPoint, leftAttach, rightAttach;
     public TextMeshProUGUI ammoText;
     public ParticleSystem muzzleFlash;
+    public Icons icons;
+    public Slide slide;
 
     [HideInInspector] public bool reloadNeeded;
 
+    private ReleaseMag releaseMag;
     private Color startColor;
     private TwoHandGrab twoHandGrab;
     private Recoil recoil;
@@ -23,7 +25,7 @@ public class CZ50 : MonoBehaviour
     private SoundForGun soundForGun;
     private int currentAmmo;
     private int damage;
-    private bool firstDialUpdate, projectilePenetration, slideBack;
+    private bool firstDialUpdate, projectilePenetration, slideBack, isHolding;
 
     private void Start()
     {
@@ -32,7 +34,16 @@ public class CZ50 : MonoBehaviour
         recoil = GetComponent<Recoil>();
         cz50Anim = GetComponent<Animator>();
         soundForGun = GetComponent<SoundForGun>();
+        releaseMag= GetComponent<ReleaseMag>();
         DefaultColor();
+    }
+
+    private void Update()
+    {
+        if (isHolding)
+        {
+            CheckForCurrentIcon();
+        }
     }
 
     public void Fire()
@@ -139,6 +150,7 @@ public class CZ50 : MonoBehaviour
         }
         else
         {
+            icons.ChangeColor(Color.red);
             reloadNeeded = true;
             soundForGun.Empty();
             EmptyColor();
@@ -161,6 +173,7 @@ public class CZ50 : MonoBehaviour
             GameManager.instance.rightHand.GrabPistol(true);
         }
         GameManager.instance.CheckCurrentAmmoBag(1);
+        isHolding= true;
     }
     public void Release()
     {
@@ -173,6 +186,8 @@ public class CZ50 : MonoBehaviour
             GameManager.instance.rightHand.GrabPistol(false);
         }
         GameManager.instance.ReleaseWeapon(1);
+        isHolding = false;
+        icons.IconDone();
     }
 
     public void Reload()
@@ -233,5 +248,25 @@ public class CZ50 : MonoBehaviour
     public void SlideBack(bool state)
     {
         slideBack = state;
+    }
+
+    public void CheckForCurrentIcon()
+    {
+        if(releaseMag.InsertMagNeeded())
+        {
+            icons.ShowIcon(0, releaseMag.magLocation.position);
+        }
+        else if (releaseMag.reloadValid)
+        {
+            icons.ShowIcon(0, slide.transform.position);
+        }
+        else if (currentAmmo <= 0)
+        {
+            icons.ShowIcon(1, new Vector3(transform.localPosition.x, transform.localPosition.y - 0.07f, transform.localPosition.z - 0.14f));
+        }
+        else
+        {
+            icons.IconDone();
+        }
     }
 }

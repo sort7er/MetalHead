@@ -13,7 +13,6 @@ public class LocomotionManager : MonoBehaviour
     }
 
     public GameObject teleportationRays;
-    public GameObject vignette;
     public TextMeshProUGUI movementText, turnText, quickTurnText;
     public InputActionAsset inputAction;
     public TeleportationController teleportationController;
@@ -23,64 +22,30 @@ public class LocomotionManager : MonoBehaviour
     [HideInInspector] public int currentTurnType;
     [HideInInspector] public int currentQuickTurnType;
 
-    private TeleportationProvider teleportationProvider;
     private ActionBasedContinuousMoveProvider continuousMoveProvider;
     private ActionBasedSnapTurnProvider snapTurnProvider;
     private ActionBasedContinuousTurnProvider continuousTurnProvider;
     private NavMeshObstacle playerObstacle;
 
-
-    private InputActionReference continuousMoveInputReference;
-    private InputActionReference snapTurnInputReference;
-    private InputActionReference continuousTurnInputReference;
-    private InputActionAsset teleportationInputReference;
-    private InputAction snapTurn;
+    //Work around
+    private float startTurnSpeed;
+    private float startMoveSpeed;
+    private float startSnapAmount;
 
     private void Start()
     {
-        teleportationProvider = GetComponent<TeleportationProvider>();
         continuousMoveProvider = GetComponent<ActionBasedContinuousMoveProvider>();
         snapTurnProvider = GetComponent<ActionBasedSnapTurnProvider>();
         continuousTurnProvider = GetComponent<ActionBasedContinuousTurnProvider>();
         playerObstacle = GameManager.instance.XROrigin.GetComponent<NavMeshObstacle>();
 
+        startMoveSpeed = continuousMoveProvider.moveSpeed;
+        startTurnSpeed = continuousTurnProvider.turnSpeed;
+        startSnapAmount = snapTurnProvider.turnAmount;
+
+
         StartSettings();
-
-        snapTurn = inputAction.FindActionMap("XRI RightHand Locomotion").FindAction("Snap Turn");
-        snapTurn.Enable();
-        snapTurn.performed += OnSnapTurn;
-    }
-
-    private void OnDestroy()
-    {
-        snapTurn.performed -= OnSnapTurn;
-    }
-
-    private void SetContinuousMoveInputReference()
-    {
-        if (continuousMoveProvider.leftHandMoveAction.reference != null)
-        {
-            continuousMoveInputReference = continuousMoveProvider.leftHandMoveAction.reference;
-        }
-    }
-
-    private void SetTeleportationInputReference()
-    {
-        teleportationInputReference = teleportationRays.GetComponentInChildren<TeleportationController>().inputAction;
-    }
-    private void SetContinousTurnInputReference()
-    {
-        if (continuousTurnProvider.leftHandTurnAction.reference != null)
-        {
-            continuousTurnInputReference = continuousTurnProvider.leftHandTurnAction.reference;
-        }
-    }
-    private void SetSnapTurnInputReference()
-    {
-        if (snapTurnProvider.leftHandSnapTurnAction.reference != null)
-        {
-            snapTurnInputReference = snapTurnProvider.leftHandSnapTurnAction.reference;
-        }
+        
     }
     private void StartSettings()
     {
@@ -144,23 +109,18 @@ public class LocomotionManager : MonoBehaviour
 
     private void SetCountinuous(bool value)
     {
-        SetContinuousMoveInputReference();
-        if (value)
+        if(value)
         {
-            continuousMoveProvider.leftHandMoveAction = new InputActionProperty(continuousMoveInputReference);
+            continuousMoveProvider.moveSpeed = startMoveSpeed;
         }
-        continuousMoveProvider.enabled = value;
+        else
+        {
+            continuousMoveProvider.moveSpeed = 0;
+        }
     }
     private void SetTeleport(bool value)
     {
-        SetTeleportationInputReference();
-        if (value)
-        {
-            teleportationRays.GetComponentInChildren<TeleportationController>().inputAction = teleportationInputReference;
-        }
         isUsingTeleport = value;
-        teleportationRays.SetActive(value);
-        teleportationProvider.enabled = value;
     }
     public void EnableMovement(bool state)
     {
@@ -173,13 +133,13 @@ public class LocomotionManager : MonoBehaviour
         {
             if (currentMoveType == 0)
             {
-                SetCountinuous(false);
                 SetTeleport(true);
+                SetCountinuous(false);
             }
             else if (currentMoveType == 1)
             {
-                SetTeleport(false);
                 SetCountinuous(true);
+                SetTeleport(false);
             }
         }
     }
@@ -209,21 +169,25 @@ public class LocomotionManager : MonoBehaviour
 
     private void SetCountinuousTurn(bool value)
     {
-        SetContinousTurnInputReference();
-        if (value)
+        if(value)
         {
-            continuousTurnProvider.leftHandTurnAction = new InputActionProperty(continuousTurnInputReference);
+            continuousTurnProvider.turnSpeed = startTurnSpeed;
         }
-        continuousTurnProvider.enabled = value;
+        else
+        {
+            continuousTurnProvider.turnSpeed = 0;
+        }
     }
     private void SetSnap(bool value)
     {
-        SetSnapTurnInputReference();
         if (value)
         {
-            snapTurnProvider.leftHandSnapTurnAction= new InputActionProperty(snapTurnInputReference);
+            snapTurnProvider.turnAmount = startSnapAmount;
         }
-        snapTurnProvider.enabled = value;
+        else
+        {
+            snapTurnProvider.turnAmount = 0;
+        }
 
     }
 
@@ -233,18 +197,23 @@ public class LocomotionManager : MonoBehaviour
         {
             SetSnap(false);
             SetCountinuousTurn(false);
+            TurnAround(false);
         }
         else
         {
             if(currentTurnType == 0)
             {
-                SetCountinuousTurn(false);
                 SetSnap(true);
+                SetCountinuousTurn(false);
             }
             else if (currentTurnType == 1)
             {
-                SetSnap(false);
                 SetCountinuousTurn(true);
+                SetSnap(false);
+            }
+            if(currentQuickTurnType== 0)
+            {
+                TurnAround(true);
             }
         }
     }
@@ -255,13 +224,13 @@ public class LocomotionManager : MonoBehaviour
         {
             currentQuickTurnType = 0;
             quickTurnText.text = "< Enabled >";
-            snapTurnProvider.enableTurnAround = true;
+            TurnAround(true);
         }
         else if (currentQuickTurnType == 0)
         {
             currentQuickTurnType = 1;
             quickTurnText.text = "< Disabled >";
-            snapTurnProvider.enableTurnAround = false;
+            TurnAround(false);
         }
         PlayerPrefs.SetInt("QuickTurnType", currentQuickTurnType);
     }
@@ -270,12 +239,9 @@ public class LocomotionManager : MonoBehaviour
         currentQuickTurnType = type;
         SetQuickTurn();
     }
-    private void OnSnapTurn(InputAction.CallbackContext context)
+    public void TurnAround(bool state)
     {
-        if (currentTurnType == 1 && !teleportationController.GetTeleportActive() && currentQuickTurnType == 0)
-        {
-            GameManager.instance.XROrigin.transform.Rotate(new Vector3(0, 180, 0));
-        }
+        snapTurnProvider.enableTurnAround = state;
     }
 
 }

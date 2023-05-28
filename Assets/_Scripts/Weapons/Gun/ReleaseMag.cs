@@ -102,7 +102,6 @@ public class ReleaseMag : MonoBehaviour
         {
             MagIn();
         }
-
     }
     public void Insert()
     {
@@ -213,5 +212,17 @@ public class ReleaseMag : MonoBehaviour
     public void TutorialCanReload(bool state)
     {
         canReload = state;
+    }
+
+    public bool InsertMagNeeded()
+    {
+        if(mag == null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
