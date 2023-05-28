@@ -16,7 +16,7 @@ public class ShotgunSlide : MonoBehaviour
     private Animator slideAnim;
     private Transform leftHand, rightHand;
     private bool slideValid, isGrabbed, hasFired;
-    public float initialDistance, closeUpDistance;
+    private float initialDistance, closeUpDistance;
     private void Start()
     {
         shotgunRecoil = GetComponentInParent<ShotgunRecoil>();
@@ -116,6 +116,11 @@ public class ShotgunSlide : MonoBehaviour
     public void HasFired()
     {
         hasFired = true;
+    }
+
+    public bool IsGrabbed()
+    {
+        return isGrabbed;
     }
 
 }

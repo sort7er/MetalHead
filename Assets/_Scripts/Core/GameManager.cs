@@ -49,6 +49,9 @@ public class GameManager : MonoBehaviour
         lHand = leftHand.gameObject.GetComponent<XRDirectInteractor>();
         rHand = rightHand.gameObject.GetComponent<XRDirectInteractor>();
         SetTimeScale(1);
+        rightHand.questController.QuestActive(false);
+        leftHand.questController.QuestActive(false);
+
     }
         private void OnEnable()
     {

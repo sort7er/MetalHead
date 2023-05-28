@@ -23,6 +23,8 @@ public class Tac14 : MonoBehaviour
     public GameObject casingPrefab;
     public DynamicTrigger dynamicTrigger;
     public GameObject slugInside;
+    public Icons icons;
+    public ShotgunSlide slide;
 
     [HideInInspector] public bool auto;
     [HideInInspector] public int insertAmmo;
@@ -89,6 +91,11 @@ public class Tac14 : MonoBehaviour
                     currentTransform = null;
                 }
             }
+
+
+            CheckForIcons();
+
+
         }
     }
 
@@ -122,6 +129,7 @@ public class Tac14 : MonoBehaviour
             GameManager.instance.rightHand.GrabShotgun(false);
         }
         GameManager.instance.ReleaseWeapon(2);
+        icons.IconDone();
     }
 
     public void Fire()
@@ -246,13 +254,14 @@ public class Tac14 : MonoBehaviour
             //Empty
             soundForGun.Empty();
             EmptyColor();
+            icons.ChangeColor(Color.red);
             Invoke(nameof(DefaultColor), 0.1f);
         }
         else
         {
             //Need to be cocked
             soundForGun.Empty();
-            //Debug.Log("Need to cock the gun");
+            icons.ChangeColor(Color.red);
         }
     }
 
@@ -408,6 +417,25 @@ public class Tac14 : MonoBehaviour
         else
         {
             projectilePenetration = true;
+        }
+    }
+
+
+
+    //Icons
+    private void CheckForIcons()
+    {
+        if(cockingNeeded && !auto && currentAmmo > 0)
+        {
+            icons.ShowIcon(0, slide.transform);
+        }
+        else if(currentAmmo <= 0)
+        {
+            icons.ShowIcon(0, dynamicTrigger.transform);
+        }
+        else
+        {
+            icons.IconDone();
         }
     }
 }

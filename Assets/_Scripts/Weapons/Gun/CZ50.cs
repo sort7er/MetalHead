@@ -44,7 +44,6 @@ public class CZ50 : MonoBehaviour
         {
             CheckForCurrentIcon();
         }
-        Debug.Log(showHelp);
     }
 
     public void Fire()

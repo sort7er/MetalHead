@@ -40,8 +40,6 @@ public class TutorialManager : MonoBehaviour
         PauseVignette(0);
         Invoke(nameof(StartTutorial), 0.1f);
         CanExitTutorial(true);
-        rightQuest.QuestActive(false);
-        leftQuest.QuestActive(false);
     }
 
     private void OnEnable()

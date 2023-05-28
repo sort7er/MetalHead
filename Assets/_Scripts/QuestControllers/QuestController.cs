@@ -109,7 +109,10 @@ public class QuestController : MonoBehaviour
             Invoke(nameof(Hide), 0.3f);
         }
 
-        displayAnim.SetBool("Display", state);
+        if(displayAnim != null)
+        {
+            displayAnim.SetBool("Display", state);
+        }
     }
 
     private void Hide()
