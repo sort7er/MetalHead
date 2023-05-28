@@ -1263,8 +1263,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f404d5d885f854282c699e23741ac4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startHealth: 100
-  startPosture: 50
+  startHealth: 80
+  startPosture: 40
   postureRegenerationSpeed: 2.5
   timeBeforeHide: 3
   hitConstraints: {fileID: 823870823}
@@ -1567,7 +1567,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1.5
+  MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
