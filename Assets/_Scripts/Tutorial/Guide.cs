@@ -41,7 +41,7 @@ public class Guide : MonoBehaviour
         camPosition = cam.position + cam.forward + Xoffset + Yoffset;
         camRotation = Quaternion.Euler(cam.eulerAngles.x, cam.eulerAngles.y, guideCanvas.eulerAngles.z);
         guideCanvas.position = Vector3.Lerp(guideCanvas.position, camPosition, Time.deltaTime * 10);
-        guideCanvas.rotation = Quaternion.Slerp(guideCanvas.rotation, camRotation, Time.deltaTime * 10);
+        guideCanvas.rotation = Quaternion.Slerp(guideCanvas.rotation, camRotation, Time.unscaledDeltaTime * 10);
 
 
 

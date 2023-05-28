@@ -38,6 +38,10 @@ public class GameManager : MonoBehaviour
     private float leftGripValue, rightGripValue;
     private bool ammoBagTaken;
 
+
+    private float targetTime;
+    private bool smoothTimeScale;
+
     private void Start()
     {
         tempDone= false;
@@ -84,6 +88,30 @@ public class GameManager : MonoBehaviour
                 TurnOnRightInteractor();
             }
         }
+        if (smoothTimeScale)
+        {
+            if(targetTime < Time.timeScale)
+            {
+                Time.timeScale += Time.unscaledDeltaTime * 0.2f;
+                if(Time.timeScale >= targetTime)
+                {
+                    Time.timeScale = targetTime;
+                    Time.fixedDeltaTime= Time.timeScale * 0.02f;
+                    smoothTimeScale= false;
+                }
+            }
+            else
+            {
+                Time.timeScale -= Time.unscaledDeltaTime * 0.2f;
+                if (Time.timeScale <= targetTime)
+                {
+                    Time.timeScale = targetTime;
+                    Time.fixedDeltaTime = Time.timeScale * 0.02f;
+                    smoothTimeScale = false;
+                }
+            }
+        }
+
     }
 
     private void SelecetLeft(InputAction.CallbackContext context)
@@ -216,6 +244,11 @@ public class GameManager : MonoBehaviour
     public void SetTimeScale(float newTime)
     {
         Time.timeScale = newTime;
+    }
+    public void SetTimeScaleSmooth(float newTime)
+    {
+        smoothTimeScale = true;
+        targetTime = newTime;
     }
     public void IsDead()
     {

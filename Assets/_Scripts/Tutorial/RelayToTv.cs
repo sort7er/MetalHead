@@ -8,6 +8,8 @@ public class RelayToTv : MonoBehaviour
     public TV[] tvsInScene;
     public Transform objectToGrab;
     public Transform button;
+    public EnemyHealth enemy;
+    public Transform enemyHead;
 
     private QuestController leftQuest, rightQuest;
     private TutorialManager tutorialManager;
@@ -27,6 +29,7 @@ public class RelayToTv : MonoBehaviour
         currentObjective = 0;
         tutorialManager = GetComponent<TutorialManager>();
         requirementCheck = GetComponent<RequirementCheck>();
+        enemy.gameObject.SetActive(false);
     }
 
 
@@ -197,22 +200,26 @@ public class RelayToTv : MonoBehaviour
     }
     public void TVKillEnemy()
     {
-        delay = 1f;
         AddRequirement(1);
+        enemy.gameObject.SetActive(true);
+        Guide.instance.SetGuide(3, enemyHead, "Kill");
         for (int i = 0; i < tvsInScene.Length; i++)
         {
             tvsInScene[i].KillEnemy();
         }
+        GameManager.instance.SetTimeScaleSmooth(0.3f);
     }
     public void TvMagnet()
     {
         delay = 2f;
         tutorialManager.SetMagnet(true);
         AddRequirement(2);
+        Guide.instance.SetGuide(3, tutorialManager.magnet.transform, "Grab magnet from over your sholder");
         for (int i = 0; i < tvsInScene.Length; i++)
         {
             tvsInScene[i].Magnet();
         }
+        GameManager.instance.SetTimeScaleSmooth(0.3f);
     }
     public void NextMagnet()
     {
@@ -255,7 +262,6 @@ public class RelayToTv : MonoBehaviour
     {
         CheckASpot(2);
         quickturn = false;
-        rightQuest.Nothing();
     }
 
     private void CheckOff()

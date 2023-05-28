@@ -10,6 +10,7 @@ public class RequirementCheck : MonoBehaviour
     public Magnet magnet;
     public Transform magPos;
     public Transform slide;
+    public Transform magnetTransform;
 
     private InputAction turnLeft;
     private InputAction turnRight;
@@ -39,6 +40,7 @@ public class RequirementCheck : MonoBehaviour
     private bool slugGrabbed;
     private bool slugInserted;
     private bool shotgunSlidePulled;
+    private bool enemyKilled;
 
     //Shooting
     private bool gunEmptied;
@@ -77,7 +79,7 @@ public class RequirementCheck : MonoBehaviour
         quickturn = inputAction.FindActionMap("XRI RightHand Locomotion").FindAction("Snap Turn");
         quickturn.Enable();
         quickturn.performed += OnQuickturn;
-
+        magnetTransform = transform;
     }
 
     private void Update()
@@ -246,14 +248,18 @@ public class RequirementCheck : MonoBehaviour
             }
         }
 
+        if(shotgunSlidePulled && relay.enemy.GetCurrentHealth() <= 0 && !enemyKilled)
+        {
+            EnemyKilled();
+        }
 
-        //if(magnetGrabbed && !magnetPickedup)
-        //{
-        //    if(magnet.GetMetalsCollected() > 0)
-        //    {
-        //        MagnetPickedUp();
-        //    }
-        //}
+        if (magnetGrabbed && !magnetPickedup)
+        {
+            if (magnet.GetMetalsCollected() > 0)
+            {
+                MagnetPickedUp();
+            }
+        }
 
 
 
@@ -316,6 +322,12 @@ public class RequirementCheck : MonoBehaviour
     {
         if (canQuickturn && !GameManager.instance.isPaused)
         {
+
+            if(!canTurnLeft && !canTurnRight)
+            {
+                rightQuest.Nothing();
+            }
+
             relay.QuickturnDone();
             canQuickturn = false;
         }
@@ -586,23 +598,35 @@ public class RequirementCheck : MonoBehaviour
             rightQuest.QuestActive(false);
         }
     }
+    public void EnemyKilled()
+    {
+        if (!enemyKilled)
+        {
+            relay.CheckASpot(0);
+            enemyKilled= true;
+            Guide.instance.GuideDone();
+            magnetTransform.position = relay.enemy.transform.position;
+        }
+    }
 
-    //public void MagnetGrabbed()
-    //{
-    //    if (!magnetGrabbed)
-    //    {
-    //        relay.CheckASpot(0);
-    //        relay.NextMagnet();
-    //        magnetGrabbed = true;
-    //    }
-    //}
-    //private void MagnetPickedUp()
-    //{
-    //    if (!magnetPickedup)
-    //    {
-    //        relay.CheckASpot(1);
-    //        magnetPickedup = true;
-    //    }
-    //}
+    public void MagnetGrabbed()
+    {
+        if (!magnetGrabbed)
+        {
+            relay.CheckASpot(0);
+            magnetGrabbed = true;
+            Guide.instance.SetGuide(3, magnetTransform, "Point magnet");
+        }
+    }
+    private void MagnetPickedUp()
+    {
+        if (!magnetPickedup)
+        {
+            relay.CheckASpot(1);
+            magnetPickedup = true;
+            Guide.instance.GuideDone();
+            GameManager.instance.SetTimeScaleSmooth(1);
+        }
+    }
 
 }
