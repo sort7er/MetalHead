@@ -4,7 +4,9 @@ using UnityEngine.UI;
 
 public class ChooseMovement : MonoBehaviour
 {
-    public TextMeshProUGUI teleportText, continuousText;
+    public string continuousDescription, teleportDescription;
+
+    public TextMeshProUGUI teleportText, continuousText, descriptionText;
     public Image teleportImage, continuousImage;
     public Animator leftControllerSide;
     public Transform character, targetPos;
@@ -80,6 +82,7 @@ public class ChooseMovement : MonoBehaviour
         {
             Display(true);
             LocomotionManager.instance.SetLocomotion(1);
+            
         }
     }
     public void Continuous()
@@ -88,6 +91,7 @@ public class ChooseMovement : MonoBehaviour
         {
             Display(false);
             LocomotionManager.instance.SetLocomotion(0);
+            
         }
     }
 
@@ -102,6 +106,7 @@ public class ChooseMovement : MonoBehaviour
                 continuousImage.color = Color.gray;
                 teleportImage.color = Color.white;
             }
+            descriptionText.text = teleportDescription;
             teleport = true;
             changed = true;
         }
@@ -114,6 +119,7 @@ public class ChooseMovement : MonoBehaviour
                 continuousImage.color = Color.white;
                 teleportImage.color = Color.gray;
             }
+            descriptionText.text = continuousDescription;
             teleport = false;
             changed = true;
         }

@@ -6,6 +6,7 @@ public class RequirementCheck : MonoBehaviour
     public InputActionAsset inputAction;
     public AmmoBag ammoBag;
     public CZ50 cz50;
+    public Tac14 tac14;
     public Magnet magnet;
     public Transform magPos;
     public Transform slide;
@@ -33,7 +34,11 @@ public class RequirementCheck : MonoBehaviour
     private bool buttonPressed;
     private bool gunGrabbed;
     private bool canGrabGun;
-    private bool magnetRoomEntered;
+    private bool enemRoomEntered;
+    private bool shotgunGrabbed;
+    private bool slugGrabbed;
+    private bool slugInserted;
+    private bool shotgunSlidePulled;
 
     //Shooting
     private bool gunEmptied;
@@ -196,13 +201,67 @@ public class RequirementCheck : MonoBehaviour
             }
         }
 
-        if(magnetGrabbed && !magnetPickedup)
+
+
+
+        //Shotgun
+        if(enemRoomEntered && !shotgunSlidePulled)
         {
-            if(magnet.GetMetalsCollected() > 0)
+            if (GameManager.instance.rightHand.IsHovering())
             {
-                MagnetPickedUp();
+                if (!gripRight)
+                {
+                    rightQuest.QuestActive(true);
+                    rightQuest.Grip();
+                    gripRight = true;
+                    holdingRight = false;
+                }
+            }
+            if (GameManager.instance.leftHand.IsHovering())
+            {
+                if (!gripLeft)
+                {
+                    leftQuest.QuestActive(true);
+                    leftQuest.Grip();
+                    gripLeft = true;
+                    holdingLeft = false;
+                }
+
+            }
+
+
+
+
+            if(!slugGrabbed && GameManager.instance.CheckHand("Slug") != 0)
+            {
+                SlugGrabbed();
+            }
+            else if (tac14.currentAmmo > 0 && !slugInserted)
+            {
+                SlugInserted();
+            }
+            else if (!tac14.CockingNeeded() && !shotgunSlidePulled)
+            {
+                ShotgunSlidePulled();
             }
         }
+
+
+        //if(magnetGrabbed && !magnetPickedup)
+        //{
+        //    if(magnet.GetMetalsCollected() > 0)
+        //    {
+        //        MagnetPickedUp();
+        //    }
+        //}
+
+
+
+
+
+
+
+
     }
 
     private void OnDestroy()
@@ -292,6 +351,7 @@ public class RequirementCheck : MonoBehaviour
     {
         if (!buttonPressed)
         {
+            Guide.instance.GuideDone();
             relay.CheckASpot(1);
             buttonPressed = true;
         }
@@ -433,7 +493,7 @@ public class RequirementCheck : MonoBehaviour
                 rightQuest.QuestActive(false);
             }
 
-            relay.NextReload();
+            //relay.NextReload();
             relay.CheckASpot(0);
             magDropped = true;
             Guide.instance.SetGuide(2, GameManager.instance.ammoBag.transform, "Grab ammo");
@@ -443,7 +503,7 @@ public class RequirementCheck : MonoBehaviour
     {
         if (!magGrabbed)
         {
-            relay.NextReload();
+            //relay.NextReload();
             relay.CheckASpot(1);
             magGrabbed = true;
             Guide.instance.SetGuide(2, magPos, "Insert");
@@ -453,7 +513,7 @@ public class RequirementCheck : MonoBehaviour
     {
         if (!magInserted)
         {
-            relay.NextReload();
+            //relay.NextReload();
             relay.CheckASpot(2);
             magInserted = true;
 
@@ -482,31 +542,67 @@ public class RequirementCheck : MonoBehaviour
             Guide.instance.GuideDone();
         }
     }
-    public void MagnetRoomEntered()
+    public void EnemyRoomEntered()
     {
-        if (!magnetRoomEntered)
+        if (!enemRoomEntered)
         {
             relay.CheckASpot(0);
-            magnetRoomEntered = true;
+            enemRoomEntered = true;
+        }
+    }
+    public void ShotgunGrabbed()
+    {
+        if (!shotgunGrabbed)
+        {
+            relay.CheckASpot(0);
+            shotgunGrabbed = true;
+            Guide.instance.SetGuide(1, ammoBag.transform, "Grab slug");
+        }
+    }
+    public void SlugGrabbed()
+    {
+        if(!slugGrabbed)
+        {
+            slugGrabbed= true;
+            Guide.instance.SetGuide(2, tac14.dynamicTrigger.transform, "Insert slug");
+        }
+    }
+    public void SlugInserted()
+    {
+        if(!slugInserted)
+        {
+            slugInserted= true;
+            Guide.instance.SetGuide(3, tac14.slide.transform, "Pump shotgun");
+        }
+    }
+    public void ShotgunSlidePulled()
+    {
+        if (!shotgunSlidePulled && slugInserted)
+        {
+            relay.CheckASpot(1);
+            shotgunSlidePulled = true;
+            Guide.instance.GuideDone();
+            leftQuest.QuestActive(false);
+            rightQuest.QuestActive(false);
         }
     }
 
-    public void MagnetGrabbed()
-    {
-        if (!magnetGrabbed)
-        {
-            relay.CheckASpot(0);
-            relay.NextMagnet();
-            magnetGrabbed = true;
-        }
-    }
-    private void MagnetPickedUp()
-    {
-        if (!magnetPickedup)
-        {
-            relay.CheckASpot(1);
-            magnetPickedup = true;
-        }
-    }
+    //public void MagnetGrabbed()
+    //{
+    //    if (!magnetGrabbed)
+    //    {
+    //        relay.CheckASpot(0);
+    //        relay.NextMagnet();
+    //        magnetGrabbed = true;
+    //    }
+    //}
+    //private void MagnetPickedUp()
+    //{
+    //    if (!magnetPickedup)
+    //    {
+    //        relay.CheckASpot(1);
+    //        magnetPickedup = true;
+    //    }
+    //}
 
 }

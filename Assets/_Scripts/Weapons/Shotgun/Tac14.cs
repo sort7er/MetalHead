@@ -56,6 +56,12 @@ public class Tac14 : MonoBehaviour
         soundForGun = GetComponent<SoundForGun>();
         startColor = currentAmmoText.color;
         currentAmmo = magSize;
+        if(currentAmmo <= 0)
+        {
+            cockingNeeded = true;
+        }
+
+
         UpdateDial();
         if(numberOfPellets < 2)
         {
@@ -419,7 +425,10 @@ public class Tac14 : MonoBehaviour
             projectilePenetration = true;
         }
     }
-
+    public bool CockingNeeded()
+    {
+        return cockingNeeded;
+    }
 
 
     //Icons

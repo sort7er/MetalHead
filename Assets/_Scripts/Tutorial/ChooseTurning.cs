@@ -4,7 +4,8 @@ using UnityEngine.UI;
 
 public class ChooseTurning : MonoBehaviour
 {
-    public TextMeshProUGUI snapText, continousText;
+    public string continuousDescription, snapDescription;
+    public TextMeshProUGUI snapText, continousText, descriptionText;
     public Image snapImage, continousImage;
     public Transform characterPivot;
     public Animator rightControllerFront;
@@ -57,6 +58,7 @@ public class ChooseTurning : MonoBehaviour
         {
             Display(true);
             LocomotionManager.instance.SetTurning(1);
+            
         }
         
     }
@@ -66,6 +68,7 @@ public class ChooseTurning : MonoBehaviour
         {
             Display(false);
             LocomotionManager.instance.SetTurning(0);
+            
         }
         
     }
@@ -80,6 +83,7 @@ public class ChooseTurning : MonoBehaviour
                 snapImage.color = Color.white;
                 continousImage.color = Color.gray;
             }
+            descriptionText.text = snapDescription;
             snap = true;
             changed = true;
         }
@@ -92,6 +96,7 @@ public class ChooseTurning : MonoBehaviour
                 snapImage.color = Color.gray;
                 continousImage.color = Color.white;
             }
+            descriptionText.text = continuousDescription;
             snap = false;
             changed = true;
         }

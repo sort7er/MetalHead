@@ -9,19 +9,21 @@ public class TV : MonoBehaviour
 
     [Header("Tutorial displays")]
     public TextMeshProUGUI niceText;
+    public TextMeshProUGUI infoText;
     public Transform tutorialParent;
-
-    public GameObject turningDisplay;
-    public GameObject quickturnDisplay;
-    public GameObject movementDisplay;
-    public GameObject menuDisplay;
-    public GameObject arrowDisplay;
     public bool pathLeft;
-    public GameObject grabGunDisplay;
-    public GameObject shootGunDisplay;
-    public GameObject reloadGunDisplay;
-    public GameObject magnetDisplay;
-    public GameObject magnetMessageDisplay;
+
+    public GameObject messageOverlay;
+    public GameObject arrowDisplay;
+    //public GameObject turningDisplay;
+    //public GameObject quickturnDisplay;
+    //public GameObject movementDisplay;
+    //public GameObject menuDisplay;
+    //public GameObject grabGunDisplay;
+    //public GameObject shootGunDisplay;
+    //public GameObject reloadGunDisplay;
+    //public GameObject magnetDisplay;
+    //public GameObject magnetMessageDisplay;
 
     [Header("Checklist")]
     public GameObject[] checkboxes;
@@ -32,6 +34,7 @@ public class TV : MonoBehaviour
     private GameObject currentDisplay;
     private TypeWriterText[] typeWriterText;
     private TypeWriterText niceTypeWriterText;
+    private TypeWriterText infoTypeWriterText;
     private DisplayStepByStep reloadGun;
     private DisplayStepByStep magnet;
 
@@ -39,10 +42,12 @@ public class TV : MonoBehaviour
 
     private void Start()
     {
-        magnet = magnetDisplay.GetComponent<DisplayStepByStep>();
-        reloadGun = reloadGunDisplay.GetComponent<DisplayStepByStep>();
+        //magnet = magnetDisplay.GetComponent<DisplayStepByStep>();
+        //reloadGun = reloadGunDisplay.GetComponent<DisplayStepByStep>();
         niceTypeWriterText = niceText.GetComponent<TypeWriterText>();
+        infoTypeWriterText = infoText.GetComponent<TypeWriterText>();
         niceText.text = "";
+        infoText.text = "";
         typeWriterText = new TypeWriterText[objectiveText.Length];
         for(int i = 0; i < objectiveText.Length; i++)
         {
@@ -61,26 +66,26 @@ public class TV : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if(GameManager.instance.isPaused && !pausedChecked)
-        {
-            EnableCurrentDisplay(false);
-            pausedChecked = true;
-        }
-        else if(!GameManager.instance.isPaused && pausedChecked)
-        {
-            EnableCurrentDisplay(true);
-            pausedChecked = false;
-        }
-    }
+    //private void Update()
+    //{
+    //    if(GameManager.instance.isPaused && !pausedChecked)
+    //    {
+    //        EnableCurrentDisplay(false);
+    //        pausedChecked = true;
+    //    }
+    //    else if(!GameManager.instance.isPaused && pausedChecked)
+    //    {
+    //        EnableCurrentDisplay(true);
+    //        pausedChecked = false;
+    //    }
+    //}
 
     //Enable
     public void Turning()
     {
         Objective(0, "Turn left");
         Objective(1, "Turn right");
-        SetCurrentDisplay(turningDisplay, true);
+        //SetCurrentDisplay(turningDisplay, true);
         if (LocomotionManager.instance.currentQuickTurnType == 0)
         {
             Objective(2, "Quickturn");
@@ -89,14 +94,18 @@ public class TV : MonoBehaviour
 
     public void Movement()
     {
-        SetCurrentDisplay(movementDisplay, true);
+        //SetCurrentDisplay(movementDisplay, true);
         Objective(0, "Move to the pillar");
         Objective(1, "Press the button");
     }
 
     public void Menu()
     {
-        SetCurrentDisplay(menuDisplay, false);
+        messageOverlay.SetActive(true);
+        infoTypeWriterText.StopTyping();
+        infoText.text = "You can change the comfort settings at any time by clicking on the menu button";
+        infoTypeWriterText.StartTyping();
+        //SetCurrentDisplay(menuDisplay, false);
     }
 
     public void Arrow(string textToPrint)
@@ -120,13 +129,13 @@ public class TV : MonoBehaviour
     {
         ResetChecklist();
         Objective(0, "Grab gun");
-        SetCurrentDisplay(grabGunDisplay, false);
+        //SetCurrentDisplay(grabGunDisplay, false);
     }
     public void ShootGun()
     {
         ResetChecklist();
         Objective(0, "Fire all bullets in gun");
-        SetCurrentDisplay(shootGunDisplay, false);
+        //SetCurrentDisplay(shootGunDisplay, false);
     }
     public void ReloadGun()
     {
@@ -135,45 +144,59 @@ public class TV : MonoBehaviour
         Objective(1, "Grab mag");
         Objective(2, "Insert mag");
         Objective(3, "Pull slide");
-        SetCurrentDisplay(reloadGunDisplay, false);
-        NextReload();
+        //SetCurrentDisplay(reloadGunDisplay, false);
+        //NextReload();
     }
-    public void NextReload()
+    //public void NextReload()
+    //{
+    //    reloadGun.Display();
+    //}
+    public void Shotgun()
     {
-        reloadGun.Display();
+        ResetChecklist();
+        Objective(0, "Grab shotgun from your shoulder");
+        Objective(1, "Reload shotgun");
+    }
+    public void KillEnemy()
+    {
+        ResetChecklist();
+        Objective(0, "Kill Enemy");
     }
     public void Magnet()
     {
         ResetChecklist();
         Objective(0, "Grab magnet from your shoulder");
         Objective(1, "Pick up metals with magnet");
-        SetCurrentDisplay(magnetDisplay, false);
-        NextMagnet();
+        //SetCurrentDisplay(magnetDisplay, false);
+        //NextMagnet();
     }
-    public void NextMagnet()
-    {
-        magnet.Display();
-    }
+    //public void NextMagnet()
+    //{
+    //    magnet.Display();
+    //}
     public void MagnetMessage()
     {
-        ResetChecklist();
-        SetCurrentDisplay(magnetMessageDisplay, false);
+        messageOverlay.SetActive(true);
+        infoTypeWriterText.StopTyping();
+        infoText.text = "The amount displayed shows how much you can spend on upgrades at an upgradestation";
+        infoTypeWriterText.StartTyping();
     }
 
     // Methods called from relay
     public void AllChecked(float delay)
     {
         ResetTutorial();
+        messageOverlay.SetActive(true);
         niceTypeWriterText.StopTyping();
         niceText.text = "Well done";
         niceTypeWriterText.StartTyping();
         Check(1);
         Invoke(nameof(ResetChecklist), delay);
     }
-    public void SetQuickTurnDisplay()
-    {
-        SetCurrentDisplay(quickturnDisplay, false);
-    }
+    //public void SetQuickTurnDisplay()
+    //{
+    //    SetCurrentDisplay(quickturnDisplay, false);
+    //}
 
     public void Check(int i)
     {
@@ -199,6 +222,9 @@ public class TV : MonoBehaviour
     {
         niceTypeWriterText.StopTyping();
         niceText.text = "";
+        infoTypeWriterText.StopTyping();
+        infoText.text = "";
+        messageOverlay.SetActive(false);
         for (int i = 0; i < objectiveText.Length; i++)
         {
             objectiveText[i].text = "";
@@ -209,7 +235,7 @@ public class TV : MonoBehaviour
     private void ResetTutorial()
     {
         currentDisplay = null;
-        foreach(Transform t in tutorialParent)
+        foreach (Transform t in tutorialParent)
         {
             t.gameObject.SetActive(false);
         }
@@ -218,6 +244,7 @@ public class TV : MonoBehaviour
     private void SetCurrentDisplay(GameObject display, bool reload)
     {
         ResetTutorial();
+        ResetChecklist();
         includeReloadAfterPause = reload;
         currentDisplay = display;
         currentDisplay.SetActive(true);

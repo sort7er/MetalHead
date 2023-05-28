@@ -7,6 +7,7 @@ public class RelayToTv : MonoBehaviour
     public GameObject[] groundToEnable;
     public TV[] tvsInScene;
     public Transform objectToGrab;
+    public Transform button;
 
     private QuestController leftQuest, rightQuest;
     private TutorialManager tutorialManager;
@@ -53,6 +54,7 @@ public class RelayToTv : MonoBehaviour
     }
     public void TvMovement()
     {
+        Guide.instance.SetGuide(3, button, "Press button");
         AddRequirement(2);
         leftQuest.QuestActive(true);
         rightQuest.QuestActive(true);
@@ -164,13 +166,13 @@ public class RelayToTv : MonoBehaviour
             tvsInScene[i].ReloadGun();
         }
     }
-    public void NextReload()
-    {
-        for (int i = 0; i < tvsInScene.Length; i++)
-        {
-            tvsInScene[i].NextReload();
-        }
-    }
+    //public void NextReload()
+    //{
+    //    for (int i = 0; i < tvsInScene.Length; i++)
+    //    {
+    //        tvsInScene[i].NextReload();
+    //    }
+    //}
     public void TvArrow2()
     {
         delay = 0;
@@ -180,6 +182,26 @@ public class RelayToTv : MonoBehaviour
         for (int i = 0; i < tvsInScene.Length; i++)
         {
             tvsInScene[i].Arrow("Proceed out of the room, or keep practicing");
+        }
+    }
+    public void TvShotgun()
+    {
+        delay = 0f;
+        tutorialManager.SetShotgun(true);
+        Guide.instance.SetGuide(3, tutorialManager.shotgun.transform, "Grab shotgun from over your sholder");
+        AddRequirement(2);
+        for (int i = 0; i < tvsInScene.Length; i++)
+        {
+            tvsInScene[i].Shotgun();
+        }
+    }
+    public void TVKillEnemy()
+    {
+        delay = 1f;
+        AddRequirement(1);
+        for (int i = 0; i < tvsInScene.Length; i++)
+        {
+            tvsInScene[i].KillEnemy();
         }
     }
     public void TvMagnet()
@@ -194,10 +216,10 @@ public class RelayToTv : MonoBehaviour
     }
     public void NextMagnet()
     {
-        for (int i = 0; i < tvsInScene.Length; i++)
-        {
-            tvsInScene[i].NextMagnet();
-        }
+        //for (int i = 0; i < tvsInScene.Length; i++)
+        //{
+        //    tvsInScene[i].NextMagnet();
+        //}
     }
     public void TVMagnetMessage()
     {
@@ -287,9 +309,17 @@ public class RelayToTv : MonoBehaviour
             }
             else if (currentObjective == 10)
             {
-                Invoke(nameof(TvMagnet), delay);
+                Invoke(nameof(TvShotgun), delay);
             }
             else if (currentObjective == 11)
+            {
+                Invoke(nameof(TVKillEnemy), delay);
+            }
+            else if (currentObjective == 12)
+            {
+                Invoke(nameof(TvMagnet), delay);
+            }
+            else if (currentObjective == 13)
             {
                 Invoke(nameof(TVMagnetMessage), delay);
             }
@@ -299,11 +329,11 @@ public class RelayToTv : MonoBehaviour
         }
         else if (numberOfRequirements == 1 && quickturn)
         {
-            for (int i = 0; i < tvsInScene.Length; i++)
-            {
-                tvsInScene[i].SetQuickTurnDisplay();
-                rightQuest.Joystick(1);
-            }
+            //for (int i = 0; i < tvsInScene.Length; i++)
+            //{
+            //    //tvsInScene[i].SetQuickTurnDisplay();
+            //}
+            rightQuest.Joystick(1);
         }
         
         if(numberOfRequirements > 0) 

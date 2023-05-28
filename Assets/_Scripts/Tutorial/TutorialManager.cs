@@ -9,6 +9,7 @@ public class TutorialManager : MonoBehaviour
     public InputActionAsset menuInputAction;
     public GameObject pauseVignette;
     public GameObject exitTutorialMenu;
+    public GameObject shotgun;
 
 
     [Header("Things to enable")]
@@ -106,6 +107,7 @@ public class TutorialManager : MonoBehaviour
     {
         TutorialMenu();
         SetMagnet(false);
+        SetShotgun(false);
     }
     public void NextMenu()
     {
@@ -196,7 +198,10 @@ public class TutorialManager : MonoBehaviour
         enableTurning = state;
         LocomotionManager.instance.EnableTurning(state);
     }
-
+    public void SetShotgun(bool state)
+    {
+        shotgun.SetActive(state);
+    }
 
     private void OpenMenuCommon()
     {
