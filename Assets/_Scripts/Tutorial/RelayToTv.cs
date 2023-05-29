@@ -194,7 +194,7 @@ public class RelayToTv : MonoBehaviour
     {
         delay = 0f;
         tutorialManager.SetShotgun(true);
-        Guide.instance.SetGuide(3, tutorialManager.shotgun.transform, "Grab shotgun from over your sholder");
+        Guide.instance.SetGuide(2, tutorialManager.shotgun.transform, "Grab shotgun from over your sholder");
         AddRequirement(2);
         for (int i = 0; i < tvsInScene.Length; i++)
         {
@@ -203,8 +203,14 @@ public class RelayToTv : MonoBehaviour
     }
     public void TVKillEnemy()
     {
-        AddRequirement(1);
+        doorToOpen[3].SetTrigger("Open");
         enemy.gameObject.SetActive(true);
+        Invoke(nameof(TVKillEnemyDelay), 1.5f);
+        
+    }
+    private void TVKillEnemyDelay()
+    {
+        AddRequirement(1);
         Guide.instance.SetGuide(3, enemyHead, "Kill");
         for (int i = 0; i < tvsInScene.Length; i++)
         {
@@ -217,7 +223,7 @@ public class RelayToTv : MonoBehaviour
         delay = 2f;
         tutorialManager.SetMagnet(true);
         AddRequirement(2);
-        Guide.instance.SetGuide(3, tutorialManager.magnet.transform, "Grab magnet from over your sholder");
+        Guide.instance.SetGuide(2, tutorialManager.magnet.transform, "Grab magnet from over your sholder");
         for (int i = 0; i < tvsInScene.Length; i++)
         {
             tvsInScene[i].Magnet();
@@ -241,7 +247,7 @@ public class RelayToTv : MonoBehaviour
     public void TvArrow3()
     {
         groundToEnable[3].SetActive(true);
-        doorToOpen[3].SetTrigger("Open");
+        doorToOpen[4].SetTrigger("Open");
         AddRequirement(1);
         for (int i = 0; i < tvsInScene.Length; i++)
         {

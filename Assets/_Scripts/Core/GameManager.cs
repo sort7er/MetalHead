@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] enemies;
     public InputActionAsset gripInput;
     public AudioSource[] soundsToSlowDown;
+    public AudioClip[] slowDownSound;
 
     [HideInInspector] public bool isUpgrading;
     [HideInInspector] public bool isPaused;
@@ -36,6 +37,7 @@ public class GameManager : MonoBehaviour
     private PauseMenu pauseMenu;
     private XRInteractorLineVisual leftLineVisual, rightLineVisual;
     private InputAction gripLeft, gripRight;
+    private AudioSource audioSource;
     private float leftGripValue, rightGripValue;
     private bool ammoBagTaken;
 
@@ -48,6 +50,7 @@ public class GameManager : MonoBehaviour
         tempDone= false;
         Physics.IgnoreLayerCollision(7, 8);
         EnableRays(false);
+        audioSource = GetComponent<AudioSource>();
         pauseMenu = GetComponent<PauseMenu>();
         leftLineVisual = leftRayInteractor.GetComponent<XRInteractorLineVisual>();
         rightLineVisual = rightRayInteractor.GetComponent<XRInteractorLineVisual>();
@@ -97,7 +100,10 @@ public class GameManager : MonoBehaviour
                 RenderSettings.fogDensity -= Time.unscaledDeltaTime * 0.15f;
                 for(int i = 0; i < soundsToSlowDown.Length; i++)
                 {
-                    soundsToSlowDown[i].pitch += Time.unscaledDeltaTime * 0.3f;
+                    if (soundsToSlowDown[i] != null)
+                    {
+                        soundsToSlowDown[i].pitch += Time.unscaledDeltaTime * 0.3f;
+                    }
                 }
                 
                 if (Time.timeScale >= targetTime)
@@ -106,11 +112,14 @@ public class GameManager : MonoBehaviour
                     RenderSettings.fog = false;
                     Time.timeScale = targetTime;
                     Time.fixedDeltaTime= Time.timeScale * 0.02f;
-                    smoothTimeScale= false;
                     for (int i = 0; i < soundsToSlowDown.Length; i++)
                     {
-                        soundsToSlowDown[i].pitch = 1;
+                        if (soundsToSlowDown[i] != null)
+                        {
+                            soundsToSlowDown[i].pitch = 1;
+                        }
                     }
+                    smoothTimeScale = false;
                 }
             }
             else
@@ -119,14 +128,21 @@ public class GameManager : MonoBehaviour
                 RenderSettings.fogDensity += Time.unscaledDeltaTime * 0.15f;
                 for (int i = 0; i < soundsToSlowDown.Length; i++)
                 {
-                    soundsToSlowDown[i].pitch -= Time.unscaledDeltaTime * 0.3f;
+                    if (soundsToSlowDown[i] != null)
+                    {
+                        soundsToSlowDown[i].pitch -= Time.unscaledDeltaTime * 0.3f;
+                    }
                 }
                 if (Time.timeScale <= targetTime)
                 {
                     for (int i = 0; i < soundsToSlowDown.Length; i++)
                     {
-                        soundsToSlowDown[i].pitch = 0.6f;
+                        if (soundsToSlowDown[i] != null)
+                        {
+                            soundsToSlowDown[i].pitch = 0.6f;
+                        }
                     }
+                    
                     RenderSettings.fogDensity = 0.3f;
                     Time.timeScale = targetTime;
                     Time.fixedDeltaTime = Time.timeScale * 0.02f;
@@ -274,8 +290,15 @@ public class GameManager : MonoBehaviour
         targetTime = newTime;
         if(newTime < Time.timeScale)
         {
+            audioSource.clip = slowDownSound[0];
+            audioSource.Play();
             RenderSettings.fog = true;
             RenderSettings.fogDensity = 0;
+        }
+        else
+        {
+            audioSource.clip = slowDownSound[1];
+            audioSource.Play();
         }
     }
     public void IsDead()
