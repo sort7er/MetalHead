@@ -157,7 +157,7 @@ public class Chest : MonoBehaviour
 
     private void SpawnPickUps()
     {
-        EffectManager.instance.SpawnPickups(transform, 10);
+        EffectManager.instance.SpawnPickups(transform, 10, true);
         treasueInteractable.enabled = true;
         
     }

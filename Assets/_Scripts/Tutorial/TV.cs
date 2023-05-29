@@ -119,10 +119,9 @@ public class TV : MonoBehaviour
         Objective(0, "Grab the cube with the right hand");
         Objective(1, "Release cube with the right hand");
     }
-    public void GrabObjectLeft()
+    public void GrabWatch()
     {
-        Objective(0, "Grab the cube with the left hand");
-        Objective(1, "Release cube with the left hand");
+        Objective(0, "Grab the watch");
     }
 
     public void GrabGun()
@@ -227,6 +226,7 @@ public class TV : MonoBehaviour
         messageOverlay.SetActive(false);
         for (int i = 0; i < objectiveText.Length; i++)
         {
+            typeWriterText[i].StopTyping();
             objectiveText[i].text = "";
             checkboxes[i].SetActive(false);
             fill[i].SetActive(false);

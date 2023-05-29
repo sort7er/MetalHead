@@ -96,7 +96,7 @@ public class EffectManager : MonoBehaviour
         Destroy(bulletHole, 8f);
     }
 
-    public void SpawnPickups(Transform enemy, int numberOfPickups)
+    public void SpawnPickups(Transform enemy, int numberOfPickups, bool willDisapear)
     {
         for(int i = 0; i < numberOfPickups; i++)
         {
@@ -118,6 +118,7 @@ public class EffectManager : MonoBehaviour
             GameObject pickup = Instantiate(pickUp[pickupNumber], enemy.position, Quaternion.identity);
             pickup.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-2,2), 2, Random.Range(-2, 2)), ForceMode.Impulse);
             pickup.GetComponent<Pickup>().SetPickupID(pickupNumber);
+            pickup.GetComponent<Pickup>().WillDisapear(willDisapear);
             pickup.transform.parent = ParentManager.instance.pickups;
         }
     }

@@ -14,9 +14,11 @@ public class TutorialManager : MonoBehaviour
 
     [Header("Things to enable")]
     public GameObject magnet;
+    
+    
+    [HideInInspector] public Watch watch;
 
     private QuestController leftQuest, rightQuest;
-    private Watch watch;
     private Renderer pauseVignetteRenderer;
     private InputAction menuPressed;
     private bool followCam, canPause;

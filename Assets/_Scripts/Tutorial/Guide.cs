@@ -7,8 +7,10 @@ public class Guide : MonoBehaviour
     public Transform guideCanvas;
     public Transform leftEdge, leftCorner;
     public Transform rightEdge, rightCorner;
+    public float threshhold;
 
     private Animator guideAnim;
+    private bool left;
 
     private void Awake()
     {
@@ -39,7 +41,7 @@ public class Guide : MonoBehaviour
 
         //Position and rotation of message
         camPosition = cam.position + cam.forward + Xoffset + Yoffset;
-        camRotation = Quaternion.Euler(cam.eulerAngles.x, cam.eulerAngles.y, guideCanvas.eulerAngles.z);
+        camRotation = Quaternion.Euler(cam.eulerAngles.x, cam.eulerAngles.y, 0);
         guideCanvas.position = Vector3.Lerp(guideCanvas.position, camPosition, Time.deltaTime * 10);
         guideCanvas.rotation = Quaternion.Slerp(guideCanvas.rotation, camRotation, Time.unscaledDeltaTime * 10);
 
@@ -50,7 +52,16 @@ public class Guide : MonoBehaviour
         {
             Vector3 prep = Vector3.Cross(cam.forward, targetTransform.position - cam.position);
 
-            if (Vector3.Dot(prep, Vector3.up) < 0)
+            if (Vector3.Dot(prep, Vector3.up) < 0 - threshhold && !left)
+            {
+                left = true;
+            }
+            else if(Vector3.Dot(prep, Vector3.up) > 0 + threshhold && left)
+            {
+                left = false; 
+            }
+
+            if(left)
             {
                 Xoffset = -cam.right * Xamount;
                 currentEdge = leftEdge.position;

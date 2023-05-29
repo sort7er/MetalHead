@@ -10,13 +10,15 @@ public class RelayToTv : MonoBehaviour
     public Transform button;
     public EnemyHealth enemy;
     public Transform enemyHead;
+    
+    [HideInInspector] public float delay;
+
 
     private QuestController leftQuest, rightQuest;
     private TutorialManager tutorialManager;
     private RequirementCheck requirementCheck;
     private bool quickturn;
     private int numberOfRequirements, currentObjective;
-    private float delay;
 
     private void Start()
     {
@@ -115,10 +117,10 @@ public class RelayToTv : MonoBehaviour
             tvsInScene[i].GrabObjectRight();
         }
     }
-    public void TvGrabLeft()
+    public void TvWatch()
     {
-        delay = 2;
-        AddRequirement(2);
+        delay = 4;
+        AddRequirement(1);
 
         GameManager.instance.EnableRightInteractor(false);
         GameManager.instance.EnableLeftInteractor(true);
@@ -128,9 +130,10 @@ public class RelayToTv : MonoBehaviour
 
         for (int i = 0; i < tvsInScene.Length; i++)
         {
-            tvsInScene[i].GrabObjectLeft();
+            tvsInScene[i].GrabWatch();
         }
     }
+
     public void TvArrow05()
     {
         delay = 0;
@@ -207,7 +210,7 @@ public class RelayToTv : MonoBehaviour
         {
             tvsInScene[i].KillEnemy();
         }
-        GameManager.instance.SetTimeScaleSmooth(0.3f);
+        GameManager.instance.SetTimeScaleSmooth(0.2f);
     }
     public void TvMagnet()
     {
@@ -219,7 +222,6 @@ public class RelayToTv : MonoBehaviour
         {
             tvsInScene[i].Magnet();
         }
-        GameManager.instance.SetTimeScaleSmooth(0.3f);
     }
     public void NextMagnet()
     {
@@ -291,7 +293,7 @@ public class RelayToTv : MonoBehaviour
             }
             else if (currentObjective == 4)
             {
-                Invoke(nameof(TvGrabLeft), delay);
+                Invoke(nameof(TvWatch), delay);
             }
             else if (currentObjective == 5)
             {

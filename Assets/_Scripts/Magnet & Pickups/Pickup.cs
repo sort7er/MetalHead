@@ -112,5 +112,9 @@ public class Pickup : MonoBehaviour
     {
         pickUpID = ID;
     }
+    public void WillDisapear(bool state)
+    {
+        willDissapear = state;
+    }
 
 }

@@ -29,7 +29,7 @@ public class RequirementCheck : MonoBehaviour
     private bool liftTriggerEntererd;
     private bool objectRoomEntererd;
     private bool grabObjectRight, releasedObjectRight;
-    private bool grabObjectLeft, releasedObjectLeft;
+    private bool grabWatch;
     private bool gripLeft, gripRight, holdingLeft, holdingRight;
     private bool firingRangeEntererd;
     private bool buttonPressed;
@@ -248,7 +248,7 @@ public class RequirementCheck : MonoBehaviour
             }
         }
 
-        if(shotgunSlidePulled && relay.enemy.GetCurrentHealth() <= 0 && !enemyKilled)
+        if(shotgunSlidePulled && relay.enemy.IsDead() && !enemyKilled)
         {
             EnemyKilled();
         }
@@ -404,28 +404,24 @@ public class RequirementCheck : MonoBehaviour
             releasedObjectRight = true;
         }
     }
-    public void GrabObjectLeft()
+    public void GrabbedWatch()
     {
-        if(!grabObjectLeft)
-        {
-            relay.CheckASpot(0);
-            grabObjectLeft = true;
-        }
-    }
-    public void ReleasedObjectLeft()
-    {
-
-        if(!releasedObjectLeft && releasedObjectRight)
+        if(!grabWatch)
         {
             GameManager.instance.rightHand.SetHandActive(true);
             GameManager.instance.EnableRightInteractor(true);
+            Guide.instance.SetGuide(2, tutorialManager.watch.transform, "The watch displays your health");
             leftQuest.QuestActive(false);
-            relay.CheckASpot(1);
-            releasedObjectLeft = true;
+            relay.CheckASpot(0);
+            grabWatch = true;
+            tutorialManager.SetWatch(true);
+            Invoke(nameof(HideWatchGuide), relay.delay);
         }
     }
-
-
+    private void HideWatchGuide()
+    {
+        Guide.instance.GuideDone();
+    }
     public void FiringRangeEntered()
     {
         if (!firingRangeEntererd)
@@ -603,9 +599,9 @@ public class RequirementCheck : MonoBehaviour
         if (!enemyKilled)
         {
             relay.CheckASpot(0);
-            enemyKilled= true;
             Guide.instance.GuideDone();
             magnetTransform.position = relay.enemy.transform.position;
+            enemyKilled= true;
         }
     }
 

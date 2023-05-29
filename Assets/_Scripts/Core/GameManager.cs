@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public Animator tempAnim;
     public GameObject[] enemies;
     public InputActionAsset gripInput;
+    public AudioSource[] soundsToSlowDown;
 
     [HideInInspector] public bool isUpgrading;
     [HideInInspector] public bool isPaused;
@@ -90,21 +91,43 @@ public class GameManager : MonoBehaviour
         }
         if (smoothTimeScale)
         {
-            if(targetTime < Time.timeScale)
+            if(targetTime > Time.timeScale)
             {
-                Time.timeScale += Time.unscaledDeltaTime * 0.2f;
-                if(Time.timeScale >= targetTime)
+                Time.timeScale += Time.unscaledDeltaTime * 0.35f;
+                RenderSettings.fogDensity -= Time.unscaledDeltaTime * 0.15f;
+                for(int i = 0; i < soundsToSlowDown.Length; i++)
                 {
+                    soundsToSlowDown[i].pitch += Time.unscaledDeltaTime * 0.3f;
+                }
+                
+                if (Time.timeScale >= targetTime)
+                {
+                    RenderSettings.fogDensity = 0;
+                    RenderSettings.fog = false;
                     Time.timeScale = targetTime;
                     Time.fixedDeltaTime= Time.timeScale * 0.02f;
                     smoothTimeScale= false;
+                    for (int i = 0; i < soundsToSlowDown.Length; i++)
+                    {
+                        soundsToSlowDown[i].pitch = 1;
+                    }
                 }
             }
             else
             {
-                Time.timeScale -= Time.unscaledDeltaTime * 0.2f;
+                Time.timeScale -= Time.unscaledDeltaTime * 0.35f;
+                RenderSettings.fogDensity += Time.unscaledDeltaTime * 0.15f;
+                for (int i = 0; i < soundsToSlowDown.Length; i++)
+                {
+                    soundsToSlowDown[i].pitch -= Time.unscaledDeltaTime * 0.3f;
+                }
                 if (Time.timeScale <= targetTime)
                 {
+                    for (int i = 0; i < soundsToSlowDown.Length; i++)
+                    {
+                        soundsToSlowDown[i].pitch = 0.6f;
+                    }
+                    RenderSettings.fogDensity = 0.3f;
                     Time.timeScale = targetTime;
                     Time.fixedDeltaTime = Time.timeScale * 0.02f;
                     smoothTimeScale = false;
@@ -249,6 +272,11 @@ public class GameManager : MonoBehaviour
     {
         smoothTimeScale = true;
         targetTime = newTime;
+        if(newTime < Time.timeScale)
+        {
+            RenderSettings.fog = true;
+            RenderSettings.fogDensity = 0;
+        }
     }
     public void IsDead()
     {
