@@ -21,14 +21,12 @@ public class InsertWeapon : MonoBehaviour
     {
         if (other.GetComponent<CZ50>() != null)
         {
-            Debug.Log("1");
             weaponInserted = 1;
             returnToHolster = other.GetComponent<ReturnToHolster>();
             weaponsRigidbody = other.GetComponent<Rigidbody>();
         }
         else if (other.GetComponentInParent<Tac14>() != null)
         {
-            Debug.Log("2");
             weaponInserted = 2;
             returnToHolster = other.GetComponentInParent<ReturnToHolster>();
             weaponsRigidbody = returnToHolster.GetComponent<Rigidbody>();

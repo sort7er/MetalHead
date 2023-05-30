@@ -5,12 +5,18 @@ public class UpgradeManager : MonoBehaviour
     public static UpgradeManager instance;
 
     [Header("CZ50")]
+    public int startAmmoClipSizeLevel;
     public int startBulletLevel;
-    public int startRecoilLevel;
-    public int startMagSizeLevel;
-    public int startProjectileLevel;
     public int startLaserLevel;
+    public int startProjectileLevel;
+    public int startRecoilLevel;
 
+    [Header("CZ50 caps")]
+    public int ammoClipSizeCap;
+    public int bulletCap;
+    public int laserCap;
+    public int penetrarionCap;
+    public int recoilCap;
 
     [Header("Tac14")]
     public int tac14StartReload;
@@ -19,9 +25,6 @@ public class UpgradeManager : MonoBehaviour
     public int tac14StartMagSize;
     public int tac14StartPellets;
     public int tac14StartPenetration;
-
-    [HideInInspector] public int[] tac14StartLevels;
-    [HideInInspector] public int[] tac14Caps;
 
 
     [Header("Tac14 caps")]
@@ -33,64 +36,78 @@ public class UpgradeManager : MonoBehaviour
     public Recoil cz50Recoil;
     public CZ50 cz50;
     public Tac14 tac14;
-    public CZ50Upgrades cZ50Upgrades;
-    public Tac14Upgrades tac14Upgrades;
 
+    [HideInInspector] public int[] cz50StartLevels;
+    [HideInInspector] public int[] tac14StartLevels;
+    [HideInInspector] public int[] cz50caps;
+    [HideInInspector] public int[] tac14Caps;
     [HideInInspector] public int magSize;
+
+
     private void Awake()
     {
         instance = this;
 
-        if (cZ50Upgrades != null)
+        if (startAmmoClipSizeLevel > ammoClipSizeCap)
         {
-            if (startBulletLevel > cZ50Upgrades.damageLevelCap)
-            {
-                startBulletLevel = cZ50Upgrades.damageLevelCap;
-            }
-            if (startRecoilLevel > cZ50Upgrades.recoilLevelCap)
-            {
-                startRecoilLevel = cZ50Upgrades.recoilLevelCap;
-            }
-            if (startMagSizeLevel > cZ50Upgrades.damageLevelCap)
-            {
-                startMagSizeLevel = cZ50Upgrades.damageLevelCap;
-            }
-            if (startProjectileLevel > cZ50Upgrades.penetrationCap)
-            {
-                startProjectileLevel = cZ50Upgrades.penetrationCap;
-            }
-            if (startLaserLevel > cZ50Upgrades.laserCap)
-            {
-                startLaserLevel = cZ50Upgrades.laserCap;
-            }
+            startAmmoClipSizeLevel = ammoClipSizeCap;
+        }
+        if (startBulletLevel > bulletCap)
+        {
+            startBulletLevel = bulletCap;
+        }
+        if (startLaserLevel > laserCap)
+        {
+            startLaserLevel = laserCap;
+        }
+        if (startProjectileLevel > penetrationCap)
+        {
+            startProjectileLevel = penetrationCap;
+        }
+        if (startRecoilLevel > recoilCap)
+        {
+            startRecoilLevel = recoilCap;
         }
 
-        if (tac14Upgrades != null)
+
+        cz50StartLevels = new int[5];
+        cz50StartLevels[0] = startAmmoClipSizeLevel;
+        cz50StartLevels[1] = startBulletLevel;
+        cz50StartLevels[2] = startLaserLevel;
+        cz50StartLevels[3] = startProjectileLevel;
+        cz50StartLevels[4] = startRecoilLevel;
+
+        cz50caps = new int[5];
+        cz50caps[0] = ammoClipSizeCap;
+        cz50caps[1] = bulletCap;
+        cz50caps[2] = laserCap;
+        cz50caps[3] = penetrarionCap;
+        cz50caps[4] = recoilCap;
+
+
+        if (tac14StartReload > reloadEfficiencyCap)
         {
-            if (tac14StartReload > reloadEfficiencyCap)
-            {
-                tac14StartReload = reloadEfficiencyCap;
-            }
-            if (tac14StartAuto > autoCap)
-            {
-                tac14StartAuto = autoCap;
-            }
-            if (tac14StartDamage > damageCap)
-            {
-                tac14StartDamage = damageCap;
-            }
-            if (tac14StartMagSize > magSizeCap)
-            {
-                tac14StartMagSize = magSizeCap;
-            }
-            if (tac14StartPellets > pelletCap)
-            {
-                tac14StartPellets = pelletCap;
-            }
-            if (tac14StartPenetration > penetrationCap)
-            {
-                tac14StartPenetration = penetrationCap;
-            }
+            tac14StartReload = reloadEfficiencyCap;
+        }
+        if (tac14StartAuto > autoCap)
+        {
+            tac14StartAuto = autoCap;
+        }
+        if (tac14StartDamage > damageCap)
+        {
+            tac14StartDamage = damageCap;
+        }
+        if (tac14StartMagSize > magSizeCap)
+        {
+            tac14StartMagSize = magSizeCap;
+        }
+        if (tac14StartPellets > pelletCap)
+        {
+            tac14StartPellets = pelletCap;
+        }
+        if (tac14StartPenetration > penetrationCap)
+        {
+            tac14StartPenetration = penetrationCap;
         }
 
 
@@ -114,7 +131,7 @@ public class UpgradeManager : MonoBehaviour
 
     private void Start()
     {
-        UpgradeCZ50(startBulletLevel, startRecoilLevel, startMagSizeLevel, startProjectileLevel, startLaserLevel);
+        UpgradeCZ50(startAmmoClipSizeLevel, startBulletLevel, startLaserLevel, startProjectileLevel, startRecoilLevel);
         UpgradeTac14(tac14StartReload, tac14StartAuto, tac14StartDamage, tac14StartMagSize, tac14StartPellets, tac14StartPenetration);
     }
 
@@ -127,10 +144,10 @@ public class UpgradeManager : MonoBehaviour
         }
         GameManager.instance.ammoBag.UpdateAmmo();
     }
-    public void UpgradeCZ50(int bulletLevel, int recoilLevel, int magSizeLevel, int projectileLevel, int laserLevel)
+    public void UpgradeCZ50(int ammoClipSizeLevel, int bulletLevel, int laserLevel, int projectileLevel, int recoilLevel)
     {
+        SetMagSize(7 + ammoClipSizeLevel * 3);
         cz50.SetDamage(10 + bulletLevel * 5);
-        SetMagSize(7 + magSizeLevel * 3);
         cz50Recoil.UpgradeRecoil(recoilLevel);
         if(projectileLevel== 2)
         {

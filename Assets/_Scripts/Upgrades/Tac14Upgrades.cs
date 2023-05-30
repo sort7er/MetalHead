@@ -6,25 +6,17 @@ public class Tac14Upgrades : MonoBehaviour
 {
     public UpgradeStation upgradeStation;
 
+    public string[] upgradeDescription;
     public int[] upgradeCost;
-
-    //public int reloadCost, autoCost, damageCost, magCost, pelletCost, penetrationCost;
 
     public TextMeshProUGUI[] costText;
     public TextMeshProUGUI[] levelText;
     public GameObject[] outlines;
 
-    //public TextMeshProUGUI reloadCostText, autoCostText, damageCostText, magCostText, pelletCostText, penetrationCostText;
-    //public TextMeshProUGUI reloadNumber, recoilNumber, ammoClipNumber, penetrationNumber, laserNumber;
-    //public GameObject bulletOutline, recoilOutline, ammoClipOutline, penetrationOutline, laserOutline;
     private Color startTextColor, selectTextColor;
     private Animator tac14UpgradesAnim;
     private int[] levels;
     private int[] startLevels;
-
-
-    //private int reloadLevel, autoLevel, damageLevel, magLevel, pelletLevel, penetrationLevel;
-    //private int startReloadLevel, startAutoLevel, startDamageLevel, startMagLevel, startPelletLevel, startPenetrationLevel;
 
 
 
@@ -48,6 +40,7 @@ public class Tac14Upgrades : MonoBehaviour
     public void ActiveUpgrade(int activeUpgrade)
     {
         tac14UpgradesAnim.SetInteger("Upgrade", activeUpgrade);
+        upgradeStation.Describe(upgradeDescription[activeUpgrade - 1]);
     }
 
     public void Plus(int number)

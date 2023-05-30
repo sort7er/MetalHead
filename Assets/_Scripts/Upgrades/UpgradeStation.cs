@@ -8,7 +8,7 @@ public class UpgradeStation : MonoBehaviour
     public AudioSource buttonSource, screenSource;
     public AudioClip screenOn, screenOff, error, select, select2, upgrading;
     public Animator screenAnim;
-    public TextMeshProUGUI titleText, normalText, currencyText, minusText;
+    public TextMeshProUGUI titleText, normalText, currencyText, minusText, descriptionText;
     public GameObject nut, backButton, executeButton, loadingBar;
     public GameObject[] gun;
     public CZ50Upgrades cz50Upgrades;
@@ -20,7 +20,7 @@ public class UpgradeStation : MonoBehaviour
     private Animator loadingBarAnim;
     private InsertWeapon insertWeapon;
     private AudioSource upgradeStationSource;
-    private TypeWriterText titleType, normalType, currencyType, minusType;
+    private TypeWriterText titleType, normalType, currencyType, minusType, describeType;
     private float currentVolume, targetVolume;
     private int activeUpgrade;
     private bool notEnough;
@@ -35,9 +35,11 @@ public class UpgradeStation : MonoBehaviour
         normalType = normalText.GetComponent<TypeWriterText>();
         currencyType = currencyText.GetComponent<TypeWriterText>();
         minusType = minusText.GetComponent<TypeWriterText>();
+        describeType = descriptionText.GetComponent<TypeWriterText>();
         nut.SetActive(false);
         backButton.SetActive(false);
         executeButton.SetActive(false);
+        Describe("");
     }
 
     private void Update()
@@ -121,11 +123,13 @@ public class UpgradeStation : MonoBehaviour
         normalType.StopTyping();
         titleType.StopTyping();
         minusType.StopTyping();
+        describeType.StopTyping();
 
         minusText.text = "";
         titleText.text = "";
         normalText.text = "";
         currencyText.text = "";
+        descriptionText.text = "";
 
         insertWeapon.PowerOff();
         nut.SetActive(false);
@@ -212,6 +216,8 @@ public class UpgradeStation : MonoBehaviour
         minusOnScreen = 0;
         minusText.text = "";
         currencyText.text = "";
+        describeType.StopTyping();
+        descriptionText.text = "";
         gun[activeUpgrade - 1].SetActive(false);
         nut.SetActive(false);
         backButton.SetActive(false);
@@ -299,5 +305,11 @@ public class UpgradeStation : MonoBehaviour
             }
             
         }
+    }
+    public void Describe(string description)
+    {
+        describeType.StopTyping();
+        descriptionText.text = description;
+        describeType.StartTyping();
     }
 }
