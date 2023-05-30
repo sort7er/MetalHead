@@ -278,12 +278,12 @@ public class CZ50 : MonoBehaviour
                 if (left)
                 {
                     GameManager.instance.leftHand.questController.QuestActive(true);
-                    GameManager.instance.leftHand.questController.Secondary();
+                    GameManager.instance.leftHand.questController.Secondary(false);
                 }
                 else
                 {
                     GameManager.instance.rightHand.questController.QuestActive(true);
-                    GameManager.instance.rightHand.questController.Secondary();
+                    GameManager.instance.rightHand.questController.Secondary(false);
                 }
                 questAnimSet = true;
             }   

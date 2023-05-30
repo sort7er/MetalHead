@@ -10,6 +10,7 @@ public class QuestController : MonoBehaviour
 
     private Animator displayAnim;
     private AudioSource controllerSource;
+    private bool includeSound;
 
     private void Awake()
     {
@@ -17,39 +18,39 @@ public class QuestController : MonoBehaviour
         controllerSource = GetComponent<AudioSource>();
     }
 
-    public void Primary()
+    public void Primary(bool sound)
     {
-        Commons();
+        Commons(sound);
         controllerAnim.Play("Primary");
         inputs[0].material = highlightMaterial;
     }
-    public void Secondary()
+    public void Secondary(bool sound)
     {
-        Commons();
+        Commons(sound);
         controllerAnim.Play("Secondary");
         inputs[1].material = highlightMaterial;
     }
-    public void Menu()
+    public void Menu(bool sound)
     {
-        Commons();
+        Commons(sound);
         controllerAnim.Play("Menu");
         inputs[2].material = highlightMaterial;
     }
-    public void Trigger()
+    public void Trigger(bool sound)
     {
-        Commons();
+        Commons(sound);
         controllerAnim.Play("Trigger");
         inputs[3].material = highlightMaterial;
     }
-    public void Grip()
+    public void Grip(bool sound)
     {
-        Commons();
+        Commons(sound);
         controllerAnim.Play("Grip");
         inputs[4].material = highlightMaterial;
     }
-    public void Joystick(int direction)
+    public void Joystick(int direction, bool sound)
     {
-        Commons();
+        Commons(sound);
         if (direction == 1)
         {
             controllerAnim.Play("JoystickDown");
@@ -67,10 +68,13 @@ public class QuestController : MonoBehaviour
         inputs[5].material = highlightMaterial;
     }
 
-    private void Commons()
+    private void Commons(bool sound)
     {
         Nothing();
-        //controllerSource.Play();
+        if (sound && !controllerSource.isPlaying)
+        {
+            controllerSource.Play();
+        }
         InvokeRepeating(nameof(SendPulse), 0, controllerSource.clip.length);
     }
     private void SendPulse()
@@ -88,7 +92,7 @@ public class QuestController : MonoBehaviour
     public void Nothing()
     {
         controllerAnim.Play("Nothing");
-        //controllerSource.Stop();
+        controllerSource.Stop();
         CancelInvoke(nameof(SendPulse));
 
         for (int i = 0; i < inputs.Length; i++)

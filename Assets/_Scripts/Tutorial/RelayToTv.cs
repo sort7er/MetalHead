@@ -40,7 +40,7 @@ public class RelayToTv : MonoBehaviour
     public void TvTurning()
     {
         rightQuest.QuestActive(true);
-        rightQuest.Joystick(2);
+        rightQuest.Joystick(2, true);
         requirementCheck.CanTurn();
         AddRequirement(2);
         delay = 2;
@@ -59,11 +59,11 @@ public class RelayToTv : MonoBehaviour
     }
     public void TvMovement()
     {
-        Guide.instance.SetGuide(3, button, "Press button");
+        Guide.instance.SetGuide(3, button, "Press button", false);
         AddRequirement(2);
         leftQuest.QuestActive(true);
         rightQuest.QuestActive(true);
-        leftQuest.Joystick(0);
+        leftQuest.Joystick(0, true);
         OpeningInFloor.SetBool("Lift", true);
         for (int i = 0; i < tvsInScene.Length; i++)
         {
@@ -75,16 +75,19 @@ public class RelayToTv : MonoBehaviour
         delay = 0f;
         requirementCheck.CanPressMenu(true);
         leftQuest.QuestActive(true);
-        leftQuest.Menu();
+        leftQuest.Menu(true);
+        Guide.instance.SetGuide(2, leftQuest.inputs[3].transform , "You can change the comfort settings at any time by clicking on the menu button", false);
         GameManager.instance.leftHand.SetHandActive(false);
-        for (int i = 0; i < tvsInScene.Length; i++)
-        {
-            tvsInScene[i].Menu();
-        }
+        //for (int i = 0; i < tvsInScene.Length; i++)
+        //{
+        //    tvsInScene[i].Menu();
+        //}
         Invoke(nameof(TvArrow), 7f);
     }
     public void TvArrow()
     {
+        Guide.instance.GuideDone();
+        CancelInvoke(nameof(TvArrow));
         requirementCheck.CanPressMenu(false);
         leftQuest.QuestActive(false);
         GameManager.instance.leftHand.SetHandActive(true);
@@ -98,7 +101,7 @@ public class RelayToTv : MonoBehaviour
     }
     public void TvGrabRight()
     {
-        Guide.instance.SetGuide(3, objectToGrab, "Grab the cube");
+        Guide.instance.SetGuide(3, objectToGrab, "Grab the cube", false);
         delay = 0;
         AddRequirement(2);
 
@@ -107,7 +110,7 @@ public class RelayToTv : MonoBehaviour
         GameManager.instance.EnableLeftInteractor(false);
 
         rightQuest.QuestActive(true);
-        rightQuest.Grip();
+        rightQuest.Grip(true);
         GameManager.instance.rightHand.SetHandActive(true);
 
 
@@ -122,10 +125,9 @@ public class RelayToTv : MonoBehaviour
         delay = 4;
         AddRequirement(1);
 
-        GameManager.instance.EnableRightInteractor(false);
         GameManager.instance.EnableLeftInteractor(true);
         leftQuest.QuestActive(true);
-        leftQuest.Grip();
+        leftQuest.Grip(true);
         GameManager.instance.leftHand.SetHandActive(true);
 
         for (int i = 0; i < tvsInScene.Length; i++)
@@ -194,7 +196,7 @@ public class RelayToTv : MonoBehaviour
     {
         delay = 0f;
         tutorialManager.SetShotgun(true);
-        Guide.instance.SetGuide(2, tutorialManager.shotgun.transform, "Grab shotgun from over your sholder");
+        Guide.instance.SetGuide(2, tutorialManager.shotgun.transform, "Grab shotgun from over your sholder", true);
         AddRequirement(2);
         for (int i = 0; i < tvsInScene.Length; i++)
         {
@@ -211,7 +213,7 @@ public class RelayToTv : MonoBehaviour
     private void TVKillEnemyDelay()
     {
         AddRequirement(1);
-        Guide.instance.SetGuide(3, enemyHead, "Kill");
+        Guide.instance.SetGuide(3, enemyHead, "Kill", false);
         for (int i = 0; i < tvsInScene.Length; i++)
         {
             tvsInScene[i].KillEnemy();
@@ -223,7 +225,7 @@ public class RelayToTv : MonoBehaviour
         delay = 2f;
         tutorialManager.SetMagnet(true);
         AddRequirement(2);
-        Guide.instance.SetGuide(2, tutorialManager.magnet.transform, "Grab magnet from over your sholder");
+        Guide.instance.SetGuide(2, tutorialManager.magnet.transform, "Grab magnet from over your sholder", true);
         for (int i = 0; i < tvsInScene.Length; i++)
         {
             tvsInScene[i].Magnet();
@@ -238,14 +240,16 @@ public class RelayToTv : MonoBehaviour
     }
     public void TVMagnetMessage()
     {
-        for (int i = 0; i < tvsInScene.Length; i++)
-        {
-            tvsInScene[i].MagnetMessage();
-        }
+        Guide.instance.SetGuide(2, tutorialManager.magnet.transform, "The amount displayed shows how much you can spend on upgrades at an upgradestation", false);
+        //for (int i = 0; i < tvsInScene.Length; i++)
+        //{
+        //    tvsInScene[i].MagnetMessage();
+        //}
         Invoke(nameof(TvArrow3), 7f);
     }
     public void TvArrow3()
     {
+        Guide.instance.GuideDone();
         groundToEnable[3].SetActive(true);
         doorToOpen[4].SetTrigger("Open");
         AddRequirement(1);
@@ -347,7 +351,7 @@ public class RelayToTv : MonoBehaviour
             //{
             //    //tvsInScene[i].SetQuickTurnDisplay();
             //}
-            rightQuest.Joystick(1);
+            rightQuest.Joystick(1, true);
         }
         
         if(numberOfRequirements > 0) 

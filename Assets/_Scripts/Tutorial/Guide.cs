@@ -4,13 +4,14 @@ using UnityEngine;
 public class Guide : MonoBehaviour
 {
     public static Guide instance;
+    public AudioSource guideSource;
     public Transform guideCanvas;
     public Transform leftEdge, leftCorner;
     public Transform rightEdge, rightCorner;
     public float threshhold;
-
+    
     private Animator guideAnim;
-    private bool left;
+    private bool left, sound;
 
     private void Awake()
     {
@@ -44,6 +45,7 @@ public class Guide : MonoBehaviour
         camRotation = Quaternion.Euler(cam.eulerAngles.x, cam.eulerAngles.y, 0);
         guideCanvas.position = Vector3.Lerp(guideCanvas.position, camPosition, Time.deltaTime * 10);
         guideCanvas.rotation = Quaternion.Slerp(guideCanvas.rotation, camRotation, Time.unscaledDeltaTime * 10);
+
 
 
 
@@ -91,18 +93,31 @@ public class Guide : MonoBehaviour
             lineRenderer.SetPosition(0, currentEdge);
             lineRenderer.SetPosition(1, currentCorner);
             lineRenderer.SetPosition(2, targetTransform.position);
+
+            if (sound)
+            {
+                guideSource.transform.position = targetTransform.position;
+            }
+
         }
 
     }
 
-    public void SetGuide(int y, Transform target, string messageText)
+    public void SetGuide(int y, Transform target, string messageText, bool soundAtTarget)
     {
         CancelInvoke(nameof(Close));
         guideCanvas.gameObject.SetActive(true);
 
+        sound = soundAtTarget;
+
         if (!guideAnim.GetBool("Open"))
         {
             guideAnim.SetBool("Open", true);
+        }
+
+        if (sound && !guideSource.isPlaying)
+        {
+            guideSource.Play();
         }
 
 
@@ -112,6 +127,8 @@ public class Guide : MonoBehaviour
     }
     public void GuideDone()
     {
+        sound = false;
+        guideSource.Stop();
         guideAnim.SetBool("Open", false);
         Invoke(nameof(Close), 0.5f);
     }

@@ -313,7 +313,10 @@ public class Hand : MonoBehaviour
     }
     public void SetHandActive(bool state)
     {
-        spawnedHand.SetActive(state);
+        if(spawnedHand != null)
+        {
+            spawnedHand.SetActive(state);
+        }
     }
 
     public void SendPulse(float intesity, float duration)
