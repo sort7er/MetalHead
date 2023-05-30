@@ -16,7 +16,9 @@ public class Bomb : MonoBehaviour
     public Transform rightAttach;
     public AudioClip[] bombTicks;
     public MeshRenderer bombGlow;
+    public Material glowMaterial;
 
+    private Material defaultMaterial;
     private AudioSource bombSource;
     private Rigidbody rb;
     private XRGrabInteractable xrGrabInteractable;
@@ -33,6 +35,7 @@ public class Bomb : MonoBehaviour
         xrGrabInteractable = GetComponent<XRGrabInteractable>();
         timer = fuseTime;
         currentInterval = startInterval;
+        defaultMaterial = bombGlow.material;
         PlaySound();
     }
 
@@ -62,14 +65,14 @@ public class Bomb : MonoBehaviour
             tick = false;
         }
 
-        bombGlow.material.EnableKeyword("_EMISSION");
+        bombGlow.material = glowMaterial;
         bombSource.Play();
         Invoke(nameof(TurnOffGlow), currentInterval * 0.2f);
         Invoke(nameof(PlaySound), currentInterval);
     }
     private void TurnOffGlow()
     {
-        bombGlow.material.DisableKeyword("_EMISSION");
+        bombGlow.material = defaultMaterial;
     }
 
     public void GrabBomb()
@@ -77,16 +80,28 @@ public class Bomb : MonoBehaviour
         if (GameManager.instance.CheckGameObject(gameObject) == 1)
         {
             xrGrabInteractable.attachTransform = leftAttach;
+            GameManager.instance.leftHand.GrabHandle(true);
         }
         if (GameManager.instance.CheckGameObject(gameObject) == 2)
         {
             xrGrabInteractable.attachTransform = rightAttach;
+            GameManager.instance.rightHand.GrabHandle(true);
         }
         hitFloor = false;
         gameObject.layer = 8;
     }
     public void ReleaseBomb()
     {
+
+        if (!GameManager.instance.leftHand.IsHoldingSomething())
+        {
+            GameManager.instance.leftHand.GrabHandle(false);
+        }
+        if (!GameManager.instance.rightHand.IsHoldingSomething())
+        {
+            GameManager.instance.rightHand.GrabHandle(false);
+        }
+
         Invoke(nameof(ChangeLayer), 0.2f);
     }
     private void ChangeLayer()
