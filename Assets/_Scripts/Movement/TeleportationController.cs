@@ -184,7 +184,7 @@ public class TeleportationController : MonoBehaviour
     private void Recenter(Transform target)
     {
         xROrigin.MoveCameraToWorldLocation(target.position);
-        xROrigin.MatchOriginUpCameraForward(target.up, target.forward);
+        //xROrigin.MatchOriginUpCameraForward(target.up, target.forward);
     }
 
 

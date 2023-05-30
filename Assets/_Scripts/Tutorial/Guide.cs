@@ -119,6 +119,10 @@ public class Guide : MonoBehaviour
         {
             guideSource.Play();
         }
+        else if (!sound)
+        {
+            guideSource.Stop();
+        }
 
 
         currentY = y;

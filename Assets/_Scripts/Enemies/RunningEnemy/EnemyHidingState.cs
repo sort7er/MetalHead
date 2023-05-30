@@ -147,7 +147,6 @@ public class EnemyHidingState : EnemyBaseState
                         }
                         if (Vector3.Dot(hit2.normal, (target.position - hit2.position).normalized) < runningEnemy.hideSensitivity)
                         {
-                            Debug.Log("7");
                             NavMeshHit myNavHit;
                             if (NavMesh.SamplePosition(runningEnemy.transform.position, out myNavHit, 0.5f, agent.areaMask))
                             {

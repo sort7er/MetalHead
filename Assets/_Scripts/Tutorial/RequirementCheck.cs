@@ -409,7 +409,7 @@ public class RequirementCheck : MonoBehaviour
         {
             GameManager.instance.rightHand.SetHandActive(true);
             GameManager.instance.EnableRightInteractor(true);
-            Guide.instance.SetGuide(2, tutorialManager.watch.transform, "The watch displays your health", true);
+            Guide.instance.SetGuide(2, tutorialManager.watch.transform, "The watch displays your health", false);
             leftQuest.QuestActive(false);
             relay.CheckASpot(0);
             grabWatch = true;
@@ -503,7 +503,7 @@ public class RequirementCheck : MonoBehaviour
             //relay.NextReload();
             relay.CheckASpot(0);
             magDropped = true;
-            Guide.instance.SetGuide(2, GameManager.instance.ammoBag.transform, "Grab ammo", true);
+            Guide.instance.SetGuide(2, GameManager.instance.ammoBag.transform, "Grab ammo", false);
         }
     }
     public void GrabMag()
@@ -563,7 +563,7 @@ public class RequirementCheck : MonoBehaviour
         {
             relay.CheckASpot(0);
             shotgunGrabbed = true;
-            Guide.instance.SetGuide(1, ammoBag.transform, "Grab slug", true);
+            Guide.instance.SetGuide(1, ammoBag.transform, "Grab slug", false);
         }
     }
     public void SlugGrabbed()

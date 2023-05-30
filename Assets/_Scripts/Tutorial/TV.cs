@@ -177,7 +177,7 @@ public class TV : MonoBehaviour
     {
         messageOverlay.SetActive(true);
         infoTypeWriterText.StopTyping();
-        infoText.text = "The amount displayed shows how much you can spend on upgrades at an upgradestation";
+        infoText.text = "The amount displayed shows how much metal you can spend on upgrades at an upgradestation";
         infoTypeWriterText.StartTyping();
     }
 

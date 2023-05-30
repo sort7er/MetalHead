@@ -76,12 +76,12 @@ public class RelayToTv : MonoBehaviour
         requirementCheck.CanPressMenu(true);
         leftQuest.QuestActive(true);
         leftQuest.Menu(true);
-        Guide.instance.SetGuide(2, leftQuest.inputs[3].transform , "You can change the comfort settings at any time by clicking on the menu button", false);
+        Guide.instance.SetGuide(2, leftQuest.inputs[2].transform , "Menu button", false);
         GameManager.instance.leftHand.SetHandActive(false);
-        //for (int i = 0; i < tvsInScene.Length; i++)
-        //{
-        //    tvsInScene[i].Menu();
-        //}
+        for (int i = 0; i < tvsInScene.Length; i++)
+        {
+            tvsInScene[i].Menu();
+        }
         Invoke(nameof(TvArrow), 7f);
     }
     public void TvArrow()
@@ -240,11 +240,11 @@ public class RelayToTv : MonoBehaviour
     }
     public void TVMagnetMessage()
     {
-        Guide.instance.SetGuide(2, tutorialManager.magnet.transform, "The amount displayed shows how much you can spend on upgrades at an upgradestation", false);
-        //for (int i = 0; i < tvsInScene.Length; i++)
-        //{
-        //    tvsInScene[i].MagnetMessage();
-        //}
+        Guide.instance.SetGuide(2, tutorialManager.magnet.transform, "Amount of metals", false);
+        for (int i = 0; i < tvsInScene.Length; i++)
+        {
+            tvsInScene[i].MagnetMessage();
+        }
         Invoke(nameof(TvArrow3), 7f);
     }
     public void TvArrow3()

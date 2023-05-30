@@ -10,6 +10,8 @@ public class Bomb : MonoBehaviour
     public int[] damageEnemy;
     public int[] damagePlayer;
 
+    public bool willExplode;
+
     [Header("References")]
     public LayerMask thingsToHit;
     public Transform leftAttach;
@@ -36,20 +38,27 @@ public class Bomb : MonoBehaviour
         timer = fuseTime;
         currentInterval = startInterval;
         defaultMaterial = bombGlow.material;
-        PlaySound();
+        if(willExplode)
+        {
+            PlaySound();
+        }
     }
 
     private void Update()
     {
-        if(timer > 0)
+        if (willExplode)
         {
-            timer -= Time.deltaTime;
-            currentInterval -= Time.deltaTime / (fuseTime * 1.3f);
+            if (timer > 0)
+            {
+                timer -= Time.deltaTime;
+                currentInterval -= Time.deltaTime / (fuseTime * 1.3f);
+            }
+            else
+            {
+                Explode();
+            }
         }
-        else
-        {
-            Explode();
-        }
+        
     }
 
     private void PlaySound()

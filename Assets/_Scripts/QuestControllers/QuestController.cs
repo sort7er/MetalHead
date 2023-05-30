@@ -71,28 +71,28 @@ public class QuestController : MonoBehaviour
     private void Commons(bool sound)
     {
         Nothing();
-        if (sound && !controllerSource.isPlaying)
-        {
-            controllerSource.Play();
-        }
+        //if (sound && !controllerSource.isPlaying)
+        //{
+        //    //controllerSource.Play();
+        //}
         InvokeRepeating(nameof(SendPulse), 0, controllerSource.clip.length);
     }
     private void SendPulse()
     {
         if (left)
         {
-            GameManager.instance.leftHand.SendPulse(0.125f, 0.125f);
+            GameManager.instance.leftHand.SendPulse(0.25f, 0.25f);
         }
         else
         {
-            GameManager.instance.rightHand.SendPulse(0.125f, 0.125f);
+            GameManager.instance.rightHand.SendPulse(0.25f, 0.25f);
         }
     }
 
     public void Nothing()
     {
         controllerAnim.Play("Nothing");
-        controllerSource.Stop();
+        //controllerSource.Stop();
         CancelInvoke(nameof(SendPulse));
 
         for (int i = 0; i < inputs.Length; i++)
