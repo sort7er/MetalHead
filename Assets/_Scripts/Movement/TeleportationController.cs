@@ -1,3 +1,4 @@
+using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -14,6 +15,7 @@ public class TeleportationController : MonoBehaviour
     public LayerMask teleportLayer;
     public TeleportCheck teleportCheck;
 
+    private XROrigin xROrigin;
     private XRInteractorLineVisual leftLineVisual;
     private InputAction thumbstickInputAction;
     private InputAction teleportActivate;
@@ -23,6 +25,8 @@ public class TeleportationController : MonoBehaviour
 
     private void Start()
     {
+        xROrigin = GameManager.instance.XROrigin.GetComponent<XROrigin>();
+
         teleportActive = false;
         rayInteractor.enabled = false;
         leftLineVisual = rayInteractor.GetComponent<XRInteractorLineVisual>();
@@ -91,6 +95,7 @@ public class TeleportationController : MonoBehaviour
 
         teleportationProvider.QueueTeleportRequest(teleportRequest);
         GameManager.instance.SetXROriginRotation(teleportReticle);
+        Recenter(teleportReticle);
         SetRay(false);
 
     }
@@ -176,6 +181,12 @@ public class TeleportationController : MonoBehaviour
             LocomotionManager.instance.EnableTurning(!state);
         }
     }
+    private void Recenter(Transform target)
+    {
+        xROrigin.MoveCameraToWorldLocation(target.position);
+        xROrigin.MatchOriginUpCameraForward(target.up, target.forward);
+    }
+
 
     private void FindReticle()
     {
