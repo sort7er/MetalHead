@@ -6,7 +6,7 @@ using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 public class Tac14 : MonoBehaviour
 {
     [Header("Inputs")]
-    public int magSize;
+    public int startAmmo;
     public int damagePerPellet;
     public int stunPerPellet;
     public int numberOfPellets;
@@ -29,6 +29,7 @@ public class Tac14 : MonoBehaviour
     [HideInInspector] public bool auto;
     [HideInInspector] public int insertAmmo;
     [HideInInspector] public int currentAmmo;
+    [HideInInspector] public int magSize;
 
 
     private TwoHandGrab twoHandGrab;
@@ -55,7 +56,7 @@ public class Tac14 : MonoBehaviour
         returnToHolster = GetComponent<ReturnToHolster>();
         soundForGun = GetComponent<SoundForGun>();
         startColor = currentAmmoText.color;
-        currentAmmo = magSize;
+        currentAmmo = startAmmo;
         if(currentAmmo <= 0)
         {
             cockingNeeded = true;

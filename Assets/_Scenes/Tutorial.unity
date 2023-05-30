@@ -18679,7 +18679,7 @@ PrefabInstance:
     - target: {fileID: 8441575486767264505, guid: 896eb9f60332a1946a0023ea27d8f390,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 5751
+      value: 5754
       objectReference: {fileID: 0}
     - target: {fileID: 8441575486767264505, guid: 896eb9f60332a1946a0023ea27d8f390,
         type: 3}
@@ -22472,7 +22472,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1420
+  m_Name: pb_Mesh-1576030
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -34197,7 +34197,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-8282
+  m_Name: pb_Mesh-1573112
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -36204,7 +36204,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-11304
+  m_Name: pb_Mesh-1570236
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -36783,7 +36783,7 @@ PrefabInstance:
     - target: {fileID: 8441575486767264505, guid: 896eb9f60332a1946a0023ea27d8f390,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 5751
+      value: 5754
       objectReference: {fileID: 0}
     - target: {fileID: 8441575486767264509, guid: 896eb9f60332a1946a0023ea27d8f390,
         type: 3}
@@ -37648,7 +37648,7 @@ PrefabInstance:
     - target: {fileID: 2571467258054364099, guid: 469fb21243f4e944a97d79d7a6d77014,
         type: 3}
       propertyPath: magSize
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2571467258686019688, guid: 469fb21243f4e944a97d79d7a6d77014,
         type: 3}
@@ -38456,7 +38456,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-14252
+  m_Name: pb_Mesh-1579476
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -70028,6 +70028,7 @@ MonoBehaviour:
   startPitch: 1.5
   endPitch: 1
   healthVignette: {fileID: 905265736}
+  heartbeatSource: {fileID: 0}
   hapticIntensity: 0.4
   duration: 0.3
   healthAtUpgrade: 96000000c8000000fa000000
@@ -72474,19 +72475,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 882aee025f03df649aec5e2d1ea55844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startAmmoClipSizeLevel: 1
   startBulletLevel: 1
-  startRecoilLevel: 1
-  startMagSizeLevel: 1
-  startProjectileLevel: 1
   startLaserLevel: 1
+  startProjectileLevel: 1
+  startRecoilLevel: 1
+  ammoClipSizeCap: 8
+  bulletCap: 6
+  laserCap: 2
+  penetrarionCap: 2
+  recoilCap: 4
   tac14StartReload: 1
   tac14StartAuto: 1
   tac14StartDamage: 1
   tac14StartMagSize: 1
   tac14StartPellets: 1
   tac14StartPenetration: 1
-  tac14StartLevels: 
-  tac14Caps: 
   reloadEfficiencyCap: 5
   autoCap: 2
   damageCap: 7
@@ -72497,8 +72501,10 @@ MonoBehaviour:
   cz50Recoil: {fileID: 4417837202390009998}
   cz50: {fileID: 8480215061100208537}
   tac14: {fileID: 910647894}
-  cZ50Upgrades: {fileID: 0}
-  tac14Upgrades: {fileID: 0}
+  cz50StartLevels: 
+  tac14StartLevels: 
+  cz50caps: 
+  tac14Caps: 
   magSize: 10
 --- !u!114 &1678176671
 MonoBehaviour:
@@ -72782,7 +72788,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-5512
+  m_Name: pb_Mesh-1582572
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -73822,7 +73828,7 @@ PrefabInstance:
     - target: {fileID: 8441575486767264505, guid: 896eb9f60332a1946a0023ea27d8f390,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 5751
+      value: 5754
       objectReference: {fileID: 0}
     - target: {fileID: 8441575486767264505, guid: 896eb9f60332a1946a0023ea27d8f390,
         type: 3}
@@ -80748,7 +80754,7 @@ PrefabInstance:
     - target: {fileID: 8441575486767264505, guid: 896eb9f60332a1946a0023ea27d8f390,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 5760
+      value: 5763
       objectReference: {fileID: 0}
     - target: {fileID: 8441575486767264505, guid: 896eb9f60332a1946a0023ea27d8f390,
         type: 3}
@@ -91897,7 +91903,7 @@ PrefabInstance:
     - target: {fileID: 8441575486767264505, guid: 896eb9f60332a1946a0023ea27d8f390,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 5748
+      value: 5751
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
