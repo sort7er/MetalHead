@@ -9,6 +9,7 @@ public class ChooseTurning : MonoBehaviour
     public Image snapImage, continousImage;
     public Transform characterPivot;
     public Animator rightControllerFront;
+    public Color enabledColor, disabledColor;
 
     private float currentTime;
     private int multiplier = 1;
@@ -80,8 +81,8 @@ public class ChooseTurning : MonoBehaviour
             {
                 continousText.alpha = 0.2f;
                 snapText.alpha = 1;
-                snapImage.color = Color.white;
-                continousImage.color = Color.gray;
+                snapImage.color = enabledColor;
+                continousImage.color = disabledColor;
             }
             descriptionText.text = snapDescription;
             snap = true;
@@ -93,8 +94,8 @@ public class ChooseTurning : MonoBehaviour
             {
                 continousText.alpha = 1;
                 snapText.alpha = 0.2f;
-                snapImage.color = Color.gray;
-                continousImage.color = Color.white;
+                snapImage.color = disabledColor;
+                continousImage.color = enabledColor;
             }
             descriptionText.text = continuousDescription;
             snap = false;

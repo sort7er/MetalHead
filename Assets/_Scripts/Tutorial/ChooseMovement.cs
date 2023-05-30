@@ -12,6 +12,7 @@ public class ChooseMovement : MonoBehaviour
     public Transform character, targetPos;
     public GameObject arm;
     public GameObject teleportMovement;
+    public Color enabledColor, disabledColor;
 
     private TutorialManager tutorialManager;
     private RelayToTv relayToTv;
@@ -103,8 +104,8 @@ public class ChooseMovement : MonoBehaviour
             {
                 teleportText.alpha = 1f;
                 continuousText.alpha = 0.2f;
-                continuousImage.color = Color.gray;
-                teleportImage.color = Color.white;
+                continuousImage.color = disabledColor;
+                teleportImage.color = enabledColor;
             }
             descriptionText.text = teleportDescription;
             teleport = true;
@@ -116,8 +117,8 @@ public class ChooseMovement : MonoBehaviour
             {
                 teleportText.alpha = 0.2f;
                 continuousText.alpha = 1;
-                continuousImage.color = Color.white;
-                teleportImage.color = Color.gray;
+                continuousImage.color = enabledColor;
+                teleportImage.color = disabledColor;
             }
             descriptionText.text = continuousDescription;
             teleport = false;

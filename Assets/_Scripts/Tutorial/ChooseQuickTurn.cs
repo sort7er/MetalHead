@@ -8,6 +8,7 @@ public class ChooseQuickTurn : MonoBehaviour
     public Image enabledImage, disabledImage;
     public Transform characterPivot;
     public Animator rightControllerFront;
+    public Color enabledColor, disabledColor;
 
     private bool quickTurn, changed;
     private Quaternion targetAngle;
@@ -50,8 +51,8 @@ public class ChooseQuickTurn : MonoBehaviour
             {
                 enabledText.alpha = 1f;
                 disabledText.alpha = 0.2f;
-                disabledImage.color = Color.gray;
-                enabledImage.color = Color.white;
+                disabledImage.color = disabledColor;
+                enabledImage.color = enabledColor;
             }
             quickTurn = true;
         }
@@ -61,8 +62,8 @@ public class ChooseQuickTurn : MonoBehaviour
             {
                 enabledText.alpha = 0.2f;
                 disabledText.alpha = 1;
-                disabledImage.color = Color.white;
-                enabledImage.color = Color.gray;
+                disabledImage.color = enabledColor;
+                enabledImage.color = disabledColor;
             }
             quickTurn = false;
         }
