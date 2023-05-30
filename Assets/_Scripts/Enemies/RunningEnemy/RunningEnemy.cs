@@ -212,16 +212,12 @@ public class RunningEnemy : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, knockbackPos, knockBackSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, knockbackPos) <= 0.6f)
             {
-                agent.Resume();
                 NavMeshHit hit;
                 if(NavMesh.SamplePosition(knockbackPos, out hit, 0.5f, agent.areaMask))
                 {
                     agent.Warp(hit.position);
                 }
-                else
-                {
-                    Debug.Log("lol");
-                }
+                agent.Resume();
 
 
                 knockBack = false;
@@ -499,22 +495,26 @@ public class RunningEnemy : MonoBehaviour
 
     public void KnockBack()
     {
-        knockBack = true;
-        Vector3 tempPos;
-        if (!Physics.Raycast(transform.position + new Vector3(0,1,0), (transform.position - GameManager.instance.XROrigin.transform.position).normalized, 1.5f, hidebleLayer))
+        if(currentState != coverState)
         {
-            tempPos = transform.position + (transform.position - GameManager.instance.XROrigin.transform.position).normalized * knockBackAmount;
+            knockBack = true;
+            Vector3 tempPos;
+            if (!Physics.Raycast(transform.position + new Vector3(0, 1, 0), (transform.position - GameManager.instance.XROrigin.transform.position).normalized, 1.5f, hidebleLayer))
+            {
+                tempPos = transform.position + (transform.position - GameManager.instance.XROrigin.transform.position).normalized * knockBackAmount;
+            }
+            else
+            {
+                tempPos = transform.position;
+            }
+            NavMeshHit myNavHit;
+            if (NavMesh.SamplePosition(tempPos, out myNavHit, 2, agent.areaMask))
+            {
+                knockbackPos = myNavHit.position;
+            }
+            agent.Stop();
         }
-        else
-        {
-            tempPos = transform.position;
-        }
-        NavMeshHit myNavHit;
-        if (NavMesh.SamplePosition(tempPos, out myNavHit, 2, agent.areaMask))
-        {
-            knockbackPos = myNavHit.position;
-        }
-        agent.Stop();
+        
     }
     public void HittingAvoidance()
     {

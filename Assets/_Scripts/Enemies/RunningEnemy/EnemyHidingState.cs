@@ -9,7 +9,7 @@ public class EnemyHidingState : EnemyBaseState
     private Animator enemyAnim;
     private Vector3 destination;
     private float checkCoverRadius, minPlayerDistance;
-    private bool inCover, noDodge, knockbackDone, invokeStarted;
+    private bool inCover, noDodge, knockbackDone, invokeStarted, coverDone;
     private int healthWhenInCover;
 
     public override void EnterState(RunningEnemy enemy)
@@ -27,8 +27,8 @@ public class EnemyHidingState : EnemyBaseState
         minPlayerDistance = enemy.minPlayerDistance;
         agent.ResetPath();
         inCover = false;
+        coverDone= false;
         invokeStarted = false;
-        noDodge = false;
         knockbackDone= false;
         NavMeshHit myNavHit;
         if (NavMesh.SamplePosition(runningEnemy.transform.position, out myNavHit, 0.5f, agent.areaMask))
@@ -41,6 +41,7 @@ public class EnemyHidingState : EnemyBaseState
 
     public override void UpdateState(RunningEnemy enemy)
     {
+
         if (!runningEnemy.knockBack && !knockbackDone)
         {
             Hide(GameManager.instance.XROrigin.transform);
@@ -49,14 +50,11 @@ public class EnemyHidingState : EnemyBaseState
 
         if (!inCover)
         {
-            NavMeshHit myNavHit;
             if ((destination - enemy.transform.position).magnitude < 0.2f)
             {
-
                 if(runningEnemy.hiding)
                 {
                     InCover();
-                    enemy.DelayedCallback(enemy.coverState, "OutOfCover", Random.Range(enemy.minCoverDuration, enemy.maxCoverDuration));
                 }
                 else
                 {
@@ -96,6 +94,8 @@ public class EnemyHidingState : EnemyBaseState
         {
             colliders[i] = null;
         }
+        noDodge = false;
+
 
         int hits = Physics.OverlapSphereNonAlloc(agent.transform.position, checkCoverRadius, colliders, runningEnemy.hidebleLayer);
 
@@ -114,7 +114,7 @@ public class EnemyHidingState : EnemyBaseState
 
         for (int i = 0; i < hits; i++)
         {
-            if (NavMesh.SamplePosition(colliders[i].transform.position, out NavMeshHit hit, 2f, agent.areaMask))
+            if (NavMesh.SamplePosition(colliders[i].transform.position, out NavMeshHit hit, 3f, agent.areaMask))
             {
                 if (!NavMesh.FindClosestEdge(hit.position, out hit, agent.areaMask))
                 {
@@ -126,6 +126,12 @@ public class EnemyHidingState : EnemyBaseState
                     {
                         runningEnemy.voiceLines.Hiding();
                     }
+
+                    NavMeshHit myNavHit;
+                    if (NavMesh.SamplePosition(runningEnemy.transform.position, out myNavHit, 0.5f, agent.areaMask))
+                    {
+                        agent.Warp(myNavHit.position);
+                    }
                     noDodge = true;
                     destination = hit.position;
                     agent.SetDestination(destination);
@@ -133,7 +139,7 @@ public class EnemyHidingState : EnemyBaseState
                 }
                 else
                 {
-                    if (NavMesh.SamplePosition(colliders[i].transform.position - (target.position - hit.position).normalized * 2, out NavMeshHit hit2, 2f, agent.areaMask))
+                    if (NavMesh.SamplePosition(colliders[i].transform.position - (target.position - hit.position).normalized * 2, out NavMeshHit hit2, 3f, agent.areaMask))
                     {
                         if (!NavMesh.FindClosestEdge(hit2.position, out hit2, agent.areaMask))
                         {
@@ -141,6 +147,12 @@ public class EnemyHidingState : EnemyBaseState
                         }
                         if (Vector3.Dot(hit2.normal, (target.position - hit2.position).normalized) < runningEnemy.hideSensitivity)
                         {
+                            Debug.Log("7");
+                            NavMeshHit myNavHit;
+                            if (NavMesh.SamplePosition(runningEnemy.transform.position, out myNavHit, 0.5f, agent.areaMask))
+                            {
+                                agent.Warp(myNavHit.position);
+                            }
                             if (runningEnemy.hiding)
                             {
                                 runningEnemy.voiceLines.Hiding();
@@ -151,10 +163,13 @@ public class EnemyHidingState : EnemyBaseState
                             break;
                         }
                     }
+
+
                 }
             }
+
         }
-        if(!noDodge)
+        if (!noDodge)
         {
             runningEnemy.SwitchState(runningEnemy.dodgeState);
         }
@@ -186,6 +201,14 @@ public class EnemyHidingState : EnemyBaseState
             InCover();
         }
     }
+    public void CheckDistance()
+    {
+        //if (Vector3.Distance(runningEnemy.transform.position, hideStartPoint) < 1f)
+        //{
+        //    Debug.Log("Yup");
+        //    runningEnemy.SwitchState(runningEnemy.dodgeState);
+        //}
+    }
 
     public void InCover()
     {
@@ -193,11 +216,16 @@ public class EnemyHidingState : EnemyBaseState
         healthWhenInCover = runningEnemy.health.GetCurrentHealth();
         enemyAnim.SetBool("InCover", true);
         agent.avoidancePriority = 48;
+        runningEnemy.DelayedCallback(runningEnemy.coverState, "OutOfCover", Random.Range(runningEnemy.minCoverDuration, runningEnemy.maxCoverDuration));
     }
     public void OutOfCover()
     {
-        enemyAnim.SetBool("InCover", false);
-        runningEnemy.DelayedCallback(runningEnemy.coverState, "HidingDone", 0.3f);
+        if(!coverDone)
+        {
+            enemyAnim.SetBool("InCover", false);
+            runningEnemy.DelayedCallback(runningEnemy.coverState, "HidingDone", 0.3f);
+            coverDone = true;
+        }
     }
 
     public void HidingDone()

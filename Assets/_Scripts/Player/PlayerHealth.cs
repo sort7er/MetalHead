@@ -6,6 +6,7 @@ public class PlayerHealth : MonoBehaviour
     public int startHealth;
     public float startPitch, endPitch;
     public Animator healthVignette;
+    public AudioSource heartbeatSource;
     [Range(0,1)]
     public float hapticIntensity;
     public float duration;
@@ -17,7 +18,7 @@ public class PlayerHealth : MonoBehaviour
     private Watch watch;
     private AudioSource healthSource;
     private float targetVolume, difference, incerements;
-    private bool watchFound;
+    private bool watchFound, heartbeatGiven, heartbeatDone;
     private XRDirectInteractor leftInteractor, rightInteractor;
 
     void Start()
@@ -29,14 +30,31 @@ public class PlayerHealth : MonoBehaviour
         incerements = difference / startHealth;
         leftInteractor = GameManager.instance.leftHand.GetComponent<XRDirectInteractor>();
         rightInteractor = GameManager.instance.rightHand.GetComponent<XRDirectInteractor>();
+        heartbeatDone = true;
     }
 
     public void TakeDamage(int damage)
     {
         if (!GameManager.instance.isDead)
         {
-            healthVignette.Play("Hit");
+            
             currentHealth -= damage;
+
+            if (currentHealth < startHealth * 0.2f && !heartbeatGiven)
+            {
+                healthVignette.Play("LowHealth");
+                heartbeatSource.Play();
+                heartbeatGiven = true;
+                heartbeatDone = false;
+                Invoke(nameof(HeartbeatDone), 2);
+            }
+            else if (heartbeatDone)
+            {
+                HitAudio(currentHealth);
+                healthVignette.Play("Hit");
+            }
+
+
             if (currentHealth <= 0)
             {
                 leftInteractor.SendHapticImpulse(hapticIntensity*2, duration*2);
@@ -50,9 +68,11 @@ public class PlayerHealth : MonoBehaviour
                 leftInteractor.SendHapticImpulse(hapticIntensity, duration);
                 rightInteractor.SendHapticImpulse(hapticIntensity, duration);
             }
-            HitAudio(currentHealth);
-
         }
+    }
+    private void HeartbeatDone()
+    {
+        heartbeatDone = true;
     }
 
     public void UpgradeHealth()
@@ -68,6 +88,7 @@ public class PlayerHealth : MonoBehaviour
             EffectManager.instance.PickUpRingEffect(watch.healthRing.transform.position);
             healthVignette.Play("UpgradeHealth");
             currentHealthLevel++;
+            heartbeatGiven = false;
             leftInteractor.SendHapticImpulse(hapticIntensity * 2, duration * 2);
             rightInteractor.SendHapticImpulse(hapticIntensity * 2, duration * 2);
         }

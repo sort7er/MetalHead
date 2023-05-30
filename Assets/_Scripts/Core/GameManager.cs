@@ -406,7 +406,7 @@ public class GameManager : MonoBehaviour
         if (!tempDone)
         {
             tempNumber++;
-            if (tempNumber >= 8)
+            if (tempNumber >= 5)
             {
                 for (int i = 0; i < enemies.Length; i++)
                 {
