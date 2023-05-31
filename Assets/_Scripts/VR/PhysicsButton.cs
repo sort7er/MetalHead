@@ -5,6 +5,7 @@ public class PhysicsButton : MonoBehaviour
 {
     public GameObject push;
     public MeshRenderer visual;
+    public Material glowMaterial;
     public float threshold = 0.1f;
     public float deadzone = 0.025f;
     public UnityEvent onPressed, onReleased;
@@ -19,6 +20,7 @@ public class PhysicsButton : MonoBehaviour
     private Rigidbody rb;
     private ConfigurableJoint joint;
     private AudioSource audioSource;
+    private Material startMaterial;
 
     private void Start()
     {
@@ -27,6 +29,7 @@ public class PhysicsButton : MonoBehaviour
         startPos = push.transform.localPosition;
         joint = push.GetComponent<ConfigurableJoint>();
         endPos = new Vector3(push.transform.localPosition.x, push.transform.localPosition.y - joint.linearLimit.limit + 0.002f, push.transform.localPosition.z);
+        startMaterial = visual.material;
     }
 
     private void Update()
@@ -76,7 +79,7 @@ public class PhysicsButton : MonoBehaviour
 
     private void Pressed()
     {
-        visual.material.EnableKeyword("_EMISSION");
+        visual.material = glowMaterial;
         isPressed = true;
         onPressed.Invoke();
         audioSource.clip = buttonDown[Random.Range(0, buttonDown.Length)];
@@ -84,7 +87,7 @@ public class PhysicsButton : MonoBehaviour
     }
     private void Released()
     {
-        visual.material.DisableKeyword("_EMISSION");
+        visual.material = startMaterial;
         isPressed = false;
         onReleased.Invoke();
         audioSource.clip = buttonUp[Random.Range(0, buttonUp.Length)];
