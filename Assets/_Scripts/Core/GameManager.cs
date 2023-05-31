@@ -22,9 +22,8 @@ public class GameManager : MonoBehaviour
     public Magnet magnet;
     public GameObject gameOverCanvas;
     public XRDirectInteractor rHand, lHand;
-    public Animator tempAnim;
-    public GameObject[] enemies;
     public InputActionAsset gripInput;
+    public Gate[] gates;
     public AudioSource[] soundsToSlowDown;
     public AudioClip[] slowDownSound;
 
@@ -32,8 +31,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public bool isPaused;
     [HideInInspector] public bool isDead;
 
-    private int tempNumber, waitingID, currentID;
-    private bool tempDone;
+    private int waitingID, currentID;
     private PauseMenu pauseMenu;
     private XRInteractorLineVisual leftLineVisual, rightLineVisual;
     private InputAction gripLeft, gripRight;
@@ -47,7 +45,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        tempDone= false;
         Physics.IgnoreLayerCollision(7, 8);
         EnableRays(false);
         audioSource = GetComponent<AudioSource>();
@@ -401,20 +398,11 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void TempAddOne()
+    public void CheckWithGates()
     {
-        if (!tempDone)
+        for (int i = 0; i < gates.Length; i++)
         {
-            tempNumber++;
-            if (tempNumber >= 5)
-            {
-                for (int i = 0; i < enemies.Length; i++)
-                {
-                    enemies[i].SetActive(true);
-                }
-                tempAnim.SetTrigger("Open");
-                tempDone = true;
-            }
+            gates[i].CheckIfDead();
         }
     }
 }
