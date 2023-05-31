@@ -7,6 +7,15 @@ public class Gate : MonoBehaviour
     public EnemyHealth[] enemiesInArea;
     public TextMeshProUGUI enemiesKilledText;
 
+    public Material redGlow;
+    public Material greenGlow;
+    public MeshRenderer[] reds;
+    public MeshRenderer[] greens;
+
+
+    private AudioSource gateSource;
+    private Material startMaterial;
+
     private Animator gateAnim;
 
     private int numberOfDeadEnemies;
@@ -14,6 +23,9 @@ public class Gate : MonoBehaviour
 
     private void Start()
     {
+        startMaterial = greens[0].material;
+
+        gateSource = GetComponent<AudioSource>();
         gateAnim = GetComponent<Animator>();
 
         if (enemiesInArea.Length > 0)
@@ -24,6 +36,13 @@ public class Gate : MonoBehaviour
         {
             enemiesKilledText.text = "0 / 0";
         }
+
+        for(int i = 0; i < reds.Length; i++)
+        {
+            reds[i].material = redGlow;
+            greens[i].material = startMaterial;
+        }
+
     }
 
 
@@ -55,5 +74,11 @@ public class Gate : MonoBehaviour
     public void OpenGate()
     {
         gateAnim.SetTrigger("Open");
+        gateSource.Play();
+        for (int i = 0; i < reds.Length; i++)
+        {
+            reds[i].material = startMaterial;
+            greens[i].material = greenGlow;
+        }
     }
 }
