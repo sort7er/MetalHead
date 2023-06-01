@@ -6,6 +6,8 @@ public class Gate : MonoBehaviour
 
     public EnemyHealth[] enemiesInArea;
     public TextMeshProUGUI enemiesKilledText;
+    public TextMeshProUGUI sectionNumber;
+    public string number;
 
     [Header("Enable on open")]
     public GameObject nextSection;
@@ -15,7 +17,6 @@ public class Gate : MonoBehaviour
     public Material greenGlow;
     public MeshRenderer[] reds;
     public MeshRenderer[] greens;
-
 
     private AudioSource gateSource;
     private Material startMaterial;
@@ -60,7 +61,7 @@ public class Gate : MonoBehaviour
             nextSection.SetActive(false);
         }
 
-
+        sectionNumber.text = number;
     }
 
 

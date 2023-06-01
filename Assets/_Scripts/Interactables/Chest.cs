@@ -14,7 +14,7 @@ public class Chest : MonoBehaviour
     private Rigidbody keyrb;
     private XRGrabInteractable keyInteractable, treasueInteractable;
     private Animator chestAnim;
-    private bool opened, keyObtained, holdingKey, insideTrigger, lerpBack;
+    private bool opened, holdingKey, insideTrigger, lerpBack;
 
     private void Start()
     {
@@ -63,7 +63,7 @@ public class Chest : MonoBehaviour
     public void Inside()
     {
         CancelInvoke(nameof(HideKey));
-        if (keyObtained)
+        if (GameManager.instance.AmountOfKeys() > 0)
         {
             key.SetActive(true);
             
@@ -140,6 +140,7 @@ public class Chest : MonoBehaviour
     {
         if (!opened)
         {
+            GameManager.instance.GotAKey(false);
             keyInteractable.enabled = false;
             key.transform.parent = keySlot;
             key.transform.position = keySlot.position;
@@ -160,12 +161,5 @@ public class Chest : MonoBehaviour
         EffectManager.instance.SpawnPickups(transform, 10, true);
         treasueInteractable.enabled = true;
         
-    }
-
-    public void KeyObtained()
-    {
-        keyObtained = true;
-        EffectManager.instance.SpawnMessage("Key obtained", 0.8f);
-        EffectManager.instance.Key(GameManager.instance.XROrigin.transform.position, 0);
     }
 }

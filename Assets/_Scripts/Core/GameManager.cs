@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public bool isUpgrading;
     [HideInInspector] public bool isPaused;
     [HideInInspector] public bool isDead;
+    [HideInInspector] public int amountOfKeys;
 
     private int waitingID, currentID;
     private PauseMenu pauseMenu;
@@ -404,5 +405,23 @@ public class GameManager : MonoBehaviour
         {
             gates[i].CheckIfDead();
         }
+    }
+
+    public void GotAKey(bool got)
+    {
+        if (got)
+        {
+            EffectManager.instance.SpawnMessage("Key obtained", 0.8f);
+            EffectManager.instance.Key(XROrigin.transform.position, 0);
+            amountOfKeys++;
+        }
+        else
+        {
+            amountOfKeys--;
+        }
+    }
+    public int AmountOfKeys()
+    {
+        return amountOfKeys;
     }
 }

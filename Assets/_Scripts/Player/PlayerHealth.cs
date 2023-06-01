@@ -84,7 +84,7 @@ public class PlayerHealth : MonoBehaviour
             difference = startPitch - endPitch;
             incerements = difference / startHealth;
             watch.SetNewHealth(currentHealth, startHealth);
-            watch.healthRing.SetActive(true);
+            watch.HealthRing(currentHealthLevel);
             EffectManager.instance.PickUpRingEffect(watch.healthRing.transform.position);
             healthVignette.Play("UpgradeHealth");
             currentHealthLevel++;
