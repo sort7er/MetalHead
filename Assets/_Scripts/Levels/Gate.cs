@@ -18,6 +18,7 @@ public class Gate : MonoBehaviour
 
     private Animator gateAnim;
 
+    private bool isOpen;
     private int numberOfDeadEnemies;
 
 
@@ -73,12 +74,16 @@ public class Gate : MonoBehaviour
 
     public void OpenGate()
     {
-        gateAnim.SetTrigger("Open");
-        gateSource.Play();
-        for (int i = 0; i < reds.Length; i++)
+        if(!isOpen)
         {
-            reds[i].material = startMaterial;
-            greens[i].material = greenGlow;
+            isOpen = true;
+            gateAnim.SetTrigger("Open");
+            gateSource.Play();
+            for (int i = 0; i < reds.Length; i++)
+            {
+                reds[i].material = startMaterial;
+                greens[i].material = greenGlow;
+            }
         }
     }
 }

@@ -5,12 +5,14 @@ public class MagnetSocket : MonoBehaviour
     public Transform magnet, attachTransform;
     public UpgradeStation upgradeStation;
 
+    private Animator magnetSocketAnim;
     private Rigidbody rb;
     private ReturnToHolster returnToHolster;
     private bool canDrop, inserted, returnToPlayer;
 
     private void Start()
     {
+        magnetSocketAnim = GetComponent<Animator>();
         returnToHolster = magnet.GetComponent<ReturnToHolster>();
         rb = magnet.GetComponent<Rigidbody>();
     }
@@ -62,5 +64,6 @@ public class MagnetSocket : MonoBehaviour
     public void CanDrop(bool state)
     {
         canDrop = state;
+        magnetSocketAnim.SetBool("Open", state);
     }
 }

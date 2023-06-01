@@ -4,6 +4,7 @@ public class InsertWeapon : MonoBehaviour
 {
     public UpgradeStation upgradeStation;
     public Transform upgradePosition;
+    public Transform insertParent;
 
     private ReturnToHolster returnToHolster;
     private Rigidbody weaponsRigidbody;
@@ -55,7 +56,7 @@ public class InsertWeapon : MonoBehaviour
                 returnToHolster.enabled = false;
                 weaponsRigidbody.isKinematic = true;
                 weaponsRigidbody.useGravity = false;
-                weaponsRigidbody.transform.parent = transform;
+                weaponsRigidbody.transform.parent = insertParent;
                 weaponsRigidbody.transform.position = upgradePosition.position;
                 weaponsRigidbody.transform.rotation = upgradePosition.rotation;
                 InsertWeaponAnim(false);
