@@ -7,6 +7,10 @@ public class Gate : MonoBehaviour
     public EnemyHealth[] enemiesInArea;
     public TextMeshProUGUI enemiesKilledText;
 
+    [Header("Enable on open")]
+    public GameObject nextSection;
+    public GameObject[] enemies;
+
     public Material redGlow;
     public Material greenGlow;
     public MeshRenderer[] reds;
@@ -44,6 +48,19 @@ public class Gate : MonoBehaviour
             greens[i].material = startMaterial;
         }
 
+        if (enemies.Length > 0)
+        {
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                enemies[i].SetActive(false);
+            }
+        }
+        if(nextSection != null)
+        {
+            nextSection.SetActive(false);
+        }
+
+
     }
 
 
@@ -71,7 +88,6 @@ public class Gate : MonoBehaviour
         }
     }
 
-
     public void OpenGate()
     {
         if(!isOpen)
@@ -84,6 +100,21 @@ public class Gate : MonoBehaviour
                 reds[i].material = startMaterial;
                 greens[i].material = greenGlow;
             }
+
+            if(nextSection != null)
+            {
+                nextSection.SetActive(true);
+            }
+
+
+            if (enemies.Length > 0)
+            {
+                for (int i = 0; i < enemies.Length; i++)
+                {
+                    enemies[i].SetActive(true);
+                }
+            }
+
         }
     }
 }
