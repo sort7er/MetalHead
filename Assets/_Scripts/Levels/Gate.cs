@@ -11,7 +11,7 @@ public class Gate : MonoBehaviour
 
     [Header("Enable on open")]
     public GameObject nextSection;
-    public GameObject[] enemies;
+    //public GameObject[] enemies;
 
     public Material redGlow;
     public Material greenGlow;
@@ -47,18 +47,6 @@ public class Gate : MonoBehaviour
         {
             reds[i].material = redGlow;
             greens[i].material = startMaterial;
-        }
-
-        if (enemies.Length > 0)
-        {
-            for (int i = 0; i < enemies.Length; i++)
-            {
-                enemies[i].SetActive(false);
-            }
-        }
-        if(nextSection != null)
-        {
-            nextSection.SetActive(false);
         }
 
         sectionNumber.text = number;
@@ -108,13 +96,13 @@ public class Gate : MonoBehaviour
             }
 
 
-            if (enemies.Length > 0)
-            {
-                for (int i = 0; i < enemies.Length; i++)
-                {
-                    enemies[i].SetActive(true);
-                }
-            }
+            //if (enemies.Length > 0)
+            //{
+            //    for (int i = 0; i < enemies.Length; i++)
+            //    {
+            //        enemies[i].SetActive(true);
+            //    }
+            //}
 
         }
     }

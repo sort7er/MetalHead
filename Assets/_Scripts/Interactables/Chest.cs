@@ -63,18 +63,22 @@ public class Chest : MonoBehaviour
 
     public void Inside()
     {
-        CancelInvoke(nameof(HideKey));
-        if (GameManager.instance.AmountOfKeys() > 0)
+        if(!opened)
         {
-            key.SetActive(true);
-            
+            CancelInvoke(nameof(HideKey));
+            if (GameManager.instance.AmountOfKeys() > 0)
+            {
+                key.SetActive(true);
+
+            }
+            else
+            {
+                canvas.SetActive(true);
+            }
+            chestAnim.SetBool("Key", true);
+            Invoke(nameof(StartShowingKey), 0.5f);
         }
-        else
-        {
-            canvas.SetActive(true);
-        }
-        chestAnim.SetBool("Key", true);
-        Invoke(nameof(StartShowingKey), 0.5f);
+        
     }
     public void Outside()
     {
