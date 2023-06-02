@@ -1411,11 +1411,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f404d5d885f854282c699e23741ac4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minAmountOfPickUps: 3
+  maxAmountOfPickUps: 6
   pickupsDisapear: 1
   startHealth: 100
   startPosture: 50
   postureRegenerationSpeed: 3
-  timeBeforeHide: 4
+  timeBeforeHide: 1
   hitConstraints: {fileID: 7362675143764957638}
 --- !u!114 &375579569181189068
 MonoBehaviour:

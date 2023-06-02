@@ -18,24 +18,29 @@ public class Tac14Upgrades : MonoBehaviour
     private int[] levels;
     private int[] startLevels;
 
-
+    private void Awake()
+    {
+        startLevels = new int[upgradeCost.Length];
+        levels = new int[upgradeCost.Length];
+    }
 
     private void Start()
     {
         tac14UpgradesAnim = GetComponent<Animator>();
         startTextColor = costText[0].color;
         selectTextColor = outlines[0].GetComponent<Image>().color;
-        levels = new int[upgradeCost.Length];
-        startLevels = new int[upgradeCost.Length];
+        SetCost();
+    }
 
+    private void OnEnable()
+    {
         for (int i = 0; i < levels.Length; i++)
         {
-            levels[i] = UpgradeManager.instance.tac14StartLevels[i];
+            levels[i] = UpgradeManager.instance.tac14CurrentLevels[i];
         }
         SetLevels();
-        SetCost();
-
     }
+
 
     public void ActiveUpgrade(int activeUpgrade)
     {
@@ -70,7 +75,7 @@ public class Tac14Upgrades : MonoBehaviour
     }
     public void Minus(int number)
     {
-        if (levels[number] > startLevels[number])
+        if (levels[number] > startLevels[number] + 1)
         {
             upgradeStation.RemovePurchase(upgradeCost[number]);
             levels[number]--;

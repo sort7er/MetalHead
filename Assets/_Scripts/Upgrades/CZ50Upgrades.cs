@@ -17,24 +17,31 @@ public class CZ50Upgrades : MonoBehaviour
     private int[] levels;
     private int[] startLevels;
 
-
+    private void Awake()
+    {
+        startLevels = new int[upgradeCost.Length];
+        levels = new int[upgradeCost.Length];
+    }
 
     private void Start()
     {
         cs50UpgradesAmin = GetComponent<Animator>();
         startTextColor = costText[0].color;
         selectTextColor = outlines[0].GetComponent<Image>().color;
-        levels = new int[upgradeCost.Length];
-        startLevels = new int[upgradeCost.Length];
 
+        
+        SetCost();
+    }
+
+    private void OnEnable()
+    {
         for (int i = 0; i < levels.Length; i++)
         {
-            levels[i] = UpgradeManager.instance.cz50StartLevels[i];
+            levels[i] = UpgradeManager.instance.cz50CurrentLevels[i];
         }
         SetLevels();
-        SetCost();
-
     }
+
 
     public void ActiveUpgrade(int activeUpgrade)
     {

@@ -6023,6 +6023,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f404d5d885f854282c699e23741ac4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minAmountOfPickUps: 1
+  maxAmountOfPickUps: 3
   pickupsDisapear: 1
   startHealth: 40
   startPosture: 20
@@ -6059,7 +6061,7 @@ MonoBehaviour:
   idleRandomDestinationRange: 7
   idleColor: {r: 0, g: 0.649231, b: 0.8490566, a: 1}
   susSpeed: 1.5
-  timeBeforeDetect: 0
+  timeBeforeDetect: 2
   susSightRange: 10
   minSusDuration: 2
   maxSusDuration: 4

@@ -4,6 +4,9 @@ using UnityEngine.AI;
 
 public class EnemyHealth : MonoBehaviour
 {
+    public int minAmountOfPickUps;
+    public int maxAmountOfPickUps;
+
     public bool pickupsDisapear;
     public int startHealth;
     public float startPosture;
@@ -100,7 +103,7 @@ public class EnemyHealth : MonoBehaviour
             isDead = true;
             runningEnemy.Die();
             runningEnemy.AddForce(rb, damageDir);
-            EffectManager.instance.SpawnPickups(transform, Random.Range(3, 8), pickupsDisapear);
+            EffectManager.instance.SpawnPickups(transform, Random.Range(minAmountOfPickUps, maxAmountOfPickUps), pickupsDisapear);
         }
     }
     private void Stun()

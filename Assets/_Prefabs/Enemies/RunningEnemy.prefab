@@ -1263,11 +1263,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f404d5d885f854282c699e23741ac4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minAmountOfPickUps: 2
+  maxAmountOfPickUps: 5
   pickupsDisapear: 1
   startHealth: 80
   startPosture: 40
   postureRegenerationSpeed: 2.5
-  timeBeforeHide: 3
+  timeBeforeHide: 1.5
   hitConstraints: {fileID: 823870823}
 --- !u!114 &7141347437139885933
 MonoBehaviour:

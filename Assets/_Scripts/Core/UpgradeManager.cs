@@ -38,7 +38,9 @@ public class UpgradeManager : MonoBehaviour
     public Tac14 tac14;
 
     [HideInInspector] public int[] cz50StartLevels;
+/*    [HideInInspector] */public int[] cz50CurrentLevels;
     [HideInInspector] public int[] tac14StartLevels;
+    [HideInInspector] public int[] tac14CurrentLevels;
     [HideInInspector] public int[] cz50caps;
     [HideInInspector] public int[] tac14Caps;
     [HideInInspector] public int magSize;
@@ -76,6 +78,13 @@ public class UpgradeManager : MonoBehaviour
         cz50StartLevels[2] = startLaserLevel;
         cz50StartLevels[3] = startProjectileLevel;
         cz50StartLevels[4] = startRecoilLevel;
+
+        cz50CurrentLevels= new int[5];
+        cz50CurrentLevels[0] = startAmmoClipSizeLevel;
+        cz50CurrentLevels[1] = startBulletLevel;
+        cz50CurrentLevels[2] = startLaserLevel;
+        cz50CurrentLevels[3] = startProjectileLevel;
+        cz50CurrentLevels[4] = startRecoilLevel;
 
         cz50caps = new int[5];
         cz50caps[0] = ammoClipSizeCap;
@@ -119,7 +128,15 @@ public class UpgradeManager : MonoBehaviour
         tac14StartLevels[4] = tac14StartPellets;
         tac14StartLevels[5] = tac14StartPenetration;
 
-        tac14Caps= new int[6];
+        tac14CurrentLevels = new int[6];
+        tac14CurrentLevels[0] = tac14StartReload;
+        tac14CurrentLevels[1] = tac14StartAuto;
+        tac14CurrentLevels[2] = tac14StartDamage;
+        tac14CurrentLevels[3] = tac14StartMagSize;
+        tac14CurrentLevels[4] = tac14StartPellets;
+        tac14CurrentLevels[5] = tac14StartPenetration;
+
+        tac14Caps = new int[6];
         tac14Caps[0] = reloadEfficiencyCap;
         tac14Caps[1] = autoCap;
         tac14Caps[2] = damageCap;
@@ -146,6 +163,13 @@ public class UpgradeManager : MonoBehaviour
     }
     public void UpgradeCZ50(int ammoClipSizeLevel, int bulletLevel, int laserLevel, int projectileLevel, int recoilLevel)
     {
+        cz50CurrentLevels[0] = ammoClipSizeLevel;
+        cz50CurrentLevels[1] = bulletLevel;
+        cz50CurrentLevels[2] = laserLevel;
+        cz50CurrentLevels[3] = projectileLevel;
+        cz50CurrentLevels[4] = recoilLevel;
+
+
         SetMagSize(7 + ammoClipSizeLevel * 3);
         cz50.SetDamage(10 + bulletLevel * 5);
         cz50Recoil.UpgradeRecoil(recoilLevel);
@@ -170,6 +194,15 @@ public class UpgradeManager : MonoBehaviour
     {
         if(tac14 != null)
         {
+            tac14CurrentLevels[0] = reloadLevel;
+            tac14CurrentLevels[1] = autoLevel;
+            tac14CurrentLevels[2] = damage;
+            tac14CurrentLevels[3] = magSize;
+            tac14CurrentLevels[4] = pellets;
+            tac14CurrentLevels[5] = projectileLevel;
+
+
+
             tac14.UpgradeReload(reloadLevel);
             tac14.UpgradeAuto(autoLevel);
             tac14.UpgradeDamage(damage);
