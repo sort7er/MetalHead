@@ -6,12 +6,13 @@ public class InsertWeapon : MonoBehaviour
     public Transform upgradePosition;
     public Transform insertParent;
 
-    private ReturnToHolster returnToHolster;
+    private ReturnToHolster returnToHolster, tempReturnToHolster;
     private Rigidbody weaponsRigidbody;
     private Animator insertWeaponAnim;
 
     [HideInInspector] public bool inserted;
     private int weaponInserted;
+    private bool returnToPlayer;
 
     private void Start()
     {
@@ -65,7 +66,22 @@ public class InsertWeapon : MonoBehaviour
             {
                 EjectWeapon();
             }
-        }    
+
+            if (inserted && Vector3.Distance(GameManager.instance.XROrigin.transform.position, weaponsRigidbody.position) > 4 && !returnToPlayer)
+            {
+                tempReturnToHolster = returnToHolster;
+                EjectWeapon();
+                returnToPlayer = true;
+            }
+            else if (returnToPlayer && tempReturnToHolster.isHolding)
+            {
+                returnToPlayer = false;
+                tempReturnToHolster = null;
+            }
+        }
+        
+
+
     }
 
     public void EjectWeapon()
@@ -101,6 +117,7 @@ public class InsertWeapon : MonoBehaviour
         if (inserted)
         {
             InsertWeaponAnim(true);
+            EjectWeapon();
         }
         else
         {
