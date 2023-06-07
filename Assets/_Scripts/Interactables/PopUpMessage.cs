@@ -7,6 +7,7 @@ public class PopUpMessage : MonoBehaviour
 
     public void SetMessage(string text)
     {
+
         message.text = text;
     }
 }

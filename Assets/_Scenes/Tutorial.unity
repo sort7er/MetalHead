@@ -40603,7 +40603,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-20238
+  m_Name: pb_Mesh-52166
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -49422,7 +49422,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-27178
+  m_Name: pb_Mesh-52086
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -72777,15 +72777,9 @@ MonoBehaviour:
   gameOverCanvas: {fileID: 2042511922}
   rHand: {fileID: 0}
   lHand: {fileID: 0}
-  tempAnim: {fileID: 0}
-  enemies:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   gripInput: {fileID: -944628639613478452, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
+  gates: []
   soundsToSlowDown:
   - {fileID: 850993537}
   - {fileID: 7141347436264070220}
@@ -72798,6 +72792,7 @@ MonoBehaviour:
   isUpgrading: 0
   isPaused: 0
   isDead: 0
+  amountOfKeys: 0
 --- !u!114 &1678176667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72899,7 +72894,9 @@ MonoBehaviour:
   cz50: {fileID: 8480215061100208537}
   tac14: {fileID: 910647894}
   cz50StartLevels: 
+  cz50CurrentLevels: 
   tac14StartLevels: 
+  tac14CurrentLevels: 
   cz50caps: 
   tac14Caps: 
   magSize: 10
@@ -73563,7 +73560,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh45002
+  m_Name: pb_Mesh37406
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -91298,6 +91295,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RightQuestController
       objectReference: {fileID: 0}
+    - target: {fileID: 1975478114086714793, guid: 6be3475996e656b4b9a4740a2a27b8dc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4964430603119132847, guid: 6be3475996e656b4b9a4740a2a27b8dc,
         type: 3}
       propertyPath: m_Mesh
@@ -91553,6 +91555,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LeftQuestController
+      objectReference: {fileID: 0}
+    - target: {fileID: 5494123671788548137, guid: 8d885c055cc30514ab32e7c988c34eac,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8925080848016011988, guid: 8d885c055cc30514ab32e7c988c34eac,
         type: 3}
