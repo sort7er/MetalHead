@@ -21,9 +21,11 @@ public class GameManager : MonoBehaviour
     public AmmoBagShotgun ammoBagShotgun;
     public Magnet magnet;
     public GameObject gameOverCanvas;
+    public GameObject youWonCanvas;
     public XRDirectInteractor rHand, lHand;
     public InputActionAsset gripInput;
     public Gate[] gates;
+    public LastLevel lastLevel;
     public AudioSource[] soundsToSlowDown;
     public AudioClip[] slowDownSound;
 
@@ -309,6 +311,24 @@ public class GameManager : MonoBehaviour
         LocomotionManager.instance.EnableTurning(false);
 
     }
+    public void WonMenu()
+    {
+        if (pauseMenu != null)
+        {
+            pauseMenu.FollowCam(false);
+        }
+        EnableDirectInteractors(false);
+        LocomotionManager.instance.EnableMovement(false);
+        LocomotionManager.instance.EnableTurning(false);
+        Invoke(nameof(WinDelay), 1);
+
+    }
+    private void WinDelay()
+    {
+        EnableRays(true);
+        youWonCanvas.SetActive(true);
+        SetTimeScale(0f);
+    }
     private void DeadMenu()
     {
         if(pauseMenu != null)
@@ -405,6 +425,11 @@ public class GameManager : MonoBehaviour
         {
             gates[i].CheckIfDead();
         }
+        if(lastLevel!= null)
+        {
+            lastLevel.CheckEnemies();
+        }
+
     }
 
     public void GotAKey(bool got)
