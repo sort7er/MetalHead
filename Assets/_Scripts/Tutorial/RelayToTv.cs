@@ -207,19 +207,19 @@ public class RelayToTv : MonoBehaviour
     {
         doorToOpen[3].SetTrigger("Open");
         enemy.gameObject.SetActive(true);
-        Invoke(nameof(TVKillEnemyDelay), 1.5f);
-        
-    }
-    private void TVKillEnemyDelay()
-    {
         AddRequirement(1);
         Guide.instance.SetGuide(3, enemyHead, "Kill", false);
         for (int i = 0; i < tvsInScene.Length; i++)
         {
             tvsInScene[i].KillEnemy();
         }
+        Invoke(nameof(Delay), 1.5f);
+    }
+    private void Delay()
+    {
         GameManager.instance.SetTimeScaleSmooth(0.2f);
     }
+
     public void TvMagnet()
     {
         delay = 2f;
@@ -240,6 +240,12 @@ public class RelayToTv : MonoBehaviour
     }
     public void TVMagnetMessage()
     {
+        if(Time.timeScale != 1)
+        {
+            GameManager.instance.SetTimeScaleSmooth(1);
+            Debug.Log(2);
+        }
+
         Guide.instance.SetGuide(2, tutorialManager.magnet.transform, "Amount of metals", false);
         for (int i = 0; i < tvsInScene.Length; i++)
         {
