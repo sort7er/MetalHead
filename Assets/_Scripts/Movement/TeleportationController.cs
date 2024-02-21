@@ -23,6 +23,8 @@ public class TeleportationController : MonoBehaviour
     private InputAction teleportBack;
     private Transform teleportReticle;
 
+    private bool move;
+
     private void Start()
     {
         xROrigin = GameManager.instance.XROrigin.GetComponent<XROrigin>();
@@ -34,6 +36,7 @@ public class TeleportationController : MonoBehaviour
         teleportActivate = inputAction.FindActionMap("XRI LeftHand Locomotion").FindAction("Teleport Mode Activate");
         teleportActivate.Enable();
         teleportActivate.performed += OnTeleportActivate;
+        teleportActivate.canceled += Move;
 
         teleportCancel = inputAction.FindActionMap("XRI LeftHand Locomotion").FindAction("Teleport Mode Cancel");
         teleportCancel.Enable();
@@ -68,15 +71,15 @@ public class TeleportationController : MonoBehaviour
         {
             return;
         }
-        if (thumbstickInputAction.triggered)
+        if (/*thumbstickInputAction.triggered*/ !move)
         {
             return;
         }
-        //if (teleportCheck.CannotTeleport())
-        //{
-        //    SetRay(false);
-        //    return;
-        //}
+        if (teleportCheck.CannotTeleport())
+        {
+            SetRay(false);
+            return;
+        }
         if (!rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit rayCastHit))
         {
             SetRay(false);
@@ -105,7 +108,12 @@ public class TeleportationController : MonoBehaviour
         if(!teleportActive)
         {
             SetRay(true);
+            move= false;
         }
+    }
+    private void Move(InputAction.CallbackContext context)
+    {
+        move = true;
     }
     private void OnTeleportCancel(InputAction.CallbackContext context)
     {

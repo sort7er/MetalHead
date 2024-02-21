@@ -25,7 +25,7 @@ public class TeleportReticleRotate : MonoBehaviour
         rightJoystick.performed += OnRotateJoystick;
         rightJoystick.Enable();
     }
-    private void OnDestroy()
+    private void OnDisable()
     {
         rightJoystick.performed -= OnRotateJoystick;
     }
@@ -68,9 +68,10 @@ public class TeleportReticleRotate : MonoBehaviour
             transform.rotation = Quaternion.Euler(raycastAngleX, GameManager.instance.leftHand.transform.eulerAngles.y + lastAngle, -raycastAngleZ);
         }
     }
-    private void ResetRotation()
+    public void ResetRotation()
     {
         transform.rotation = Quaternion.Euler(raycastAngleX, GameManager.instance.leftHand.transform.eulerAngles.y, -raycastAngleZ);
+        rotationDir= Vector3.zero;
         lastAngle= 0f;
     }
 }
