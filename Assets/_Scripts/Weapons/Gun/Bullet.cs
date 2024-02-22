@@ -6,12 +6,19 @@ public class Bullet : MonoBehaviour
     private int damage;
     private float bulletSpeed;
 
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward * bulletSpeed, ForceMode.Impulse);
-        Destroy(gameObject, 2f);
     }
+
+    public void Fire(int damage, float speed)
+    {
+        this.damage = damage;
+        bulletSpeed = speed;
+        rb.AddForce(transform.forward * bulletSpeed, ForceMode.Impulse);
+        Invoke(nameof(Disable), 2f);
+    }
+
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -46,16 +53,13 @@ public class Bullet : MonoBehaviour
             EffectManager.instance.SpawnBulletHole(collision.transform, collision.contacts[0].point, collision.contacts[0].normal, 5);
         }
 
-        Destroy(gameObject);
+        CancelInvoke(nameof(Disable));
+        Disable();
     }
     
-    public void SetDamage(int dmg)
+    public void Disable()
     {
-        damage= dmg;
-    }
-    public void SetSpeed(float speed)
-    {
-        bulletSpeed = speed;
+        gameObject.SetActive(false);
     }
 
 }

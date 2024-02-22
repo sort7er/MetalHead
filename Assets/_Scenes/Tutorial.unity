@@ -72775,11 +72775,13 @@ MonoBehaviour:
   ammoBagShotgun: {fileID: 1887227900}
   magnet: {fileID: 1966746291}
   gameOverCanvas: {fileID: 2042511922}
+  youWonCanvas: {fileID: 0}
   rHand: {fileID: 0}
   lHand: {fileID: 0}
   gripInput: {fileID: -944628639613478452, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
   gates: []
+  lastLevel: {fileID: 0}
   soundsToSlowDown:
   - {fileID: 850993537}
   - {fileID: 7141347436264070220}
@@ -72918,9 +72920,9 @@ MonoBehaviour:
     type: 3}
   bulletHolePrefabWithSound: {fileID: 3550857489680246223, guid: a7b19bf1321451247bc2febf9f108a99,
     type: 3}
-  hitPlayer: {fileID: 4824387240131724937, guid: 161b9cd861e14c145a3b180dd67b39dc,
-    type: 3}
   hitEnemy: {fileID: 2869318214092889750, guid: 618782a7cf12fe541a3018c46330a41d,
+    type: 3}
+  hitPlayer: {fileID: 4824387240131724937, guid: 161b9cd861e14c145a3b180dd67b39dc,
     type: 3}
   hitEnemyBarrel: {fileID: 8309065693326733749, guid: 61eff16b8d41b1a4e87a0a494b2bf86b,
     type: 3}

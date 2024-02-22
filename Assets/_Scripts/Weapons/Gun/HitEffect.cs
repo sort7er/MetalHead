@@ -8,10 +8,13 @@ public class HitEffect : MonoBehaviour
 
     private AudioSource HitEnemySource;
 
-    private void Start()
+    private void Awake()
     {
         HitEnemySource = GetComponent<AudioSource>();
+    }
 
+    private void OnEnable()
+    {
         if (randomPitch)
         {
             float currentPitch = HitEnemySource.pitch;
@@ -20,5 +23,9 @@ public class HitEffect : MonoBehaviour
         }
 
         HitEnemySource.PlayOneShot(hitSound[Random.Range(0, hitSound.Length)]);
+    }
+    private void OnDisable()
+    {
+        HitEnemySource.Stop();
     }
 }

@@ -310,8 +310,10 @@ public class RunningEnemy : MonoBehaviour
     public void DestroyNow()
     {
         EffectManager.instance.SpawnDeadEnemyEffect(enemyModel);
-        Destroy(gameObject);
-        Destroy(enemyModel.gameObject);
+        enemyModel.gameObject.SetActive(false);
+        gameObject.SetActive(false);
+        //Destroy(gameObject);
+        //Destroy(enemyModel.gameObject);
     }
     public void ChangeAnimationState(string newState)
     {
