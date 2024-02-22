@@ -84,9 +84,13 @@ public class AmmoBox : MonoBehaviour
                 box.SetActive(false);
                 boxCollider.enabled = false;
                 pickedUp = true;
-                Destroy(gameObject, 0.5f);
+                Invoke(nameof(Disable), 0.5f);
             }
 
         }
+    }
+    private void Disable()
+    {
+        gameObject.SetActive(false);
     }
 }

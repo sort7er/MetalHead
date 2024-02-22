@@ -23,7 +23,12 @@ public class Casing : MonoBehaviour
             casingSourse.clip = casingHitGround[Random.Range(0, casingHitGround.Length)];
             casingSourse.Play();
             played = true;
-            Destroy(gameObject, 10f);
+            Invoke(nameof(Disable), 10f);
         }
+    }
+
+    private void Disable()
+    {
+        gameObject.SetActive(false);
     }
 }
